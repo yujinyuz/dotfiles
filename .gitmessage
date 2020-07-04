@@ -1,0 +1,18 @@
+
+
+# Whatever you place as a commit message, always
+# Read it as: If applied, this commit will <commit message here>.
+# [Add/Fix/Remove/Update/Refactor/Document] [issue #id] [summary]
+
+# Why is it necessary? (Bug fix, feature, improvements?)
+# -
+# How does it address the problem?
+# -
+# What side effects does this change have?
+# -
+# Include a link to the ticket, if any.
+#
+# Add co-authors if you worked on this code with others:
+#
+# Co-authored-by: Full Name <email@example.com>
+# Co-authored-by: Full Name <email@example.com>

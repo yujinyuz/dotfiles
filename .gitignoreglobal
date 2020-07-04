@@ -1,0 +1,30 @@
+.gems
+tags
+.rbenv-gemsets
+.ruby-version
+
+# python stuffs
+.python-version
+*.py[co]
+
+# .vscode stuffs
+.vscode/
+
+# temporary stuffs
+tmp/
+temp/
+
+.DS_Store
+
+# vim stuffs
+.vim/
+Session.vim
+
+### Node ###
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+node_modules
