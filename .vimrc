@@ -62,7 +62,7 @@ set noswapfile
 set nobackup nowritebackup
 
 " Use system clipboard
-set clipboard=unnamedplus
+set clipboard+=unnamedplus
 
 " Disable neovim from setting cursor style
 " set guicursor=
@@ -223,6 +223,7 @@ Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-entire'
 Plug 'mbbill/undotree'
 Plug 'dense-analysis/ale'
+Plug 'wakatime/vim-wakatime'
 Plug 'SidOfc/mkdx'
 call plug#end()
 " End Plugins}}}
