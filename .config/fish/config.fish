@@ -34,6 +34,7 @@ status --is-interactive; and pyenv virtualenv-init - | source
 type -q install_python_provider; and install_python_provider
 
 # goenv
+set -gx GOENV_GOPATH_PREFIX $HOME/.go
 status --is-interactive; and goenv init - | source
 
 # rbenv
