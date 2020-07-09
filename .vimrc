@@ -348,7 +348,8 @@ nnoremap <C-y> 3<C-y>
 nnoremap <C-e> 3<C-e>
 
 " Easily move around windows
-nmap <Space><Space> <C-w>w
+" nmap <Space><Space> <C-w>w
+nmap <Space><Space> :Files %:p:h<CR>
 
 " For easier splitting of files
 nmap ss :split<CR><C-w>w
@@ -366,6 +367,9 @@ nnoremap <C-]> g<C-]>:echo expand('%:p')<CR>
 
 " bind K to grep word under cursor
 nnoremap K :Rg <C-R><C-W><CR>
+
+" Write file as sudo
+cnoremap w!! w !sudo tee % >/dev/null
 " End Native }}}
 
 " Plugins custom settings {{{
