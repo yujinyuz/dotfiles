@@ -22,8 +22,8 @@
 ;; (setq doom-font (font-spec :family "FiraMono Nerd Font" :size 14)
 ;;       doom-variable-pitch-font (font-spec :family "FiraMono Nerd Font" :size 14))
 
-(setq doom-font (font-spec :family "FiraMono Nerd Font" :size 14)
-      doom-variable-pitch-font (font-spec :family "FiraMono Nerd Font" :size 14))
+(setq doom-font (font-spec :family "FiraMono Nerd Font Mono" :size 12)
+      doom-variable-pitch-font (font-spec :family "FiraMono Nerd Font Mono" :size 12))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -59,3 +59,6 @@
 
 (map! :leader :desc "Clear highlights" "l" #'evil-ex-nohighlight)
 ;; (map! :n :leader "l" 'evil-ex-nohighlight)
+
+;; Maximize doom upon launching
+(add-to-list 'initial-frame-alist '(fullscreen . maximized))
