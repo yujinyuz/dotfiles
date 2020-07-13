@@ -1,3 +1,10 @@
+# Manually unset then set the PATH because it's duplicating in tmux.
+# Only pyenv, rbenv, goenv are known to have duplicates because it doesn't
+# check if the environment variable already exists
+# set -gx PATH ""
+# List can be found under /etc/paths on MacOS
+# set -gx PATH /usr/local/bin /usr/bin /bin /usr/sbin /sbin $PATH
+
 # Ensure fisherman and plugins are installe
 if not functions -q fisher
   echo "===> Installing fisher..."
@@ -22,6 +29,8 @@ set -gx LANG en_US.UTF-8
 set -gx MYVIMRC $HOME/.vimrc
 set -gx MANPAGER "sh -c 'col -bx | bat -l man -p'"
 
+contains $fish_user_paths $HOME/.local/bin; or set -Ua fish_user_paths $HOME/.local/bin
+
 # Autojump
 set -gx Z_CMD "j"
 
@@ -44,11 +53,11 @@ status --is-interactive; and rbenv init - | source
 set -gx PYTHON_3_HOST_PROG $PYENV_ROOT/versions/nvim/bin/python3
 
 # FZF
-set -gx FD_OPTIONS "--hidden --follow --exclude .git --exclude node_modules"
-set -gx FZF_DEFAULT_COMMAND "git ls-files --cached --others --exclude-standard | fd --type f --type l --hidden --follow --exclude .git --exclude node_modules"
-set -gx FZF_DEFAULT_OPTS "--height 40% --layout=reverse --border --preview-window down:1"
-set -gx FZF_ALT_C_COMMAND "fd --type d $FD_OPTIONS"
-set -gx FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
+set -l FD_OPTIONS "--hidden --follow --exclude .git --exclude node_modules"
+set -g -x FZF_DEFAULT_OPTS "--height 40% --layout=reverse --border --preview-window down:1"
+set -g -x FZF_DEFAULT_COMMAND "git ls-files --cached --others --exclude-standard | fd --type f --type l $FD_OPTIONS"
+set -g -x FZF_CTRL_T_COMMAND "fd $FD_OPTIONS"
+set -g -x FZF_ALT_C_COMMAND "fd --type d $FD_OPTIONS"
 
 # Set nvm aliases and add to path
 set -gx nvm_alias_output $HOME/.node_aliases
@@ -70,11 +79,12 @@ alias ppath="echo $PATH | tr -s ':' '\n'"
 alias rscp="rsync -avhW --no-compress --progress" # for copying local files
 alias rsmv="rsync -avhW --no-compress --progress --remove-source-files"
 alias t="tmux"
+# alias tn="tmux new-session -As 0"
 alias tree="exa --tree --level=3"
 alias vi="nvim"
+alias vifish="vi ~/.config/fish/config.fish"
 
 # abbreviations
 if status --is-interactive
   abbr --add --global ta tmux attach -t
-  abbr --add --global tn tmux new-session -As 0
 end
