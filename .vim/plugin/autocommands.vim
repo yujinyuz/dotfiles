@@ -1,8 +1,13 @@
 " Return to last edit position when opening files (You want this!)
 augroup ReturnToLastEditPosition
   autocmd!
-  autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$")
-    \| exe "normal! g'\"" | endif
+  " When editing a file, always jump to the last known cursor position.
+  " Don't do it for commit messages, when the position is invalid, or when
+  " inside an event handler (happens when dropping a file on gvim).
+  autocmd BufReadPost *
+    \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
+    \   exe "normal g`\"" |
+    \ endif
 augroup END
 
 " https://github.com/neoclide/coc.nvim/wiki/Completion-with-sources

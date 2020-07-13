@@ -134,13 +134,20 @@ set undofile
 " Disable intro message
 set shortmess+=I
 
+set omnifunc+=ale#completion#OmniFunc
+
 " Change leader key
 let mapleader = ' '
 
 " Enable elite mode. No arrows!!
 let g:elite_mode = 1
 
+" Disable python2 provider
+let g:loaded_python_provider = 0
 let g:python3_host_prog = $PYTHON_3_HOST_PROG
+
+" Disable highlighting matched parenthesis
+let g:loaded_matchparen = 1
 
 " NeoVim Enabled Defaults {{{
 " Just uncomment the lines with `set` to when not using neovim
@@ -198,9 +205,10 @@ call plug#begin('~/.vim/plugged')
 Plug 'preservim/nerdtree', {'on': ['NERDTreeToggle', 'NERDTreeFind']}
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'sheerun/vim-polyglot'
+Plug 'gruvbox-community/gruvbox'
 Plug 'sainnhe/gruvbox-material'
 Plug 'joshdick/onedark.vim'
-Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-slash'
 Plug 'tpope/vim-surround'
@@ -225,6 +233,8 @@ Plug 'mbbill/undotree'
 Plug 'dense-analysis/ale'
 Plug 'wakatime/vim-wakatime'
 Plug 'SidOfc/mkdx'
+Plug 'machakann/vim-highlightedyank'
+let g:highlightedyank_highlight_duration = 250
 call plug#end()
 " End Plugins}}}
 
@@ -234,6 +244,8 @@ syntax on
 
 set t_Co=256
 colorscheme gruvbox-material
+" Make background transparent
+hi Normal guibg=NONE ctermbg=NONE
 " End Colors }}}
 
 " Native Key Mappings {{{
@@ -349,7 +361,7 @@ nnoremap <C-e> 3<C-e>
 
 " Easily move around windows
 " nmap <Space><Space> <C-w>w
-nmap <Space><Space> :Files %:p:h<CR>
+nmap <Space><Space> :Files<CR>
 
 " For easier splitting of files
 nmap ss :split<CR><C-w>w
@@ -417,7 +429,6 @@ let g:coc_global_extensions = [
   \ 'coc-html',
   \ 'coc-css',
   \ 'coc-cssmodules',
-  \ 'coc-yank',
   \ 'coc-snippets'
   \ ]
 " 'coc-eslint'
@@ -429,9 +440,30 @@ let g:endwise_no_mappings = 1
 
 " statusline {{{
 let g:airline_powerline_fonts = 1
+let g:airline_mode_map = {
+    \ '__'     : '-',
+    \ 'c'      : 'C',
+    \ 'i'      : 'I',
+    \ 'ic'     : 'I',
+    \ 'ix'     : 'I',
+    \ 'n'      : 'N',
+    \ 'multi'  : 'M',
+    \ 'ni'     : 'N',
+    \ 'no'     : 'N',
+    \ 'R'      : 'R',
+    \ 'Rv'     : 'R',
+    \ 's'      : 'S',
+    \ 'S'      : 'S',
+    \ ''     : 'S',
+    \ 't'      : 'T',
+    \ 'v'      : 'V',
+    \ 'V'      : 'V',
+    \ ''     : 'V',
+    \ }
 " }}}
 
 " fzf.vim {{{
+let $FZF_DEFAULT_COMMAND="git ls-files --cached --others --exclude-standard | fd --type f --type l --hidden --follow --exclude .git --exclude node_modules"
 let g:fzf_tags_command = 'ctags -R'
 let g:fzf_preview_window = 'down:1'
 let g:fzf_layout = { 'window': { 'width': 0.6, 'height': 0.6 } }
@@ -450,11 +482,11 @@ imap <c-x><c-l> <plug>(fzf-complete-line)
 nnoremap <silent> <C-p> :Files<CR>
 nnoremap <silent> ++ :Files<CR>
 " Global search
-nnoremap <leader>f :Rg<Space>
+" nnoremap <leader>f :Rg<Space>
 " Buffers search
 nnoremap <leader>b :Buffers<CR>
 " Search files relative to the current buffer
-nnoremap <leader>r :Files %:p:h<CR>
+nnoremap <leader>ff :Files %:p:h<CR>
 " Tags search
 nnoremap <leader>t :Tags<CR>
 nnoremap <leader>T :BTags<CR>
