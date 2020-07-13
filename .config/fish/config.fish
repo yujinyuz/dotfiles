@@ -29,15 +29,22 @@ set -gx LANG en_US.UTF-8
 set -gx MYVIMRC $HOME/.vimrc
 set -gx MANPAGER "sh -c 'col -bx | bat -l man -p'"
 
-contains $fish_user_paths $HOME/.local/bin; or set -Ua fish_user_paths $HOME/.local/bin
+contains $HOME/.local/bin $fish_user_paths; or set -Ua fish_user_paths $HOME/.local/bin
 
 # Autojump
-set -gx Z_CMD "j"
+set -x Z_CMD "j"
+
+# FZF
+set -l FD_OPTIONS "--hidden --follow --exclude .git --exclude node_modules"
+set -gx FZF_DEFAULT_COMMAND "git ls-files --cached --others --exclude-standard | fd --type f --type l $FD_OPTIONS"
+set -gx FZF_DEFAULT_OPTS "--height 40% --layout=reverse --border --preview-window down:1"
+set -gx FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
+set -gx FZF_ALT_C_COMMAND "fd --type d $FD_OPTIONS"
 
 # pyenv
 set -gx PYENV_ROOT $HOME/.pyenv
 set -gx PYTHON_BUILD_ARIA2_OPTS "-x 10 -k 1M" # Use aria2c when downloading
-contains $fish_user_paths $PYENV_ROOT/bin; or set -Ua fish_user_paths $PYENV_ROOT/bin
+contains $PYENV_ROOT/bin $fish_user_paths; or set -Ua fish_user_paths $PYENV_ROOT/bin
 status --is-interactive; and pyenv init - | source
 status --is-interactive; and pyenv virtualenv-init - | source
 type -q install_python_provider; and install_python_provider
@@ -52,16 +59,9 @@ status --is-interactive; and rbenv init - | source
 # neovim
 set -gx PYTHON_3_HOST_PROG $PYENV_ROOT/versions/nvim/bin/python3
 
-# FZF
-set -l FD_OPTIONS "--hidden --follow --exclude .git --exclude node_modules"
-set -g -x FZF_DEFAULT_OPTS "--height 40% --layout=reverse --border --preview-window down:1"
-set -g -x FZF_DEFAULT_COMMAND "git ls-files --cached --others --exclude-standard | fd --type f --type l $FD_OPTIONS"
-set -g -x FZF_CTRL_T_COMMAND "fd $FD_OPTIONS"
-set -g -x FZF_ALT_C_COMMAND "fd --type d $FD_OPTIONS"
-
 # Set nvm aliases and add to path
 set -gx nvm_alias_output $HOME/.node_aliases
-contains $fish_user_paths $nvm_alias_output; or set -Ua fish_user_paths $nvm_alias_output
+contains $nvm_alias_output $fish_user_paths; or set -Ua fish_user_paths $nvm_alias_output
 
 # aliases
 alias brewup="brew update; brew upgrade; brew cleanup; brew doctor"
@@ -76,6 +76,7 @@ alias localip="ifconfig|grep 'inet 192'|cut -d ' ' -f2"
 alias mv="mv -v"
 alias pm="python manage.py"
 alias ppath="echo $PATH | tr -s ':' '\n'"
+alias fupath="echo $fish_user_paths | tr ' ' '\n'"
 alias rscp="rsync -avhW --no-compress --progress" # for copying local files
 alias rsmv="rsync -avhW --no-compress --progress --remove-source-files"
 alias t="tmux"
