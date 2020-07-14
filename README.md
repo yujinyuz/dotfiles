@@ -1,30 +1,30 @@
-# dotdotdot
+# dotfiles
 My collection of dotfiles using git bare
 
 ## Setup
 ```sh
 git init --bare $HOME/.dotfiles
-alias config='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-config remote add origin git@github.com:yujinyuz/dotfiles.git
+alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+dotfiles remote add origin git@github.com:yujinyuz/dotfiles.git
 ```
 
 ## Setting up a new machine
 ```sh
-git clone --separate-git-dir=$HOME/.dotfiles https://github.com/yujinyuz/dotfiles.git dotfiles-tmp
+git clone --separate-git-dir=$HOME/.dotfiles git@github.com:yujinyuz/dotfiles.git dotfiles-tmp
 rsync --recursive --verbose --exclude '.git' dotfiles-tmp/ $HOME/
 rm --recursive dotfiles-tmp
 ```
 
 ## Configuration
 ```sh
-config config status.showUntrackedFiles no
-config remote set-url origin git@github.com:yujinyuz/dotfiles.git
+dotfiles config status.showUntrackedFiles no
+dotfiles remote set-url origin git@github.com:yujinyuz/dotfiles.git
 ```
 
 ## Usage
 ```sh
-config status
-config add .gitconfig
-config commit -m 'Add gitconfig'
-config push
+dotfiles status
+dotfiles add .gitconfig
+dotfiles commit -m 'Add some stuffs'
+dotfiles push
 ```
