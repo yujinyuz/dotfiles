@@ -42,26 +42,14 @@ set -gx FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
 set -gx FZF_ALT_C_COMMAND "fd --type d $FD_OPTIONS"
 
 # pyenv
-set -gx PYENV_ROOT $HOME/.pyenv
 set -gx PYTHON_BUILD_ARIA2_OPTS "-x 10 -k 1M" # Use aria2c when downloading
-contains $PYENV_ROOT/bin $fish_user_paths; or set -Ua fish_user_paths $PYENV_ROOT/bin
-status --is-interactive; and pyenv init - | source
-status --is-interactive; and pyenv virtualenv-init - | source
-type -q install_python_provider; and install_python_provider
-
-# goenv
-set -gx GOENV_GOPATH_PREFIX $HOME/.go
-status --is-interactive; and goenv init - | source
-
-# rbenv
-status --is-interactive; and rbenv init - | source
 
 # neovim
-set -gx PYTHON_3_HOST_PROG $PYENV_ROOT/versions/nvim/bin/python3
+set -gx PYTHON_3_HOST_PROG $HOME/.virtualenvs/nvim/bin/python3
 
-# Set nvm aliases and add to path
-set -gx nvm_alias_output $HOME/.node_aliases
-contains $nvm_alias_output $fish_user_paths; or set -Ua fish_user_paths $nvm_alias_output
+# asdf
+# Installation method via git since brew --prefix asdf is slow
+source $HOME/.asdf/asdf.fish
 
 # aliases
 alias brewup="brew update; brew upgrade; brew cleanup; brew doctor"
@@ -80,7 +68,6 @@ alias fupath="echo $fish_user_paths | tr ' ' '\n'"
 alias rscp="rsync -avhW --no-compress --progress" # for copying local files
 alias rsmv="rsync -avhW --no-compress --progress --remove-source-files"
 alias t="tmux"
-# alias tn="tmux new-session -As 0"
 alias tree="exa --tree --level=3"
 alias vi="nvim"
 alias vifish="vi ~/.config/fish/config.fish"
