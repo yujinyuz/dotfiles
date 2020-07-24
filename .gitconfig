@@ -15,6 +15,8 @@
   ctags = !.git/hooks/ctags
   d = difftool
   dl = !git ll -1
+  ; Show what files changed in current branch
+  df = diff --name-only ; <branch_name>
   ; Find branches containing commit
   fb = "!f() { git branch -a --contains $1; }; f"
   ; Find commits by source code
@@ -23,7 +25,6 @@
   fm = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=$1; }; f"
   ; Find tags containing commit
   ft = "!f() { git describe --always --contains $1; }; f"
-  filelog = log -u
   fl = log -u
   ; Switch to a branch, creating it if necessary
   go = "!f() { git checkout -b \"$1\" 2> /dev/null || git checkout \"$1\"; }; f"
