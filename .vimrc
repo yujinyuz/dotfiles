@@ -208,8 +208,8 @@ Plug 'sheerun/vim-polyglot'
 Plug 'gruvbox-community/gruvbox'
 Plug 'sainnhe/gruvbox-material'
 Plug 'joshdick/onedark.vim'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
+Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
+Plug 'vn-ki/coc-clap'
 Plug 'junegunn/vim-slash'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
@@ -226,7 +226,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'fcpg/vim-waikiki'
 Plug 'honza/vim-snippets'
 Plug 'liuchengxu/vista.vim'
-Plug 'ludovicchabant/vim-gutentags'
+" Plug 'ludovicchabant/vim-gutentags'
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-entire'
 Plug 'mbbill/undotree'
@@ -234,16 +234,17 @@ Plug 'dense-analysis/ale'
 Plug 'wakatime/vim-wakatime'
 Plug 'SidOfc/mkdx'
 Plug 'machakann/vim-highlightedyank'
-let g:highlightedyank_highlight_duration = 250
 call plug#end()
 " End Plugins}}}
 
 " Colors {{{
-set termguicolors
 syntax on
 
+if has('termguicolors')
+  set termguicolors
+endif
 set t_Co=256
-colorscheme gruvbox-material
+colorscheme onedark
 " Make background transparent
 hi Normal guibg=NONE ctermbg=NONE
 " End Colors }}}
@@ -359,11 +360,8 @@ nnoremap <leader>k 10k
 nnoremap <C-y> 3<C-y>
 nnoremap <C-e> 3<C-e>
 
-" Easily move around windows
-" nmap <Space><Space> <C-w>w
-nmap <Space><Space> :Files<CR>
-
 " For easier splitting of files
+map s <NOP>
 nmap ss :split<CR><C-w>w
 nmap sv :vsplit<CR><C-w>w
 
@@ -372,6 +370,11 @@ nnoremap <C-l> <C-w>l
 nnoremap <C-h> <C-w>h
 nnoremap <C-k> <C-w>k
 nnoremap <C-j> <C-w>j
+
+nnoremap sl <C-w>l
+nnoremap sh <C-w>h
+nnoremap sk <C-w>k
+nnoremap sj <C-w>j
 
 " Jump to first tag if only one exists
 " else, let us choose which tag to jump to
@@ -463,7 +466,6 @@ let g:airline_mode_map = {
 " }}}
 
 " fzf.vim {{{
-let $FZF_DEFAULT_COMMAND="git ls-files --cached --others --exclude-standard | fd --type f --type l --hidden --follow --exclude .git --exclude node_modules"
 let g:fzf_tags_command = 'ctags -R'
 let g:fzf_preview_window = 'down:1'
 let g:fzf_layout = { 'window': { 'width': 0.6, 'height': 0.6 } }
@@ -478,18 +480,6 @@ imap <c-x><c-f> <plug>(fzf-complete-path)
 imap <c-x><c-j> <plug>(fzf-complete-file-ag)
 imap <c-x><c-l> <plug>(fzf-complete-line)
 
-" Use CtrlP when Cmd-P is not available
-nnoremap <silent> <C-p> :Files<CR>
-nnoremap <silent> ++ :Files<CR>
-" Global search
-" nnoremap <leader>f :Rg<Space>
-" Buffers search
-nnoremap <leader>b :Buffers<CR>
-" Search files relative to the current buffer
-nnoremap <leader>ff :Files %:p:h<CR>
-" Tags search
-nnoremap <leader>t :Tags<CR>
-nnoremap <leader>T :BTags<CR>
 " }}}
 
 " vim-fugitive {{{
@@ -524,12 +514,35 @@ let g:netrw_winsize = 25
 nnoremap <leader>u :UndotreeToggle<CR>
 " }}}
 
+" vim-clap {{{
+let g:clap_theme = 'material_design_dark'
+let g:clap_insert_mode_only = v:true
+" Use CtrlP when Cmd-P is not available
+nnoremap <silent> <C-p> :<C-u>Clap files<CR>
+nnoremap <Space><Space> :<C-u>Clap files<CR>
+" Buffers search
+nnoremap <leader>b :<C-u>Clap buffers<CR>
+" Search files relative to the current buffer
+nnoremap <leader>ff :<C-u>Clap filer %:p:h<CR>
+
+" Tags search
+nnoremap <leader>t :<C-u>Clap proj_tags<CR>
+nnoremap <leader>T :<C-u>Clap tags<CR>
+
+" Global search
+nnoremap <leader>F :<C-u>Clap grep2<CR>
+" }}}
+
 " vim-go {{{
 let g:go_def_mapping_enabled = 0
 let g:go_highlight_functions = 1
 let g:go_highlight_function_calls = 1
 let g:go_highlight_structs = 1
 let g:go_fmt_command = 'goimports'
+" }}}
+
+" vim-highlightedyank {{{
+let g:highlightedyank_highlight_duration = 250
 " }}}
 
 " vim-polyglot {{{
@@ -666,15 +679,15 @@ command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport
 
 " Using CocList
 " Show all diagnostics
-nnoremap <silent> \a :<C-u>CocList diagnostics<cr>
+nnoremap <silent> \a :<C-u>Clap coc_diagnostics<cr>
 " Manage extensions
-nnoremap <silent> \e :<C-u>CocList extensions<cr>
+nnoremap <silent> \e :<C-u>Clap coc_extensions<cr>
 " Show commands
-nnoremap <silent> \c :<C-u>CocList commands<cr>
+nnoremap <silent> \c :<C-u>Clap coc_commands<cr>
 " Find symbol of current document
-nnoremap <silent> \o :<C-u>CocList outline<cr>
+nnoremap <silent> \o :<C-u>Clap coc_outline<cr>
 " Search workspace symbols
-nnoremap <silent> \s :<C-u>CocList -I symbols<cr>
+nnoremap <silent> \s :<C-u>Clap coc_symbols<cr>
 " Do default action for next item.
 nnoremap <silent> \j :<C-u>CocNext<CR>
 " Do default action for previous item.
