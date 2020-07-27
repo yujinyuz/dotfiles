@@ -17,6 +17,8 @@
   dl = !git ll -1
   ; Show what files changed in current branch
   df = diff --name-only ; <branch_name>
+  ; Fetch all
+  fa = fetch --all
   ; Find branches containing commit
   fb = "!f() { git branch -a --contains $1; }; f"
   ; Find commits by source code
