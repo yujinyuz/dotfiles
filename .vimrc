@@ -202,7 +202,7 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.vim/plugged')
-Plug 'preservim/nerdtree', {'on': ['NERDTreeToggle', 'NERDTreeFind']}
+Plug 'lambdalisue/fern.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'sheerun/vim-polyglot'
 Plug 'gruvbox-community/gruvbox'
@@ -493,17 +493,45 @@ nnoremap <leader>gd :Gvdiffsplit<CR>
 nnoremap <leader>h :Git difftool<CR>
 " }}}
 
-" NERDTree {{{
-let g:nerdtree_tabs_open_on_console_startup = 0
-let NERDTreeNaturalSort = 1
-let NERDTreeQuitOnOpen = 0
-let NERDTreeIgnore = ['__pycache__', 'node_modules']
-let g:NERDTreeMinimalUI = 1
-let g:NERDTreeWinSize = 25
-let NERDTreeAutoCenter = 1
+" File Explorer {{{
+let g:fern#disable_default_mappings = 1
+let g:fern#renderer#default#collapsed_symbol = '▷ '
+let g:fern#renderer#default#expanded_symbol  = '▼ '
+let g:fern#renderer#default#leading          = ' '
+let g:fern#renderer#default#leaf_symbol      = ' '
+let g:fern#renderer#default#marked_symbol    = '●'
+let g:fern#renderer#default#root_symbol      = '~ '
+let g:fern#renderer#default#unmarked_symbol  = ''
+noremap <silent> <C-n> :<C-u>Fern . -drawer -width=35 -toggle<CR><C-w>=
+noremap <silent> <Leader>nf :<C-u>Fern . -drawer -reveal=% -width=35<CR><C-w>=
+noremap <silent> <Leader>. :<C-u>Fern %:h -drawer -width=35<CR><C-w>=
 
-nnoremap <silent> <C-n> :NERDTreeToggle<CR>
-nnoremap <leader>nf :NERDTreeFind<CR>
+function! FernInit() abort
+  nmap <buffer><expr>
+        \ <Plug>(fern-my-open-expand-collapse)
+        \ fern#smart#leaf(
+        \   "\<Plug>(fern-action-open:select)",
+        \   "\<Plug>(fern-action-expand)",
+        \   "\<Plug>(fern-action-collapse)",
+        \ )
+  nmap <buffer> <CR> <Plug>(fern-my-open-expand-collapse)
+  nmap <buffer> <2-LeftMouse> <Plug>(fern-my-open-expand-collapse)
+  nmap <buffer> N <Plug>(fern-action-new-file)
+  nmap <buffer> K <Plug>(fern-action-new-dir)
+  nmap <buffer> D <Plug>(fern-action-remove)
+  nmap <buffer> H <Plug>(fern-action-hidden-toggle)j
+  nmap <buffer> R <Plug>(fern-action-reload)
+  nmap <buffer> m <Plug>(fern-action-mark-toggle)j
+  nmap <buffer> s <Plug>(fern-action-open:split)
+  nmap <buffer> v <Plug>(fern-action-open:vsplit)
+  nmap <buffer><nowait> < <Plug>(fern-action-leave)
+  nmap <buffer><nowait> > <Plug>(fern-action-enter)
+endfunction
+
+augroup FernGroup
+  autocmd!
+  autocmd FileType fern call FernInit()
+augroup END
 " }}}
 
 " netrw {{{
