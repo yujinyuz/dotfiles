@@ -381,6 +381,27 @@ nnoremap sh <C-w>h
 nnoremap sk <C-w>k
 nnoremap sj <C-w>j
 
+" Readline-like mappings
+" - Ctrl-a - go to the start of line
+" - Ctrl-e - go to the end of the line
+" - Alt-b  - back a word
+" - Alt-f  - forward a word
+" - Alt-BS - delete backward word
+" - Alt-d  - delete forward word
+inoremap <C-a>  <C-o>^
+inoremap <C-e>  <C-o>$
+inoremap <A-b>  <C-Left>
+inoremap <A-f>  <C-Right>
+inoremap <A-BS> <C-w>
+inoremap <A-d>  <C-o>dw
+" As above but for command mode.
+cnoremap <C-a>  <Home>
+cnoremap <C-e>  <End>
+cnoremap <A-b>  <C-Left>
+cnoremap <A-f>  <C-Right>
+cnoremap <A-BS> <C-w>
+cnoremap <A-d>  <C-Right><C-w>
+
 " Jump to first tag if only one exists
 " else, let us choose which tag to jump to
 nnoremap <C-]> g<C-]>:echo expand('%:p')<CR>
