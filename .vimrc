@@ -522,6 +522,7 @@ nnoremap <leader>u :UndotreeToggle<CR>
 " vim-clap {{{
 let g:clap_theme = 'material_design_dark'
 let g:clap_insert_mode_only = v:true
+let g:clap_layout = { 'relative': 'editor' }
 " Use CtrlP when Cmd-P is not available
 nnoremap <silent> <C-p> :<C-u>Clap files<CR>
 nnoremap <Space><Space> :<C-u>Clap files<CR>
@@ -535,7 +536,8 @@ nnoremap <leader>t :<C-u>Clap proj_tags<CR>
 nnoremap <leader>T :<C-u>Clap tags<CR>
 
 " Global search
-nnoremap <leader>F :<C-u>Clap grep2<CR>
+nnoremap <leader>F :<C-u>Clap grep<CR>
+" }}}
 " }}}
 
 " vim-go {{{
