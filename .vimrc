@@ -234,6 +234,7 @@ Plug 'dense-analysis/ale'
 Plug 'wakatime/vim-wakatime'
 Plug 'SidOfc/mkdx'
 Plug 'machakann/vim-highlightedyank'
+Plug 'editorconfig/editorconfig-vim'
 call plug#end()
 " End Plugins}}}
 
@@ -439,6 +440,10 @@ let g:coc_global_extensions = [
 
 " endwise {{{
 let g:endwise_no_mappings = 1
+" }}}
+
+" editorconfig-vim {{{
+let g:EditorConfig_disable_rules = ['trim_trailing_whitespace']
 " }}}
 
 " statusline {{{
