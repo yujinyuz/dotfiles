@@ -272,6 +272,10 @@ inoremap jk <Esc>
 " Make Y work like other upcase commands
 nnoremap Y y$
 
+" Direct changes into the black hole register.
+nnoremap c "_c
+nnoremap C "_C
+
 " Copy/paste and move cursor to end of last operated text or end of putted text
 vnoremap <silent> y y`]
 vnoremap <silent> p p`]
