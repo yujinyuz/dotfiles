@@ -516,6 +516,9 @@ let g:netrw_winsize = 25
 " }}}
 
 " mbbill/undotree {{{
+let g:undotree_HighlightChangedWithSign = 0
+let g:undotree_WindowLayout = 4
+let g:undotree_SetFocusWhenToggle = 1
 nnoremap <leader>u :UndotreeToggle<CR>
 " }}}
 
