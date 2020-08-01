@@ -541,6 +541,10 @@ nnoremap <leader>T :<C-u>Clap tags<CR>
 " Global search
 nnoremap <leader>F :<C-u>Clap grep<CR>
 " }}}
+
+" vim-closetag {{{
+let g:closetag_filenames = '*.html,*.hbs'
+let g:closetag_emptyTags_caseSensitive = 1
 " }}}
 
 " vim-go {{{
