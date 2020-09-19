@@ -36,6 +36,7 @@
   lg = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)'
   ll = log --pretty=format:\"%C(yellow)%h%Cred%d %Creset%s%Cblue [%cn]\" --decorate --numstat
   lnc = log --pretty=format:\"%h %s [%cn]\"
+  modified = ls-files -m
   pu = push
   ; It will halt the push operation if someone has pushed to the same branch while you were working on it (and haven’t pulled any changes).
   pf = push --force-with-lease
