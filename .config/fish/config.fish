@@ -50,15 +50,18 @@ set -gx PYTHON_3_HOST_PROG $HOME/.virtualenvs/nvim/bin/python3
 # asdf
 # Installation method via git since brew --prefix asdf is slow
 source $HOME/.asdf/asdf.fish
+set -gx ASDF_SKIM_RESHIM 1
 
 # aliases
 alias brewup="brew update; brew upgrade; brew cleanup; brew doctor"
 alias cat="bat"
 alias cp="cp -v"
+alias dc="docker-compose"
 alias doom="~/.emacs.d/bin/doom"
 alias dotfiles="/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
 alias dotlocal="/usr/bin/git --git-dir=$HOME/.dotlocal/ --work-tree=$HOME"
 alias eb="~/.ebcli-virtual-env/bin/eb"
+alias fastvi="nvim -u NONE"
 alias getip="curl ipinfo.io/ip"
 alias localip="ipconfig getifaddr en0"
 alias mv="mv -v"
