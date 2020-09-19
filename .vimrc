@@ -35,6 +35,7 @@ set matchtime=2
 " triggered when pressing tab while in the
 " execute command mode `:`
 set wildmenu
+set wildcharm=<C-z>
 
 " set wildmode=list:longest,list:full
 " Disabled wildignore since it conflicts with tags
@@ -163,7 +164,6 @@ let g:loaded_matchparen = 1
 " backspace through everything in insert mode
 " set backspace=indent,eol,start
 
-
 " Disable annoying bell sound
 " set belloff=all
 " set visualbell
@@ -202,53 +202,86 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.vim/plugged')
+
+" File management
+" Better file tree alternative to NERDTree
 Plug 'lambdalisue/fern.vim'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Fuzzy search for files
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'antoinemadec/coc-fzf'
+" Plug 'liuchengxu/vim-clap'
+" Plug 'vn-ki/coc-clap'
+
+" Syntax / Colors
+" Documentation suggests to disable languages before loading vim-polyglot
+let g:polyglot_disabled = ['markdown']
+" All the syntax highlight we need
 Plug 'sheerun/vim-polyglot'
+" Better markdown than what vim-polyglot is using (plasticboy/vim-markdown)
+Plug 'SidOfc/mkdx'
 Plug 'gruvbox-community/gruvbox'
 Plug 'sainnhe/gruvbox-material'
+Plug 'bluz71/vim-moonfly-colors'
 Plug 'joshdick/onedark.vim'
-Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
-Plug 'vn-ki/coc-clap'
-Plug 'junegunn/vim-slash'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-endwise'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-obsession'
-Plug 'tpope/vim-unimpaired'
-Plug 'tpope/vim-dispatch'
-Plug 'tpope/vim-rhubarb'
+Plug 'chuling/ci_dark'
+Plug 'machakann/vim-highlightedyank'
+Plug 'hardcoreplayers/oceanic-material'
+
+" IDE stuffs
+" Making vim intelligent like VSCode
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Go development
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries', 'for': 'go'}
-Plug 'alvan/vim-closetag'
-Plug 'vim-airline/vim-airline'
-Plug 'fcpg/vim-waikiki'
-Plug 'honza/vim-snippets'
+" Useful for generating tagbar
 Plug 'liuchengxu/vista.vim'
-" Plug 'ludovicchabant/vim-gutentags'
+" Mostly for linting
+Plug 'dense-analysis/ale'
+" Automatically close html tags
+Plug 'alvan/vim-closetag'
+" Awesome status line
+Plug 'vim-airline/vim-airline'
+" For .editorconfig files
+Plug 'editorconfig/editorconfig-vim'
+" Useful for showing what can be undone!
+Plug 'mbbill/undotree'
+" Useful with set autoread enabled
+Plug 'tmux-plugins/vim-tmux-focus-events'
+" Automatically generate tags file for us
+Plug 'ludovicchabant/vim-gutentags'
+
+" Holiness
+" Word manipulations
+Plug 'tpope/vim-surround'
+" For commenting out sutffs
+Plug 'tpope/vim-commentary'
+" Awesome git interface for in vim
+Plug 'tpope/vim-fugitive'
+" Automatically end things for us specially in rails
+Plug 'tpope/vim-endwise'
+" Add extra functionality to the dot operator
+Plug 'tpope/vim-repeat'
+" Automatically save sessions for us
+Plug 'tpope/vim-obsession'
+" Add some helpful mappings. See docs
+Plug 'tpope/vim-unimpaired'
+" Dispatch an external command
+Plug 'tpope/vim-dispatch'
+" Enables :GBrowse when using vim-fugitive
+Plug 'tpope/vim-rhubarb'
+
+" Misc
+" Enhances buffer search
+Plug 'junegunn/vim-slash'
+" More snippets!
+Plug 'honza/vim-snippets'
+" Only use this for [ydc]ae
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-entire'
-Plug 'mbbill/undotree'
-Plug 'dense-analysis/ale'
+" Wakatime vim plugin
 Plug 'wakatime/vim-wakatime'
-Plug 'SidOfc/mkdx'
-Plug 'machakann/vim-highlightedyank'
-Plug 'editorconfig/editorconfig-vim'
 call plug#end()
 " End Plugins}}}
-
-" Colors {{{
-syntax on
-
-if has('termguicolors')
-  set termguicolors
-endif
-set t_Co=256
-colorscheme onedark
-" Make background transparent
-hi Normal guibg=NONE ctermbg=NONE
-" End Colors }}}
 
 " Native Key Mappings {{{
 
@@ -263,7 +296,7 @@ nmap <leader>qq :q!<CR>
 " Editing vimrc
 " ev = edit vimrc
 " sv = source vimrc
-nnoremap <leader>ev :vsplit $MYVIMRC<CR>
+" nnoremap <leader>ev :vsplit $MYVIMRC<CR>
 nnoremap <leader>sv :source $MYVIMRC<CR>
 
 " Map jk to Escape because it's too far away
@@ -286,14 +319,13 @@ nnoremap <silent> p p`]
 vnoremap < <gv
 vnoremap > >gv
 
-
 " Blackhole deletes
 nnoremap <leader>d "_d
 
 " Buffers
 " <BS> = buffer switch
 " gb = go buffer
-nnoremap <BS> :buffer#<CR>:echo bufnr('%') . ': ' . expand('%:p')<CR>
+nnoremap <BS> <C-^>
 nnoremap gb :ls<CR>:b
 
 " Tab management
@@ -323,9 +355,6 @@ if get(g:, 'elite_mode')
   nnoremap <Left> :vertical resize +2<CR>
   nnoremap <Right> :vertical resize -2<CR>
 endif
-
-" Open definition in new tab
-map <C-\> :tab split<CR>:exec('tag '.expand('<cword>'))<CR>
 
 " Find and Replace highlighted line
 nnoremap <leader>cu "hy:%s/<C-r>h//gc<left><left><left>
@@ -371,10 +400,10 @@ nmap ss :split<CR><C-w>w
 nmap sv :vsplit<CR><C-w>w
 
 " For navigating splits
-nnoremap <C-l> <C-w>l
-nnoremap <C-h> <C-w>h
-nnoremap <C-k> <C-w>k
-nnoremap <C-j> <C-w>j
+nnoremap <C-l> :<C-u>echoerr('Use sl')<CR>
+nnoremap <C-h> :<C-u>echoerr('Use sh')<CR>
+nnoremap <C-k> :<C-u>echoerr('Use sk')<CR>
+nnoremap <C-j> :<C-u>echoerr('Use sj')<CR>
 
 nnoremap sl <C-w>l
 nnoremap sh <C-w>h
@@ -407,24 +436,37 @@ cnoremap <A-d>  <C-Right><C-w>
 nnoremap <C-]> g<C-]>:echo expand('%:p')<CR>
 
 " bind K to grep word under cursor
-nnoremap K :Rg <C-R><C-W><CR>
+" nnoremap K :Rg <C-R><C-W><CR>
+" nnoremap K :<C-u>Clap grep ++query=<cword><CR>
+" vnoremap K :<C-u>Clap grep ++query=@visual<CR>
+nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 " Write file as sudo
 cnoremap w!! w !sudo tee % >/dev/null
+
+" Faster project-based editing
+" nnoremap ,e :e **/*<C-z><S-Tab>
+" Make sure set wildcharm=<C-z> exists in config
+nnoremap <leader>e :edit <C-z><S-Tab>
+nnoremap <leader>E :edit **/*<C-z><S-Tab>
+
+nnoremap <leader>cp :<C-u>let @+ = expand('%:p')<CR>
 " End Native }}}
 
 " Plugins custom settings {{{
 
 " ale {{{
 let g:ale_fixers = {
-\ '*': ['remove_trailing_lines', 'trim_whitespace'],
+\ '*': ['remove_trailing_lines'],
 \ }
-let g:ale_lint_on_insert_leave = 1
-let g:ale_fix_on_save = 1
+let g:ale_on_enter = 0
+let g:ale_lint_on_filetype_changed = 0
+let g:ale_lint_on_insert_leave = 0
 let g:ale_lint_on_save = 1
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_fix_on_save = 0
 let g:ale_sign_error = '◉'
 let g:ale_sign_warning = '⚠'
-let g:ale_on_enter = 0
 let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
 
@@ -497,19 +539,29 @@ let g:airline_mode_map = {
 
 " fzf.vim {{{
 let g:fzf_tags_command = 'ctags -R'
-let g:fzf_preview_window = 'down:1'
-let g:fzf_layout = { 'window': { 'width': 0.6, 'height': 0.6 } }
+let g:fzf_layout = { 'window': { 'width': 0.67, 'height': 0.33 } }
 let g:fzf_action = {
   \ 'ctrl-t': 'tab split',
   \ 'ctrl-x': 'below split',
   \ 'ctrl-v': 'vsplit'
   \ }
+" Use CtrlP when Cmd-P is not available
+nnoremap <silent> <C-p> :<C-u>Files<CR>
+nnoremap <silent> <Space><Space> :<C-u>Files<CR>
+" Buffers search
+nnoremap <leader>b :<C-u>Buffers<CR>
+" Search files relative to the current buffer
+nnoremap <leader>ff :<C-u>Files %:p:h<CR>
+" Tags search
+nnoremap <leader>] :<C-u>Tags<CR>
+" nnoremap <leader>T :BTags<CR>
+
+nnoremap <leader>F :<C-u>RG<CR>
 
 imap <c-x><c-k> <plug>(fzf-complete-word)
 imap <c-x><c-f> <plug>(fzf-complete-path)
 imap <c-x><c-j> <plug>(fzf-complete-file-ag)
 imap <c-x><c-l> <plug>(fzf-complete-line)
-
 " }}}
 
 " vim-fugitive {{{
@@ -528,7 +580,7 @@ let g:fern#renderer#default#marked_symbol    = '●'
 let g:fern#renderer#default#root_symbol      = '~ '
 let g:fern#renderer#default#unmarked_symbol  = ''
 noremap <silent> <C-n> :<C-u>Fern . -drawer -width=35 -toggle<CR><C-w>=
-noremap <silent> <Leader>nf :<C-u>Fern . -drawer -reveal=% -width=35<CR><C-w>=
+noremap <silent> <Leader>sf :<C-u>Fern . -drawer -reveal=% -width=35<CR><C-w>=
 noremap <silent> <Leader>. :<C-u>Fern %:h -drawer -width=35<CR><C-w>=
 
 function! FernInit() abort
@@ -556,6 +608,7 @@ endfunction
 augroup FernGroup
   autocmd!
   autocmd FileType fern call FernInit()
+  au BufNewFile,BufRead *.html set filetype=htmldjango " not the proper place
 augroup END
 " }}}
 
@@ -577,22 +630,21 @@ nnoremap <leader>u :UndotreeToggle<CR>
 
 " vim-clap {{{
 let g:clap_theme = 'material_design_dark'
-let g:clap_insert_mode_only = v:true
-let g:clap_layout = { 'relative': 'editor' }
-" Use CtrlP when Cmd-P is not available
-nnoremap <silent> <C-p> :<C-u>Clap files<CR>
-nnoremap <Space><Space> :<C-u>Clap files<CR>
-" Buffers search
-nnoremap <leader>b :<C-u>Clap buffers<CR>
-" Search files relative to the current buffer
-nnoremap <leader>ff :<C-u>Clap filer %:p:h<CR>
+let g:clap_insert_mode_only = v:false
+" " Use CtrlP when Cmd-P is not available
+" nnoremap <silent> <C-p> :<C-u>Clap files<CR>
+" nnoremap <Space><Space> :<C-u>Clap files<CR>
+" " Buffers search
+" nnoremap <leader>b :<C-u>Clap buffers<CR>
+" " Search files relative to the current buffer
+" nnoremap <leader>ff :<C-u>Clap filer %:p:h<CR>
 
-" Tags search
-nnoremap <leader>t :<C-u>Clap proj_tags<CR>
-nnoremap <leader>T :<C-u>Clap tags<CR>
+" " Tags search
+" nnoremap <leader>] :<C-u>Clap proj_tags<CR>
+" nnoremap <leader>T :<C-u>Clap tags<CR>
 
-" Global search
-nnoremap <leader>F :<C-u>Clap grep<CR>
+" " Global search
+" nnoremap <leader>F :<C-u>Clap grep<CR>
 " }}}
 
 " vim-closetag {{{
@@ -613,7 +665,6 @@ let g:highlightedyank_highlight_duration = 250
 " }}}
 
 " vim-polyglot {{{
-let g:polyglot_disabled = ['markdown']
 let g:mkdx#settings = { 'highlight': { 'enable': 1 },
                       \ 'enter': { 'shift': 1 },
                       \ 'links': { 'external': { 'enable': 1 } },
@@ -717,7 +768,7 @@ augroup CocGroup
   " Update signature help on jump placeholder
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
   " Highlight symbol under cursor on CursorHold
-  autocmd CursorHold * silent call CocActionAsync('highlight')
+  " autocmd CursorHold * silent call CocActionAsync('highlight')
 augroup end
 
 " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
@@ -746,15 +797,15 @@ command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport
 
 " Using CocList
 " Show all diagnostics
-nnoremap <silent> \a :<C-u>Clap coc_diagnostics<cr>
+nnoremap <silent> \a :<C-u>CocFzfList diagnostics<cr>
 " Manage extensions
-nnoremap <silent> \e :<C-u>Clap coc_extensions<cr>
+nnoremap <silent> \e :<C-u>CocFzfList extensions<cr>
 " Show commands
-nnoremap <silent> \c :<C-u>Clap coc_commands<cr>
+nnoremap <silent> \c :<C-u>CocFzfList commands<cr>
 " Find symbol of current document
-nnoremap <silent> \o :<C-u>Clap coc_outline<cr>
+nnoremap <silent> \o :<C-u>CocFzfList outline<cr>
 " Search workspace symbols
-nnoremap <silent> \s :<C-u>Clap coc_symbols<cr>
+nnoremap <silent> \s :<C-u>CocFzfList symbols<cr>
 " Do default action for next item.
 nnoremap <silent> \j :<C-u>CocNext<CR>
 " Do default action for previous item.
@@ -763,7 +814,25 @@ nnoremap <silent> \k :<C-u>CocPrev<CR>
 nnoremap <silent> \p :<C-u>CocListResume<CR>
 " End coc.nvim settings }}}
 
-if filereadable(expand('$HOME/.vimrc.local'))
-  source $HOME/.vimrc.local
+" Colors {{{
+syntax on
+
+if has('termguicolors')
+  set termguicolors
 endif
+set t_Co=256
+
+if filereadable(expand('~/.colorscheme'))
+  exec "colorscheme " . readfile(expand('~/.colorscheme'))[0]
+else
+  colorscheme gruvbox
+endif
+" Make background transparent
+hi Normal guibg=NONE ctermbg=NONE
+" End Colors }}}
+
+if filereadable(expand('~/.vimrc.local'))
+  source ~/.vimrc.local
+endif
+
 " vim:filetype=vim sw=2 foldmethod=marker tw=78 expandtab
