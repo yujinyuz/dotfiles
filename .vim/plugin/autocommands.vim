@@ -15,3 +15,15 @@ augroup EndAutocomplete
   autocmd!
   autocmd CompleteDone * if pumvisible() == 0 | silent! pclose | endif
 augroup END
+
+function! s:TrimWhitespace() abort
+  let l = line('.')
+  let c = col('.')
+  %s/\s\+$//e
+  call cursor(l, c)
+endfunction
+
+augroup StripTrailingWhiteSpace
+  autocmd!
+  autocmd BufWritePre * call <SID>TrimWhitespace()
+augroup END
