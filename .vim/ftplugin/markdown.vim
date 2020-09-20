@@ -1,7 +1,7 @@
-if exists('b:custom_ftplugin')
+if exists('b:my_markdown_ftplugin')
   finish
 endif
-let b:custom_ftplugin = 1
+let b:my_markdown_ftplugin = 1
 
 setlocal spell
 

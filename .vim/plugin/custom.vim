@@ -29,3 +29,5 @@ command! -nargs=* -complete=command ZZWrap let &scrolloff=999 | exec <q-args> | 
 
 " Delete all buffers except current one
 command! BufOnly silent! execute "%bd|e#|bd#"
+command! DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
+		  \ | wincmd p | diffthis
