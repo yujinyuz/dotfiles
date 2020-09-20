@@ -1,7 +1,7 @@
-if exists('b:custom_ftplugin')
+if exists('b:my_python_ftplugin')
   finish
 endif
-let b:custom_ftplugin = 1
+let b:my_python_ftplugin = 1
 
 setlocal tabstop=4
 setlocal shiftwidth=4
