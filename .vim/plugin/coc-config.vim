@@ -1,8 +1,12 @@
+if !has_key(plugs, 'coc.nvim')
+  finish
+endif
+
 if exists('g:custom_coc_config_loaded')
   finish
 end
 
-let g:custom_coc_config_loaded = v:true
+let g:custom_coc_config_loaded = 1
 let g:coc_global_extensions = [
   \ 'coc-python',
   \ 'coc-emmet',
