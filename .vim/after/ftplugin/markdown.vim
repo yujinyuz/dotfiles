@@ -1,8 +1,3 @@
-if exists('b:my_markdown_ftplugin')
-  finish
-endif
-let b:my_markdown_ftplugin = 1
-
 setlocal spell
 
 " plasticboy/vim-markdown
