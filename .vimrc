@@ -14,44 +14,49 @@
 
 " General {{{
 
-" Whitespace
-set tabstop=2 shiftwidth=2      " a tab is two spaces (or set this to 4)
-set expandtab                   " use spaces, not tabs (optional)
+" Shift 4 spaces when pressing tab
+set tabstop=4
+" Shift 4 spaces when pressing < or >
+set shiftwidth=4
 
-" Searching
-set ignorecase                  " searches are case insensitive...
-set smartcase                   " ... unless they contain at least one capital letter
+" Use spaces instead of tabs
+set expandtab
+" Make search case insenstive
+set ignorecase
+" Unless it contains atleast one capital letter
+set smartcase
 
 " Turn on relative numbers
 set relativenumber
-
 " Show current line number
 set number
 
-" How many tenths of a second to blink when matching brakcets
-set matchtime=2
-
-" Visual autocomplete for command menu
-" triggered when pressing tab while in the
-" execute command mode `:`
+" Visual autocomplete for command menu triggered when
+" pressing tab while in the execute command mode
 set wildmenu
 set wildcharm=<C-z>
 
-" set wildmode=list:longest,list:full
-" Disabled wildignore since it conflicts with tags
-" set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
+" Patterns to ignore when expanding wildcards
+set wildignore=*.o,*.obj,*~
+set wildignore+=tags,.*.un~,*.pyc
+set wildignore+=*vim/backups*
+set wildignore+=*sass-cache*
+set wildignore+=*DS_Store*
+set wildignore+=vendor/rails/**
+set wildignore+=vendor/cache/**
+set wildignore+=*.gem
+set wildignore+=log/**
+set wildignore+=tmp/**
+set wildignore+=*.png,*.jpg,*.gif
 
 " Redraw only when needed
 set lazyredraw
 
-" Hide buffer
+" Allow vim to set title of terminal
+set title
+
+" Hide buffer when switching to other files
 set hidden
-
-" Fix paste bug [200~ when remapping jk to escape
-set t_BE=
-
-" Always show signcolumns
-set signcolumn=yes
 
 " Prefer bash for shell-related tasks
 set shell=/bin/bash
@@ -65,49 +70,22 @@ set nobackup nowritebackup
 " Use system clipboard
 set clipboard+=unnamedplus
 
-" Disable neovim from setting cursor style
-" set guicursor=
-
-" Only need 1 line for cmd
-set cmdheight=1
-
-" Let vim set the title
-set title
-
 " Search relative to current file and directory
 set path=.,**
 
 " Split right by default
 set splitright
 
-" Split below by default
-" set splitbelow
-
-" Hide the -- INSERT --
-" comment this out when you aren't using lightline.vim
-" set noshowmode
-
-" Alwayts show tabs
+" Always show tabs
 set showtabline=2
 
-" Show whitespaces
-" set list
+" Symbols used for displaying whitespace characters
 set listchars=tab:→\ ,space:·,nbsp:␣,trail:·,precedes:«,extends:»
-
-" Show line column
-set colorcolumn=80,90,120
-
-" Show 3 more lines below/above when scrolling
-set scrolloff=3
-
-" Show indicator when line is wrapped
-let &showbreak='↳ '
-set conceallevel=3
 
 " Disable soft wrapping
 set nowrap
 
-" ID Tags relative to current file and directory
+" Include tags relative to current file and directory
 set tags^=.git/tags
 
 " Show highlight when doing :%s/foo/bar
@@ -116,81 +94,37 @@ set inccommand=split
 " Enable mouse coz why not?
 set mouse=nicr
 
-" Syntax coloring lines that are too long just slows down the world
-set synmaxcol=512
-
-" Don't wait too long for key sequences
-set timeoutlen=500
-
-" Avoid annoying mode switch lag
-set ttimeoutlen=50
-
 " Use rg instead of grep.
-set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case
+if executable('rg')
+  set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case
+end
 
 " Enable undo directory
-set undodir=~/.vim/undodir
 set undofile
+set undodir=~/.vim/undodir
 
 " Disable intro message
 set shortmess+=I
+" Don't give |ins-completion-menu| messages.
+set shortmess+=c
 
-set omnifunc+=ale#completion#OmniFunc
+" Always show signcolumns
+set signcolumn=yes
 
-" Change leader key
+" You will have bad experience for diagnostic messages when it's default 4000.
+set updatetime=100
+
+" Start scrolling when we're 8 lines below
+set scrolloff=8
+" and 15 lines from the side
+set sidescrolloff=15
+
+" Map leader key to Space
 let mapleader = ' '
 
-" Enable elite mode. No arrows!!
-let g:elite_mode = 1
-
-" Disable python2 provider
+" Neovim Python Provider
 let g:loaded_python_provider = 0
 let g:python3_host_prog = $PYTHON_3_HOST_PROG
-
-" Disable highlighting matched parenthesis
-let g:loaded_matchparen = 1
-
-" NeoVim Enabled Defaults {{{
-" Just uncomment the lines with `set` to when not using neovim
-" Autoread file when there are changes
-" set autoread
-
-" Helps force plugins to load correctly when it is turned back on
-" filetype off
-
-" Load file type plugins + indentation
-" filetype plugin indent on
-
-" backspace through everything in insert mode
-" set backspace=indent,eol,start
-
-" Disable annoying bell sound
-" set belloff=all
-" set visualbell
-
-" Choose no compatibility with legacy vi
-" set nocompatible
-
-" Use utf-8 file encoding
-" set encoding=utf-8
-
-" Display incomplete commands
-" set showcmd
-
-" Keep info in memory to speed things up
-" set history=10000
-
-" Highlight matches
-" set hlsearch
-
-" Incremental searching
-" set incsearch
-
-" Enable ruler
-" set ruler
-
-"" End NeoVim Enabled Defaults }}}
-
 " End General }}}
 
 " Plugins {{{
@@ -209,28 +143,17 @@ Plug 'lambdalisue/fern.vim'
 " Fuzzy search for files
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'antoinemadec/coc-fzf'
-" Plug 'liuchengxu/vim-clap'
-" Plug 'vn-ki/coc-clap'
+" Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
 
 " Syntax / Colors
-" Documentation suggests to disable languages before loading vim-polyglot
-let g:polyglot_disabled = ['markdown']
-" All the syntax highlight we need
-Plug 'sheerun/vim-polyglot'
-" Better markdown than what vim-polyglot is using (plasticboy/vim-markdown)
-Plug 'SidOfc/mkdx'
 Plug 'gruvbox-community/gruvbox'
-Plug 'sainnhe/gruvbox-material'
-Plug 'bluz71/vim-moonfly-colors'
 Plug 'joshdick/onedark.vim'
-Plug 'chuling/ci_dark'
-Plug 'machakann/vim-highlightedyank'
-Plug 'hardcoreplayers/oceanic-material'
+Plug 'ayu-theme/ayu-vim'
 
 " IDE stuffs
-" Making vim intelligent like VSCode
+" Make vim intelligent like VSCode
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'antoinemadec/coc-fzf'
 " Go development
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries', 'for': 'go'}
 " Useful for generating tagbar
@@ -240,7 +163,6 @@ Plug 'dense-analysis/ale'
 " Automatically close html tags
 Plug 'alvan/vim-closetag'
 " Awesome status line
-Plug 'vim-airline/vim-airline'
 " For .editorconfig files
 Plug 'editorconfig/editorconfig-vim'
 " Useful for showing what can be undone!
@@ -249,6 +171,9 @@ Plug 'mbbill/undotree'
 Plug 'tmux-plugins/vim-tmux-focus-events'
 " Automatically generate tags file for us
 Plug 'ludovicchabant/vim-gutentags'
+" Syntax highlighting
+let g:polyglot_disabled = ['markdown']
+Plug 'sheerun/vim-polyglot'
 
 " Holiness
 " Word manipulations
@@ -267,6 +192,10 @@ Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-unimpaired'
 " Dispatch an external command
 Plug 'tpope/vim-dispatch'
+" Wrapper for UNIX shell commands
+Plug 'tpope/vim-eunuch'
+" Provide useful commands like :Messages, :Scriptnames, zS
+Plug 'tpope/vim-scriptease'
 " Enables :GBrowse when using vim-fugitive
 Plug 'tpope/vim-rhubarb'
 
@@ -275,9 +204,12 @@ Plug 'tpope/vim-rhubarb'
 Plug 'junegunn/vim-slash'
 " More snippets!
 Plug 'honza/vim-snippets'
-" Only use this for [ydc]ae
+" Custom Text Objects
 Plug 'kana/vim-textobj-user'
+" [ae] for targeting
 Plug 'kana/vim-textobj-entire'
+" [ai]/[ii] for targeting
+Plug 'kana/vim-textobj-indent'
 " Wakatime vim plugin
 Plug 'wakatime/vim-wakatime'
 call plug#end()
@@ -285,19 +217,34 @@ call plug#end()
 
 " Native Key Mappings {{{
 
-" Writing and quitting
+" Leader maps should be here
 " w = write
-" qa = quit all
-" qq = quit current
 nmap <leader>w :w!<CR>
-nnoremap <leader>qa :qa!<CR>
+" qa = quit all
+nmap <leader>qa :qa!<CR>
+" qq = quit current
 nmap <leader>qq :q!<CR>
 
-" Editing vimrc
-" ev = edit vimrc
-" sv = source vimrc
-" nnoremap <leader>ev :vsplit $MYVIMRC<CR>
+" Blackhole deletes
+nnoremap <leader>d "_d
+
+" source vimrc
 nnoremap <leader>sv :source $MYVIMRC<CR>
+
+" Find and Replace highlighted line
+nnoremap <leader>cu "hy:%s/<C-r>h//gc<left><left><left>
+
+" Find and replace highlighted word with confirmation until EOF
+" cu =  change under
+noremap <leader>cu "sy:ZZWrap .,$s/<C-r>s//gc<Left><Left><Left>
+
+" Faster project-based editing
+" Make sure set wildcharm=<C-z> exists in config
+nnoremap <leader>e :edit <C-z><S-Tab>
+nnoremap <leader>E :edit **/*<C-z><S-Tab>
+
+" Copy current filepath to clipboard
+nnoremap <leader>cp :<C-u>let @+ = expand('%:p')<CR>
 
 " Map jk to Escape because it's too far away
 inoremap jk <Esc>
@@ -319,55 +266,26 @@ nnoremap <silent> p p`]
 vnoremap < <gv
 vnoremap > >gv
 
-" Blackhole deletes
-nnoremap <leader>d "_d
-
-" Buffers
 " <BS> = buffer switch
-" gb = go buffer
 nnoremap <BS> <C-^>
+" gb = go buffer
 nnoremap gb :ls<CR>:b
-
-" Tab management
-map \tn :tabnew<CR>
-map \to :tabonly<CR>
-map \tc :tabclose<CR>
-map \tm :tabmove<CR>
 
 " Command-line like forward/reverse search
 cnoremap <C-k> <Up>
 cnoremap <C-j> <Down>
 
-" Clear search highlight
-nnoremap <silent> <leader>l :noh<CR>
-
-" Use Alt-jk for moving lines
-" Note: iTerm2 > Profiles > Keys > Left Option > Esc+
-nmap <M-j> mz:m+<cr>`z
-nmap <M-k> mz:m-2<cr>`z
-vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
-vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
-
 " Disable arrow movements. Resize splits panes instead
-if get(g:, 'elite_mode')
-  nnoremap <Up> :resize +2<CR>
-  nnoremap <Down> :resize -2<CR>
-  nnoremap <Left> :vertical resize +2<CR>
-  nnoremap <Right> :vertical resize -2<CR>
-endif
-
-" Find and Replace highlighted line
-nnoremap <leader>cu "hy:%s/<C-r>h//gc<left><left><left>
-
-" Find and replace highlighted word with confirmation until EOF
-" cu =  change under
-noremap <leader>cu "sy:ZZWrap .,$s/<C-r>s//gc<Left><Left><Left>
+nnoremap <Up> :resize +2<CR>
+nnoremap <Down> :resize -2<CR>
+nnoremap <Left> :vertical resize +2<CR>
+nnoremap <Right> :vertical resize -2<CR>
 
 " Togglewrap
 noremap \\ :ToggleWrap<CR>
 
-" Disable annoying Ex mode
-nnoremap Q <NOP>
+" Remap ex mode to format
+nnoremap Q gq
 
 " Visually select pasted or yanked text
 nnoremap gV `[v`]
@@ -388,6 +306,9 @@ cnoremap \dT <C-R>=strftime('%m-%d-%Y')<CR>
 cnoremap \tn <C-R>=strftime('%Y-%m-%d %a %I:%M %p')<CR>
 inoremap \tn <C-R>=strftime('%Y-%m-%d %a %I:%M %p')<CR>
 
+" Clear search highlight
+nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
+
 " For faster navigation
 nnoremap <leader>j 10j
 nnoremap <leader>k 10k
@@ -400,7 +321,7 @@ nmap ss :split<CR><C-w>w
 nmap sv :vsplit<CR><C-w>w
 
 " For navigating splits
-nnoremap <C-l> :<C-u>echoerr('Use sl')<CR>
+" nnoremap <C-l> :<C-u>echoerr('Use sl')<CR>
 nnoremap <C-h> :<C-u>echoerr('Use sh')<CR>
 nnoremap <C-k> :<C-u>echoerr('Use sk')<CR>
 nnoremap <C-j> :<C-u>echoerr('Use sj')<CR>
@@ -435,22 +356,8 @@ cnoremap <A-d>  <C-Right><C-w>
 " else, let us choose which tag to jump to
 nnoremap <C-]> g<C-]>:echo expand('%:p')<CR>
 
-" bind K to grep word under cursor
-" nnoremap K :Rg <C-R><C-W><CR>
-" nnoremap K :<C-u>Clap grep ++query=<cword><CR>
-" vnoremap K :<C-u>Clap grep ++query=@visual<CR>
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-
 " Write file as sudo
 cnoremap w!! w !sudo tee % >/dev/null
-
-" Faster project-based editing
-" nnoremap ,e :e **/*<C-z><S-Tab>
-" Make sure set wildcharm=<C-z> exists in config
-nnoremap <leader>e :edit <C-z><S-Tab>
-nnoremap <leader>E :edit **/*<C-z><S-Tab>
-
-nnoremap <leader>cp :<C-u>let @+ = expand('%:p')<CR>
 " End Native }}}
 
 " Plugins custom settings {{{
@@ -470,14 +377,6 @@ let g:ale_sign_warning = '⚠'
 let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
 
-" https://github.com/dense-analysis/ale/issues/249
-" highlight clear ALEErrorSign
-" highlight clear ALEWarningSign
-" hi link ALEErrorSign    Error
-" hi link ALEWarningSign  Warning
-" highlight ALEErrorSign ctermfg=9 ctermbg=15 guifg=#C30500 guibg=NONE
-" highlight ALEWarningSign ctermfg=11 ctermbg=15 guifg=#ED6237 guibg=NONE
-
 " next/previous warnings or errors
 nmap ]w <Plug>(ale_next_wrap)
 nmap [w <Plug>(ale_previous_wrap)
@@ -488,80 +387,12 @@ let g:closetag_filenames = '*.html,*.js,*.erb'
 let g:closetag_emptyTags_caseSensitive = 1
 " }}}
 
-" coc.vim {{{
-let g:coc_global_extensions = [
-  \ 'coc-python',
-  \ 'coc-emmet',
-  \ 'coc-json',
-  \ 'coc-sql',
-  \ 'coc-tsserver',
-  \ 'coc-pairs',
-  \ 'coc-yaml',
-  \ 'coc-html',
-  \ 'coc-css',
-  \ 'coc-cssmodules',
-  \ 'coc-snippets'
-  \ ]
-" 'coc-eslint'
-" }}}
-
 " endwise {{{
 let g:endwise_no_mappings = 1
 " }}}
 
 " editorconfig-vim {{{
 let g:EditorConfig_disable_rules = ['trim_trailing_whitespace']
-" }}}
-
-" statusline {{{
-let g:airline_powerline_fonts = 1
-let g:airline_mode_map = {
-    \ '__'     : '-',
-    \ 'c'      : 'C',
-    \ 'i'      : 'I',
-    \ 'ic'     : 'I',
-    \ 'ix'     : 'I',
-    \ 'n'      : 'N',
-    \ 'multi'  : 'M',
-    \ 'ni'     : 'N',
-    \ 'no'     : 'N',
-    \ 'R'      : 'R',
-    \ 'Rv'     : 'R',
-    \ 's'      : 'S',
-    \ 'S'      : 'S',
-    \ ''     : 'S',
-    \ 't'      : 'T',
-    \ 'v'      : 'V',
-    \ 'V'      : 'V',
-    \ ''     : 'V',
-    \ }
-" }}}
-
-" fzf.vim {{{
-let g:fzf_tags_command = 'ctags -R'
-let g:fzf_layout = { 'window': { 'width': 0.67, 'height': 0.33 } }
-let g:fzf_action = {
-  \ 'ctrl-t': 'tab split',
-  \ 'ctrl-x': 'below split',
-  \ 'ctrl-v': 'vsplit'
-  \ }
-" Use CtrlP when Cmd-P is not available
-nnoremap <silent> <C-p> :<C-u>Files<CR>
-nnoremap <silent> <Space><Space> :<C-u>Files<CR>
-" Buffers search
-nnoremap <leader>b :<C-u>Buffers<CR>
-" Search files relative to the current buffer
-nnoremap <leader>ff :<C-u>Files %:p:h<CR>
-" Tags search
-nnoremap <leader>] :<C-u>Tags<CR>
-" nnoremap <leader>T :BTags<CR>
-
-nnoremap <leader>F :<C-u>RG<CR>
-
-imap <c-x><c-k> <plug>(fzf-complete-word)
-imap <c-x><c-f> <plug>(fzf-complete-path)
-imap <c-x><c-j> <plug>(fzf-complete-file-ag)
-imap <c-x><c-l> <plug>(fzf-complete-line)
 " }}}
 
 " vim-fugitive {{{
@@ -608,16 +439,15 @@ endfunction
 augroup FernGroup
   autocmd!
   autocmd FileType fern call FernInit()
-  au BufNewFile,BufRead *.html set filetype=htmldjango " not the proper place
 augroup END
 " }}}
 
 " netrw {{{
-" let g:loaded_netrwPlugin = 1 " Disable netrw
-let g:netrw_banner = 0
-let g:netrw_liststyle = 3
-let g:netrw_browse_split = 4
-let g:netrw_altv = 1
+let g:loaded_netrwPlugin = 1 " Disable netrw
+let g:netrw_browse_split = 4 " open in prior window
+let g:netrw_altv = 1 " open splits to the right
+let g:netrw_banner = 0 " disable annoying banner
+let g:netrw_liststyle = 3 " tree view
 let g:netrw_winsize = 25
 " }}}
 
@@ -626,25 +456,6 @@ let g:undotree_HighlightChangedWithSign = 0
 let g:undotree_WindowLayout = 4
 let g:undotree_SetFocusWhenToggle = 1
 nnoremap <leader>u :UndotreeToggle<CR>
-" }}}
-
-" vim-clap {{{
-let g:clap_theme = 'material_design_dark'
-let g:clap_insert_mode_only = v:false
-" " Use CtrlP when Cmd-P is not available
-" nnoremap <silent> <C-p> :<C-u>Clap files<CR>
-" nnoremap <Space><Space> :<C-u>Clap files<CR>
-" " Buffers search
-" nnoremap <leader>b :<C-u>Clap buffers<CR>
-" " Search files relative to the current buffer
-" nnoremap <leader>ff :<C-u>Clap filer %:p:h<CR>
-
-" " Tags search
-" nnoremap <leader>] :<C-u>Clap proj_tags<CR>
-" nnoremap <leader>T :<C-u>Clap tags<CR>
-
-" " Global search
-" nnoremap <leader>F :<C-u>Clap grep<CR>
 " }}}
 
 " vim-closetag {{{
@@ -660,10 +471,6 @@ let g:go_highlight_structs = 1
 let g:go_fmt_command = 'goimports'
 " }}}
 
-" vim-highlightedyank {{{
-let g:highlightedyank_highlight_duration = 250
-" }}}
-
 " vim-polyglot {{{
 let g:mkdx#settings = { 'highlight': { 'enable': 1 },
                       \ 'enter': { 'shift': 1 },
@@ -675,13 +482,8 @@ let g:mkdx#settings = { 'highlight': { 'enable': 1 },
 " vim-slash {{{
 if has('timers')
   " Blink 2 times with 50ms interval
-  noremap <expr> <plug>(slash-after) 'zz'.slash#blink(2, 50)
+  noremap <expr> <Plug>(slash-after) 'zz'.slash#blink(2, 50)
 endif
-" }}}
-
-" vim-waikiki {{{
-let g:waikiki_roots = ['~/vimwiki']
-let g:waikiki_default_maps = 1
 " }}}
 
 " vista.vim {{{
@@ -691,129 +493,6 @@ nnoremap <leader>v :Vista finder<CR>
 
 " End Plugins Custom Settings }}}
 
-" coc.nvim settings from documentation {{{
-" You will have bad experience for diagnostic messages when it's default 4000.
-set updatetime=100
-
-" Don't give |ins-completion-menu| messages.
-set shortmess+=c
-
-" always show signcolumns
-set signcolumn=yes
-
-" Use tab for trigger completion with characters ahead and navigate.
-" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-" Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
-
-" Make CoC and endwise compatible
-" https://github.com/tpope/vim-endwise/issues/22#issuecomment-554685904
-" inoremap <expr> <Plug>CustomCocCR complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>\<C-r>=coc#on_enter()\<CR>"
-" imap <CR> <Plug>CustomCocCR<Plug>DiscretionaryEnd
-
-if exists('*complete_info')
-  inoremap <silent><expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>\<C-R>=coc#on_enter()\<CR>"
-else
-  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>\<C-R>=coc#on_enter()\<CR>"
-endif
-
-" Use `[g` and `]g` to navigate diagnostics
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
-
-" Remap keys for gotos
-" would've been better to remap `coc-definition` and others
-" to start with `g` but I changed it to `<leader>c[char]` so that
-" it would remind me that it's from coc.nvim.
-nmap <silent> <leader>cd <Plug>(coc-definition)
-nmap <silent> <leader>ct <Plug>(coc-type-definition)
-nmap <silent> <leader>ci <Plug>(coc-implementation)
-nmap <silent> <leader>cr <Plug>(coc-references)
-nmap <silent> <leader>cn <Plug>(coc-rename)
-nmap <silent> <leader>ck :call <SID>show_documentation()<CR>
-
-" Use <C-l> for trigger snippet expand.
-imap <C-l> <Plug>(coc-snippets-expand-jump)
-
-" Use <C-j> for select text for visual placeholder of snippet.
-vmap <C-j> <Plug>(coc-snippets-select)
-
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
-
-" Remap for format selected region
-xmap <leader>cf <Plug>(coc-format-selected)
-nmap <leader>cf <Plug>(coc-format-selected)
-
-augroup CocGroup
-  autocmd!
-  " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-  " Update signature help on jump placeholder
-  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-  " Highlight symbol under cursor on CursorHold
-  " autocmd CursorHold * silent call CocActionAsync('highlight')
-augroup end
-
-" Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
-xmap <leader>a <Plug>(coc-codeaction-selected)
-nmap <leader>a <Plug>(coc-codeaction-selected)
-
-" Remap for do codeAction of current line
-nmap <leader>ac <Plug>(coc-codeaction)
-" Fix autofix problem of current line
-nmap <leader>qf <Plug>(coc-fix-current)
-
-" Create mappings for function text object, requires document symbols feature of languageserver.
-xmap if <Plug>(coc-funcobj-i)
-xmap af <Plug>(coc-funcobj-a)
-omap if <Plug>(coc-funcobj-i)
-omap af <Plug>(coc-funcobj-a)
-
-" Use `:Format` to format current buffer
-command! -nargs=0 Format :call CocAction('format')
-
-" Use `:Fold` to fold current buffer
-command! -nargs=? Fold :call CocAction('fold', <f-args>)
-
-" use `:OR` for organize import of current buffer
-command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
-
-" Using CocList
-" Show all diagnostics
-nnoremap <silent> \a :<C-u>CocFzfList diagnostics<cr>
-" Manage extensions
-nnoremap <silent> \e :<C-u>CocFzfList extensions<cr>
-" Show commands
-nnoremap <silent> \c :<C-u>CocFzfList commands<cr>
-" Find symbol of current document
-nnoremap <silent> \o :<C-u>CocFzfList outline<cr>
-" Search workspace symbols
-nnoremap <silent> \s :<C-u>CocFzfList symbols<cr>
-" Do default action for next item.
-nnoremap <silent> \j :<C-u>CocNext<CR>
-" Do default action for previous item.
-nnoremap <silent> \k :<C-u>CocPrev<CR>
-" Resume latest coc list
-nnoremap <silent> \p :<C-u>CocListResume<CR>
-" End coc.nvim settings }}}
-
 " Colors {{{
 syntax on
 
@@ -821,14 +500,11 @@ if has('termguicolors')
   set termguicolors
 endif
 set t_Co=256
-
-if filereadable(expand('~/.colorscheme'))
-  exec "colorscheme " . readfile(expand('~/.colorscheme'))[0]
-else
-  colorscheme gruvbox
-endif
+colorscheme onedark
 " Make background transparent
 hi Normal guibg=NONE ctermbg=NONE
+" Make SignColumn transparent
+hi clear SignColumn
 " End Colors }}}
 
 if filereadable(expand('~/.vimrc.local'))
