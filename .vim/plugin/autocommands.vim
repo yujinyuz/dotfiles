@@ -11,12 +11,8 @@ augroup ReturnToLastEditPosition
     \ | endif
 augroup END
 
-" https://github.com/neoclide/coc.nvim/wiki/Completion-with-sources
-augroup EndAutocomplete
-  autocmd!
-  autocmd CompleteDone * if pumvisible() == 0 | silent! pclose | endif
-augroup END
 
+" Trim Whitesapce and go back to last position
 function! s:TrimWhitespace() abort
   let l = line('.')
   let c = col('.')

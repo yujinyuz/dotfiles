@@ -1,8 +1,3 @@
-" Convenient command to see the difference between the current buffer and the
-" file it was loaded from, thus the changes you made.
-command! DiffSaved setlocal nosplitright | vert new | set bt=nofile | r # | 0d_
-                  \ | diffthis | wincmd p | diffthis | setlocal splitright
-
 function! s:ToggleWrap() abort
   if &wrap
     echo "Wrap OFF"
@@ -24,10 +19,11 @@ function! s:ToggleWrap() abort
 endfunction
 command! ToggleWrap call <SID>ToggleWrap()
 
-" Substitue selected text starting from cursor up to EOF
-command! -nargs=* -complete=command ZZWrap let &scrolloff=999 | exec <q-args> | let &so=0
-
 " Delete all buffers except current one
 command! BufOnly silent! execute "%bd|e#|bd#"
 command! DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
 		  \ | wincmd p | diffthis
+" Convenient command to see the difference between the current buffer and the
+" file it was loaded from, thus the changes you made.
+command! DiffSaved setlocal nosplitright | vert new | set bt=nofile | r # | 0d_
+                  \ | diffthis | wincmd p | diffthis | setlocal splitright
