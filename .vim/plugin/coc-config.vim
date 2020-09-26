@@ -57,6 +57,7 @@ nmap <silent> <leader>ci <Plug>(coc-implementation)
 nmap <silent> <leader>cr <Plug>(coc-references)
 nmap <silent> <leader>cn <Plug>(coc-rename)
 nmap <silent> <leader>ck :call <SID>show_documentation()<CR>
+nmap <leader>cs :echohl String \| echo(coc#status())<CR>
 
 " Use <C-l> for trigger snippet expand.
 imap <C-l> <Plug>(coc-snippets-expand-jump)
@@ -84,6 +85,8 @@ augroup CocGroup
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
   " Highlight symbol under cursor on CursorHold
   " autocmd CursorHold * silent call CocActionAsync('highlight')
+  " https://github.com/neoclide/coc.nvim/wiki/Completion-with-sources
+  autocmd CompleteDone * if pumvisible() == 0 | silent! pclose | endif
 augroup end
 
 " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph

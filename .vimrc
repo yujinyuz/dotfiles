@@ -36,8 +36,24 @@ set number
 set wildmenu
 set wildcharm=<C-z>
 
+" Patterns to ignore when expanding wildcards
+set wildignore=*.o,*.obj,*~
+set wildignore+=tags,.*.un~,*.pyc
+set wildignore+=*vim/backups*
+set wildignore+=*sass-cache*
+set wildignore+=*DS_Store*
+set wildignore+=vendor/rails/**
+set wildignore+=vendor/cache/**
+set wildignore+=*.gem
+set wildignore+=log/**
+set wildignore+=tmp/**
+set wildignore+=*.png,*.jpg,*.gif
+
 " Redraw only when needed
 set lazyredraw
+
+" Allow vim to set title of terminal
+set title
 
 " Hide buffer when switching to other files
 set hidden
@@ -98,7 +114,12 @@ set signcolumn=yes
 " You will have bad experience for diagnostic messages when it's default 4000.
 set updatetime=100
 
-" Change leader key
+" Start scrolling when we're 8 lines below
+set scrolloff=8
+" and 15 lines from the side
+set sidescrolloff=15
+
+" Map leader key to Space
 let mapleader = ' '
 
 " Neovim Python Provider
@@ -122,10 +143,12 @@ Plug 'lambdalisue/fern.vim'
 " Fuzzy search for files
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+" Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
 
 " Syntax / Colors
 Plug 'gruvbox-community/gruvbox'
 Plug 'joshdick/onedark.vim'
+Plug 'ayu-theme/ayu-vim'
 
 " IDE stuffs
 " Make vim intelligent like VSCode
@@ -140,7 +163,6 @@ Plug 'dense-analysis/ale'
 " Automatically close html tags
 Plug 'alvan/vim-closetag'
 " Awesome status line
-Plug 'vim-airline/vim-airline'
 " For .editorconfig files
 Plug 'editorconfig/editorconfig-vim'
 " Useful for showing what can be undone!
@@ -170,6 +192,10 @@ Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-unimpaired'
 " Dispatch an external command
 Plug 'tpope/vim-dispatch'
+" Wrapper for UNIX shell commands
+Plug 'tpope/vim-eunuch'
+" Provide useful commands like :Messages, :Scriptnames, zS
+Plug 'tpope/vim-scriptease'
 " Enables :GBrowse when using vim-fugitive
 Plug 'tpope/vim-rhubarb'
 
@@ -178,16 +204,20 @@ Plug 'tpope/vim-rhubarb'
 Plug 'junegunn/vim-slash'
 " More snippets!
 Plug 'honza/vim-snippets'
-" Only use this for [ydc]ae
+" Custom Text Objects
 Plug 'kana/vim-textobj-user'
+" [ae] for targeting
 Plug 'kana/vim-textobj-entire'
+" [ai]/[ii] for targeting
+Plug 'kana/vim-textobj-indent'
 " Wakatime vim plugin
 Plug 'wakatime/vim-wakatime'
 call plug#end()
 " End Plugins}}}
 
 " Native Key Mappings {{{
-" Leader
+
+" Leader maps should be here
 " w = write
 nmap <leader>w :w!<CR>
 " qa = quit all
@@ -201,9 +231,6 @@ nnoremap <leader>d "_d
 " source vimrc
 nnoremap <leader>sv :source $MYVIMRC<CR>
 
-" Clear search highlight
-nnoremap <silent> <leader>l :noh<CR>
-
 " Find and Replace highlighted line
 nnoremap <leader>cu "hy:%s/<C-r>h//gc<left><left><left>
 
@@ -212,7 +239,6 @@ nnoremap <leader>cu "hy:%s/<C-r>h//gc<left><left><left>
 noremap <leader>cu "sy:ZZWrap .,$s/<C-r>s//gc<Left><Left><Left>
 
 " Faster project-based editing
-" nnoremap ,e :e **/*<C-z><S-Tab>
 " Make sure set wildcharm=<C-z> exists in config
 nnoremap <leader>e :edit <C-z><S-Tab>
 nnoremap <leader>E :edit **/*<C-z><S-Tab>
@@ -249,26 +275,17 @@ nnoremap gb :ls<CR>:b
 cnoremap <C-k> <Up>
 cnoremap <C-j> <Down>
 
-
-" Use Alt-jk for moving lines
-nmap <M-j> mz:m+<cr>`z
-nmap <M-k> mz:m-2<cr>`z
-vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
-vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
-
 " Disable arrow movements. Resize splits panes instead
-if get(g:, 'elite_mode')
-  nnoremap <Up> :resize +2<CR>
-  nnoremap <Down> :resize -2<CR>
-  nnoremap <Left> :vertical resize +2<CR>
-  nnoremap <Right> :vertical resize -2<CR>
-endif
+nnoremap <Up> :resize +2<CR>
+nnoremap <Down> :resize -2<CR>
+nnoremap <Left> :vertical resize +2<CR>
+nnoremap <Right> :vertical resize -2<CR>
 
 " Togglewrap
 noremap \\ :ToggleWrap<CR>
 
-" Disable annoying Ex mode
-map Q gq
+" Remap ex mode to format
+nnoremap Q gq
 
 " Visually select pasted or yanked text
 nnoremap gV `[v`]
@@ -289,6 +306,9 @@ cnoremap \dT <C-R>=strftime('%m-%d-%Y')<CR>
 cnoremap \tn <C-R>=strftime('%Y-%m-%d %a %I:%M %p')<CR>
 inoremap \tn <C-R>=strftime('%Y-%m-%d %a %I:%M %p')<CR>
 
+" Clear search highlight
+nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
+
 " For faster navigation
 nnoremap <leader>j 10j
 nnoremap <leader>k 10k
@@ -301,7 +321,7 @@ nmap ss :split<CR><C-w>w
 nmap sv :vsplit<CR><C-w>w
 
 " For navigating splits
-nnoremap <C-l> :<C-u>echoerr('Use sl')<CR>
+" nnoremap <C-l> :<C-u>echoerr('Use sl')<CR>
 nnoremap <C-h> :<C-u>echoerr('Use sh')<CR>
 nnoremap <C-k> :<C-u>echoerr('Use sk')<CR>
 nnoremap <C-j> :<C-u>echoerr('Use sj')<CR>
@@ -375,56 +395,6 @@ let g:endwise_no_mappings = 1
 let g:EditorConfig_disable_rules = ['trim_trailing_whitespace']
 " }}}
 
-" statusline {{{
-let g:airline_powerline_fonts = 1
-let g:airline_mode_map = {
-    \ '__'     : '-',
-    \ 'c'      : 'C',
-    \ 'i'      : 'I',
-    \ 'ic'     : 'I',
-    \ 'ix'     : 'I',
-    \ 'n'      : 'N',
-    \ 'multi'  : 'M',
-    \ 'ni'     : 'N',
-    \ 'no'     : 'N',
-    \ 'R'      : 'R',
-    \ 'Rv'     : 'R',
-    \ 's'      : 'S',
-    \ 'S'      : 'S',
-    \ ''     : 'S',
-    \ 't'      : 'T',
-    \ 'v'      : 'V',
-    \ 'V'      : 'V',
-    \ ''     : 'V',
-    \ }
-" }}}
-
-" fzf.vim {{{
-let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6, 'highlight': 'Todo', 'border': 'round' } }
-let g:fzf_tags_command = 'ctags -R'
-let g:fzf_action = {
-  \ 'ctrl-t': 'tab split',
-  \ 'ctrl-x': 'below split',
-  \ 'ctrl-v': 'vsplit'
-  \ }
-" Use CtrlP when Cmd-P is not available
-nnoremap <silent> <C-p> :<C-u>Files<CR>
-nnoremap <silent> <Space><Space> :<C-u>Files<CR>
-" Buffers search
-nnoremap <leader>b :<C-u>Buffers<CR>
-" Search files relative to the current buffer
-nnoremap <leader>ff :<C-u>Files %:p:h<CR>
-" Tags search
-nnoremap <leader>] :<C-u>Tags<CR>
-" Global Search
-nnoremap <leader>F :<C-u>RG<CR>
-
-imap <c-x><c-k> <plug>(fzf-complete-word)
-imap <c-x><c-f> <plug>(fzf-complete-path)
-imap <c-x><c-j> <plug>(fzf-complete-file-ag)
-imap <c-x><c-l> <plug>(fzf-complete-line)
-" }}}
-
 " vim-fugitive {{{
 nnoremap <leader>gs :Git<CR>
 nnoremap <leader>gd :Gvdiffsplit<CR>
@@ -474,10 +444,10 @@ augroup END
 
 " netrw {{{
 let g:loaded_netrwPlugin = 1 " Disable netrw
-let g:netrw_banner = 0
-let g:netrw_liststyle = 3
-let g:netrw_browse_split = 4
-let g:netrw_altv = 1
+let g:netrw_browse_split = 4 " open in prior window
+let g:netrw_altv = 1 " open splits to the right
+let g:netrw_banner = 0 " disable annoying banner
+let g:netrw_liststyle = 3 " tree view
 let g:netrw_winsize = 25
 " }}}
 
@@ -499,10 +469,6 @@ let g:go_highlight_functions = 1
 let g:go_highlight_function_calls = 1
 let g:go_highlight_structs = 1
 let g:go_fmt_command = 'goimports'
-" }}}
-
-" vim-highlightedyank {{{
-let g:highlightedyank_highlight_duration = 250
 " }}}
 
 " vim-polyglot {{{
@@ -537,6 +503,8 @@ set t_Co=256
 colorscheme onedark
 " Make background transparent
 hi Normal guibg=NONE ctermbg=NONE
+" Make SignColumn transparent
+hi clear SignColumn
 " End Colors }}}
 
 if filereadable(expand('~/.vimrc.local'))
