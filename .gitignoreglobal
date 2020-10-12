@@ -19,6 +19,7 @@ __pycache__/
 # vim stuffs
 .vim/
 Session.vim
+.projections.json
 
 # node
 npm-debug.log*
