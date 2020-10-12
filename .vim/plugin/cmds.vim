@@ -24,6 +24,9 @@ command! BufOnly silent! execute "%bd|e#|bd#"
 command! DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
 		  \ | wincmd p | diffthis
 " Convenient command to see the difference between the current buffer and the
-" file it was loaded from, thus the changes you made.
+
 command! DiffSaved setlocal nosplitright | vert new | set bt=nofile | r # | 0d_
                   \ | diffthis | wincmd p | diffthis | setlocal splitright
+
+command! EditConfig silent! execute "e $MYVIMRC"
+command! ReloadConfig silent! execute "source $MYVIMRC"
