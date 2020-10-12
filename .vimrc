@@ -141,14 +141,20 @@ call plug#begin('~/.vim/plugged')
 " Better file tree alternative to NERDTree
 Plug 'lambdalisue/fern.vim'
 " Fuzzy search for files
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+if isdirectory('/usr/local/opt/fzf')
+  Plug '/usr/local/opt/fzf'
+else
+  Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+endif
 Plug 'junegunn/fzf.vim'
+Plug 'justinmk/vim-dirvish'
 " Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
 
 " Syntax / Colors
 Plug 'gruvbox-community/gruvbox'
 Plug 'joshdick/onedark.vim'
 Plug 'ayu-theme/ayu-vim'
+Plug 'sainnhe/gruvbox-material'
 
 " IDE stuffs
 " Make vim intelligent like VSCode
@@ -156,6 +162,8 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'antoinemadec/coc-fzf'
 " Go development
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries', 'for': 'go'}
+"Ruby dev
+Plug 'tpope/vim-rails'
 " Useful for generating tagbar
 Plug 'liuchengxu/vista.vim'
 " Mostly for linting
@@ -174,6 +182,10 @@ Plug 'ludovicchabant/vim-gutentags'
 " Syntax highlighting
 let g:polyglot_disabled = ['markdown']
 Plug 'sheerun/vim-polyglot'
+" Better markdown support compared to polyglot default
+Plug 'SidOfc/mkdx'
+" Enhances multi-file search and replace
+Plug 'wincent/ferret'
 
 " Holiness
 " Word manipulations
@@ -198,6 +210,10 @@ Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-scriptease'
 " Enables :GBrowse when using vim-fugitive
 Plug 'tpope/vim-rhubarb'
+" Better 'path' support
+Plug 'tpope/vim-apathy'
+" Easier navigation for project files :A
+Plug 'tpope/vim-projectionist'
 
 " Misc
 " Enhances buffer search
@@ -216,10 +232,10 @@ call plug#end()
 " End Plugins}}}
 
 " Native Key Mappings {{{
-
 " Leader maps should be here
-" w = write
-nmap <leader>w :w!<CR>
+
+" Same as write but only write when file is updated
+nmap <silent> <leader>w :update!<CR>
 " qa = quit all
 nmap <leader>qa :qa!<CR>
 " qq = quit current
@@ -228,20 +244,14 @@ nmap <leader>qq :q!<CR>
 " Blackhole deletes
 nnoremap <leader>d "_d
 
-" source vimrc
-nnoremap <leader>sv :source $MYVIMRC<CR>
-
-" Find and Replace highlighted line
-nnoremap <leader>cu "hy:%s/<C-r>h//gc<left><left><left>
-
-" Find and replace highlighted word with confirmation until EOF
-" cu =  change under
-noremap <leader>cu "sy:ZZWrap .,$s/<C-r>s//gc<Left><Left><Left>
+" source current file
+nnoremap <leader>so :so %<CR>
 
 " Faster project-based editing
 " Make sure set wildcharm=<C-z> exists in config
 nnoremap <leader>e :edit <C-z><S-Tab>
-nnoremap <leader>E :edit **/*<C-z><S-Tab>
+" nnoremap <leader>E :edit **/*<C-z><S-Tab>
+nnoremap <leader>E :E<C-z><S-Tab>
 
 " Copy current filepath to clipboard
 nnoremap <leader>cp :<C-u>let @+ = expand('%:p')<CR>
@@ -251,10 +261,6 @@ inoremap jk <Esc>
 
 " Make Y work like other upcase commands
 nnoremap Y y$
-
-" Direct changes into the black hole register.
-nnoremap c "_c
-nnoremap C "_C
 
 " Copy/paste and move cursor to end of last operated text or end of putted text
 vnoremap <silent> y y`]
@@ -280,9 +286,6 @@ nnoremap <Up> :resize +2<CR>
 nnoremap <Down> :resize -2<CR>
 nnoremap <Left> :vertical resize +2<CR>
 nnoremap <Right> :vertical resize -2<CR>
-
-" Togglewrap
-noremap \\ :ToggleWrap<CR>
 
 " Remap ex mode to format
 nnoremap Q gq
@@ -322,7 +325,7 @@ nmap sv :vsplit<CR><C-w>w
 
 " For navigating splits
 " nnoremap <C-l> :<C-u>echoerr('Use sl')<CR>
-nnoremap <C-h> :<C-u>echoerr('Use sh')<CR>
+" nnoremap <C-h> :<C-u>echoerr('Use sh')<CR>
 nnoremap <C-k> :<C-u>echoerr('Use sk')<CR>
 nnoremap <C-j> :<C-u>echoerr('Use sj')<CR>
 
@@ -330,6 +333,13 @@ nnoremap sl <C-w>l
 nnoremap sh <C-w>h
 nnoremap sk <C-w>k
 nnoremap sj <C-w>j
+
+" Use M-[jk] for moving lines up/down
+" vim-unimpaired has ]e and [e but they don't work for visual mode
+nmap <M-j> mz:m+<CR>`z
+nmap <M-k> mz:m-2<CR>`z
+vmap <M-j> :m'>+<CR>`<my`>mzgv`yo`z
+vmap <M-k> :m'<-2<CR>`>my`<mzgv`yo`z
 
 " Readline-like mappings
 " - Ctrl-a - go to the start of line
@@ -362,32 +372,7 @@ cnoremap w!! w !sudo tee % >/dev/null
 
 " Plugins custom settings {{{
 
-" ale {{{
-let g:ale_fixers = {
-\ '*': ['remove_trailing_lines'],
-\ }
-let g:ale_on_enter = 0
-let g:ale_lint_on_filetype_changed = 0
-let g:ale_lint_on_insert_leave = 0
-let g:ale_lint_on_save = 1
-let g:ale_lint_on_text_changed = 'never'
-let g:ale_fix_on_save = 0
-let g:ale_sign_error = '◉'
-let g:ale_sign_warning = '⚠'
-let g:ale_echo_msg_error_str = 'E'
-let g:ale_echo_msg_warning_str = 'W'
-
-" next/previous warnings or errors
-nmap ]w <Plug>(ale_next_wrap)
-nmap [w <Plug>(ale_previous_wrap)
-" }}}
-
-" closetag.vim {{{
-let g:closetag_filenames = '*.html,*.js,*.erb'
-let g:closetag_emptyTags_caseSensitive = 1
-" }}}
-
-" endwise {{{
+" vim-endwise {{{
 let g:endwise_no_mappings = 1
 " }}}
 
@@ -412,7 +397,7 @@ let g:fern#renderer#default#root_symbol      = '~ '
 let g:fern#renderer#default#unmarked_symbol  = ''
 noremap <silent> <C-n> :<C-u>Fern . -drawer -width=35 -toggle<CR><C-w>=
 noremap <silent> <Leader>sf :<C-u>Fern . -drawer -reveal=% -width=35<CR><C-w>=
-noremap <silent> <Leader>. :<C-u>Fern %:h -drawer -width=35<CR><C-w>=
+" noremap <silent> <Leader>. :<C-u>Fern %:h -drawer -width=35<CR><C-w>=
 
 function! FernInit() abort
   nmap <buffer><expr>
@@ -440,6 +425,8 @@ augroup FernGroup
   autocmd!
   autocmd FileType fern call FernInit()
 augroup END
+
+nnoremap <silent> <leader>. :Dirvish %:p:h<CR>
 " }}}
 
 " netrw {{{
@@ -459,7 +446,7 @@ nnoremap <leader>u :UndotreeToggle<CR>
 " }}}
 
 " vim-closetag {{{
-let g:closetag_filenames = '*.html,*.hbs'
+let g:closetag_filenames = '*.html,*.js,*.erb,*.hbs'
 let g:closetag_emptyTags_caseSensitive = 1
 " }}}
 
@@ -500,7 +487,7 @@ if has('termguicolors')
   set termguicolors
 endif
 set t_Co=256
-colorscheme onedark
+colorscheme gruvbox-material
 " Make background transparent
 hi Normal guibg=NONE ctermbg=NONE
 " Make SignColumn transparent

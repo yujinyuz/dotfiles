@@ -9,6 +9,7 @@ end
 let g:custom_coc_config_loaded = 1
 let g:coc_global_extensions = [
   \ 'coc-python',
+  \ 'coc-solargraph',
   \ 'coc-emmet',
   \ 'coc-json',
   \ 'coc-sql',
@@ -37,10 +38,18 @@ endfunction
 " Use <c-space> to trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
 
-if exists('*complete_info')
-  inoremap <silent><expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>\<C-R>=coc#on_enter()\<CR>"
+if has_key(plugs, 'vim-endwise')
+  " Make coc.nvim compatible with endwise
+  " See: https://github.com/tpope/vim-endwise/issues/22#issuecomment-554685904
+  inoremap <expr> <Plug>CustomCocCR complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>\<C-r>=coc#on_enter()\<CR>"
+  imap <CR> <Plug>CustomCocCR<Plug>DiscretionaryEnd
 else
-  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>\<C-R>=coc#on_enter()\<CR>"
+  " Use default recommended settings from coc.nvim docs
+  if exists('*complete_info')
+    inoremap <silent><expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>\<C-R>=coc#on_enter()\<CR>"
+  else
+    inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>\<C-R>=coc#on_enter()\<CR>"
+  endif
 endif
 
 " Use `[g` and `]g` to navigate diagnostics
@@ -57,7 +66,7 @@ nmap <silent> <leader>ci <Plug>(coc-implementation)
 nmap <silent> <leader>cr <Plug>(coc-references)
 nmap <silent> <leader>cn <Plug>(coc-rename)
 nmap <silent> <leader>ck :call <SID>show_documentation()<CR>
-nmap <leader>cs :echohl String \| echo(coc#status())<CR>
+nmap <leader>cs :echohl String \| echo(coc#status()) \| echohl None<CR>
 
 " Use <C-l> for trigger snippet expand.
 imap <C-l> <Plug>(coc-snippets-expand-jump)
@@ -89,20 +98,11 @@ augroup CocGroup
   autocmd CompleteDone * if pumvisible() == 0 | silent! pclose | endif
 augroup end
 
-" Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
-xmap <leader>a <Plug>(coc-codeaction-selected)
-nmap <leader>a <Plug>(coc-codeaction-selected)
 
 " Remap for do codeAction of current line
 nmap <leader>ac <Plug>(coc-codeaction)
 " Fix autofix problem of current line
 nmap <leader>qf <Plug>(coc-fix-current)
-
-" Create mappings for function text object, requires document symbols feature of languageserver.
-xmap if <Plug>(coc-funcobj-i)
-xmap af <Plug>(coc-funcobj-a)
-omap if <Plug>(coc-funcobj-i)
-omap af <Plug>(coc-funcobj-a)
 
 " Use `:Format` to format current buffer
 command! -nargs=0 Format :call CocAction('format')
