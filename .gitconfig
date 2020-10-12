@@ -51,6 +51,7 @@
   unpushed = "cherry -v"
   unstage = "restore --staged ."
   wc = whatchanged
+  wip = "!git add . && git commit -m '[WIP] Just reset via git reset HEAD~1'"
 [core]
   excludesfile = ~/.gitignoreglobal
   pager = diff-so-fancy | less --tabs=4 -RFX

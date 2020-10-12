@@ -4,13 +4,32 @@ if !has_key(plugs, 'fzf.vim')
   finish
 endif
 
-let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6, 'highlight': 'Todo', 'border': 'round' } }
+" let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6, 'highlight': 'Todo', 'border': 'round' } }
+let $FZF_DEFAULT_OPTS = ''
+let g:fzf_layout = { 'down': '~25%' }
 let g:fzf_tags_command = 'ctags -R'
 let g:fzf_action = {
       \ 'ctrl-t': 'tab split',
       \ 'ctrl-x': 'below split',
       \ 'ctrl-v': 'vsplit'
       \ }
+
+" let g:fzf_preview_window = ''
+let g:fzf_colors         = {
+      \ 'fg':      ['fg', 'Normal'],
+      \ 'bg':      ['bg', 'Clear'],
+      \ 'hl':      ['fg', 'String'],
+      \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+      \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+      \ 'hl+':     ['fg', 'Statement'],
+      \ 'info':    ['fg', 'PreProc'],
+      \ 'prompt':  ['fg', 'Conditional'],
+      \ 'pointer': ['fg', 'Exception'],
+      \ 'marker':  ['fg', 'Keyword'],
+      \ 'spinner': ['fg', 'Label'],
+      \ 'header':  ['fg', 'Comment']
+      \ }
+
 " Use CtrlP when Cmd-P is not available
 nnoremap <silent> <C-p> :<C-u>Files<CR>
 nnoremap <silent> <Space><Space> :<C-u>Files<CR>
