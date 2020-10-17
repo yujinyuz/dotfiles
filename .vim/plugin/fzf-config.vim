@@ -72,3 +72,6 @@ function! RipgrepFzf(query, fullscreen) abort
   call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
 endfunction
 command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
+
+autocmd! FileType fzf set laststatus=0 noshowmode noruler nonumber norelativenumber signcolumn=no
+  \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler number relativenumber signcolumn=yes
