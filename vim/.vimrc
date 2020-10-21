@@ -161,9 +161,9 @@ Plug 'sainnhe/gruvbox-material'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'antoinemadec/coc-fzf'
 " Go development
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries', 'for': 'go'}
+Plug 'fatih/vim-go', {'for': 'go'}
 "Ruby dev
-Plug 'tpope/vim-rails'
+Plug 'tpope/vim-rails', {'for': 'ruby'}
 " Useful for generating tagbar
 Plug 'liuchengxu/vista.vim'
 " Mostly for linting

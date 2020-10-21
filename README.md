@@ -5,5 +5,5 @@ My collection of dotfiles
 ```sh
 $ brew install stow
 $ git clone git@github.com:yujinyuz/dotfiles.git
-$ ./setup.sh
+$ ./syncdots
 ```
