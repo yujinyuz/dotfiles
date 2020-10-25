@@ -17,7 +17,6 @@ __pycache__/
 .vscode/
 
 # vim stuffs
-.vim/
 Session.vim
 .projections.json
 
@@ -29,7 +28,6 @@ node_modules
 .nvmrc
 
 # git bare
-.dotfiles
 .dotlocal
 
 # general
