@@ -136,7 +136,6 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.vim/plugged')
-
 " File management
 " Better file tree alternative to NERDTree
 Plug 'lambdalisue/fern.vim'
@@ -171,6 +170,7 @@ Plug 'dense-analysis/ale'
 " Automatically close html tags
 Plug 'alvan/vim-closetag'
 " Awesome status line
+" Plug 'vim-airline/vim-airline'
 " For .editorconfig files
 Plug 'editorconfig/editorconfig-vim'
 " Useful for showing what can be undone!
@@ -180,8 +180,9 @@ Plug 'tmux-plugins/vim-tmux-focus-events'
 " Automatically generate tags file for us
 Plug 'ludovicchabant/vim-gutentags'
 " Syntax highlighting
-let g:polyglot_disabled = ['markdown']
+let g:polyglot_disabled = ['markdown', 'javascript.plugin', 'python.plugin', 'html.plugin']
 Plug 'sheerun/vim-polyglot'
+Plug 'nvim-treesitter/nvim-treesitter'
 " Better markdown support compared to polyglot default
 Plug 'SidOfc/mkdx'
 " Enhances multi-file search and replace
@@ -326,8 +327,10 @@ nmap sv :vsplit<CR><C-w>w
 " For navigating splits
 " nnoremap <C-l> :<C-u>echoerr('Use sl')<CR>
 " nnoremap <C-h> :<C-u>echoerr('Use sh')<CR>
-nnoremap <C-k> :<C-u>echoerr('Use sk')<CR>
-nnoremap <C-j> :<C-u>echoerr('Use sj')<CR>
+" nnoremap <C-k> :<C-u>echoerr('Use sk')<CR>
+" nnoremap <C-j> :<C-u>echoerr('Use sj')<CR>
+nnoremap <C-k> :wincmd w<CR>
+nnoremap <C-j> :wincmd w<CR>
 
 nnoremap sl <C-w>l
 nnoremap sh <C-w>h
@@ -487,15 +490,25 @@ if has('termguicolors')
   set termguicolors
 endif
 set t_Co=256
-colorscheme gruvbox-material
+let g:gruvbox_contrast_dark = 'hard'
+let g:gruvbox_invert_selection = 0
+let &t_8f = "\<Esc>[38:2:%lu:%lu:%lum"
+let &t_8b = "\<Esc>[48:2:%lu:%lu:%lum"
+colorscheme gruvbox
 " Make background transparent
-hi Normal guibg=NONE ctermbg=NONE
+" hi Normal guibg=NONE ctermbg=NONE
 " Make SignColumn transparent
-hi clear SignColumn
+
+" Move to separate plugin
+if g:colors_name == 'gruvbox'
+  " hi clear SignColumn
+  hi clear TabLineFill
+endif
 " End Colors }}}
 
 if filereadable(expand('~/.vimrc.local'))
   source ~/.vimrc.local
 endif
 
+" set fillchars
 " vim:filetype=vim sw=2 foldmethod=marker tw=78 expandtab
