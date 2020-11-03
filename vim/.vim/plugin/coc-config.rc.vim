@@ -10,6 +10,7 @@ let g:custom_coc_config_loaded = 1
 let g:coc_global_extensions = [
   \ 'coc-python',
   \ 'coc-solargraph',
+  \ 'coc-vimlsp',
   \ 'coc-emmet',
   \ 'coc-json',
   \ 'coc-sql',
@@ -88,7 +89,7 @@ endfunction
 xmap <leader>cf <Plug>(coc-format-selected)
 nmap <leader>cf <Plug>(coc-format-selected)
 
-augroup CocGroup
+augroup CocCallbacks
   autocmd!
   " Setup formatexpr specified filetype(s).
   autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
@@ -100,9 +101,6 @@ augroup CocGroup
   autocmd CompleteDone * if pumvisible() == 0 | silent! pclose | endif
 augroup end
 
-
-" Remap for do codeAction of current line
-nmap <leader>ac <Plug>(coc-codeaction)
 " Fix autofix problem of current line
 nmap <leader>qf <Plug>(coc-fix-current)
 
