@@ -42,15 +42,11 @@ inoremap <silent><expr> <c-space> coc#refresh()
 if has_key(plugs, 'vim-endwise')
   " Make coc.nvim compatible with endwise
   " See: https://github.com/tpope/vim-endwise/issues/22#issuecomment-554685904
-  inoremap <expr> <Plug>CustomCocCR complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>\<C-r>=coc#on_enter()\<CR>"
+  inoremap <silent><expr> <Plug>CustomCocCR complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>\<C-r>=coc#on_enter()\<CR>"
   imap <CR> <Plug>CustomCocCR<Plug>DiscretionaryEnd
 else
   " Use default recommended settings from coc.nvim docs
-  if exists('*complete_info')
-    inoremap <silent><expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>\<C-R>=coc#on_enter()\<CR>"
-  else
-    inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>\<C-R>=coc#on_enter()\<CR>"
-  endif
+  inoremap <silent><expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>\<C-R>=coc#on_enter()\<CR>"
 endif
 
 " Use `[g` and `]g` to navigate diagnostics
