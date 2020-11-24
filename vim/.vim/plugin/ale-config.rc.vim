@@ -1,4 +1,4 @@
-if !has_key(plugs, 'coc.nvim')
+if !has_key(plugs, 'ale')
   finish
 endif
 
