@@ -10,6 +10,7 @@ let g:custom_coc_config_loaded = 1
 let g:coc_global_extensions = [
   \ 'coc-python',
   \ 'coc-solargraph',
+  \ 'coc-vimlsp',
   \ 'coc-emmet',
   \ 'coc-json',
   \ 'coc-sql',
@@ -41,15 +42,11 @@ inoremap <silent><expr> <c-space> coc#refresh()
 if has_key(plugs, 'vim-endwise')
   " Make coc.nvim compatible with endwise
   " See: https://github.com/tpope/vim-endwise/issues/22#issuecomment-554685904
-  inoremap <expr> <Plug>CustomCocCR complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>\<C-r>=coc#on_enter()\<CR>"
+  inoremap <silent><expr> <Plug>CustomCocCR complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>\<C-r>=coc#on_enter()\<CR>"
   imap <CR> <Plug>CustomCocCR<Plug>DiscretionaryEnd
 else
   " Use default recommended settings from coc.nvim docs
-  if exists('*complete_info')
-    inoremap <silent><expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>\<C-R>=coc#on_enter()\<CR>"
-  else
-    inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>\<C-R>=coc#on_enter()\<CR>"
-  endif
+  inoremap <silent><expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>\<C-R>=coc#on_enter()\<CR>"
 endif
 
 " Use `[g` and `]g` to navigate diagnostics
@@ -88,7 +85,7 @@ endfunction
 xmap <leader>cf <Plug>(coc-format-selected)
 nmap <leader>cf <Plug>(coc-format-selected)
 
-augroup CocGroup
+augroup CocCallbacks
   autocmd!
   " Setup formatexpr specified filetype(s).
   autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
@@ -100,9 +97,6 @@ augroup CocGroup
   autocmd CompleteDone * if pumvisible() == 0 | silent! pclose | endif
 augroup end
 
-
-" Remap for do codeAction of current line
-nmap <leader>ac <Plug>(coc-codeaction)
 " Fix autofix problem of current line
 nmap <leader>qf <Plug>(coc-fix-current)
 
