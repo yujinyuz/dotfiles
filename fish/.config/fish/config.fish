@@ -65,7 +65,6 @@ alias fastvi="vi -u ~/.vimrcmin"
 alias getip="curl ipinfo.io/ip"
 alias localip="ipconfig getifaddr en0"
 alias mv="mv -v"
-alias pm="python manage.py"
 alias ppath="echo $PATH | tr -s ':' '\n'"
 alias fupath="echo $fish_user_paths | tr ' ' '\n'"
 alias rscp="rsync -avhW --no-compress --progress" # for copying local files
@@ -75,8 +74,3 @@ alias tree="exa --tree --level=3"
 # alias vi="nvim -c 'let g:tty='\'(tty)'\''"
 alias vi="nvim"
 alias vifish="vi ~/.config/fish/config.fish"
-
-# abbreviations
-if status --is-interactive
-  abbr --add --global ta tmux attach -t
-end
