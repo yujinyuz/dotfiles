@@ -15,7 +15,6 @@ let g:coc_global_extensions = [
   \ 'coc-json',
   \ 'coc-sql',
   \ 'coc-tsserver',
-  \ 'coc-pairs',
   \ 'coc-yaml',
   \ 'coc-html',
   \ 'coc-css',
@@ -42,8 +41,9 @@ inoremap <silent><expr> <c-space> coc#refresh()
 if has_key(plugs, 'vim-endwise')
   " Make coc.nvim compatible with endwise
   " See: https://github.com/tpope/vim-endwise/issues/22#issuecomment-554685904
-  inoremap <silent><expr> <Plug>CustomCocCR complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>\<C-r>=coc#on_enter()\<CR>"
-  imap <CR> <Plug>CustomCocCR<Plug>DiscretionaryEnd
+  " inoremap <silent><expr> <Plug>CustomCocCR complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>\<C-r>=coc#on_enter()\<CR>"
+  " imap <CR> <Plug>CustomCocCR<Plug>DiscretionaryEnd
+  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 else
   " Use default recommended settings from coc.nvim docs
   inoremap <silent><expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>\<C-R>=coc#on_enter()\<CR>"

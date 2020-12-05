@@ -1,4 +1,11 @@
-lua << EOF
+:lua << EOF
+local custom_captures = {
+  -- highlight own capture @foo.bar with highlight group "Identifier", see :h nvim-treesitter-query-extensions
+  ['foo.bar'] = 'Identifier',
+  ['function.call'] = 'LuaFunctionCall',
+  ['function.bracket'] = 'Type',
+}
+
 require "nvim-treesitter.configs".setup {
   ensure_installed = "maintained",
   incremental_selection = {
@@ -11,10 +18,13 @@ require "nvim-treesitter.configs".setup {
     }
   },
   highlight = {
-    enable = true
+    enable = true,
+    disable = {"json"},
+    use_languagetree = false,
   },
  indent = {
     enable = true
- }
+ },
+ custom_captures = custom_captures
 }
 EOF

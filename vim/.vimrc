@@ -38,7 +38,7 @@ set wildcharm=<C-z>
 
 " Patterns to ignore when expanding wildcards
 set wildignore=*.o,*.obj,*~
-set wildignore+=tags,.*.un~,*.pyc
+set wildignore+=.*.un~,*.pyc
 set wildignore+=*vim/backups*
 set wildignore+=*sass-cache*
 set wildignore+=*DS_Store*
@@ -138,14 +138,11 @@ endif
 call plug#begin('~/.vim/plugged')
 " File management
 " Better file tree alternative to NERDTree
-Plug 'lambdalisue/fern.vim'
+Plug 'kyazdani42/nvim-tree.lua'
 " Fuzzy search for files
-if isdirectory('/usr/local/opt/fzf')
-  Plug '/usr/local/opt/fzf'
-else
-  Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-endif
-Plug 'junegunn/fzf.vim'
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
 Plug 'justinmk/vim-dirvish'
 " Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
 
@@ -158,7 +155,7 @@ Plug 'sainnhe/gruvbox-material'
 " IDE stuffs
 " Make vim intelligent like VSCode
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'antoinemadec/coc-fzf'
+Plug 'yujinyuz/vim-dyad'
 " Go development
 Plug 'fatih/vim-go', {'for': 'go'}
 "Ruby dev
@@ -180,13 +177,15 @@ Plug 'tmux-plugins/vim-tmux-focus-events'
 " Automatically generate tags file for us
 Plug 'ludovicchabant/vim-gutentags'
 " Syntax highlighting
-let g:polyglot_disabled = ['markdown', 'javascript.plugin', 'python.plugin', 'html.plugin']
+let g:polyglot_disabled = ['markdown', 'python.plugin', 'html.plugin', 'javascript.plugin', 'graphql', 'lua']
 Plug 'sheerun/vim-polyglot'
-Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 " Better markdown support compared to polyglot default
 Plug 'SidOfc/mkdx'
 " Enhances multi-file search and replace
 Plug 'wincent/ferret'
+" :DetectIndent command
+Plug 'roryokane/detectindent'
 
 " Holiness
 " Word manipulations
@@ -390,45 +389,18 @@ nnoremap <leader>h :Git difftool<CR>
 " }}}
 
 " File Explorer {{{
-let g:fern#disable_default_mappings = 1
-let g:fern#renderer#default#collapsed_symbol = '▷ '
-let g:fern#renderer#default#expanded_symbol  = '▼ '
-let g:fern#renderer#default#leading          = ' '
-let g:fern#renderer#default#leaf_symbol      = ' '
-let g:fern#renderer#default#marked_symbol    = '●'
-let g:fern#renderer#default#root_symbol      = '~ '
-let g:fern#renderer#default#unmarked_symbol  = ''
-noremap <silent> <C-n> :<C-u>Fern . -drawer -width=35 -toggle<CR><C-w>=
-noremap <silent> <Leader>sf :<C-u>Fern . -drawer -reveal=% -width=35<CR><C-w>=
-" noremap <silent> <Leader>. :<C-u>Fern %:h -drawer -width=35<CR><C-w>=
+let g:lua_tree_width = 40 "30 by default
+let g:lua_tree_follow = 1
+let g:lua_tree_quit_on_open = 0
+let g:lua_tree_indent_markers = 1
 
-function! FernInit() abort
-  nmap <buffer><expr>
-        \ <Plug>(fern-my-open-expand-collapse)
-        \ fern#smart#leaf(
-        \   "\<Plug>(fern-action-open:select)",
-        \   "\<Plug>(fern-action-expand)",
-        \   "\<Plug>(fern-action-collapse)",
-        \ )
-  nmap <buffer> <CR> <Plug>(fern-my-open-expand-collapse)
-  nmap <buffer> <2-LeftMouse> <Plug>(fern-my-open-expand-collapse)
-  nmap <buffer> N <Plug>(fern-action-new-file)
-  nmap <buffer> K <Plug>(fern-action-new-dir)
-  nmap <buffer> D <Plug>(fern-action-remove)
-  nmap <buffer> H <Plug>(fern-action-hidden-toggle)j
-  nmap <buffer> R <Plug>(fern-action-reload)
-  nmap <buffer> m <Plug>(fern-action-mark-toggle)j
-  nmap <buffer> s <Plug>(fern-action-open:split)
-  nmap <buffer> v <Plug>(fern-action-open:vsplit)
-  nmap <buffer><nowait> < <Plug>(fern-action-leave)
-  nmap <buffer><nowait> > <Plug>(fern-action-enter)
-endfunction
-
-augroup FernGroup
+augroup LuaTree
   autocmd!
-  autocmd FileType fern call FernInit()
+  autocmd FileType LuaTree setlocal nowrap cursorline signcolumn=no
 augroup END
 
+
+nnoremap <silent> <C-n> <cmd>LuaTreeToggle<CR>
 nnoremap <silent> <leader>. :Dirvish %:p:h<CR>
 " }}}
 

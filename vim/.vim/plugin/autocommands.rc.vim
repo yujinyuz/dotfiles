@@ -21,6 +21,7 @@ function! TrimWhitespace() abort
   let l = line('.')
   let c = col('.')
   %s/\s\+$//e
+
   call cursor(l, c)
 endfunction
 
