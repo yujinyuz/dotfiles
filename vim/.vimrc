@@ -15,9 +15,9 @@
 " General {{{
 
 " Shift 4 spaces when pressing tab
-set tabstop=4
+set tabstop=2
 " Shift 4 spaces when pressing < or >
-set shiftwidth=4
+set shiftwidth=2
 
 " Use spaces instead of tabs
 set expandtab
@@ -143,6 +143,7 @@ Plug 'kyazdani42/nvim-tree.lua'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzy-native.nvim'
 Plug 'justinmk/vim-dirvish'
 " Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
 
@@ -177,15 +178,13 @@ Plug 'tmux-plugins/vim-tmux-focus-events'
 " Automatically generate tags file for us
 Plug 'ludovicchabant/vim-gutentags'
 " Syntax highlighting
-let g:polyglot_disabled = ['markdown', 'python.plugin', 'html.plugin', 'javascript.plugin', 'graphql', 'lua']
-Plug 'sheerun/vim-polyglot'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+let g:polyglot_disabled = ['markdown', 'python', 'html.plugin', 'javascript.plugin', 'php.plugin', 'graphql', 'lua']
+Plug 'sheerun/vim-polyglot'
 " Better markdown support compared to polyglot default
 Plug 'SidOfc/mkdx'
 " Enhances multi-file search and replace
 Plug 'wincent/ferret'
-" :DetectIndent command
-Plug 'roryokane/detectindent'
 
 " Holiness
 " Word manipulations
@@ -477,6 +476,11 @@ if g:colors_name == 'gruvbox'
   hi clear TabLineFill
 endif
 " End Colors }}}
+
+augroup HighlightCallback
+  autocmd!
+  autocmd TextYankPost * silent! lua vim.highlight.on_yank()
+augroup END
 
 if filereadable(expand('~/.vimrc.local'))
   source ~/.vimrc.local
