@@ -41,11 +41,13 @@ set -gx FZF_DEFAULT_OPTS "--height 40% --layout=reverse --border --preview-windo
 set -gx FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
 set -gx FZF_ALT_C_COMMAND "fd --type d $FD_OPTIONS"
 
+set -gx VIRTUALENVS_DIR $HOME/.local/share/virtualenvs
+
 # pyenv
 set -gx PYTHON_BUILD_ARIA2_OPTS "-x 10 -k 1M" # Use aria2c when downloading
 
 # neovim
-set -gx PYTHON_3_HOST_PROG $HOME/.virtualenvs/nvim/bin/python3
+set -gx PYTHON_3_HOST_PROG $VIRTUALENVS_DIR/nvim/bin/python3
 
 # asdf
 # Installation method via git since brew --prefix asdf is slow
@@ -68,7 +70,7 @@ alias localip="ipconfig getifaddr en0"
 alias mv="mv -v"
 alias ppath="echo $PATH | tr -s ':' '\n'"
 alias fupath="echo $fish_user_paths | tr ' ' '\n'"
-alias rscp="rsync -avhW --no-compress --progress" # for copying local files
+alias rscp="rsync -avhW --progress" # for copying local files
 alias rsmv="rsync -avhW --no-compress --progress --remove-source-files"
 alias t="tmux"
 alias tree="exa --tree --level=3"
