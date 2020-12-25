@@ -4,7 +4,7 @@ endif
 
 " set nonumber, norelativenumber for neovim
 " line number is not neccessary for fuzzy finder
-setl laststatus=0 noshowmode noruler nonumber norelativenumber
+" setl laststatus=0 noshowmode noruler nonumber norelativenumber
 " Clear the message
 echo "\r"
 
