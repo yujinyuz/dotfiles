@@ -11,7 +11,6 @@ augroup ReturnToLastEditPosition
     \ | endif
 augroup END
 
-
 " Strip whitesapce and go back to last position
 function! TrimWhitespace() abort
   if exists('b:no_strip_whitespace')
@@ -28,4 +27,21 @@ endfunction
 augroup StripTrailingWhiteSpace
   autocmd!
   autocmd BufWritePre * call TrimWhitespace()
+augroup END
+
+augroup BackupFileCallback
+  autocmd!
+  "Meaningful backup name, example: filename@2015-04-05.14:59
+  autocmd BufwritePre * let &bex = substitute(expand('%:p:h'), '/', ':', 'g') . strftime('%F.%H:%M')
+augroup END
+
+augroup TerminalCallback
+  autocmd!
+  autocmd TermOpen * startinsert
+  autocmd TermOpen * set signcolumn=no
+augroup END
+
+augroup HighlightCallback
+  autocmd!
+  autocmd TextYankPost * silent! lua vim.highlight.on_yank()
 augroup END

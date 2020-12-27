@@ -1,6 +1,7 @@
 local go = vim.o
 local bo = vim.bo
 local wo = vim.wo
+local data_dir = vim.fn.stdpath('data')
 
 
 -- There isn't an alternative to `set <option>` in Lua as of writing this
@@ -27,7 +28,7 @@ go.title = true
 -- Hide buffer when switching to other files
 go.hidden = true
 -- Prefer bash for shell-related tasks
-go.shell = "/bin/bash"	
+go.shell = "/bin/bash"
 -- Disable annoying swapfiles
 go.swapfile = false
 bo.swapfile = false
@@ -51,18 +52,26 @@ go.grepprg = [[rg --vimgrep --no-heading --smart-case]]
 go.shortmess = go.shortmess .. "I"
 -- Don't give |ins-completion-menu| messages
 go.shortmess = go.shortmess .. "c"
+go.completeopt = "menuone,noinsert,noselect"
 -- Always show sign columns
-wo.signcolumn = "number"
+wo.signcolumn = "yes"
 -- Having longer update time leads to noticeable delays and poor UX
 go.updatetime = 300
 -- Start scrolling when we're 8 lines below
 go.scrolloff = 8
 -- and 15 lines from the side
 go.sidescrolloff = 15
+-- Use a simple statusline
+go.statusline = [[[%n] %<%.99f %y%h%w%m%r%=%-14.(%l,%c%V%) %P]]
+-- Enable backups
+go.backup = true
+-- Ensure filename uniqueness with //
+go.backupdir = data_dir .. '/backup//'
 
 -- Use Space as the leader key
 vim.g.mapleader = ' '
 vim.g.python3_host_prog = os.getenv('PYTHON_3_HOST_PROG')
 
 require("jyz.plugins")
+require("jyz.plugins_config")
 require("jyz.native_keymaps")

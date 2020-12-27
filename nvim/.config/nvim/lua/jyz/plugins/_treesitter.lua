@@ -19,6 +19,26 @@ local options = {
   indent = {
     enable = true
   },
+  textobjects = {
+    select = {
+      enable = true,
+      keymaps = {
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ac"] = "@class.outer",
+        ["ic"] = "@class.inner",
+      }
+    },
+    swap = {
+      enable = true,
+      swap_next = {
+        ["<leader>>"] = "@parameter.inner",
+      },
+      swap_previous = {
+        ["<leader><"] = "@parameter.outer",
+      }
+    }
+  }
 }
 
 ts_configs.setup(options)

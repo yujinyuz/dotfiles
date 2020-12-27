@@ -1,53 +1,61 @@
 local packer_exists = pcall(vim.cmd, [[packadd packer.nvim]])
 
 if not packer_exists then
-	local install_path = vim.fn.stdpath('data')..'/site/pack/packer/opt/packer.nvim'
-	print('Downloading packer.nvim...')
-	vim.fn.system(string.format(
-			'git clone %s %s',
-			'https://github.com/wbthomason/packer.nvim',
-			install_path
-		)
-	)
+  local install_path = vim.fn.stdpath('data')..'/site/pack/packer/opt/packer.nvim'
+  print('Downloading packer.nvim...')
+  vim.fn.system(string.format(
+      'git clone %s %s',
+      'https://github.com/wbthomason/packer.nvim',
+      install_path
+    )
+  )
 end
 
 local packer = require('packer')
 local plugins = function()
-	use {'wbthomason/packer.nvim', opt = true}
+  local use = packer.use
+  use {'wbthomason/packer.nvim', opt = true}
 
   -- File management
-	use {
-		'nvim-telescope/telescope.nvim',
-		requires = {
-			'nvim-lua/popup.nvim',
-			'nvim-lua/plenary.nvim',
-		},
-	}
-	use {
-		'nvim-telescope/telescope-fzy-native.nvim',
-		requires = {
-			'nvim-telescope/telescope.nvim'
-		}
-	}
-	use {'kyazdani42/nvim-tree.lua'}
+  use {
+    'nvim-telescope/telescope.nvim',
+    requires = {
+      'nvim-lua/popup.nvim',
+      'nvim-lua/plenary.nvim',
+    },
+  }
+  use {
+    'nvim-telescope/telescope-fzy-native.nvim',
+    requires = {
+      'nvim-telescope/telescope.nvim'
+    }
+  }
+  use {'kyazdani42/nvim-tree.lua'}
   use {'justinmk/vim-dirvish'}
 
-
   -- Colors / Syntax
-	use {'gruvbox-community/gruvbox'}
-	use {'norcalli/nvim-colorizer.lua'} -- colorize hex/rgb/hsl value
-	use {'sheerun/vim-polyglot'}
-	use {
-		'nvim-treesitter/nvim-treesitter',
-		run = function()
+  use {'gruvbox-community/gruvbox'}
+  use {'norcalli/nvim-colorizer.lua'} -- colorize hex/rgb/hsl value
+  use {'sheerun/vim-polyglot'}
+  use {
+    'nvim-treesitter/nvim-treesitter',
+    run = function()
       vim.cmd [[TSUdpate]]
     end
-	}
+  }
+  use {
+    'nvim-treesitter/nvim-treesitter-textobjects',
+    requires = {
+      'nvim-tresitter/nvim-treesitter'
+    }
+  }
 
   -- IDE Stuffs
   use {'neovim/nvim-lspconfig'}
   use {'yujinyuz/vim-dyad'}
   use {'dense-analysis/ale'}
+  use {'alvan/vim-closetag'}
+  use {'mbbill/undotree'}
   use {
     'nvim-lua/completion-nvim',
     requires = {
@@ -82,6 +90,8 @@ local plugins = function()
   use {'tpope/vim-scriptease'}
   use {'tpope/vim-rhubarb'}
   use {'tpope/vim-apathy'}
+  use {'tpope/vim-rsi'}
+  use {'tpope/vim-dispatch'}
   use {'tpope/vim-projectionist'}
 
   -- Misc
@@ -90,21 +100,8 @@ local plugins = function()
   use {'kana/vim-textobj-user'}
   use {'kana/vim-textobj-entire'} -- [ae]
   use {'kana/vim-textobj-indent'} -- [ai]/[ii]
-	use {'wakatime/vim-wakatime'} -- track usage time using wakatime
+  use {'wakatime/vim-wakatime'} -- track usage time using wakatime
   use {'tmux-plugins/vim-tmux-focus-events'} -- Useful when `autoread` is enabled
 end
-
-vim.g.polyglot_disabled = {
-  'markdown',
-  'python.plugin',
-  'html.plugin',
-  'javascript.plugin',
-}
-vim.g.ale_linters_explicit = 1
-vim.g.ale_fixers = {
-  python = {'autopep8', 'isort'}
-}
-vim.g.ale_sign_error = '✘'
-vim.g.ale_sign_warning = '⚠'
 
 return packer.startup(plugins)

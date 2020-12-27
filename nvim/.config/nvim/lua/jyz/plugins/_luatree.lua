@@ -1,4 +1,6 @@
--- Set some variables
+local helpers = require('jyz.lib.nvim_helpers')
+local set_keymap = helpers.set_keymap
+
 vim.g.lua_tree_side = 'left'
 vim.g.lua_tree_width = 30
 vim.g.lua_tree_ignore = {
@@ -52,5 +54,12 @@ vim.g.lua_tree_icons = {
   folder = {default = "", open = " "}
 }
 
-vim.api.nvim_set_keymap('n', '<C-n>', '<cmd>LuaTreeToggle<CR>', {noremap = true, silent = true})
-vim.cmd [[ autocmd FileType LuaTree setlocal nowrap cursorline signcolumn=number ]]
+set_keymap('n', '<C-n>', '<cmd>LuaTreeToggle<CR>', {silent = true})
+helpers.augroup('LuaTreeCallback', {
+    {
+      events = {'FileType'},
+      targets = {'LuaTree'},
+      command = [[setlocal nowrap cursorline signcolumn=no]]
+
+    };
+})
