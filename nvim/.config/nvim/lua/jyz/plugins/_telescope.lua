@@ -2,6 +2,8 @@ local telescope = require('telescope')
 local actions = require('telescope.actions')
 local previewers = require('telescope.previewers')
 local builtin = require('telescope.builtin')
+local helpers = require('jyz.lib.nvim_helpers')
+local set_keymap = helpers.set_keymap
 
 -- Change mappings  because of memory muscle from fzf
 local mappings = {
@@ -15,7 +17,6 @@ local mappings = {
   ["<esc>"] = actions.close,
 }
 
-local nvim_set_keymap = vim.api.nvim_set_keymap
 
 telescope.setup {
   defaults = {
@@ -37,10 +38,10 @@ telescope.setup {
 
 telescope.load_extension('fzy_native')
 
-nvim_set_keymap('n', '<C-p>', '<cmd>Telescope find_files<CR>', {nowait = true, silent = true})
-nvim_set_keymap('n', '<leader>]', '<cmd>Telescope tags<CR>', {nowait = true, silent = true})
-nvim_set_keymap('n', '<leader><Space>', '<cmd>Telescope git_files<CR>', {nowait = true, silent = true})
-nvim_set_keymap('n', '<leader>F', '<cmd>Telescope live_grep<CR>', {nowait = true, silent = true})
-nvim_set_keymap('n', '<leader>b', '<cmd>Telescope buffers<CR>', {nowait = true, silent = true})
-nvim_set_keymap('n', '<leader>gw', [[<cmd>Telescope grep_string<CR>]], {nowait = true, silent = true})
+set_keymap('n', '<C-p>', helpers.cmd_map('Telescope find_files'), {nowait = true, silent = true})
+set_keymap('n', '<leader>]', helpers.cmd_map('Telescope tags'), {nowait = true, silent = true})
+set_keymap('n', '<leader><Space>', helpers.cmd_map('Telescope git_files'), {nowait = true, silent = true})
+set_keymap('n', '<leader>F', helpers.cmd_map('Telescope live_grep'), {nowait = true, silent = true})
+set_keymap('n', '<leader>b', helpers.cmd_map('Telescope buffers'), {nowait = true, silent = true})
+set_keymap('n', '<leader>gw', helpers.cmd_map('Telescope grep_string'), {nowait = true, silent = true})
 
