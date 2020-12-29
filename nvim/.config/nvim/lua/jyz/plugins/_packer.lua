@@ -1,7 +1,7 @@
 local packer_exists = pcall(vim.cmd, [[packadd packer.nvim]])
 
 if not packer_exists then
-  local install_path = vim.fn.stdpath('data')..'/site/pack/packer/opt/packer.nvim'
+  local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/opt/packer.nvim'
   print('Downloading packer.nvim...')
   vim.fn.system(string.format(
       'git clone %s %s',
@@ -13,7 +13,6 @@ end
 
 local packer = require('packer')
 local plugins = function()
-  local use = packer.use
   use {'wbthomason/packer.nvim', opt = true}
 
   -- File management

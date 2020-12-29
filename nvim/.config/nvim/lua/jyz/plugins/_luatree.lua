@@ -1,5 +1,4 @@
 local helpers = require('jyz.lib.nvim_helpers')
-local set_keymap = helpers.set_keymap
 
 vim.g.lua_tree_side = 'left'
 vim.g.lua_tree_width = 30
@@ -54,7 +53,12 @@ vim.g.lua_tree_icons = {
   folder = {default = "", open = " "}
 }
 
-set_keymap('n', '<C-n>', '<cmd>LuaTreeToggle<CR>', {silent = true})
+helpers.create_mappings{
+  n = {
+    {lhs = '<C-n>', rhs = helpers.cmd_map('LuaTreeToggle'), opts = {silent = true, noremap = true}},
+  }
+}
+
 helpers.augroup('LuaTreeCallback', {
     {
       events = {'FileType'},

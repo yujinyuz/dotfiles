@@ -3,7 +3,6 @@ local actions = require('telescope.actions')
 local previewers = require('telescope.previewers')
 local builtin = require('telescope.builtin')
 local helpers = require('jyz.lib.nvim_helpers')
-local set_keymap = helpers.set_keymap
 
 -- Change mappings  because of memory muscle from fzf
 local mappings = {
@@ -38,10 +37,13 @@ telescope.setup {
 
 telescope.load_extension('fzy_native')
 
-set_keymap('n', '<C-p>', helpers.cmd_map('Telescope find_files'), {nowait = true, silent = true})
-set_keymap('n', '<leader>]', helpers.cmd_map('Telescope tags'), {nowait = true, silent = true})
-set_keymap('n', '<leader><Space>', helpers.cmd_map('Telescope git_files'), {nowait = true, silent = true})
-set_keymap('n', '<leader>F', helpers.cmd_map('Telescope live_grep'), {nowait = true, silent = true})
-set_keymap('n', '<leader>b', helpers.cmd_map('Telescope buffers'), {nowait = true, silent = true})
-set_keymap('n', '<leader>gw', helpers.cmd_map('Telescope grep_string'), {nowait = true, silent = true})
-
+helpers.create_mappings{
+  n = {
+    {lhs = '<C-p>', rhs = helpers.cmd_map('Telescope find_files'), opts = {noremap = true, silent = true}},
+    {lhs = '<leader>]', rhs = helpers.cmd_map('Telescope tags'), opts = {noremap = true, silent = true}},
+    {lhs = '<leader><Space>', rhs = helpers.cmd_map('Telescope git_files'), opts = {noremap = true, silent = true}},
+    {lhs = '<leader>F', rhs = helpers.cmd_map('Telescope live_grep'), opts = {noremap = true, silent = true}},
+    {lhs = '<leader>b', rhs = helpers.cmd_map('Telescope buffers'), opts = {noremap = true, silent = true}},
+    {lhs = '<leader>gw', rhs = helpers.cmd_map('Telescope grep_string'), opts = {noremap = true, silent = true}},
+  }
+}

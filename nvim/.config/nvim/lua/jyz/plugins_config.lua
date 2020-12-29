@@ -1,7 +1,7 @@
 -- Here resides some config files that require minimal config
 local helpers = require('jyz.lib.nvim_helpers')
-local set_keymap = helpers.set_keymap
 
+-- TODO: Maybe only have a single `create_mappings`??
 
 -- vim-polyglot
 vim.g.polyglot_disabled = {
@@ -20,10 +20,18 @@ vim.g.ale_sign_error = '✘'
 vim.g.ale_sign_warning = '⚠'
 
 -- vim-fugitive
-set_keymap('n', '<leader>gs', helpers.cmd_map('Git'), {silent = true})
+helpers.create_mappings{
+  n = {
+    {lhs = '<leader>gs', rhs = helpers.cmd_map('Git'), opts = {silent = true, noremap = true}},
+  }
+}
 
 -- vim-dirvish
-set_keymap('n', '<leader>.', helpers.cmd_map('Dirvish %:p:h'), {silent = true})
+helpers.create_mappings{
+  n = {
+    {lhs = '<leader>.', rhs = helpers.cmd_map('Dirvish %:p:h'), opts = {silent = true, noremap = true}},
+  }
+}
 
 -- Disable netrw
 vim.g.loaded_netrwPlugin = 1
@@ -32,7 +40,11 @@ vim.g.loaded_netrwPlugin = 1
 vim.g.undotree_HighlightChangedWithSign = 0
 vim.g.undotree_WindowLayout = 4
 vim.g.undotree_SetFocusWhenToggle = 1
-set_keymap('n', '<leader>u', helpers.cmd_map('UndoTreeToggle'), {silent = true})
+helpers.create_mappings{
+  n = {
+    {lhs = '<leader>u', rhs = helpers.cmd_map('UndotreeToggle'), opts = {silent = true, noremap = true}},
+  }
+}
 
 -- vim-closetag
 vim.g.closetag_filename = '*.html,*.js,*.erb,*.hbs'
@@ -46,4 +58,8 @@ vim.g.go_highlight_structs = 1
 vim.g.go_fmt_command = 'goimports'
 
 -- vista.vim
-set_keymap('n', [[\b]], helpers.cmd_map('Vista!!'), {silent = true})
+helpers.create_mappings{
+  n = {
+    {lhs = [[\b]], rhs = helpers.cmd_map('Vista!!'), {silent = true}},
+  }
+}

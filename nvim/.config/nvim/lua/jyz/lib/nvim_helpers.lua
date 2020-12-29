@@ -8,19 +8,19 @@ function M.vcmd_map(cmd)
   return string.format([[<Cmd>'<,'>%s<CR>]], cmd)
 end
 
-function M.set_keymap(mode, lhs, rhs, opts)
-  vim.api.nvim_set_keymap(
-    mode,
-    lhs,
-    rhs,
-    {
-      noremap = opts.noremap or true,
-      silent = opts.silent or false,
-      expr = opts.expr or false,
-      script = opts.script or false,
-      nowait = opts.nowait or false,
-    }
-  )
+function M.create_mappings(mappings, bufnr)
+  local fn = vim.api.nvim_set_keymap
+  if bufnr then
+    fn = function(...)
+      vim.api.nvim_buf_set_keymap(bufnr, ...)
+    end
+  end
+
+  for mode, rules in pairs(mappings) do
+    for _, m in ipairs(rules) do
+      fn(mode, m.lhs, m.rhs, m.opts or {})
+    end
+  end
 end
 
 function M.augroup(name, commands)
