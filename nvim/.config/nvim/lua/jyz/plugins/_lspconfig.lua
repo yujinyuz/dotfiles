@@ -1,7 +1,6 @@
 local lspconfig = require('lspconfig')
 local completion = require('completion')
 local helpers = require('jyz.lib.nvim_helpers')
-local set_keymap = helpers.set_keymap
 
 -- When in need of help, just check documentation via :h lsp
 
@@ -9,32 +8,56 @@ local on_attach = function(client)
   local resolved_capabilities = client.resolved_capabilities
   completion.on_attach(client)
 
-  local opts = {noremap = true, silent = true}
-  set_keymap('n', 'gD', helpers.cmd_map([[lua vim.lsp.buf.declaration()]]), opts)
-  set_keymap('n', 'gd', helpers.cmd_map([[lua vim.lsp.buf.definition()]]), opts)
-  set_keymap('n', 'ga', helpers.cmd_map([[lua vim.lsp.buf.code_action()]]), opts)
-  set_keymap('n', 'K', helpers.cmd_map([[lua vim.lsp.buf.hover()]]), opts)
-  set_keymap('n', 'gi', helpers.cmd_map([[lua vim.lsp.buf.implementation()]]), opts)
-  set_keymap('n', '<leader>gr', helpers.cmd_map([[lua vim.lsp.buf.rename()]]), opts)
-  set_keymap('n', 'gr', helpers.cmd_map([[lua require'telescope.builtin'.lsp_references()]]), opts)
-  set_keymap('n', '<leader>ld', helpers.cmd_map([[lua vim.lsp.diagnostic.show_line_diagnostics()]]), opts)
+  helpers.create_mappings{
+    n = {
+      {lhs = 'gD', rhs = helpers.cmd_map([[lua vim.lsp.buf.declaration()]]), opts = {noremap = true, silent = true}},
+      {lhs = 'gd', rhs = helpers.cmd_map([[lua vim.lsp.buf.definition()]]), opts = {noremap = true, silent = true}},
+      {lhs = 'ga', rhs = helpers.cmd_map([[lua vim.lsp.buf.code_action()]]), opts = {noremap = true, silent = true}},
+      {lhs = 'K', rhs = helpers.cmd_map([[lua vim.lsp.buf.hover()]]), opts = {noremap = true, silent = true}},
+      {lhs = 'gi', rhs = helpers.cmd_map([[lua vim.lsp.buf.implementation()]]), opts = {noremap = true, silent = true}},
+      {lhs = 'gr', rhs = helpers.cmd_map([[lua require'telescope.builtin'.lsp_references()]]), opts = {noremap = true, silent = true}},
+      {lhs = '<leader>gr', rhs = helpers.cmd_map([[lua vim.lsp.buf.rename()]]), opts = {noremap = true, silent = true}},
+      {lhs = '<leader>ld', rhs = helpers.cmd_map([[lua vim.lsp.diagnostic.show_line_diagnostics()]]), opts = {noremap = true, silent = true}},
+    },
+    i = {
+      {lhs = '<C-s>', rhs = helpers.cmd_map([[lua vim.lsp.buf.signature_help()]]), opts = {noremap = true, silent = true}},
+    }
+  }
 
   vim.bo.omnifunc = 'v:lua.vim.lsp.omnifunc'
 
-  vim.cmd([[augroup LSPCallbacks]])
-  vim.cmd([[autocmd!]])
-  vim.cmd([[autocmd CursorHold <buffer> lua vim.lsp.diagnostic.show_line_diagnostics()]])
-  if resolved_capabilities.document_highlight then
-    vim.cmd([[autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()]])
-    vim.cmd([[autocmd CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()]])
-    vim.cmd([[autocmd CursorMoved <buffer> lua vim.lsp.util.buf_clear_references()]])
+  local buf_autocmds = {
+    {
+      events = {'CursorHold'},
+      targets = {'<buffer>'},
+      command = [[lua vim.lsp.diagnostic.show_line_diagnostics()]],
+    }
+  }
+
+  if resolved_capabilities.documentFormatting then
+    table.insert(buf_autocmds, {
+      events = {'CursorHold', 'CursorHoldI'},
+      targets = {'<buffer>'},
+      command = [[lua vim.lsp.diagnostic.show_line_diagnostics()]]
+    })
+
+    table.insert(buf_autocmds, {
+      events = {'CursorMoved'},
+      targets = {'<buffer>'},
+      command = [[lua vim.lsp.util.buf_clear_references()]]
+    })
   end
-  vim.cmd([[augroup END]])
+
+  helpers.augroup('LspCallbacks',  buf_autocmds)
 end
 
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {
+    -- underline = false,
+    -- virtual_text = false,
+    -- signs = true,
+    -- update_in_insert = false,
     virtual_text = {
       prefix = "»",
       spacing = 4,
@@ -47,14 +70,28 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 
 local servers = {
   vimls = {},
+  efm = {
+    init_options = {
+      documentFormatting = true,
+    },
+  },
   jsonls = {},
-  -- jedi_language_server = {},
-  pyls_ms = {},
+  jedi_language_server = {},
+  -- pyls_ms = {},
   sumneko_lua = {
     settings = {
       Lua = {
+        runtime = {
+          version = "LuaJIT",
+        },
         diagnostics = {
-          globals = { 'vim' }
+          globals = { 'vim', 'use', }
+        },
+        workspace = {
+          library = {
+            [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+            [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+          }
         }
       }
     }
@@ -85,15 +122,15 @@ vim.g.completion_chain_complete_list = {
     }
   }
 }
+
 vim.g.completion_matching_smart_case = 1
 vim.g.completion_confirm_key = ""
 
-set_keymap('i', '<Tab>', [[pumvisible() ? "\<C-n>": "\<Tab>"]], {expr = true, noremap = true, silent = true})
-set_keymap('i', '<S-Tab>', [[pumvisible() ? "\<C-p>": "\<S-Tab>"]], {expr = true, noremap = true, silent = true})
-set_keymap('i', '<C-Space>', [[<Plug>(completion_trigger)]], {silent = true})
-set_keymap(
-  'i',
-  '<CR>',
-  [[ pumvisible() ? complete_info()["selected"] != "-1" ? "\<Plug>(completion_confirm_completion)" : "\<C-e>\<CR>" : "\<CR>" ]],
-  {expr = true, silent = true}
-)
+helpers.create_mappings{
+  i = {
+    {lhs = '<Tab>', rhs = [[pumvisible() ? "\<C-n>": "\<Tab>"]], opts = {expr = true, silent = true}},
+    {lhs = '<S-Tab>', rhs = [[pumvisible() ? "\<C-p>": "\<S-Tab>"]], opts = {expr = true, noremap = true, silent = true}},
+    {lhs = '<C-Space>', rhs = [[<Plug>(completion_trigger)]], opts = {silent = true}},
+    {lhs = '<CR>', rhs = [[pumvisible() ? complete_info()["selected"] != "-1" ? "\<Plug>(completion_confirm_completion)" : "\<C-e>\<CR>" : "\<CR>"]], opts = {expr = true, silent = true}}
+  }
+}
