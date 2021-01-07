@@ -67,6 +67,9 @@ go.statusline = [[[%n] %<%.99f %y%h%w%m%r%=%-14.(%l,%c%V%) %P]]
 go.backup = true
 -- Ensure filename uniqueness with //
 go.backupdir = data_dir .. '/backup//'
+-- Enable persistent undo
+go.undofile = true
+bo.undofile = true
 
 -- Use Space as the leader key
 vim.g.mapleader = ' '

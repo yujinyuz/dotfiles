@@ -13,7 +13,7 @@ augroup END
 
 " Strip whitesapce and go back to last position
 function! TrimWhitespace() abort
-  if exists('b:no_strip_whitespace')
+  if exists('b:no_strip_whitespace') || &ft =~ 'commit'
     return
   endif
 
@@ -44,4 +44,10 @@ augroup END
 augroup HighlightCallback
   autocmd!
   autocmd TextYankPost * silent! lua vim.highlight.on_yank()
+augroup END
+
+augroup NumberToggle
+  autocmd!
+	autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &nu && mode() != "i" | set rnu | endif
+  autocmd BufLeave,FocusLost,InsertEnter,WinLeave * if &nu | set nornu | endif
 augroup END

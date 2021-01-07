@@ -21,76 +21,135 @@ local plugins = function()
     requires = {
       'nvim-lua/popup.nvim',
       'nvim-lua/plenary.nvim',
+      'nvim-telescope/telescope-fzy-native.nvim',
     },
   }
+
   use {
-    'nvim-telescope/telescope-fzy-native.nvim',
-    requires = {
-      'nvim-telescope/telescope.nvim'
-    }
+    'kyazdani42/nvim-tree.lua',
+    requires = {'kyazdani42/nvim-web-devicons', opt = true}
   }
-  use {'kyazdani42/nvim-tree.lua'}
-  use {'justinmk/vim-dirvish'}
+  use {
+    'justinmk/vim-dirvish',
+  }
 
   -- Colors / Syntax
   use {'gruvbox-community/gruvbox'}
   use {'norcalli/nvim-colorizer.lua'} -- colorize hex/rgb/hsl value
-  use {'sheerun/vim-polyglot'}
   use {
-    'nvim-treesitter/nvim-treesitter',
-    run = function()
-      vim.cmd [[TSUdpate]]
+    'sheerun/vim-polyglot',
+    setup = function()
+      vim.g.polyglot_disabled = {
+        'markdowm',
+        'python.plugin',
+        'html.plugin',
+        'javascript.plugin',
+      }
     end
   }
   use {
-    'nvim-treesitter/nvim-treesitter-textobjects',
+    'nvim-treesitter/nvim-treesitter',
     requires = {
-      'nvim-tresitter/nvim-treesitter'
+      {'nvim-treesitter/completion-treesitter'},
+      {'nvim-treesitter/nvim-treesitter-textobjects'},
     }
   }
 
   -- IDE Stuffs
   use {'neovim/nvim-lspconfig'}
   use {'yujinyuz/vim-dyad'}
-  use {'dense-analysis/ale'}
-  use {'alvan/vim-closetag'}
-  use {'mbbill/undotree'}
+  use {
+    'alvan/vim-closetag',
+    setup = function()
+      vim.g.closetag_filename = '*.html,*.js,*.erb,*.hbs'
+      vim.g.closetag_emptyTags_caseSensitive = 1
+    end
+
+  }
+  use {
+    'mbbill/undotree',
+    opt = true,
+    cmd = {'UndotreeToggle'}
+  }
+
   use {
     'nvim-lua/completion-nvim',
     requires = {
-      'neovim/nvim-lspconfig'
+      {'steelsojka/completion-buffers'},
+      {'kristijanhusak/completion-tags'},
+      {'neovim/nvim-lspconfig'}
     }
   }
-  use {
-    'steelsojka/completion-buffers',
-    requires = {
-      'nvim-lua/completion-nvim',
-    }
-  }
-  use {
-    'kristijanhusak/completion-tags',
-    requires = {
-      'nvim-lua/completion-nvim'
-    }
-  }
+
   use {'ludovicchabant/vim-gutentags'}
   use {'wincent/ferret'}
+  use {
+    'mfussenegger/nvim-dap',
+    requires = {
+      {'mfussenegger/nvim-dap-python'},
+      {'theHamsta/nvim-dap-virtual-text'},
+    }
+  }
+
+  use {
+    'hoob3rt/lualine.nvim',
+    requires = {'kyazdani42/nvim-web-devicons', opt = true},
+    config = function()
+      local lualine = require('lualine')
+      local function filename()
+        return [[%f %m]]
+      end
+      vim.o.showmode = false
+
+      lualine.theme = 'gruvbox'
+      lualine.separator = '|'
+      lualine.sections = {
+        lualine_a = { 'mode' },
+        lualine_b = { 'branch' },
+        lualine_c = { filename },
+        lualine_x = { 'encoding', 'fileformat', 'filetype' },
+        lualine_y = { 'progress' },
+        lualine_z = { 'location'  },
+      }
+      lualine.inactive_sections = {
+        lualine_a = {  },
+        lualine_b = {  },
+        lualine_c = { filename },
+        lualine_x = { 'location' },
+        lualine_y = {  },
+        lualine_z = {   }
+      }
+      -- lualine.extensions = { 'fzf' }
+      lualine.status()
+    end
+  }
 
   -- Holiness
   use {'tpope/vim-surround'}
   use {'tpope/vim-commentary'}
-  use {'tpope/vim-fugitive'}
+  use {
+    'tpope/vim-fugitive',
+    opt = true,
+    cmd = {'G', 'Git', 'Glog', 'Gbrowse', 'Gblame', 'Gcommit', 'Gcd', 'Gvdiffsplit', 'Gwrite'}
+  }
   -- use {'tpope/vim-endwise'}
   use {'tpope/vim-repeat'}
   -- use {'tpope/vim-obsession'}
   use {'tpope/vim-unimpaired'}
-  -- use {'tpope/vim-dispatch'}
   use {'tpope/vim-eunuch'}
-  use {'tpope/vim-scriptease'}
+  use {
+    'tpope/vim-scriptease',
+    opt = true,
+    cmd = {'Scriptnames', 'Messages'}
+  }
   use {'tpope/vim-rhubarb'}
   use {'tpope/vim-apathy'}
   use {'tpope/vim-rsi'}
-  use {'tpope/vim-dispatch'}
+  use {
+    'tpope/vim-dispatch',
+    opt = true,
+    cmd = {'Dispatch', 'Make', 'Focus', 'Start'}
+  }
   use {'tpope/vim-projectionist'}
 
   -- Misc
