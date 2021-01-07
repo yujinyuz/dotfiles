@@ -55,7 +55,7 @@ vim.g.lua_tree_icons = {
 
 helpers.create_mappings{
   n = {
-    {lhs = '<C-n>', rhs = helpers.cmd_map('LuaTreeToggle'), opts = {silent = true, noremap = true}},
+    {lhs = '<C-n>', rhs = helpers.cmd_map('NvimTreeToggle'), opts = {silent = true, noremap = true}},
   }
 }
 

@@ -4,11 +4,11 @@ local helpers = require('jyz.lib.nvim_helpers')
 
 -- When in need of help, just check documentation via :h lsp
 
-local on_attach = function(client)
+local on_attach = function(client, bufnr)
   local resolved_capabilities = client.resolved_capabilities
   completion.on_attach(client)
 
-  helpers.create_mappings{
+  helpers.create_mappings({
     n = {
       {lhs = 'gD', rhs = helpers.cmd_map([[lua vim.lsp.buf.declaration()]]), opts = {noremap = true, silent = true}},
       {lhs = 'gd', rhs = helpers.cmd_map([[lua vim.lsp.buf.definition()]]), opts = {noremap = true, silent = true}},
@@ -18,11 +18,15 @@ local on_attach = function(client)
       {lhs = 'gr', rhs = helpers.cmd_map([[lua require'telescope.builtin'.lsp_references()]]), opts = {noremap = true, silent = true}},
       {lhs = '<leader>gr', rhs = helpers.cmd_map([[lua vim.lsp.buf.rename()]]), opts = {noremap = true, silent = true}},
       {lhs = '<leader>ld', rhs = helpers.cmd_map([[lua vim.lsp.diagnostic.show_line_diagnostics()]]), opts = {noremap = true, silent = true}},
+      {lhs = '<C-s>', rhs = helpers.cmd_map([[lua vim.lsp.buf.signature_help()]]), opts = {noremap = true, silent = true}},
+      {lhs = '<leader>lf', rhs = helpers.cmd_map([[lua vim.lsp.buf.formatting()]]), opts = {noremap = true, silent = true}},
+      {lhs = ']w', rhs = helpers.cmd_map([[lua vim.lsp.diagnostic.goto_next()]]), opts = {noremap = true}},
+      {lhs = '[w', rhs = helpers.cmd_map([[lua vim.lsp.diagnostic.goto_prev()]]), opts = {noremap = true}},
     },
     i = {
       {lhs = '<C-s>', rhs = helpers.cmd_map([[lua vim.lsp.buf.signature_help()]]), opts = {noremap = true, silent = true}},
     }
-  }
+  }, bufnr)
 
   vim.bo.omnifunc = 'v:lua.vim.lsp.omnifunc'
 
@@ -58,15 +62,29 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     -- virtual_text = false,
     -- signs = true,
     -- update_in_insert = false,
-    virtual_text = {
-      prefix = "»",
-      spacing = 4,
-    },
+    -- virtual_text = {
+    --   prefix = "»",
+    --   spacing = 4,
+    -- },
+    virtual_text = true,
     signs = false,
     update_in_insert = false,
     underline = true
   }
 )
+
+local system_name
+if vim.fn.has("mac") == 1 then
+  system_name = "macOS"
+elseif vim.fn.has("unix") == 1 then
+  system_name = "Linux"
+elseif vim.fn.has('win32') == 1 then
+  system_name = "Windows"
+else
+  print("Unsupported system for sumneko")
+end
+local sumneko_root_path = vim.fn.stdpath('cache')..'/lspconfig/sumneko_lua/lua-language-server'
+local sumneko_binary = sumneko_root_path.."/bin/"..system_name.."/lua-language-server"
 
 local servers = {
   vimls = {},
@@ -75,14 +93,18 @@ local servers = {
       documentFormatting = true,
     },
   },
+  tsserver = {},
   jsonls = {},
   jedi_language_server = {},
   -- pyls_ms = {},
+  -- pyright = {},
   sumneko_lua = {
+    cmd = {sumneko_binary, "-E", sumneko_root_path .. "/main.lua"},
     settings = {
       Lua = {
         runtime = {
           version = "LuaJIT",
+          path = vim.split(package.path, ';'),
         },
         diagnostics = {
           globals = { 'vim', 'use', }
@@ -112,15 +134,18 @@ vim.g.completion_matching_strategy_list = {'exact', 'substring', 'fuzzy'}
 vim.g.completion_chain_complete_list = {
   default = {
     default = {
-      {complete_items = { 'lsp', 'tags' } },
-      {complete_items = { 'buffers' } },
+      {complete_items = { 'lsp', 'ts', 'tags' } },
+      {complete_items = { 'buffers', 'path' } },
       {mode = '<c-p>'},
       {mode = '<c-n>'},
     },
     string = {
-      { complete_items = { 'path' } },
+      { complete_items = { 'path', 'buffers', } },
     }
-  }
+  },
+  -- python = {
+  --   {complete_items = {'ts'} },
+  -- }
 }
 
 vim.g.completion_matching_smart_case = 1
@@ -131,6 +156,8 @@ helpers.create_mappings{
     {lhs = '<Tab>', rhs = [[pumvisible() ? "\<C-n>": "\<Tab>"]], opts = {expr = true, silent = true}},
     {lhs = '<S-Tab>', rhs = [[pumvisible() ? "\<C-p>": "\<S-Tab>"]], opts = {expr = true, noremap = true, silent = true}},
     {lhs = '<C-Space>', rhs = [[<Plug>(completion_trigger)]], opts = {silent = true}},
-    {lhs = '<CR>', rhs = [[pumvisible() ? complete_info()["selected"] != "-1" ? "\<Plug>(completion_confirm_completion)" : "\<C-e>\<CR>" : "\<CR>"]], opts = {expr = true, silent = true}}
+    {lhs = '<CR>', rhs = [[pumvisible() ? complete_info()["selected"] != "-1" ? "\<Plug>(completion_confirm_completion)" : "\<C-e>\<CR>" : "\<CR>"]], opts = {expr = true, silent = true}},
+    -- {lhs = '<A-j>', rhs = '<Plug>(completion_next_source)', opts = {}},
+    -- {lhs = '<A-k>', rhs = '<Plug>(completion_prev_source)', opts = {}},
   }
 }

@@ -13,7 +13,7 @@ helpers.create_mappings{
     {lhs = '<leader>d', rhs = '"_d', opts = {silent = true, noremap = true}},
     {lhs = 'Q', rhs = 'gq', opts = {noremap = true}},
     -- Remove highlights
-    {lhs = '<C-l>', rhs = helpers.cmd_map('nohl'), opts = {silent = true, noremap = true}},
+    {lhs = '<C-l>', rhs = [[:nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>]], opts = {noremap = true, silent = true}},
     -- Make Y work like other upcase commands
     {lhs = 'Y', rhs = 'y$', opts = {noremap = true}},
     -- Buffer Switch
@@ -39,8 +39,8 @@ helpers.create_mappings{
     {lhs = '<C-j>', rhs = '<C-n>', opts = {noremap = true}},
     {lhs = '<C-k>', rhs = '<C-p>', opts = {noremap = true}},
     {lhs = '<A-h>', rhs = [[<C-\><C-n><C-w>h]], opts = {noremap = true}},
-    {lhs = '<A-j>', rhs = [[<C-\><C-n><C-w>j]], opts = {noremap = true}},
-    {lhs = '<A-k>', rhs = [[<C-\><C-n><C-w>k]], opts = {noremap = true}},
+    -- {lhs = '<A-j>', rhs = [[<C-\><C-n><C-w>j]], opts = {noremap = true}},
+    -- {lhs = '<A-k>', rhs = [[<C-\><C-n><C-w>k]], opts = {noremap = true}},
     {lhs = '<A-l>', rhs = [[<C-\><C-n><C-w>l]], opts = {noremap = true}},
   },
   c = {

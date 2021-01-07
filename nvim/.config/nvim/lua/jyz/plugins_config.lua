@@ -3,14 +3,6 @@ local helpers = require('jyz.lib.nvim_helpers')
 
 -- TODO: Maybe only have a single `create_mappings`??
 
--- vim-polyglot
-vim.g.polyglot_disabled = {
-  'markdown',
-  'python.plugin',
-  'html.plugin',
-  'javascript.plugin',
-}
-
 -- ale
 vim.g.ale_linters_explicit = 1
 vim.g.ale_fixers = {
@@ -46,10 +38,6 @@ helpers.create_mappings{
   }
 }
 
--- vim-closetag
-vim.g.closetag_filename = '*.html,*.js,*.erb,*.hbs'
-vim.g.closetag_emptyTags_caseSensitive = 1
-
 -- vim-go
 vim.g.go_def_mapping_enabled = 0
 vim.g.go_highlight_functions = 1
@@ -63,3 +51,7 @@ helpers.create_mappings{
     {lhs = [[\b]], rhs = helpers.cmd_map('Vista!!'), {silent = true}},
   }
 }
+
+
+vim.g.dap_virtual_text = true
+
