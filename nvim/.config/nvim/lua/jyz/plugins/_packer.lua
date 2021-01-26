@@ -12,7 +12,7 @@ if not packer_exists then
 end
 
 local packer = require('packer')
-local plugins = function()
+local plugins = function(use)
   use {'wbthomason/packer.nvim', opt = true}
 
   -- File management
@@ -22,6 +22,7 @@ local plugins = function()
       'nvim-lua/popup.nvim',
       'nvim-lua/plenary.nvim',
       'nvim-telescope/telescope-fzy-native.nvim',
+      'nvim-telescope/telescope-fzf-writer.nvim'
     },
   }
 
@@ -37,18 +38,8 @@ local plugins = function()
   use {'gruvbox-community/gruvbox'}
   use {'norcalli/nvim-colorizer.lua'} -- colorize hex/rgb/hsl value
   use {
-    'sheerun/vim-polyglot',
-    setup = function()
-      vim.g.polyglot_disabled = {
-        'markdowm',
-        'python.plugin',
-        'html.plugin',
-        'javascript.plugin',
-      }
-    end
-  }
-  use {
     'nvim-treesitter/nvim-treesitter',
+    run = function() vim.cmd [[TSUpdate]] end,
     requires = {
       {'nvim-treesitter/completion-treesitter'},
       {'nvim-treesitter/nvim-treesitter-textobjects'},
@@ -58,6 +49,7 @@ local plugins = function()
   -- IDE Stuffs
   use {'neovim/nvim-lspconfig'}
   use {'yujinyuz/vim-dyad'}
+  use {'Vimjas/vim-python-pep8-indent'}
   use {
     'alvan/vim-closetag',
     setup = function()
@@ -71,14 +63,34 @@ local plugins = function()
     opt = true,
     cmd = {'UndotreeToggle'}
   }
+  use {
+    'hrsh7th/nvim-compe',
+    config = function()
+      require('compe').setup {
+        enabled = true,
+        debug = false,
+        min_length = 1,
+        preselect = 'enable',
+        allow_prefix_unmatch = false,
+
+        source = {
+          nvim_lsp = true,
+          tags = true,
+          path = true,
+          buffer = true,
+        }
+      }
+    end
+  }
 
   use {
-    'nvim-lua/completion-nvim',
+    'SirVer/ultisnips',
     requires = {
-      {'steelsojka/completion-buffers'},
-      {'kristijanhusak/completion-tags'},
-      {'neovim/nvim-lspconfig'}
-    }
+      {'honza/vim-snippets'},
+    },
+    config = function()
+      vim.g.UltiSnipsExpandTrigger = '<C-l>'
+    end
   }
 
   use {'ludovicchabant/vim-gutentags'}

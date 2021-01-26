@@ -71,6 +71,9 @@ go.backupdir = data_dir .. '/backup//'
 go.undofile = true
 bo.undofile = true
 
+go.wildmenu = true
+go.wildcharm = 26 -- Equivalent of <C-z>
+
 -- Use Space as the leader key
 vim.g.mapleader = ' '
 vim.g.python3_host_prog = os.getenv('PYTHON_3_HOST_PROG')
