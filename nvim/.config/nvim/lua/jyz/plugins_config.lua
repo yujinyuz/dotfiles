@@ -3,23 +3,24 @@ local helpers = require('jyz.lib.nvim_helpers')
 
 -- TODO: Maybe only have a single `create_mappings`??
 
--- ale
-vim.g.ale_linters_explicit = 1
-vim.g.ale_fixers = {
-  python = {'autopep8', 'isort'}
+-- nvim-compe
+helpers.create_mappings {
+  i = {
+    {lhs = '<C-Space>', rhs = [[compe#complete()]], opts = {noremap = true, silent = true, expr = true}},
+    {lhs = '<CR>', rhs = [[compe#confirm('<CR>')]], opts = {noremap = true, silent = true, expr = true}},
+    {lhs = '<C-e>', rhs = [[compe#close()]], opts = {noremap = true, silent = true, expr = true}},
+  }
 }
-vim.g.ale_sign_error = '✘'
-vim.g.ale_sign_warning = '⚠'
 
 -- vim-fugitive
-helpers.create_mappings{
+helpers.create_mappings {
   n = {
     {lhs = '<leader>gs', rhs = helpers.cmd_map('Git'), opts = {silent = true, noremap = true}},
   }
 }
 
 -- vim-dirvish
-helpers.create_mappings{
+helpers.create_mappings {
   n = {
     {lhs = '<leader>.', rhs = helpers.cmd_map('Dirvish %:p:h'), opts = {silent = true, noremap = true}},
   }
@@ -32,7 +33,7 @@ vim.g.loaded_netrwPlugin = 1
 vim.g.undotree_HighlightChangedWithSign = 0
 vim.g.undotree_WindowLayout = 4
 vim.g.undotree_SetFocusWhenToggle = 1
-helpers.create_mappings{
+helpers.create_mappings {
   n = {
     {lhs = '<leader>u', rhs = helpers.cmd_map('UndotreeToggle'), opts = {silent = true, noremap = true}},
   }
@@ -46,12 +47,9 @@ vim.g.go_highlight_structs = 1
 vim.g.go_fmt_command = 'goimports'
 
 -- vista.vim
-helpers.create_mappings{
+helpers.create_mappings {
   n = {
     {lhs = [[\b]], rhs = helpers.cmd_map('Vista!!'), {silent = true}},
   }
 }
-
-
 vim.g.dap_virtual_text = true
-

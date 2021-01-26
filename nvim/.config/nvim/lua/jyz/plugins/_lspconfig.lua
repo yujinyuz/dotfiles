@@ -1,12 +1,10 @@
 local lspconfig = require('lspconfig')
-local completion = require('completion')
 local helpers = require('jyz.lib.nvim_helpers')
 
 -- When in need of help, just check documentation via :h lsp
 
-local on_attach = function(client, bufnr)
+local on_attach = function(client)
   local resolved_capabilities = client.resolved_capabilities
-  completion.on_attach(client)
 
   helpers.create_mappings({
     n = {
@@ -26,7 +24,7 @@ local on_attach = function(client, bufnr)
     i = {
       {lhs = '<C-s>', rhs = helpers.cmd_map([[lua vim.lsp.buf.signature_help()]]), opts = {noremap = true, silent = true}},
     }
-  }, bufnr)
+  }, 0)
 
   vim.bo.omnifunc = 'v:lua.vim.lsp.omnifunc'
 
@@ -55,7 +53,6 @@ local on_attach = function(client, bufnr)
   helpers.augroup('LspCallbacks',  buf_autocmds)
 end
 
-
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {
     -- underline = false,
@@ -66,7 +63,11 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     --   prefix = "»",
     --   spacing = 4,
     -- },
-    virtual_text = true,
+    -- virtual_text = true,
+    virtual_text = {
+      spacing = 2,
+      severity_limit = "Warning",
+    },
     signs = false,
     update_in_insert = false,
     underline = true
@@ -92,6 +93,7 @@ local servers = {
     init_options = {
       documentFormatting = true,
     },
+    filetypes = {'*'}
   },
   tsserver = {},
   jsonls = {},
@@ -107,7 +109,7 @@ local servers = {
           path = vim.split(package.path, ';'),
         },
         diagnostics = {
-          globals = { 'vim', 'use', }
+          globals = { 'vim' }
         },
         workspace = {
           library = {
@@ -122,42 +124,15 @@ local servers = {
 
 for server, config in pairs(servers) do
   config.on_attach = on_attach
-  config.on_init = function()
-    print('Language Protocol Server started!')
+  config.on_init = function(client)
+    print('LSP: ' .. client.name .. ' started')
   end
   lspconfig[server].setup(config)
 end
-
--- completion-lua
-vim.g.completion_sorting = 'length'
-vim.g.completion_matching_strategy_list = {'exact', 'substring', 'fuzzy'}
-vim.g.completion_chain_complete_list = {
-  default = {
-    default = {
-      {complete_items = { 'lsp', 'ts', 'tags' } },
-      {complete_items = { 'buffers', 'path' } },
-      {mode = '<c-p>'},
-      {mode = '<c-n>'},
-    },
-    string = {
-      { complete_items = { 'path', 'buffers', } },
-    }
-  },
-  -- python = {
-  --   {complete_items = {'ts'} },
-  -- }
-}
-
-vim.g.completion_matching_smart_case = 1
-vim.g.completion_confirm_key = ""
 
 helpers.create_mappings{
   i = {
     {lhs = '<Tab>', rhs = [[pumvisible() ? "\<C-n>": "\<Tab>"]], opts = {expr = true, silent = true}},
     {lhs = '<S-Tab>', rhs = [[pumvisible() ? "\<C-p>": "\<S-Tab>"]], opts = {expr = true, noremap = true, silent = true}},
-    {lhs = '<C-Space>', rhs = [[<Plug>(completion_trigger)]], opts = {silent = true}},
-    {lhs = '<CR>', rhs = [[pumvisible() ? complete_info()["selected"] != "-1" ? "\<Plug>(completion_confirm_completion)" : "\<C-e>\<CR>" : "\<CR>"]], opts = {expr = true, silent = true}},
-    -- {lhs = '<A-j>', rhs = '<Plug>(completion_next_source)', opts = {}},
-    -- {lhs = '<A-k>', rhs = '<Plug>(completion_prev_source)', opts = {}},
   }
 }

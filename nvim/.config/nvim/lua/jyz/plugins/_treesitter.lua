@@ -17,7 +17,8 @@ local options = {
     use_languagetree = false,
   },
   indent = {
-    enable = false,
+    enable = true,
+    disable = {"python"}
   },
   textobjects = {
     select = {

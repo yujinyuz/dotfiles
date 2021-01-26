@@ -11,22 +11,16 @@ augroup ReturnToLastEditPosition
     \ | endif
 augroup END
 
-" Strip whitesapce and go back to last position
-function! TrimWhitespace() abort
-  if exists('b:no_strip_whitespace') || &ft =~ 'commit'
-    return
-  endif
-
-  let l = line('.')
-  let c = col('.')
-  %s/\s\+$//e
-
-  call cursor(l, c)
-endfunction
-
 augroup StripTrailingWhiteSpace
+  " Strip trailing whitespace and go back to last cursor position
   autocmd!
-  autocmd BufWritePre * call TrimWhitespace()
+  autocmd! BufWritePre *
+    \ if &ft !~# 'commit'
+    \ |   let l = line('.')
+    \ |   let c = col('.')
+    \ |   %s/\s\+$//e
+    \ |   call cursor(l, c)
+    \ | endif
 augroup END
 
 augroup BackupFileCallback
@@ -51,3 +45,28 @@ augroup NumberToggle
 	autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &nu && mode() != "i" | set rnu | endif
   autocmd BufLeave,FocusLost,InsertEnter,WinLeave * if &nu | set nornu | endif
 augroup END
+
+augroup CompletionNvim
+  autocmd!
+augroup END
+
+augroup T
+  autocmd!
+  autocmd FileType * if &ft != 'python' | set indentexpr=nvim_treesitter#indent() | endif
+augroup END
+
+
+" Errors in Red
+hi LspDiagnosticsVirtualTextError guifg=Red ctermfg=Red
+" Warnings in Yellow
+hi LspDiagnosticsVirtualTextWarning guifg=Yellow ctermfg=Yellow
+" Info and Hints in White
+hi LspDiagnosticsVirtualTextInformation guifg=White ctermfg=White
+hi LspDiagnosticsVirtualTextHint guifg=White ctermfg=White
+
+" Underline the offending code
+hi LspDiagnosticsUnderlineError guifg=NONE ctermfg=NONE cterm=underline gui=underline
+hi LspDiagnosticsUnderlineWarning guifg=NONE ctermfg=NONE cterm=underline gui=underline
+hi LspDiagnosticsUnderlineInformation guifg=NONE ctermfg=NONE cterm=underline gui=underline
+hi LspDiagnosticsUnderlineHint guifg=NONE ctermfg=NONE cterm=underline gui=underline
+
