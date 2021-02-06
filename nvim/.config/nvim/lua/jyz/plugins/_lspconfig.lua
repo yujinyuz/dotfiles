@@ -89,12 +89,6 @@ local sumneko_binary = sumneko_root_path.."/bin/"..system_name.."/lua-language-s
 
 local servers = {
   vimls = {},
-  efm = {
-    init_options = {
-      documentFormatting = true,
-    },
-    filetypes = {'*'}
-  },
   tsserver = {},
   jsonls = {},
   jedi_language_server = {},
@@ -122,6 +116,37 @@ local servers = {
   },
 }
 
+local prettier = require('jyz.efm.prettier')
+local eslint = require('jyz.efm.eslint')
+local autopep8 = require('jyz.efm.autopep8')
+local isort = require('jyz.efm.isort')
+local flake8 = require('jyz.efm.flake8')
+local jq = require('jyz.efm.jq')
+
+local languages = {
+  typescript = {prettier, eslint},
+  javascript = {prettier, eslint},
+  python = {isort, autopep8, flake8},
+  json = {jq},
+  -- css = {prettier},
+  -- html = {prettier},
+}
+
+local efm = {
+  init_options = {
+    documentFormatting = true,
+  },
+  settings = {
+    rootMarkers = {".git/"},
+    languages = languages,
+  },
+  filetypes = vim.tbl_keys(languages),
+}
+
+servers.efm = efm
+
+
+
 for server, config in pairs(servers) do
   config.on_attach = on_attach
   config.on_init = function(client)
@@ -129,10 +154,3 @@ for server, config in pairs(servers) do
   end
   lspconfig[server].setup(config)
 end
-
-helpers.create_mappings{
-  i = {
-    {lhs = '<Tab>', rhs = [[pumvisible() ? "\<C-n>": "\<Tab>"]], opts = {expr = true, silent = true}},
-    {lhs = '<S-Tab>', rhs = [[pumvisible() ? "\<C-p>": "\<S-Tab>"]], opts = {expr = true, noremap = true, silent = true}},
-  }
-}
