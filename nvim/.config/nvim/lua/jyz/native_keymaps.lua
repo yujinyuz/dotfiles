@@ -19,10 +19,11 @@ helpers.create_mappings{
     -- Buffer Switch
     {lhs = '<BS>', rhs = '<C-^>', opts = {noremap = true}},
     -- Resize splits with arrows
-    {lhs = '<Up>', rhs = helpers.cmd_map('resize +2'), opts = {noremap = true}},
-    {lhs = '<Down>', rhs = helpers.cmd_map('resize -2'), opts = {noremap = true}},
-    {lhs = '<Left>', rhs = helpers.cmd_map('vertical resize +2'), opts = {noremap = true}},
-    {lhs = '<Right>', rhs = helpers.cmd_map('vertical resize -2'), opts = {noremap = true}},
+    {lhs = '<Up>', rhs = '<C-w>+', opts = {noremap = true}},
+    {lhs = '<Down>', rhs = '<C-w>-', opts = {noremap = true}},
+    {lhs = '<Left>', rhs = '<C-w><', opts = {noremap = true}},
+    {lhs = '<Right>', rhs = '<C-w>>', opts = {noremap = true}},
+    {lhs = '<leader>=', rhs = '<C-w>=', opts = {noremap = true}},
     -- Smooth scroll
     {lhs = '<C-y>', rhs = '3<C-y>', opts = {noremap = true}},
     {lhs = '<C-e>', rhs = '3<C-e>', opts = {noremap = true}},
@@ -31,6 +32,8 @@ helpers.create_mappings{
     {lhs = '<A-k>', rhs = [[mz:m-2<CR>`z]], opts = {noremap = true, silent = true}},
     -- Create new file relative to the currently opened file
     {lhs = '<leader>fn', rhs = [[:e %:h<C-z>]], opts = {noremap = true}},
+    -- Save and execute
+    {lhs = '<leader>x', rhs = helpers.cmd_map([[lua require('jyz.lib.nvim_helpers').save_and_execute()]]), opts = {noremap = true, silent = true}},
     -- Open new terminal
     {lhs = '<leader>ot', rhs = helpers.cmd_map([[rightbelow split<CR><Cmd>exec "resize " . (winheight(0) * 2/3)<CR><Cmd>e term://]] .. shell), opts = {noremap = true, silent = true}},
   },
