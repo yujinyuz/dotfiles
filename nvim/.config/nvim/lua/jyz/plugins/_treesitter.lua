@@ -1,6 +1,4 @@
-local ts_configs = require('nvim-treesitter.configs')
-
-local options = {
+require('nvim-treesitter.configs').setup {
   ensure_installed = "maintained",
   incremental_selection = {
     enable = true,
@@ -41,5 +39,3 @@ local options = {
     }
   }
 }
-
-ts_configs.setup(options)

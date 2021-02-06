@@ -1,5 +1,8 @@
 vim.o.termguicolors = true
-vim.cmd([[ colorscheme gruvbox ]])
+-- require('colorbuddy').colorscheme('gruvbuddy')
+-- require('colorbuddy').colorscheme('onebuddy')
+-- require('colorbuddy').colorscheme('nvim-gruvbox')
+vim.cmd([[ colorscheme gruvbox-material ]])
 require('colorizer').setup{}
 
 if vim.g.colors_name == 'gruvbox' then
