@@ -36,13 +36,18 @@ local plugins = function(use)
 
   -- Colors / Syntax
   use {'gruvbox-community/gruvbox'}
+  use {'sainnhe/gruvbox-material'}
+  use {'tjdevries/gruvbuddy.nvim'}
+  use {'Th3Whit3Wolf/onebuddy'}
+  use {'tjdevries/colorbuddy.vim'}
+  use {'RishabhRD/nvim-gruvbox'}
   use {'norcalli/nvim-colorizer.lua'} -- colorize hex/rgb/hsl value
   use {
     'nvim-treesitter/nvim-treesitter',
-    run = function() vim.cmd [[TSUpdate]] end,
+    run = ':TSUpdate',
     requires = {
-      {'nvim-treesitter/completion-treesitter'},
       {'nvim-treesitter/nvim-treesitter-textobjects'},
+      -- {'romgrk/nvim-treesitter-context'},
     }
   }
 
@@ -50,14 +55,7 @@ local plugins = function(use)
   use {'neovim/nvim-lspconfig'}
   use {'yujinyuz/vim-dyad'}
   use {'Vimjas/vim-python-pep8-indent'}
-  use {
-    'alvan/vim-closetag',
-    setup = function()
-      vim.g.closetag_filename = '*.html,*.js,*.erb,*.hbs'
-      vim.g.closetag_emptyTags_caseSensitive = 1
-    end
-
-  }
+  use {'alvan/vim-closetag'}
   use {
     'mbbill/undotree',
     opt = true,
@@ -68,16 +66,33 @@ local plugins = function(use)
     config = function()
       require('compe').setup {
         enabled = true,
+        autocomplete = true,
         debug = false,
         min_length = 1,
         preselect = 'enable',
         allow_prefix_unmatch = false,
 
+        -- priority: Higher means top of the list
         source = {
-          nvim_lsp = true,
-          tags = true,
+          nvim_lsp = {
+            priority = 100,
+          },
+          nvim_lua = {
+            priority = 100,
+          },
+          treesitter = {
+            priority = 90,
+            dup = false,
+          },
+          tags = {
+            priority = 50,
+            dup = false,
+          },
+          buffer = {
+            priority = 40,
+            dup = false,
+          },
           path = true,
-          buffer = true,
         }
       }
     end
@@ -109,11 +124,12 @@ local plugins = function(use)
     config = function()
       local lualine = require('lualine')
       local function filename()
-        return [[%f %m]]
+        return [[%<%.15f %m]]
       end
       vim.o.showmode = false
 
-      lualine.theme = 'gruvbox'
+      lualine.theme = 'gruvbox_material'
+      -- lualine.theme = 'gruvbox'
       lualine.separator = '|'
       lualine.sections = {
         lualine_a = { 'mode' },
@@ -152,7 +168,8 @@ local plugins = function(use)
   use {
     'tpope/vim-scriptease',
     opt = true,
-    cmd = {'Scriptnames', 'Messages'}
+    cmd = {'Scriptnames', 'Messages'},
+    keys = {'zS'}
   }
   use {'tpope/vim-rhubarb'}
   use {'tpope/vim-apathy'}
@@ -171,7 +188,6 @@ local plugins = function(use)
   use {'kana/vim-textobj-entire'} -- [ae]
   use {'kana/vim-textobj-indent'} -- [ai]/[ii]
   use {'wakatime/vim-wakatime'} -- track usage time using wakatime
-  use {'tmux-plugins/vim-tmux-focus-events'} -- Useful when `autoread` is enabled
 end
 
 return packer.startup(plugins)

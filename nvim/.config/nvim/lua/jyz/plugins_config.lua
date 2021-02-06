@@ -3,11 +3,17 @@ local helpers = require('jyz.lib.nvim_helpers')
 
 -- TODO: Maybe only have a single `create_mappings`??
 
+-- vim-closetag
+vim.g.closetag_filename = '*.html,*.js,*.erb,*.hbs'
+vim.g.closetag_emptyTags_caseSensitive = 1
+
 -- nvim-compe
 helpers.create_mappings {
   i = {
+    {lhs = '<Tab>', rhs = [[pumvisible() ? "\<C-n>": "\<Tab>"]], opts = {noremap = true, expr = true, silent = true}},
+    {lhs = '<S-Tab>', rhs = [[pumvisible() ? "\<C-p>": "\<S-Tab>"]], opts = {noremap = true, silent = true, expr = true}},
     {lhs = '<C-Space>', rhs = [[compe#complete()]], opts = {noremap = true, silent = true, expr = true}},
-    {lhs = '<CR>', rhs = [[compe#confirm('<CR>')]], opts = {noremap = true, silent = true, expr = true}},
+    {lhs = '<C-y>', rhs = [[compe#confirm('<CR>')]], opts = {noremap = true, silent = true, expr = true}},
     {lhs = '<C-e>', rhs = [[compe#close()]], opts = {noremap = true, silent = true, expr = true}},
   }
 }
@@ -46,10 +52,5 @@ vim.g.go_highlight_function_calls = 1
 vim.g.go_highlight_structs = 1
 vim.g.go_fmt_command = 'goimports'
 
--- vista.vim
-helpers.create_mappings {
-  n = {
-    {lhs = [[\b]], rhs = helpers.cmd_map('Vista!!'), {silent = true}},
-  }
-}
+-- nvim-dap
 vim.g.dap_virtual_text = true

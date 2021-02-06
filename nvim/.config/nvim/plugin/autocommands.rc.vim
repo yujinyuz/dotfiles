@@ -46,13 +46,8 @@ augroup NumberToggle
   autocmd BufLeave,FocusLost,InsertEnter,WinLeave * if &nu | set nornu | endif
 augroup END
 
-augroup CompletionNvim
-  autocmd!
-augroup END
-
 augroup T
   autocmd!
-  autocmd FileType * if &ft != 'python' | set indentexpr=nvim_treesitter#indent() | endif
 augroup END
 
 
