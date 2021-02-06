@@ -1,0 +1,7 @@
+require('jyz.plugins._packer')
+require('jyz.plugins._colors')
+require('jyz.plugins._luatree')
+require('jyz.plugins._telescope')
+require('jyz.plugins._treesitter')
+require('jyz.plugins._lspconfig')
+require('jyz.plugins._dap')
