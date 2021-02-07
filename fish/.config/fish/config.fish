@@ -54,6 +54,10 @@ set -gx PYTHON_3_HOST_PROG $VIRTUALENVS_DIR/nvim/bin/python3
 source $HOME/.asdf/asdf.fish
 set -gx ASDF_SKIM_RESHIM 1
 
+# System
+# Increase resource usage limits to 2048. Default is 256
+ulimit -n 2048
+
 # aliases
 alias brewup="brew update; brew upgrade; brew cleanup; brew doctor"
 alias cat="bat"
@@ -73,7 +77,7 @@ alias fupath="echo $fish_user_paths | tr ' ' '\n'"
 alias rscp="rsync -avhW --progress" # for copying local files
 alias rsmv="rsync -avhW --no-compress --progress --remove-source-files"
 alias t="tmux"
-alias tree="exa --tree --level=3"
+alias tree="exa --tree"
 # alias vi="nvim -c 'let g:tty='\'(tty)'\''"
 alias vi="nvim"
 alias vifish="vi ~/.config/fish/config.fish"
