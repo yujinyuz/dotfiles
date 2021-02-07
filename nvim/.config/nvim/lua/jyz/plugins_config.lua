@@ -45,6 +45,14 @@ helpers.create_mappings {
   }
 }
 
+-- ferret
+vim.g.FerretMap = 0
+helpers.create_mappings {
+  n = {
+    {lhs = '<leader>fa', rhs = '<Plug>(FerretAck)', opts = {}},
+  }
+}
+
 -- vim-go
 vim.g.go_def_mapping_enabled = 0
 vim.g.go_highlight_functions = 1

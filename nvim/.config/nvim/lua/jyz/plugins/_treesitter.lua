@@ -3,10 +3,10 @@ require('nvim-treesitter.configs').setup {
   incremental_selection = {
     enable = true,
     keymaps = {
-      init_selection = "gnn",
-      node_incremental = "grn",
-      scope_incremental = "grc",
-      node_decremental = "grm",
+      init_selection = "<M-w>",
+      node_incremental = "<M-w>",
+      scope_incremental = "<M-e>",
+      node_decremental = "<M-C-w>",
     }
   },
   highlight = {
@@ -17,6 +17,16 @@ require('nvim-treesitter.configs').setup {
   indent = {
     enable = true,
     disable = {"python"}
+  },
+  refactor = {
+    highlight_definitions = {enable = true},
+    highlight_current_scope = {enable = false},
+    smart_rename = {
+      enable = true,
+      keymaps = {
+        smart_rename = "<leader>rn",
+      },
+    },
   },
   textobjects = {
     select = {

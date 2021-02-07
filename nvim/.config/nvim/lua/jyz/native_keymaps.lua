@@ -28,8 +28,8 @@ helpers.create_mappings{
     {lhs = '<C-y>', rhs = '3<C-y>', opts = {noremap = true}},
     {lhs = '<C-e>', rhs = '3<C-e>', opts = {noremap = true}},
     -- Use Alt for moving lines up/down
-    {lhs = '<A-j>', rhs = [[mz:m+<CR>`z]], opts = {noremap = true, silent = true}},
-    {lhs = '<A-k>', rhs = [[mz:m-2<CR>`z]], opts = {noremap = true, silent = true}},
+    {lhs = '<M-j>', rhs = [[mz:m+<CR>`z]], opts = {noremap = true, silent = true}},
+    {lhs = '<M-k>', rhs = [[mz:m-2<CR>`z]], opts = {noremap = true, silent = true}},
     -- Create new file relative to the currently opened file
     {lhs = '<leader>fn', rhs = [[:e %:h<C-z>]], opts = {noremap = true}},
     -- Save and execute
@@ -54,14 +54,14 @@ helpers.create_mappings{
   },
   v = {
     -- Use alt for moving lines or selected lines up/down
-    {lhs = '<A-j>', rhs = [[:m'>+<CR>`<my`>mzgv`yo`z]], opts = {noremap = true, silent = true}},
-    {lhs = '<A-k>', rhs = [[:m'<-2<CR>`>my`<mzgv`yo`z]], opts = {noremap = true, silent = true}},
+    {lhs = '<M-j>', rhs = [[:m'>+<CR>`<my`>mzgv`yo`z]], opts = {noremap = true, silent = true}},
+    {lhs = '<M-k>', rhs = [[:m'<-2<CR>`>my`<mzgv`yo`z]], opts = {noremap = true, silent = true}},
   },
   t = {
     {lhs = '<Esc>', rhs = [[<C-\><C-n>]], opts = {noremap = true}},
-    {lhs = '<A-h>', rhs = [[<C-\><C-n><C-w>h]], opts = {noremap = true}},
-    {lhs = '<A-j>', rhs = [[<C-\><C-n><C-w>j]], opts = {noremap = true}},
-    {lhs = '<A-k>', rhs = [[<C-\><C-n><C-w>k]], opts = {noremap = true}},
-    {lhs = '<A-l>', rhs = [[<C-\><C-n><C-w>l]], opts = {noremap = true}},
+    {lhs = '<M-h>', rhs = [[<C-\><C-n><C-w>h]], opts = {noremap = true}},
+    {lhs = '<M-j>', rhs = [[<C-\><C-n><C-w>j]], opts = {noremap = true}},
+    {lhs = '<M-k>', rhs = [[<C-\><C-n><C-w>k]], opts = {noremap = true}},
+    {lhs = '<M-l>', rhs = [[<C-\><C-n><C-w>l]], opts = {noremap = true}},
   }
 }
