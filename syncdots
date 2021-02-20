@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 user_dirs=(
+    alacritty
     bin
     emacs
     fish
