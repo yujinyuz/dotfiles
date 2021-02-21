@@ -69,7 +69,6 @@ _G.packer_plugins = {
     path = "/Users/eugene/.local/share/nvim/site/pack/packer/start/nvim-colorizer.lua"
   },
   ["nvim-compe"] = {
-    config = { "\27LJ\2\nè\1\0\0\5\0\n\0\r6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\5\0005\4\4\0=\4\6\0035\4\a\0=\4\b\3=\3\t\2B\0\2\1K\0\1\0\vsource\rnvim_lua\1\0\1\rpriority\3d\rnvim_lsp\1\0\2\tpath\2\tomni\2\1\0\1\rpriority\3d\1\0\6\ndebug\1\25allow_prefix_unmatch\1\14preselect\venable\fenabled\2\17autocomplete\2\15min_length\3\1\nsetup\ncompe\frequire\0" },
     loaded = true,
     path = "/Users/eugene/.local/share/nvim/site/pack/packer/start/nvim-compe"
   },
@@ -147,7 +146,6 @@ _G.packer_plugins = {
     path = "/Users/eugene/.local/share/nvim/site/pack/packer/start/telescope.nvim"
   },
   ultisnips = {
-    config = { "\27LJ\2\n>\0\0\2\0\4\0\0056\0\0\0009\0\1\0'\1\3\0=\1\2\0K\0\1\0\n<C-l>\27UltiSnipsExpandTrigger\6g\bvim\0" },
     loaded = true,
     path = "/Users/eugene/.local/share/nvim/site/pack/packer/start/ultisnips"
   },
@@ -174,10 +172,8 @@ _G.packer_plugins = {
     path = "/Users/eugene/.local/share/nvim/site/pack/packer/start/vim-dirvish"
   },
   ["vim-dispatch"] = {
-    commands = { "Dispatch", "Make", "Focus", "Start" },
-    loaded = false,
-    needs_bufread = false,
-    path = "/Users/eugene/.local/share/nvim/site/pack/packer/opt/vim-dispatch"
+    loaded = true,
+    path = "/Users/eugene/.local/share/nvim/site/pack/packer/start/vim-dispatch"
   },
   ["vim-dyad"] = {
     loaded = true,
@@ -252,19 +248,11 @@ _G.packer_plugins = {
   }
 }
 
--- Config for: ultisnips
-try_loadstring("\27LJ\2\n>\0\0\2\0\4\0\0056\0\0\0009\0\1\0'\1\3\0=\1\2\0K\0\1\0\n<C-l>\27UltiSnipsExpandTrigger\6g\bvim\0", "config", "ultisnips")
--- Config for: nvim-compe
-try_loadstring("\27LJ\2\nè\1\0\0\5\0\n\0\r6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\5\0005\4\4\0=\4\6\0035\4\a\0=\4\b\3=\3\t\2B\0\2\1K\0\1\0\vsource\rnvim_lua\1\0\1\rpriority\3d\rnvim_lsp\1\0\2\tpath\2\tomni\2\1\0\1\rpriority\3d\1\0\6\ndebug\1\25allow_prefix_unmatch\1\14preselect\venable\fenabled\2\17autocomplete\2\15min_length\3\1\nsetup\ncompe\frequire\0", "config", "nvim-compe")
 
 -- Command lazy-loads
 vim.cmd [[command! -nargs=* -range -bang -complete=file UndotreeToggle lua require("packer.load")({'undotree'}, { cmd = "UndotreeToggle", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
-vim.cmd [[command! -nargs=* -range -bang -complete=file Make lua require("packer.load")({'vim-dispatch'}, { cmd = "Make", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
-vim.cmd [[command! -nargs=* -range -bang -complete=file Dispatch lua require("packer.load")({'vim-dispatch'}, { cmd = "Dispatch", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
-vim.cmd [[command! -nargs=* -range -bang -complete=file Scriptnames lua require("packer.load")({'vim-scriptease'}, { cmd = "Scriptnames", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
 vim.cmd [[command! -nargs=* -range -bang -complete=file Messages lua require("packer.load")({'vim-scriptease'}, { cmd = "Messages", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
-vim.cmd [[command! -nargs=* -range -bang -complete=file Focus lua require("packer.load")({'vim-dispatch'}, { cmd = "Focus", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
-vim.cmd [[command! -nargs=* -range -bang -complete=file Start lua require("packer.load")({'vim-dispatch'}, { cmd = "Start", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+vim.cmd [[command! -nargs=* -range -bang -complete=file Scriptnames lua require("packer.load")({'vim-scriptease'}, { cmd = "Scriptnames", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
 
 -- Keymap lazy-loads
 vim.cmd [[noremap <silent> zS <cmd>lua require("packer.load")({'vim-scriptease'}, { keys = "zS", prefix = "" }, _G.packer_plugins)<cr>]]

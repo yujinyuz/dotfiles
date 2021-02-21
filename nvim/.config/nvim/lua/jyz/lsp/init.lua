@@ -13,8 +13,8 @@ local on_attach = function(client)
   local resolved_capabilities = client.resolved_capabilities
 
   nnoremap { 'gD', cmd [[lua vim.lsp.buf.declaration()]], buffer = true }
-  nnoremap { 'gd',  cmd [[lua vim.lsp.buf.definition()]], buffer = true}
-  nnoremap { '<leader>gd', cmd [[Lspsaga preview_definition]], buffer = true}
+  nnoremap { 'gd',  cmd [[lua vim.lsp.buf.definition()]], buffer = true }
+  nnoremap { '<leader>gd', cmd [[Lspsaga preview_definition]], buffer = true }
 
   nnoremap { 'ga', cmd [[Lspsaga code_action]], buffer = true }
   nnoremap { 'K', cmd [[Lspsaga hover_doc]], buffer = true }
@@ -29,8 +29,8 @@ local on_attach = function(client)
 
   nnoremap { '<leader>lf', cmd [[lua vim.lsp.buf.formatting()]], buffer = true }
 
-  nnoremap { ']w', cmd [[lua require('lspsaga.diagnostic').lsp_jump_diagnostic_next()]], buffer = true }
-  nnoremap { '[w', cmd [[lua require('lspsaga.diagnostic').lsp_jump_diagnostic_prev()]], buffer = true }
+  nnoremap { ']w', cmd [[Lspsaga diagnostic_jump_next]], buffer = true }
+  nnoremap { '[w', cmd [[Lspsaga diagnostic_jump_prev]], buffer = true }
 
   vnoremap { 'ga', cmd [[<C-u>Lspsaga range_code_action]], buffer = true }
 
@@ -131,12 +131,12 @@ local servers = {
   },
 }
 
-local prettier = require('jyz.efm.prettier')
-local eslint = require('jyz.efm.eslint')
-local autopep8 = require('jyz.efm.autopep8')
-local isort = require('jyz.efm.isort')
-local flake8 = require('jyz.efm.flake8')
-local jq = require('jyz.efm.jq')
+local prettier = require('jyz.lsp.efm.prettier')
+local eslint = require('jyz.lsp.efm.eslint')
+local autopep8 = require('jyz.lsp.efm.autopep8')
+local isort = require('jyz.lsp.efm.isort')
+local flake8 = require('jyz.lsp.efm.flake8')
+local jq = require('jyz.lsp.efm.jq')
 
 local languages = {
   typescript = {prettier, eslint},
