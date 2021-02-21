@@ -65,52 +65,13 @@ local plugins = function(use)
     opt = true,
     cmd = {'UndotreeToggle'}
   }
-  use {
-    'hrsh7th/nvim-compe',
-    config = function()
-      require('compe').setup {
-        enabled = true,
-        autocomplete = true,
-        debug = false,
-        min_length = 1,
-        preselect = 'enable',
-        allow_prefix_unmatch = false,
-
-        -- priority: Higher means top of the list
-        source = {
-          nvim_lsp = {
-            priority = 100,
-          },
-          nvim_lua = {
-            priority = 100,
-          },
-          omni = true,
-          -- treesitter = {
-          --   priority = 90,
-          --   dup = false,
-          -- },
-          -- tags = {
-          --   priority = 50,
-          --   dup = false,
-          -- },
-          -- buffer = {
-          --   priority = 40,
-          --   dup = false,
-          -- },
-          path = true,
-        }
-      }
-    end
-  }
+  use {'hrsh7th/nvim-compe'}
 
   use {
     'SirVer/ultisnips',
     requires = {
       {'honza/vim-snippets'},
-    },
-    config = function()
-      vim.g.UltiSnipsExpandTrigger = '<C-l>'
-    end
+    }
   }
 
   use {'ludovicchabant/vim-gutentags'}
@@ -147,11 +108,7 @@ local plugins = function(use)
   use {'tpope/vim-rhubarb'}
   use {'tpope/vim-apathy'}
   use {'tpope/vim-rsi'}
-  use {
-    'tpope/vim-dispatch',
-    opt = true,
-    cmd = {'Dispatch', 'Make', 'Focus', 'Start'}
-  }
+  use {'tpope/vim-dispatch'}
   use {'tpope/vim-projectionist'}
 
   -- Misc

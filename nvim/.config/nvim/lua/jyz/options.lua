@@ -1,6 +1,5 @@
 -- Wait for vim.opts to get merged asdfjasd klfj asdfasdf
 --  https://github.com/neovim/neovim/pull/13479
-
 local opt = require('jyz.lib.nvim_helpers').get_vim_opts()
 local data_dir = vim.fn.stdpath('data')
 
@@ -46,11 +45,13 @@ opt.mouse = 'nicr'
 -- Use ripgrep instead of grep
 -- opt.grepprg = [[rg --vimgrep --no-heading --smart-case]]
 
+opt.shortmess = opt.shortmess .. 'a'
 opt.shortmess = opt.shortmess .. 'I' -- Disable intro message
 opt.shortmess = opt.shortmess .. 'c' -- Don't give |ins-completion-menu| messages
 
 -- opt.completeopt = 'menu,menuone,noselect'
-opt.completeopt = 'menuone,noselect'
+-- opt.completeopt = 'menuone,noselect'
+opt.completeopt = 'menuone,noinsert,noselect'
 -- Always show sign columns
 opt.signcolumn = 'yes'
 -- Having longer update time leads to noticeable delays and poor UX
@@ -74,7 +75,7 @@ opt.wildcharm = 26 -- Equivalent of <C-z>
 
 opt.wildmode = 'longest,full'
 
--- opt.wildoptions = 'pum'
+opt.wildoptions = 'pum'
 -- Transparent pums
 opt.pumblend = 17
 
@@ -88,3 +89,6 @@ opt.breakindent = true
 -- Make it so long that lines wrap smartly
 opt.showbreak = string.rep(' ', 3)
 opt.linebreak = true
+
+-- Enable 24-bit RGB color
+opt.termguicolors = true

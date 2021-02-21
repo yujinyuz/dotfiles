@@ -16,20 +16,17 @@ vim.g.mapleader = ' '
 vim.g.python3_host_prog = os.getenv('PYTHON_3_HOST_PROG')
 
 
+-- require('jyz.globals')
+
+-- Load neovim options
+require('jyz.options')
+
+-- Defer loading
 vim.schedule(function()
-  -- require('jyz.globals')
   -- Load packer.nvim config
   require('jyz.plugins')
-  -- require('plugin.statusline')
-  -- vim.cmd [[runtime plugin/astronauta.vim]]
-
-  -- Load neovim options
-  require('jyz.options')
-
   -- LSP configuration
   require('jyz.lsp')
-
   -- Telescope
   require('jyz.telescope')
 end)
-
