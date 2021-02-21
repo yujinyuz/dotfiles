@@ -19,7 +19,7 @@ require('nvim-treesitter.configs').setup {
     disable = {"python"}
   },
   refactor = {
-    highlight_definitions = {enable = true},
+    highlight_definitions = {enable = false},
     highlight_current_scope = {enable = false},
     smart_rename = {
       enable = true,
@@ -49,3 +49,4 @@ require('nvim-treesitter.configs').setup {
     }
   }
 }
+

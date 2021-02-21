@@ -1,3 +1,5 @@
+set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case
+
 " Return to last edit position when opening files (You want this!)
 augroup ReturnToLastEditPosition
   autocmd!
@@ -48,20 +50,20 @@ augroup END
 
 augroup T
   autocmd!
+  autocmd User TelescopePreviewerLoaded setlocal wrap
 augroup END
 
 
-" Errors in Red
-hi LspDiagnosticsVirtualTextError guifg=Red ctermfg=Red
-" Warnings in Yellow
-hi LspDiagnosticsVirtualTextWarning guifg=Yellow ctermfg=Yellow
-" Info and Hints in White
-hi LspDiagnosticsVirtualTextInformation guifg=White ctermfg=White
-hi LspDiagnosticsVirtualTextHint guifg=White ctermfg=White
+" " Errors in Red
+" hi LspDiagnosticsVirtualTextError guifg=Red ctermfg=Red
+" " Warnings in Yellow
+" hi LspDiagnosticsVirtualTextWarning guifg=Yellow ctermfg=Yellow
+" " Info and Hints in White
+" hi LspDiagnosticsVirtualTextInformation guifg=White ctermfg=White
+" hi LspDiagnosticsVirtualTextHint guifg=White ctermfg=White
 
-" Underline the offending code
-hi LspDiagnosticsUnderlineError guifg=NONE ctermfg=NONE cterm=underline gui=underline
-hi LspDiagnosticsUnderlineWarning guifg=NONE ctermfg=NONE cterm=underline gui=underline
-hi LspDiagnosticsUnderlineInformation guifg=NONE ctermfg=NONE cterm=underline gui=underline
-hi LspDiagnosticsUnderlineHint guifg=NONE ctermfg=NONE cterm=underline gui=underline
-
+" " Underline the offending code
+" hi LspDiagnosticsUnderlineError guifg=NONE ctermfg=NONE cterm=underline gui=underline
+" hi LspDiagnosticsUnderlineWarning guifg=NONE ctermfg=NONE cterm=underline gui=underline
+" hi LspDiagnosticsUnderlineInformation guifg=NONE ctermfg=NONE cterm=underline gui=underline
+" hi LspDiagnosticsUnderlineHint guifg=NONE ctermfg=NONE cterm=underline gui=underline

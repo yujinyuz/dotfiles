@@ -23,14 +23,19 @@ if not string.find(package.cpath, install_cpath_pattern, 1, true) then
 end
 
 local function try_loadstring(s, component, name)
-  local success, err = pcall(loadstring(s))
+  local success, result = pcall(loadstring(s))
   if not success then
     print('Error running ' .. component .. ' for ' .. name)
-    error(err)
+    error(result)
   end
+  return result
 end
 
 _G.packer_plugins = {
+  ["astronauta.nvim"] = {
+    loaded = true,
+    path = "/Users/eugene/.local/share/nvim/site/pack/packer/start/astronauta.nvim"
+  },
   ["colorbuddy.vim"] = {
     loaded = true,
     path = "/Users/eugene/.local/share/nvim/site/pack/packer/start/colorbuddy.vim"
@@ -51,8 +56,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/eugene/.local/share/nvim/site/pack/packer/start/gruvbuddy.nvim"
   },
+  ["lspsaga.nvim"] = {
+    loaded = true,
+    path = "/Users/eugene/.local/share/nvim/site/pack/packer/start/lspsaga.nvim"
+  },
   ["lualine.nvim"] = {
-    config = { "\27LJ\2\n\26\0\0\1\0\1\0\2'\0\0\0L\0\2\0\15%<%.15f %m¾\3\1\0\4\0\27\0-6\0\0\0'\2\1\0B\0\2\0023\1\2\0006\2\3\0009\2\4\2+\3\1\0=\3\5\2'\2\a\0=\2\6\0'\2\t\0=\2\b\0005\2\f\0005\3\v\0=\3\r\0025\3\14\0=\3\15\0024\3\3\0>\1\1\3=\3\16\0025\3\17\0=\3\18\0025\3\19\0=\3\20\0025\3\21\0=\3\22\2=\2\n\0005\2\24\0004\3\0\0=\3\r\0024\3\0\0=\3\15\0024\3\3\0>\1\1\3=\3\16\0025\3\25\0=\3\18\0024\3\0\0=\3\20\0024\3\0\0=\3\22\2=\2\23\0009\2\26\0B\2\1\1K\0\1\0\vstatus\1\2\0\0\rlocation\1\0\0\22inactive_sections\14lualine_z\1\2\0\0\rlocation\14lualine_y\1\2\0\0\rprogress\14lualine_x\1\4\0\0\rencoding\15fileformat\rfiletype\14lualine_c\14lualine_b\1\2\0\0\vbranch\14lualine_a\1\0\0\1\2\0\0\tmode\rsections\6|\14separator\21gruvbox_material\ntheme\rshowmode\6o\bvim\0\flualine\frequire\0" },
     loaded = true,
     path = "/Users/eugene/.local/share/nvim/site/pack/packer/start/lualine.nvim"
   },
@@ -61,7 +69,7 @@ _G.packer_plugins = {
     path = "/Users/eugene/.local/share/nvim/site/pack/packer/start/nvim-colorizer.lua"
   },
   ["nvim-compe"] = {
-    config = { "\27LJ\2\nÊ\2\0\0\5\0\16\0\0196\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\5\0005\4\4\0=\4\6\0035\4\a\0=\4\b\0035\4\t\0=\4\n\0035\4\v\0=\4\f\0035\4\r\0=\4\14\3=\3\15\2B\0\2\1K\0\1\0\vsource\vbuffer\1\0\2\bdup\1\rpriority\3(\ttags\1\0\2\bdup\1\rpriority\0032\15treesitter\1\0\2\bdup\1\rpriority\3Z\rnvim_lua\1\0\1\rpriority\3d\rnvim_lsp\1\0\1\tpath\2\1\0\1\rpriority\3d\1\0\6\ndebug\1\25allow_prefix_unmatch\1\14preselect\venable\15min_length\3\1\17autocomplete\2\fenabled\2\nsetup\ncompe\frequire\0" },
+    config = { "\27LJ\2\nè\1\0\0\5\0\n\0\r6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\5\0005\4\4\0=\4\6\0035\4\a\0=\4\b\3=\3\t\2B\0\2\1K\0\1\0\vsource\rnvim_lua\1\0\1\rpriority\3d\rnvim_lsp\1\0\2\tpath\2\tomni\2\1\0\1\rpriority\3d\1\0\6\ndebug\1\25allow_prefix_unmatch\1\14preselect\venable\fenabled\2\17autocomplete\2\15min_length\3\1\nsetup\ncompe\frequire\0" },
     loaded = true,
     path = "/Users/eugene/.local/share/nvim/site/pack/packer/start/nvim-compe"
   },
@@ -111,6 +119,7 @@ _G.packer_plugins = {
   },
   ["packer.nvim"] = {
     loaded = false,
+    needs_bufread = false,
     path = "/Users/eugene/.local/share/nvim/site/pack/packer/opt/packer.nvim"
   },
   ["plenary.nvim"] = {
@@ -120,6 +129,10 @@ _G.packer_plugins = {
   ["popup.nvim"] = {
     loaded = true,
     path = "/Users/eugene/.local/share/nvim/site/pack/packer/start/popup.nvim"
+  },
+  sgbrowse = {
+    loaded = true,
+    path = "/Users/eugene/.local/share/nvim/site/pack/packer/start/sgbrowse"
   },
   ["telescope-fzf-writer.nvim"] = {
     loaded = true,
@@ -141,6 +154,7 @@ _G.packer_plugins = {
   undotree = {
     commands = { "UndotreeToggle" },
     loaded = false,
+    needs_bufread = false,
     path = "/Users/eugene/.local/share/nvim/site/pack/packer/opt/undotree"
   },
   ["vim-apathy"] = {
@@ -162,6 +176,7 @@ _G.packer_plugins = {
   ["vim-dispatch"] = {
     commands = { "Dispatch", "Make", "Focus", "Start" },
     loaded = false,
+    needs_bufread = false,
     path = "/Users/eugene/.local/share/nvim/site/pack/packer/opt/vim-dispatch"
   },
   ["vim-dyad"] = {
@@ -173,9 +188,8 @@ _G.packer_plugins = {
     path = "/Users/eugene/.local/share/nvim/site/pack/packer/start/vim-eunuch"
   },
   ["vim-fugitive"] = {
-    commands = { "G", "Git", "Glog", "Gbrowse", "Gblame", "Gcommit", "Gcd", "Gvdiffsplit", "Gwrite" },
-    loaded = false,
-    path = "/Users/eugene/.local/share/nvim/site/pack/packer/opt/vim-fugitive"
+    loaded = true,
+    path = "/Users/eugene/.local/share/nvim/site/pack/packer/start/vim-fugitive"
   },
   ["vim-gutentags"] = {
     loaded = true,
@@ -205,6 +219,7 @@ _G.packer_plugins = {
     commands = { "Scriptnames", "Messages" },
     keys = { { "", "zS" } },
     loaded = false,
+    needs_bufread = false,
     path = "/Users/eugene/.local/share/nvim/site/pack/packer/opt/vim-scriptease"
   },
   ["vim-snippets"] = {
@@ -239,26 +254,15 @@ _G.packer_plugins = {
 
 -- Config for: ultisnips
 try_loadstring("\27LJ\2\n>\0\0\2\0\4\0\0056\0\0\0009\0\1\0'\1\3\0=\1\2\0K\0\1\0\n<C-l>\27UltiSnipsExpandTrigger\6g\bvim\0", "config", "ultisnips")
--- Config for: lualine.nvim
-try_loadstring("\27LJ\2\n\26\0\0\1\0\1\0\2'\0\0\0L\0\2\0\15%<%.15f %m¾\3\1\0\4\0\27\0-6\0\0\0'\2\1\0B\0\2\0023\1\2\0006\2\3\0009\2\4\2+\3\1\0=\3\5\2'\2\a\0=\2\6\0'\2\t\0=\2\b\0005\2\f\0005\3\v\0=\3\r\0025\3\14\0=\3\15\0024\3\3\0>\1\1\3=\3\16\0025\3\17\0=\3\18\0025\3\19\0=\3\20\0025\3\21\0=\3\22\2=\2\n\0005\2\24\0004\3\0\0=\3\r\0024\3\0\0=\3\15\0024\3\3\0>\1\1\3=\3\16\0025\3\25\0=\3\18\0024\3\0\0=\3\20\0024\3\0\0=\3\22\2=\2\23\0009\2\26\0B\2\1\1K\0\1\0\vstatus\1\2\0\0\rlocation\1\0\0\22inactive_sections\14lualine_z\1\2\0\0\rlocation\14lualine_y\1\2\0\0\rprogress\14lualine_x\1\4\0\0\rencoding\15fileformat\rfiletype\14lualine_c\14lualine_b\1\2\0\0\vbranch\14lualine_a\1\0\0\1\2\0\0\tmode\rsections\6|\14separator\21gruvbox_material\ntheme\rshowmode\6o\bvim\0\flualine\frequire\0", "config", "lualine.nvim")
 -- Config for: nvim-compe
-try_loadstring("\27LJ\2\nÊ\2\0\0\5\0\16\0\0196\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\5\0005\4\4\0=\4\6\0035\4\a\0=\4\b\0035\4\t\0=\4\n\0035\4\v\0=\4\f\0035\4\r\0=\4\14\3=\3\15\2B\0\2\1K\0\1\0\vsource\vbuffer\1\0\2\bdup\1\rpriority\3(\ttags\1\0\2\bdup\1\rpriority\0032\15treesitter\1\0\2\bdup\1\rpriority\3Z\rnvim_lua\1\0\1\rpriority\3d\rnvim_lsp\1\0\1\tpath\2\1\0\1\rpriority\3d\1\0\6\ndebug\1\25allow_prefix_unmatch\1\14preselect\venable\15min_length\3\1\17autocomplete\2\fenabled\2\nsetup\ncompe\frequire\0", "config", "nvim-compe")
+try_loadstring("\27LJ\2\nè\1\0\0\5\0\n\0\r6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\5\0005\4\4\0=\4\6\0035\4\a\0=\4\b\3=\3\t\2B\0\2\1K\0\1\0\vsource\rnvim_lua\1\0\1\rpriority\3d\rnvim_lsp\1\0\2\tpath\2\tomni\2\1\0\1\rpriority\3d\1\0\6\ndebug\1\25allow_prefix_unmatch\1\14preselect\venable\fenabled\2\17autocomplete\2\15min_length\3\1\nsetup\ncompe\frequire\0", "config", "nvim-compe")
 
 -- Command lazy-loads
-vim.cmd [[command! -nargs=* -range -bang -complete=file Gcommit lua require("packer.load")({'vim-fugitive'}, { cmd = "Gcommit", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
-vim.cmd [[command! -nargs=* -range -bang -complete=file Gcd lua require("packer.load")({'vim-fugitive'}, { cmd = "Gcd", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
-vim.cmd [[command! -nargs=* -range -bang -complete=file Gwrite lua require("packer.load")({'vim-fugitive'}, { cmd = "Gwrite", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
-vim.cmd [[command! -nargs=* -range -bang -complete=file Gvdiffsplit lua require("packer.load")({'vim-fugitive'}, { cmd = "Gvdiffsplit", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+vim.cmd [[command! -nargs=* -range -bang -complete=file UndotreeToggle lua require("packer.load")({'undotree'}, { cmd = "UndotreeToggle", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+vim.cmd [[command! -nargs=* -range -bang -complete=file Make lua require("packer.load")({'vim-dispatch'}, { cmd = "Make", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+vim.cmd [[command! -nargs=* -range -bang -complete=file Dispatch lua require("packer.load")({'vim-dispatch'}, { cmd = "Dispatch", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
 vim.cmd [[command! -nargs=* -range -bang -complete=file Scriptnames lua require("packer.load")({'vim-scriptease'}, { cmd = "Scriptnames", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
 vim.cmd [[command! -nargs=* -range -bang -complete=file Messages lua require("packer.load")({'vim-scriptease'}, { cmd = "Messages", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
-vim.cmd [[command! -nargs=* -range -bang -complete=file UndotreeToggle lua require("packer.load")({'undotree'}, { cmd = "UndotreeToggle", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
-vim.cmd [[command! -nargs=* -range -bang -complete=file G lua require("packer.load")({'vim-fugitive'}, { cmd = "G", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
-vim.cmd [[command! -nargs=* -range -bang -complete=file Git lua require("packer.load")({'vim-fugitive'}, { cmd = "Git", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
-vim.cmd [[command! -nargs=* -range -bang -complete=file Glog lua require("packer.load")({'vim-fugitive'}, { cmd = "Glog", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
-vim.cmd [[command! -nargs=* -range -bang -complete=file Gbrowse lua require("packer.load")({'vim-fugitive'}, { cmd = "Gbrowse", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
-vim.cmd [[command! -nargs=* -range -bang -complete=file Gblame lua require("packer.load")({'vim-fugitive'}, { cmd = "Gblame", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
-vim.cmd [[command! -nargs=* -range -bang -complete=file Dispatch lua require("packer.load")({'vim-dispatch'}, { cmd = "Dispatch", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
-vim.cmd [[command! -nargs=* -range -bang -complete=file Make lua require("packer.load")({'vim-dispatch'}, { cmd = "Make", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
 vim.cmd [[command! -nargs=* -range -bang -complete=file Focus lua require("packer.load")({'vim-dispatch'}, { cmd = "Focus", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
 vim.cmd [[command! -nargs=* -range -bang -complete=file Start lua require("packer.load")({'vim-dispatch'}, { cmd = "Start", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
 

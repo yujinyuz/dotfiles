@@ -14,6 +14,7 @@ end
 local packer = require('packer')
 local plugins = function(use)
   use {'wbthomason/packer.nvim', opt = true}
+  use {'tjdevries/astronauta.nvim'}
 
   -- File management
   use {
@@ -54,6 +55,8 @@ local plugins = function(use)
 
   -- IDE Stuffs
   use {'neovim/nvim-lspconfig'}
+  use {'glepnir/lspsaga.nvim'}
+  -- use {'windwp/nvim-autopairs'}
   use {'yujinyuz/vim-dyad'}
   use {'Vimjas/vim-python-pep8-indent'}
   use {'alvan/vim-closetag'}
@@ -81,18 +84,19 @@ local plugins = function(use)
           nvim_lua = {
             priority = 100,
           },
-          treesitter = {
-            priority = 90,
-            dup = false,
-          },
-          tags = {
-            priority = 50,
-            dup = false,
-          },
-          buffer = {
-            priority = 40,
-            dup = false,
-          },
+          omni = true,
+          -- treesitter = {
+          --   priority = 90,
+          --   dup = false,
+          -- },
+          -- tags = {
+          --   priority = 50,
+          --   dup = false,
+          -- },
+          -- buffer = {
+          --   priority = 40,
+          --   dup = false,
+          -- },
           path = true,
         }
       }
@@ -122,45 +126,13 @@ local plugins = function(use)
   use {
     'hoob3rt/lualine.nvim',
     requires = {'kyazdani42/nvim-web-devicons', opt = true},
-    config = function()
-      local lualine = require('lualine')
-      local function filename()
-        return [[%<%.15f %m]]
-      end
-      vim.o.showmode = false
-
-      lualine.theme = 'gruvbox_material'
-      -- lualine.theme = 'gruvbox'
-      lualine.separator = '|'
-      lualine.sections = {
-        lualine_a = { 'mode' },
-        lualine_b = { 'branch' },
-        lualine_c = { filename },
-        lualine_x = { 'encoding', 'fileformat', 'filetype' },
-        lualine_y = { 'progress' },
-        lualine_z = { 'location'  },
-      }
-      lualine.inactive_sections = {
-        lualine_a = {  },
-        lualine_b = {  },
-        lualine_c = { filename },
-        lualine_x = { 'location' },
-        lualine_y = {  },
-        lualine_z = {   }
-      }
-      -- lualine.extensions = { 'fzf' }
-      lualine.status()
-    end
   }
 
   -- Holiness
   use {'tpope/vim-surround'}
   use {'tpope/vim-commentary'}
-  use {
-    'tpope/vim-fugitive',
-    opt = true,
-    cmd = {'G', 'Git', 'Glog', 'Gbrowse', 'Gblame', 'Gcommit', 'Gcd', 'Gvdiffsplit', 'Gwrite'}
-  }
+  use {'tpope/vim-fugitive'}
+  use {'camdencheek/sgbrowse'}
   -- use {'tpope/vim-endwise'}
   use {'tpope/vim-repeat'}
   -- use {'tpope/vim-obsession'}
