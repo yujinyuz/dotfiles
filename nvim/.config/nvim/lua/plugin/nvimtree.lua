@@ -1,4 +1,8 @@
-local helpers = require('jyz.lib.nvim_helpers')
+local nnoremap = vim.keymap.nnoremap
+
+local cmd = require('jyz.lib.nvim_helpers').cmd_map
+local augroup = require('jyz.lib.nvim_helpers').augroup
+
 
 vim.g.nvim_tree_side = 'left'
 vim.g.nvim_tree_width = 30
@@ -53,13 +57,10 @@ vim.g.nvim_tree_icons = {
   folder = {default = "", open = " "}
 }
 
-helpers.create_mappings{
-  n = {
-    {lhs = '<C-n>', rhs = helpers.cmd_map('NvimTreeToggle'), opts = {silent = true, noremap = true}},
-  }
-}
+nnoremap { '<C-n>', cmd 'NvimTreeToggle' }
 
-helpers.augroup('LuaTreeCallback', {
+
+augroup('LuaTreeCallback', {
     {
       events = {'FileType'},
       targets = {'LuaTree'},

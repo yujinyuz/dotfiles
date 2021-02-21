@@ -4,10 +4,6 @@ function M.cmd_map(cmd)
   return string.format('<Cmd>%s<CR>', cmd)
 end
 
-function M.vcmd_map(cmd)
-  return string.format([[<Cmd>'<,'>%s<CR>]], cmd)
-end
-
 function M.create_mappings(mappings, bufnr)
   local fn = vim.api.nvim_set_keymap
   if bufnr then
