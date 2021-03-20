@@ -1,30 +1,38 @@
 local lspconfig = require('lspconfig')
-local helpers = require('jyz.lib.nvim_helpers')
+
+local nnoremap = vim.keymap.nnoremap
+local inoremap = vim.keymap.inoremap
+local vnoremap = vim.keymap.vnoremap
+
+local augroup = require('jyz.lib.nvim_helpers').augroup
+local cmd = require('jyz.lib.nvim_helpers').cmd_map
+
 
 -- When in need of help, just check documentation via :h lsp
-
 local on_attach = function(client)
   local resolved_capabilities = client.resolved_capabilities
 
-  helpers.create_mappings({
-    n = {
-      {lhs = 'gD', rhs = helpers.cmd_map([[lua vim.lsp.buf.declaration()]]), opts = {noremap = true, silent = true}},
-      {lhs = 'gd', rhs = helpers.cmd_map([[lua vim.lsp.buf.definition()]]), opts = {noremap = true, silent = true}},
-      {lhs = 'ga', rhs = helpers.cmd_map([[lua vim.lsp.buf.code_action()]]), opts = {noremap = true, silent = true}},
-      {lhs = 'K', rhs = helpers.cmd_map([[lua vim.lsp.buf.hover()]]), opts = {noremap = true, silent = true}},
-      {lhs = 'gi', rhs = helpers.cmd_map([[lua vim.lsp.buf.implementation()]]), opts = {noremap = true, silent = true}},
-      {lhs = 'gr', rhs = helpers.cmd_map([[lua require'telescope.builtin'.lsp_references()]]), opts = {noremap = true, silent = true}},
-      {lhs = '<leader>gr', rhs = helpers.cmd_map([[lua vim.lsp.buf.rename()]]), opts = {noremap = true, silent = true}},
-      {lhs = '<leader>ld', rhs = helpers.cmd_map([[lua vim.lsp.diagnostic.show_line_diagnostics()]]), opts = {noremap = true, silent = true}},
-      {lhs = '<C-s>', rhs = helpers.cmd_map([[lua vim.lsp.buf.signature_help()]]), opts = {noremap = true, silent = true}},
-      {lhs = '<leader>lf', rhs = helpers.cmd_map([[lua vim.lsp.buf.formatting()]]), opts = {noremap = true, silent = true}},
-      {lhs = ']w', rhs = helpers.cmd_map([[lua vim.lsp.diagnostic.goto_next()]]), opts = {noremap = true}},
-      {lhs = '[w', rhs = helpers.cmd_map([[lua vim.lsp.diagnostic.goto_prev()]]), opts = {noremap = true}},
-    },
-    i = {
-      {lhs = '<C-s>', rhs = helpers.cmd_map([[lua vim.lsp.buf.signature_help()]]), opts = {noremap = true, silent = true}},
-    }
-  }, 0)
+  nnoremap { 'gD', cmd [[lua vim.lsp.buf.declaration()]], buffer = true }
+  nnoremap { 'gd',  cmd [[lua vim.lsp.buf.definition()]], buffer = true }
+  nnoremap { '<leader>gd', cmd [[Lspsaga preview_definition]], buffer = true }
+
+  nnoremap { 'ga', cmd [[Lspsaga code_action]], buffer = true }
+  nnoremap { 'K', cmd [[Lspsaga hover_doc]], buffer = true }
+
+  nnoremap { 'gi', cmd [[lua vim.lsp.buf.implementation()]], buffer = true }
+  nnoremap { 'gr', cmd [[Lspsaga lsp_finder]], buffer = true }
+
+  nnoremap { '<leader>gr', cmd [[Lspsaga rename]], buffer = true }
+  nnoremap { '<leader>ld', cmd [[Lspsaga show_line_diagnostics]], buffer = true }
+  nnoremap { '<C-s>', cmd [[Lspsaga signature_help]], buffer = true }
+  inoremap { '<C-s>', cmd [[Lspsaga signature_help]], buffer = true }
+
+  nnoremap { '<leader>lf', cmd [[lua vim.lsp.buf.formatting()]], buffer = true }
+
+  nnoremap { ']w', cmd [[Lspsaga diagnostic_jump_next]], buffer = true }
+  nnoremap { '[w', cmd [[Lspsaga diagnostic_jump_prev]], buffer = true }
+
+  vnoremap { 'ga', cmd [[<C-u>Lspsaga range_code_action]], buffer = true }
 
   vim.bo.omnifunc = 'v:lua.vim.lsp.omnifunc'
 
@@ -32,7 +40,7 @@ local on_attach = function(client)
     {
       events = {'CursorHold'},
       targets = {'<buffer>'},
-      command = [[lua vim.lsp.diagnostic.show_line_diagnostics()]],
+      command = [[lua require('lspsaga.diagnostic').show_line_diagnostics()]],
     }
   }
 
@@ -40,7 +48,8 @@ local on_attach = function(client)
     table.insert(buf_autocmds, {
       events = {'CursorHold', 'CursorHoldI'},
       targets = {'<buffer>'},
-      command = [[lua vim.lsp.diagnostic.show_line_diagnostics()]]
+      command = [[lua require('lspsaga.diagnostic').show_line_diagnostics()]]
+      -- command = [[lua vim.lsp.diagnostic.show_line_diagnostics()]]
     })
 
     table.insert(buf_autocmds, {
@@ -50,9 +59,15 @@ local on_attach = function(client)
     })
   end
 
-  helpers.augroup('LspCallbacks',  buf_autocmds)
+  -- allow_incremental_sync (bool, default false): Allow using on_line callbacks for lsp
+  if client.config.flags then
+    client.config.flags.allow_incremental_sync = true
+  end
+
+  augroup('LspCallbacks', buf_autocmds)
 end
 
+-- vim.lsp.handlers["textDocument/hover"] = require('lspsaga.hover').handler
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {
     -- underline = false,
@@ -66,7 +81,7 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     -- virtual_text = true,
     virtual_text = {
       spacing = 2,
-      severity_limit = "Warning",
+      severity_limit = "Error",
     },
     signs = false,
     update_in_insert = false,
@@ -116,12 +131,12 @@ local servers = {
   },
 }
 
-local prettier = require('jyz.efm.prettier')
-local eslint = require('jyz.efm.eslint')
-local autopep8 = require('jyz.efm.autopep8')
-local isort = require('jyz.efm.isort')
-local flake8 = require('jyz.efm.flake8')
-local jq = require('jyz.efm.jq')
+local prettier = require('jyz.lsp.efm.prettier')
+local eslint = require('jyz.lsp.efm.eslint')
+local autopep8 = require('jyz.lsp.efm.autopep8')
+local isort = require('jyz.lsp.efm.isort')
+local flake8 = require('jyz.lsp.efm.flake8')
+local jq = require('jyz.lsp.efm.jq')
 
 local languages = {
   typescript = {prettier, eslint},
@@ -132,9 +147,10 @@ local languages = {
   -- html = {prettier},
 }
 
-local efm = {
+servers.efm = {
   init_options = {
     documentFormatting = true,
+    gotoDefinition = false,
   },
   settings = {
     rootMarkers = {".git/"},
@@ -142,10 +158,6 @@ local efm = {
   },
   filetypes = vim.tbl_keys(languages),
 }
-
-servers.efm = efm
-
-
 
 for server, config in pairs(servers) do
   config.on_attach = on_attach
