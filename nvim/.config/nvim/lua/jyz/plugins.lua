@@ -14,6 +14,7 @@ end
 local packer = require('packer')
 local plugins = function(use)
   use {'wbthomason/packer.nvim', opt = true}
+  use {'tjdevries/astronauta.nvim'}
 
   -- File management
   use {
@@ -35,6 +36,7 @@ local plugins = function(use)
   }
 
   -- Colors / Syntax
+  use {'SidOfc/mkdx'}
   use {'gruvbox-community/gruvbox'}
   use {'sainnhe/gruvbox-material'}
   use {'tjdevries/gruvbuddy.nvim'}
@@ -44,73 +46,38 @@ local plugins = function(use)
   use {'norcalli/nvim-colorizer.lua'} -- colorize hex/rgb/hsl value
   use {
     'nvim-treesitter/nvim-treesitter',
-    run = ':TSUpdate',
+    -- run = ':TSUpdate',
     requires = {
       {'nvim-treesitter/nvim-treesitter-textobjects'},
       {'nvim-treesitter/nvim-treesitter-refactor'},
+      {'windwp/nvim-ts-autotag'},
       -- {'romgrk/nvim-treesitter-context'},
     }
   }
 
   -- IDE Stuffs
   use {'neovim/nvim-lspconfig'}
+  use {'glepnir/lspsaga.nvim'}
+  -- use {'windwp/nvim-autopairs'}
   use {'yujinyuz/vim-dyad'}
   use {'Vimjas/vim-python-pep8-indent'}
-  use {'alvan/vim-closetag'}
   use {
     'mbbill/undotree',
     opt = true,
     cmd = {'UndotreeToggle'}
   }
-  use {
-    'hrsh7th/nvim-compe',
-    config = function()
-      require('compe').setup {
-        enabled = true,
-        autocomplete = true,
-        debug = false,
-        min_length = 1,
-        preselect = 'enable',
-        allow_prefix_unmatch = false,
-
-        -- priority: Higher means top of the list
-        source = {
-          nvim_lsp = {
-            priority = 100,
-          },
-          nvim_lua = {
-            priority = 100,
-          },
-          treesitter = {
-            priority = 90,
-            dup = false,
-          },
-          tags = {
-            priority = 50,
-            dup = false,
-          },
-          buffer = {
-            priority = 40,
-            dup = false,
-          },
-          path = true,
-        }
-      }
-    end
-  }
+  use {'hrsh7th/nvim-compe'}
 
   use {
     'SirVer/ultisnips',
     requires = {
       {'honza/vim-snippets'},
-    },
-    config = function()
-      vim.g.UltiSnipsExpandTrigger = '<C-l>'
-    end
+    }
   }
 
   use {'ludovicchabant/vim-gutentags'}
   use {'wincent/ferret'}
+  use {'wincent/loupe'}
   use {
     'mfussenegger/nvim-dap',
     requires = {
@@ -122,45 +89,13 @@ local plugins = function(use)
   use {
     'hoob3rt/lualine.nvim',
     requires = {'kyazdani42/nvim-web-devicons', opt = true},
-    config = function()
-      local lualine = require('lualine')
-      local function filename()
-        return [[%<%.15f %m]]
-      end
-      vim.o.showmode = false
-
-      lualine.theme = 'gruvbox_material'
-      -- lualine.theme = 'gruvbox'
-      lualine.separator = '|'
-      lualine.sections = {
-        lualine_a = { 'mode' },
-        lualine_b = { 'branch' },
-        lualine_c = { filename },
-        lualine_x = { 'encoding', 'fileformat', 'filetype' },
-        lualine_y = { 'progress' },
-        lualine_z = { 'location'  },
-      }
-      lualine.inactive_sections = {
-        lualine_a = {  },
-        lualine_b = {  },
-        lualine_c = { filename },
-        lualine_x = { 'location' },
-        lualine_y = {  },
-        lualine_z = {   }
-      }
-      -- lualine.extensions = { 'fzf' }
-      lualine.status()
-    end
   }
 
   -- Holiness
   use {'tpope/vim-surround'}
   use {'tpope/vim-commentary'}
-  use {
-    'tpope/vim-fugitive',
-    opt = true,
-    cmd = {'G', 'Git', 'Glog', 'Gbrowse', 'Gblame', 'Gcommit', 'Gcd', 'Gvdiffsplit', 'Gwrite'}
-  }
+  use {'tpope/vim-fugitive'}
+  use {'camdencheek/sgbrowse'}
   -- use {'tpope/vim-endwise'}
   use {'tpope/vim-repeat'}
   -- use {'tpope/vim-obsession'}
@@ -175,11 +110,7 @@ local plugins = function(use)
   use {'tpope/vim-rhubarb'}
   use {'tpope/vim-apathy'}
   use {'tpope/vim-rsi'}
-  use {
-    'tpope/vim-dispatch',
-    opt = true,
-    cmd = {'Dispatch', 'Make', 'Focus', 'Start'}
-  }
+  use {'tpope/vim-dispatch'}
   use {'tpope/vim-projectionist'}
 
   -- Misc
@@ -190,5 +121,6 @@ local plugins = function(use)
   use {'kana/vim-textobj-indent'} -- [ai]/[ii]
   use {'wakatime/vim-wakatime'} -- track usage time using wakatime
 end
+
 
 return packer.startup(plugins)
