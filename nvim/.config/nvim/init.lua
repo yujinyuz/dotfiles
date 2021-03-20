@@ -21,7 +21,7 @@ vim.g.python3_host_prog = os.getenv('PYTHON_3_HOST_PROG')
 -- Load neovim options
 require('jyz.options')
 
--- Defer loading
+-- :h vim.schedule
 vim.schedule(function()
   -- Load packer.nvim config
   require('jyz.plugins')

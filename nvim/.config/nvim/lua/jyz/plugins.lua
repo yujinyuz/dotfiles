@@ -36,6 +36,7 @@ local plugins = function(use)
   }
 
   -- Colors / Syntax
+  use {'SidOfc/mkdx'}
   use {'gruvbox-community/gruvbox'}
   use {'sainnhe/gruvbox-material'}
   use {'tjdevries/gruvbuddy.nvim'}
@@ -45,10 +46,11 @@ local plugins = function(use)
   use {'norcalli/nvim-colorizer.lua'} -- colorize hex/rgb/hsl value
   use {
     'nvim-treesitter/nvim-treesitter',
-    run = ':TSUpdate',
+    -- run = ':TSUpdate',
     requires = {
       {'nvim-treesitter/nvim-treesitter-textobjects'},
       {'nvim-treesitter/nvim-treesitter-refactor'},
+      {'windwp/nvim-ts-autotag'},
       -- {'romgrk/nvim-treesitter-context'},
     }
   }
@@ -59,7 +61,6 @@ local plugins = function(use)
   -- use {'windwp/nvim-autopairs'}
   use {'yujinyuz/vim-dyad'}
   use {'Vimjas/vim-python-pep8-indent'}
-  use {'alvan/vim-closetag'}
   use {
     'mbbill/undotree',
     opt = true,
@@ -76,6 +77,7 @@ local plugins = function(use)
 
   use {'ludovicchabant/vim-gutentags'}
   use {'wincent/ferret'}
+  use {'wincent/loupe'}
   use {
     'mfussenegger/nvim-dap',
     requires = {
@@ -119,5 +121,6 @@ local plugins = function(use)
   use {'kana/vim-textobj-indent'} -- [ai]/[ii]
   use {'wakatime/vim-wakatime'} -- track usage time using wakatime
 end
+
 
 return packer.startup(plugins)
