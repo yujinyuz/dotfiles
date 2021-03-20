@@ -56,6 +56,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/eugene/.local/share/nvim/site/pack/packer/start/gruvbuddy.nvim"
   },
+  loupe = {
+    loaded = true,
+    path = "/Users/eugene/.local/share/nvim/site/pack/packer/start/loupe"
+  },
   ["lspsaga.nvim"] = {
     loaded = true,
     path = "/Users/eugene/.local/share/nvim/site/pack/packer/start/lspsaga.nvim"
@@ -63,6 +67,10 @@ _G.packer_plugins = {
   ["lualine.nvim"] = {
     loaded = true,
     path = "/Users/eugene/.local/share/nvim/site/pack/packer/start/lualine.nvim"
+  },
+  mkdx = {
+    loaded = true,
+    path = "/Users/eugene/.local/share/nvim/site/pack/packer/start/mkdx"
   },
   ["nvim-colorizer.lua"] = {
     loaded = true,
@@ -107,6 +115,10 @@ _G.packer_plugins = {
   ["nvim-treesitter-textobjects"] = {
     loaded = true,
     path = "/Users/eugene/.local/share/nvim/site/pack/packer/start/nvim-treesitter-textobjects"
+  },
+  ["nvim-ts-autotag"] = {
+    loaded = true,
+    path = "/Users/eugene/.local/share/nvim/site/pack/packer/start/nvim-ts-autotag"
   },
   ["nvim-web-devicons"] = {
     loaded = true,
@@ -158,10 +170,6 @@ _G.packer_plugins = {
   ["vim-apathy"] = {
     loaded = true,
     path = "/Users/eugene/.local/share/nvim/site/pack/packer/start/vim-apathy"
-  },
-  ["vim-closetag"] = {
-    loaded = true,
-    path = "/Users/eugene/.local/share/nvim/site/pack/packer/start/vim-closetag"
   },
   ["vim-commentary"] = {
     loaded = true,
@@ -250,9 +258,9 @@ _G.packer_plugins = {
 
 
 -- Command lazy-loads
-vim.cmd [[command! -nargs=* -range -bang -complete=file UndotreeToggle lua require("packer.load")({'undotree'}, { cmd = "UndotreeToggle", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
-vim.cmd [[command! -nargs=* -range -bang -complete=file Messages lua require("packer.load")({'vim-scriptease'}, { cmd = "Messages", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
 vim.cmd [[command! -nargs=* -range -bang -complete=file Scriptnames lua require("packer.load")({'vim-scriptease'}, { cmd = "Scriptnames", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+vim.cmd [[command! -nargs=* -range -bang -complete=file Messages lua require("packer.load")({'vim-scriptease'}, { cmd = "Messages", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+vim.cmd [[command! -nargs=* -range -bang -complete=file UndotreeToggle lua require("packer.load")({'undotree'}, { cmd = "UndotreeToggle", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
 
 -- Keymap lazy-loads
 vim.cmd [[noremap <silent> zS <cmd>lua require("packer.load")({'vim-scriptease'}, { keys = "zS", prefix = "" }, _G.packer_plugins)<cr>]]

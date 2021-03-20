@@ -1,4 +1,4 @@
--- Wait for vim.opts to get merged asdfjasd klfj asdfasdf
+-- Wait for vim.opts to get merged
 --  https://github.com/neovim/neovim/pull/13479
 local opt = require('jyz.lib.nvim_helpers').get_vim_opts()
 local data_dir = vim.fn.stdpath('data')

@@ -11,7 +11,7 @@ vim.g.closetag_emptyTags_caseSensitive = 1
 nnoremap { '<leader>gs', '<Cmd>Git<CR>' }
 
 -- vim-dirvish
-nnoremap { '<leader>.', '<Cmd>Dirvish %:p:h<CR>' }
+nnoremap { '<leader>.', '<Cmd>Dirvish %<CR>' }
 
 -- Disable netrw
 vim.g.loaded_netrwPlugin = 1
@@ -26,6 +26,9 @@ nnoremap { '<leader>u', '<Cmd>UndotreeToggle<CR>' }
 vim.g.FerretMap = 0
 nmap { '<leader>fa', '<Plug>(FerretAck)' }
 
+-- loupe
+nmap { '<C-l>', '<Plug>(LoupeClearHighlight)', silent = true }
+
 -- vim-go
 vim.g.go_def_mapping_enabled = 0
 vim.g.go_highlight_functions = 1
@@ -38,3 +41,6 @@ vim.g.dap_virtual_text = true
 
 -- ultisnips
 vim.g.UltiSnipsExpandTrigger = '<C-l>'
+
+
+require('nvim-ts-autotag').setup()

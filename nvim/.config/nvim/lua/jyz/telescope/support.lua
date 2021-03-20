@@ -42,7 +42,7 @@ function M.ctags()
     winblend = 10,
     border = true,
     previewer = false,
-    shorten_path = true,
+    shorten_path = false,
   }
 
   require('telescope.builtin').tags(opts)

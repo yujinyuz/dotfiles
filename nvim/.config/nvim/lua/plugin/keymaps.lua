@@ -18,7 +18,7 @@ nnoremap { '<leader>qa', cmd 'qa!' }
 nnoremap { '<leader>d', '"_d' }
 nnoremap { 'Q', 'gq' }
 -- Remove highlights
-nnoremap { '<C-l>', [[:nohlsearch<CR>:diffupdate<CR>:syntax sync fromstart<CR><C-l>]], silent = true }
+nnoremap { '<C-l>', [[<Cmd>nohlsearch<CR><Cmd>diffupdate<CR><C-l>]], silent = true }
 -- Make Y work like other upcase commands
 nnoremap { 'Y', 'y$' }
 -- Buffer Switch
@@ -39,6 +39,9 @@ vnoremap { '<M-j>', [[:m'>+`<my`>mzgv`yo`z]] }
 vnoremap { '<M-k>', [[:m'<-2`>my`<mzgv`yo`z]] }
 -- Create new file relative to the currently opened file
 nnoremap { '<leader>fn', [[:e %:h<C-z>]] }
+
+-- Delete other buffers except the current one
+nnoremap { '<leader>1', cmd [[execute "%bd|e#|bd#"]] }
 
 -- Save and execute
 nnoremap { '<leader>x', cmd [[lua require('jyz.lib.nvim_helpers').save_and_execute()]] }
