@@ -42,5 +42,10 @@ vim.g.dap_virtual_text = true
 -- ultisnips
 vim.g.UltiSnipsExpandTrigger = '<C-l>'
 
+-- unimpaired overrides
+nnoremap { 'yol', '<Cmd>IndentBlanklineToggle!<CR>' }
+nnoremap { 'yob', '<Cmd>GitBlameToggle<CR>' }
+nnoremap { 'yog', '<Cmd>Neogit<CR>' }
+
 
 require('nvim-ts-autotag').setup()

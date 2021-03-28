@@ -3,7 +3,7 @@ local actions = require('telescope.actions')
 local previewers = require('telescope.previewers')
 
 local nnoremap = vim.keymap.nnoremap
-local cmd = require('jyz.lib.nvim_helpers').cmd_map
+local cmd = require('modules.lib.nvim_helpers').cmd_map
 
 -- Change mappings  because of memory muscle from fzf
 local mappings = {
@@ -37,12 +37,12 @@ telescope.setup {
 
 telescope.load_extension('fzy_native')
 
-nnoremap { '<C-p>', cmd [[lua require('jyz.telescope.support').find_files()]] }
-nnoremap { '<leader>]', cmd [[lua require('jyz.telescope.support').ctags()]] }
-nnoremap { '<leader><Space>', cmd [[lua require('jyz.telescope.support').git_files()]] }
-nnoremap { '<leader>F', cmd [[lua require('jyz.telescope.support').live_grep()]] }
-nnoremap { '<leader>fw', cmd [[lua require('jyz.telescope.support').grep_prompt()]] }
+nnoremap { '<C-p>', cmd [[lua require('modules.telescope.support').find_files()]] }
+nnoremap { '<leader>]', cmd [[lua require('modules.telescope.support').ctags()]] }
+nnoremap { '<leader><Space>', cmd [[lua require('modules.telescope.support').git_files()]] }
+nnoremap { '<leader>F', cmd [[lua require('modules.telescope.support').live_grep()]] }
+nnoremap { '<leader>fw', cmd [[lua require('modules.telescope.support').grep_prompt()]] }
 nnoremap { '<leader>b', cmd [[Telescope buffers]] }
 nnoremap { '<leader>gw', cmd [[Telescope grep_string]] }
-nnoremap { '<leader>en', cmd [[lua require('jyz.telescope.support').edit_neovim()]] }
+nnoremap { '<leader>en', cmd [[lua require('modules.telescope.support').edit_neovim()]] }
 nnoremap { '<leader>of', cmd [[Telescope oldfiles]] }

@@ -6,7 +6,7 @@ local xnoremap = vim.keymap.xnoremap
 local vnoremap = vim.keymap.vnoremap
 local tnoremap = vim.keymap.tnoremap
 
-local cmd = require('jyz.lib.nvim_helpers').cmd_map
+local cmd = require('modules.lib.nvim_helpers').cmd_map
 
 -- Write file when it is updated
 nnoremap { '<leader>w', cmd 'update' }
@@ -29,6 +29,11 @@ nnoremap { '<Down>', '<C-w>-' }
 nnoremap { '<Left>', '<C-w><' }
 nnoremap { '<Right>', '<C-w>>' }
 nnoremap { '<leader>=', '<C-w>=' }
+
+-- Windows
+nnoremap { '<C-j>', '<C-w>w' }
+nnoremap { '<C-k>', '<C-w>W' }
+
 -- Smooth scroll
 nnoremap { '<C-y>', '3<C-y>' }
 nnoremap { '<C-e>', '3<C-e>' }
@@ -44,7 +49,7 @@ nnoremap { '<leader>fn', [[:e %:h<C-z>]] }
 nnoremap { '<leader>1', cmd [[execute "%bd|e#|bd#"]] }
 
 -- Save and execute
-nnoremap { '<leader>x', cmd [[lua require('jyz.lib.nvim_helpers').save_and_execute()]] }
+nnoremap { '<leader>x', cmd [[lua require('modules.lib.nvim_helpers').save_and_execute()]] }
 -- -- Open new terminal
 nnoremap { '<leader>ot', cmd [[rightbelow splitexec "resize " . (winheight(0) * 2/3)e term://]] .. shell }
 

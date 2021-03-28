@@ -1,6 +1,6 @@
 -- Wait for vim.opts to get merged
 --  https://github.com/neovim/neovim/pull/13479
-local opt = require('jyz.lib.nvim_helpers').get_vim_opts()
+local opt = require('modules.lib.nvim_helpers').get_vim_opts()
 local data_dir = vim.fn.stdpath('data')
 
 -- Shift 2 spaces when pressing tab
@@ -9,6 +9,9 @@ opt.tabstop = 2
 opt.shiftwidth = 2
 -- Use spaces instead of tabs
 opt.expandtab = true
+-- Indents
+opt.autoindent = true
+opt.cindent = true
 -- Make search case insensitive
 opt.ignorecase = true
 -- .. unless it contains atleast one capital letter
@@ -48,6 +51,10 @@ opt.mouse = 'nicr'
 opt.shortmess = opt.shortmess .. 'a'
 opt.shortmess = opt.shortmess .. 'I' -- Disable intro message
 opt.shortmess = opt.shortmess .. 'c' -- Don't give |ins-completion-menu| messages
+
+-- Formatting
+-- vim.cmd [[set formatoptions-=o]] -- O and o, do not continue comments
+opt.formatoptions = 'jcrql'
 
 -- opt.completeopt = 'menu,menuone,noselect'
 -- opt.completeopt = 'menuone,noselect'

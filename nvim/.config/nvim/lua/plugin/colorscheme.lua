@@ -1,4 +1,7 @@
-vim.cmd [[colorscheme gruvbox-material]]
+-- vim.cmd [[colorscheme gruvbox-material]]
+
+vim.cmd [[colorscheme gruvbox]]
+-- require('colorbuddy').colorscheme('onebuddy')
 
 -- Errors in Red
 vim.cmd [[hi LspDiagnosticsVirtualTextError guifg=Red ctermfg=Red]]

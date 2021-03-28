@@ -49,4 +49,5 @@ augroup END
 augroup T
   autocmd!
   autocmd User TelescopePreviewerLoaded setlocal wrap
+  " autocmd OptionSet wrap :if &wrap | nnoremap j gj | nnoremap k gk | endif
 augroup END
