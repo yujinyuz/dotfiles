@@ -1,2 +1,0 @@
--- `vim.opt`
--- require('jyz.globals.opt')

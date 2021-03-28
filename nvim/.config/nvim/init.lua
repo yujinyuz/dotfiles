@@ -14,19 +14,22 @@
 
 vim.g.mapleader = ' '
 vim.g.python3_host_prog = os.getenv('PYTHON_3_HOST_PROG')
-
+vim.g.grvubox_contrast_dark = 'hard'
+vim.g.gruvbox_invert_selection = 0
+vim.g.indent_blankline_enabled = false
+vim.g.gitblame_enabled = 0
 
 -- require('jyz.globals')
 
 -- Load neovim options
-require('jyz.options')
+require('modules.options')
 
 -- :h vim.schedule
 vim.schedule(function()
   -- Load packer.nvim config
-  require('jyz.plugins')
+  require('modules.plugins')
   -- LSP configuration
-  require('jyz.lsp')
+  require('modules.lsp')
   -- Telescope
-  require('jyz.telescope')
+  require('modules.telescope')
 end)

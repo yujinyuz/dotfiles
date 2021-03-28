@@ -1,7 +1,7 @@
 local nnoremap = vim.keymap.nnoremap
 
-local cmd = require('jyz.lib.nvim_helpers').cmd_map
-local augroup = require('jyz.lib.nvim_helpers').augroup
+local cmd = require('modules.lib.nvim_helpers').cmd_map
+local augroup = require('modules.lib.nvim_helpers').augroup
 
 
 vim.g.nvim_tree_side = 'left'
