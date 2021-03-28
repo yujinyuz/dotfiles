@@ -51,6 +51,7 @@ local plugins = function(use)
       {'nvim-treesitter/nvim-treesitter-textobjects'},
       {'nvim-treesitter/nvim-treesitter-refactor'},
       {'windwp/nvim-ts-autotag'},
+      {'JoosepAlviste/nvim-ts-context-commentstring'}
       -- {'romgrk/nvim-treesitter-context'},
     }
   }
@@ -58,8 +59,7 @@ local plugins = function(use)
   -- IDE Stuffs
   use {'neovim/nvim-lspconfig'}
   use {'glepnir/lspsaga.nvim'}
-  -- use {'windwp/nvim-autopairs'}
-  use {'yujinyuz/vim-dyad'}
+  use {'windwp/nvim-autopairs'}
   use {'Vimjas/vim-python-pep8-indent'}
   use {
     'mbbill/undotree',
@@ -120,6 +120,9 @@ local plugins = function(use)
   use {'kana/vim-textobj-entire'} -- [ae]
   use {'kana/vim-textobj-indent'} -- [ai]/[ii]
   use {'wakatime/vim-wakatime'} -- track usage time using wakatime
+  use {'lukas-reineke/indent-blankline.nvim', branch = 'lua'}
+  use {'f-person/git-blame.nvim'}
+  use {'TimUntersberger/neogit'}
 end
 
 

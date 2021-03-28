@@ -44,6 +44,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/eugene/.local/share/nvim/site/pack/packer/start/ferret"
   },
+  ["git-blame.nvim"] = {
+    loaded = true,
+    path = "/Users/eugene/.local/share/nvim/site/pack/packer/start/git-blame.nvim"
+  },
   gruvbox = {
     loaded = true,
     path = "/Users/eugene/.local/share/nvim/site/pack/packer/start/gruvbox"
@@ -55,6 +59,10 @@ _G.packer_plugins = {
   ["gruvbuddy.nvim"] = {
     loaded = true,
     path = "/Users/eugene/.local/share/nvim/site/pack/packer/start/gruvbuddy.nvim"
+  },
+  ["indent-blankline.nvim"] = {
+    loaded = true,
+    path = "/Users/eugene/.local/share/nvim/site/pack/packer/start/indent-blankline.nvim"
   },
   loupe = {
     loaded = true,
@@ -71,6 +79,14 @@ _G.packer_plugins = {
   mkdx = {
     loaded = true,
     path = "/Users/eugene/.local/share/nvim/site/pack/packer/start/mkdx"
+  },
+  neogit = {
+    loaded = true,
+    path = "/Users/eugene/.local/share/nvim/site/pack/packer/start/neogit"
+  },
+  ["nvim-autopairs"] = {
+    loaded = true,
+    path = "/Users/eugene/.local/share/nvim/site/pack/packer/start/nvim-autopairs"
   },
   ["nvim-colorizer.lua"] = {
     loaded = true,
@@ -119,6 +135,10 @@ _G.packer_plugins = {
   ["nvim-ts-autotag"] = {
     loaded = true,
     path = "/Users/eugene/.local/share/nvim/site/pack/packer/start/nvim-ts-autotag"
+  },
+  ["nvim-ts-context-commentstring"] = {
+    loaded = true,
+    path = "/Users/eugene/.local/share/nvim/site/pack/packer/start/nvim-ts-context-commentstring"
   },
   ["nvim-web-devicons"] = {
     loaded = true,
@@ -182,10 +202,6 @@ _G.packer_plugins = {
   ["vim-dispatch"] = {
     loaded = true,
     path = "/Users/eugene/.local/share/nvim/site/pack/packer/start/vim-dispatch"
-  },
-  ["vim-dyad"] = {
-    loaded = true,
-    path = "/Users/eugene/.local/share/nvim/site/pack/packer/start/vim-dyad"
   },
   ["vim-eunuch"] = {
     loaded = true,

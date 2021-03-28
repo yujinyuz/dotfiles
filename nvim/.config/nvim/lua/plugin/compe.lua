@@ -21,10 +21,10 @@ require('compe').setup {
     --   priority = 90,
     --   dup = false,
     -- },
-    -- tags = {
-    --   priority = 50,
-    --   dup = false,
-    -- },
+    tags = {
+      priority = 50,
+      dup = false,
+    },
     -- buffer = {
     --   priority = 40,
     --   dup = false,
@@ -71,14 +71,38 @@ _G.s_tab_complete = function()
   end
 end
 
+vim.g.completion_confirm_key = ""
+
+local npairs = require('nvim-autopairs')
+
+_G.completion_confirm = function()
+  if vim.fn.pumvisible() ~= 0 then
+    if vim.fn.complete_info()["selected"] ~= -1 then
+      vim.fn["compe#confirm"]()
+      return t "<C-y>"
+    else
+      vim.defer_fn(function()
+        vim.fn["compe#confirm"]("<CR>")
+      end, 20)
+      return t "<C-n>"
+    end
+  else
+    return npairs.check_break_line_char()
+  end
+end
+
+npairs.setup()
+
 -- vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
 -- vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
 -- vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
 -- vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
 
 
+
 inoremap { '<Tab>', [[v:lua.tab_complete()]], expr = true, silent = true }
 inoremap { '<S-Tab>', [[v:lua.s_tab_complete()]], expr = true, silent = true }
 inoremap { '<C-Space>', [[compe#complete() ]], silent = true, expr = true }
-inoremap { '<C-y>', [[compe#confirm('<CR>')]], silent = true, expr = true }
+-- inoremap { '<C-y>', [[compe#confirm('<CR>')]], silent = true, expr = true }
 inoremap { '<C-e>', [[compe#close()]], silent = true, expr = true }
+inoremap { '<CR>', [[v:lua.completion_confirm()]], expr = true }
