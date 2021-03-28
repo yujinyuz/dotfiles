@@ -4,8 +4,8 @@ local nnoremap = vim.keymap.nnoremap
 local inoremap = vim.keymap.inoremap
 local vnoremap = vim.keymap.vnoremap
 
-local augroup = require('jyz.lib.nvim_helpers').augroup
-local cmd = require('jyz.lib.nvim_helpers').cmd_map
+local augroup = require('modules.lib.nvim_helpers').augroup
+local cmd = require('modules.lib.nvim_helpers').cmd_map
 
 
 -- When in need of help, just check documentation via :h lsp
@@ -131,12 +131,12 @@ local servers = {
   },
 }
 
-local prettier = require('jyz.lsp.efm.prettier')
-local eslint = require('jyz.lsp.efm.eslint')
-local autopep8 = require('jyz.lsp.efm.autopep8')
-local isort = require('jyz.lsp.efm.isort')
-local flake8 = require('jyz.lsp.efm.flake8')
-local jq = require('jyz.lsp.efm.jq')
+local prettier = require('modules.lsp.efm.prettier')
+local eslint = require('modules.lsp.efm.eslint')
+local autopep8 = require('modules.lsp.efm.autopep8')
+local isort = require('modules.lsp.efm.isort')
+local flake8 = require('modules.lsp.efm.flake8')
+local jq = require('modules.lsp.efm.jq')
 
 local languages = {
   typescript = {prettier, eslint},

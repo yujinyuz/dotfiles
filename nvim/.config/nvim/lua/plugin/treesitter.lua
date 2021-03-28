@@ -47,6 +47,9 @@ require('nvim-treesitter.configs').setup {
         ['<leader><'] = '@parameter.outer',
       }
     }
+  },
+  context_commentstring = {
+    enable = true,
   }
 }
 
