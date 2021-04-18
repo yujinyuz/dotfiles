@@ -1,2 +1,3 @@
-# clean up any backups not used in the past 7 days out of the ~/.backup directory
-30 21 * * * find ~/.vim/backup -type f -name '*:*' -not \( -atime 0 -or -atime 1 -or -atime 2 -or -atime 3 -or -atime 4 -or -atime 5 -or -atime 6 \) -delete
+# clean up any backups not used in the past 7 days out of the backup directory
+# set backupdir? to know what is the backup folder
+30 21 * * * find ~/.local/share/nvim/backup -type f -name '*:*' -not \( -atime 0 -or -atime 1 -or -atime 2 -or -atime 3 -or -atime 4 -or -atime 5 -or -atime 6 \) -delete
