@@ -58,7 +58,7 @@ opt.formatoptions = 'jcrql'
 
 -- opt.completeopt = 'menu,menuone,noselect'
 -- opt.completeopt = 'menuone,noselect'
-opt.completeopt = 'menuone,noinsert,noselect'
+opt.completeopt = 'menuone,noselect,noinsert'
 -- Always show sign columns
 opt.signcolumn = 'yes'
 -- Having longer update time leads to noticeable delays and poor UX
