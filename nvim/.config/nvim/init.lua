@@ -11,7 +11,6 @@
 --    GitHub: https://github.com/yujinyuz
 --    Repository URL: https://github.com/yujinyuz/dotfiles
 --    Desc: Collection of dotfiles gathered across different dotfiles repos
-
 vim.g.mapleader = ' '
 vim.g.python3_host_prog = os.getenv('PYTHON_3_HOST_PROG')
 vim.g.grvubox_contrast_dark = 'hard'
@@ -26,11 +25,13 @@ vim.g.gruvbox_material_better_performance = 1
 require('modules.options')
 
 -- :h vim.schedule
-vim.schedule(function()
-  -- Load packer.nvim config
-  require('modules.plugins')
-  -- LSP configuration
-  require('modules.lsp')
-  -- Telescope
-  require('modules.telescope')
-end)
+vim.schedule(
+  function()
+    -- Load packer.nvim config
+    require('modules.plugins')
+    -- LSP configuration
+    require('modules.lsp')
+    -- Telescope
+    require('modules.telescope')
+  end
+)
