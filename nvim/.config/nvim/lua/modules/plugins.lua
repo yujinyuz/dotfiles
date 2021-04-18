@@ -26,6 +26,7 @@ local plugins = function(use)
       'nvim-telescope/telescope-fzf-writer.nvim'
     },
   }
+  use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
 
   use {
     'kyazdani42/nvim-tree.lua',
@@ -50,8 +51,19 @@ local plugins = function(use)
     requires = {
       {'nvim-treesitter/nvim-treesitter-textobjects'},
       {'nvim-treesitter/nvim-treesitter-refactor'},
-      {'windwp/nvim-ts-autotag'},
-      {'JoosepAlviste/nvim-ts-context-commentstring'}
+      {
+        'windwp/nvim-ts-autotag',
+        config = function()
+          require('nvim-ts-autotag').setup()
+        end
+      },
+      {'JoosepAlviste/nvim-ts-context-commentstring'},
+      -- {
+      --   'code-biscuits/nvim-biscuits',
+      --   config = function()
+      --     require('nvim-biscuits').setup({})
+      --   end
+      -- },
       -- {'romgrk/nvim-treesitter-context'},
     }
   }
@@ -59,7 +71,6 @@ local plugins = function(use)
   -- IDE Stuffs
   use {'neovim/nvim-lspconfig'}
   use {'glepnir/lspsaga.nvim'}
-  use {'windwp/nvim-autopairs'}
   use {'Vimjas/vim-python-pep8-indent'}
   use {
     'mbbill/undotree',
@@ -110,19 +121,34 @@ local plugins = function(use)
   use {'tpope/vim-rhubarb'}
   use {'tpope/vim-apathy'}
   use {'tpope/vim-rsi'}
+  use {'windwp/nvim-autopairs'}
   use {'tpope/vim-dispatch'}
   use {'tpope/vim-projectionist'}
 
   -- Misc
-  -- use {'junegunn/vim-slash'} -- Enhances buffer search
   -- use {'honza/vim-snippets'}
+  use {'junegunn/vim-easy-align'}
   use {'kana/vim-textobj-user'}
   use {'kana/vim-textobj-entire'} -- [ae]
   use {'kana/vim-textobj-indent'} -- [ai]/[ii]
   use {'wakatime/vim-wakatime'} -- track usage time using wakatime
   use {'lukas-reineke/indent-blankline.nvim', branch = 'lua'}
   use {'f-person/git-blame.nvim'}
+  use {
+    'lewis6991/gitsigns.nvim',
+    config = function()
+      require('gitsigns').setup {
+        signcolumn = false,
+      }
+    end
+  }
   use {'TimUntersberger/neogit'}
+  use {
+    'ruifm/gitlinker.nvim',
+    config = function()
+      require('gitlinker').setup()
+    end
+  }
 end
 
 

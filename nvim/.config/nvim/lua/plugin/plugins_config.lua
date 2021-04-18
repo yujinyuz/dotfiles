@@ -1,17 +1,16 @@
 -- Here resides some config files that require minimal config
 local nmap = vim.keymap.nmap
 local nnoremap = vim.keymap.nnoremap
-local inoremap = vim.keymap.inoremap
 
--- vim-closetag
-vim.g.closetag_filename = '*.html,*.js,*.erb,*.hbs'
-vim.g.closetag_emptyTags_caseSensitive = 1
+local cmd = require('modules.lib.nvim_helpers').cmd_map
 
 -- vim-fugitive
-nnoremap { '<leader>gs', '<Cmd>Git<CR>' }
+nnoremap { '<leader>gs', cmd 'G' }
+nnoremap { '<leader>gc', cmd 'G commit' }
 
 -- vim-dirvish
-nnoremap { '<leader>.', '<Cmd>Dirvish %<CR>' }
+nnoremap { '<leader>.', cmd 'Dirvish %' }
+nnoremap { '<leader>/', cmd 'Dirvish' }
 
 -- Disable netrw
 vim.g.loaded_netrwPlugin = 1
@@ -20,7 +19,7 @@ vim.g.loaded_netrwPlugin = 1
 vim.g.undotree_HighlightChangedWithSign = 0
 vim.g.undotree_WindowLayout = 4
 vim.g.undotree_SetFocusWhenToggle = 1
-nnoremap { '<leader>u', '<Cmd>UndotreeToggle<CR>' }
+nnoremap { '<leader>u', cmd 'UndotreeToggle' }
 
 -- ferret
 vim.g.FerretMap = 0
@@ -43,9 +42,6 @@ vim.g.dap_virtual_text = true
 vim.g.UltiSnipsExpandTrigger = '<C-l>'
 
 -- unimpaired overrides
-nnoremap { 'yol', '<Cmd>IndentBlanklineToggle!<CR>' }
-nnoremap { 'yob', '<Cmd>GitBlameToggle<CR>' }
-nnoremap { 'yog', '<Cmd>Neogit<CR>' }
-
-
-require('nvim-ts-autotag').setup()
+nnoremap { 'yol', cmd 'IndentBlanklineToggle!' }
+nnoremap { 'yob', [[<Cmd>GitBlameToggle<CR><Cmd>lua require("gitsigns").toggle_signs()<CR>]] }
+nnoremap { 'yog', cmd 'Neogit' }

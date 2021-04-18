@@ -18,6 +18,7 @@ vim.g.grvubox_contrast_dark = 'hard'
 vim.g.gruvbox_invert_selection = 0
 vim.g.indent_blankline_enabled = false
 vim.g.gitblame_enabled = 0
+vim.g.gruvbox_material_better_performance = 1
 
 -- require('jyz.globals')
 
