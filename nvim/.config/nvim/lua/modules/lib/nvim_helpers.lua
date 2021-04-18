@@ -1,17 +1,18 @@
 local M = {}
 
-function M.cmd_map(cmd)
-  return string.format('<Cmd>%s<CR>', cmd)
-end
+function M.cmd_map(cmd) return string.format('<Cmd>%s<CR>', cmd) end
 
 function M.augroup(name, commands)
   vim.cmd('augroup ' .. name)
   vim.cmd('autocmd!')
   for _, c in ipairs(commands) do
-    vim.cmd(string.format('autocmd %s %s %s %s', table.concat(c.events, ','),
-                                                 table.concat(c.targets or {}, ','),
-                                                 table.concat(c.modifiers or {}, ' '),
-                          c.command))
+    vim.cmd(
+      string.format(
+        'autocmd %s %s %s %s', table.concat(c.events, ','),
+        table.concat(c.targets or {}, ','),
+        table.concat(c.modifiers or {}, ' '), c.command
+      )
+    )
   end
   vim.cmd('augroup END')
 end
@@ -21,18 +22,20 @@ end
 -- so we need to set the global `vim.o` first and then set is as a window local or a buffer local
 function M.get_vim_opts()
   local opts_info = vim.api.nvim_get_all_options_info()
-  local opt = setmetatable({}, {
-    __index = vim.o,
-    __newindex = function(_, key, value)
-      vim.o[key] = value
-      local scope = opts_info[key].scope
-      if scope == "win" then
-        vim.wo[key] = value
-        elseif scope == "buf" then
-        vim.bo[key] = value
-      end
-    end,
-  })
+  local opt = setmetatable(
+    {}, {
+      __index = vim.o,
+      __newindex = function(_, key, value)
+        vim.o[key] = value
+        local scope = opts_info[key].scope
+        if scope == 'win' then
+          vim.wo[key] = value
+        elseif scope == 'buf' then
+          vim.bo[key] = value
+        end
+      end,
+    }
+  )
   return opt
 end
 
