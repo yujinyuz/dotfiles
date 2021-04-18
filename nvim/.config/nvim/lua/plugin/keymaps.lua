@@ -5,6 +5,8 @@ local cnoremap = vim.keymap.cnoremap
 local xnoremap = vim.keymap.xnoremap
 local vnoremap = vim.keymap.vnoremap
 local tnoremap = vim.keymap.tnoremap
+local nmap = vim.keymap.nmap
+local vmap = vim.keymap.vmap
 
 local cmd = require('modules.lib.nvim_helpers').cmd_map
 
@@ -38,10 +40,10 @@ nnoremap { '<C-k>', '<C-w>W' }
 nnoremap { '<C-y>', '3<C-y>' }
 nnoremap { '<C-e>', '3<C-e>' }
 -- Use Alt for moving lines up/down
-nnoremap { '<M-j>', [[mz:m+`z]] }
-nnoremap { '<M-k>', [[mz:m-2`z]] }
-vnoremap { '<M-j>', [[:m'>+`<my`>mzgv`yo`z]] }
-vnoremap { '<M-k>', [[:m'<-2`>my`<mzgv`yo`z]] }
+nmap { '<M-j>', [[mz:m+<CR>`z]], silent = true }
+nmap { '<M-k>', [[mz:m-2<CR>`z]], silent = true }
+vmap { '<M-j>', [[:m'>+<CR>`<my`>mzgv`yo`z]], silent = true }
+vmap { '<M-k>', [[:m'<-2<CR>`>my`<mzgv`yo`z]], silent = true }
 -- Create new file relative to the currently opened file
 nnoremap { '<leader>fn', [[:e %:h<C-z>]] }
 
