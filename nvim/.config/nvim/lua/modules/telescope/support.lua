@@ -1,4 +1,6 @@
-local themes = require('telescope.themes')
+-- NOTE: This file was named support.lua because it's supposed
+-- to act like a support like in the parts of a telescope.
+
 local builtin = require('telescope.builtin')
 local M = {}
 
@@ -19,6 +21,8 @@ end
 
 function M.find_files()
   require('telescope').extensions.fzf_writer.files{}
+  -- require('telescope.builtin').find_files()
+
 end
 
 function M.live_grep()
@@ -38,12 +42,13 @@ end
 
 function M.ctags()
   -- require('telescope').extensions.fzf_writer.tags {}
-  local opts = themes.get_dropdown {
-    winblend = 10,
-    border = true,
-    previewer = false,
-    shorten_path = false,
-  }
+  -- local opts = themes.get_dropdown {
+  --   winblend = 10,
+  --   border = true,
+  --   previewer = false,
+  --   shorten_path = false,
+  -- }
+  local opts = nil
 
   require('telescope.builtin').tags(opts)
 end

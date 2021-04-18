@@ -1,6 +1,6 @@
--- vim.cmd [[colorscheme gruvbox-material]]
+vim.cmd [[colorscheme gruvbox-material]]
 
-vim.cmd [[colorscheme gruvbox]]
+-- vim.cmd [[colorscheme gruvbox]]
 -- require('colorbuddy').colorscheme('onebuddy')
 
 -- Errors in Red

@@ -34,6 +34,8 @@ local on_attach = function(client)
 
   vnoremap { 'ga', cmd [[<C-u>Lspsaga range_code_action]], buffer = true }
 
+  nnoremap { '<leader>lr', cmd [[LspRestart]], buffer = true }
+
   vim.bo.omnifunc = 'v:lua.vim.lsp.omnifunc'
 
   local buf_autocmds = {

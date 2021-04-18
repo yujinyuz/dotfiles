@@ -28,14 +28,17 @@ telescope.setup {
     },
   },
   extensions = {
-    fzy_native = {
-      override_generic_sorter = true,
-      override_file_sorter = true,
+    fzf = {
+      override_generic_sorter = false, -- override the generic sorter
+      override_file_sorter = true,     -- override the file sorter
+      case_mode = "smart_case",
     },
   }
 }
 
-telescope.load_extension('fzy_native')
+-- telescope.load_extension('fzy_native')
+telescope.load_extension('fzf')
+
 
 nnoremap { '<C-p>', cmd [[lua require('modules.telescope.support').find_files()]] }
 nnoremap { '<leader>]', cmd [[lua require('modules.telescope.support').ctags()]] }
