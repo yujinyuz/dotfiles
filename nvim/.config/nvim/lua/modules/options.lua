@@ -23,7 +23,8 @@ opt.number = true
 -- Allow vim to set title of the terminal
 opt.title = true
 -- Change list characters
-opt.listchars = [[tab:→ ,trail:·,space:·,eol:↲,nbsp:☠,precedes:«,extends:»,conceal:┊]]
+opt.listchars =
+  [[tab:→ ,trail:·,space:·,eol:↲,nbsp:☠,precedes:«,extends:»,conceal:┊]]
 -- Hide buffer when switching to other files
 opt.hidden = true
 -- Prefer bash for shell-related tasks
