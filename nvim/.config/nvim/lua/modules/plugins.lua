@@ -1,17 +1,19 @@
 local packer_exists = pcall(vim.cmd, [[packadd packer.nvim]])
 
 if not packer_exists then
-  local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/opt/packer.nvim'
+  local install_path = vim.fn.stdpath('data') ..
+                         '/site/pack/packer/opt/packer.nvim'
   print('Downloading packer.nvim...')
-  vim.fn.system(string.format(
-      'git clone %s %s',
-      'https://github.com/wbthomason/packer.nvim',
+  vim.fn.system(
+    string.format(
+      'git clone %s %s', 'https://github.com/wbthomason/packer.nvim',
       install_path
     )
   )
 end
 
 local packer = require('packer')
+local disable = function() return false end
 local plugins = function(use)
   use {'wbthomason/packer.nvim', opt = true}
   use {'tjdevries/astronauta.nvim'}
@@ -23,18 +25,16 @@ local plugins = function(use)
       'nvim-lua/popup.nvim',
       'nvim-lua/plenary.nvim',
       'nvim-telescope/telescope-fzy-native.nvim',
-      'nvim-telescope/telescope-fzf-writer.nvim'
+      'nvim-telescope/telescope-fzf-writer.nvim',
     },
   }
-  use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
+  use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'}
 
   use {
     'kyazdani42/nvim-tree.lua',
-    requires = {'kyazdani42/nvim-web-devicons', opt = true}
+    requires = {'kyazdani42/nvim-web-devicons', opt = true},
   }
-  use {
-    'justinmk/vim-dirvish',
-  }
+  use {'justinmk/vim-dirvish'}
 
   -- Colors / Syntax
   use {'SidOfc/mkdx'}
@@ -53,38 +53,26 @@ local plugins = function(use)
       {'nvim-treesitter/nvim-treesitter-refactor'},
       {
         'windwp/nvim-ts-autotag',
-        config = function()
-          require('nvim-ts-autotag').setup()
-        end
+        config = function() require('nvim-ts-autotag').setup() end,
       },
       {'JoosepAlviste/nvim-ts-context-commentstring'},
-      -- {
-      --   'code-biscuits/nvim-biscuits',
-      --   config = function()
-      --     require('nvim-biscuits').setup({})
-      --   end
-      -- },
-      -- {'romgrk/nvim-treesitter-context'},
-    }
+      {
+        'code-biscuits/nvim-biscuits',
+        config = function() require('nvim-biscuits').setup({}) end,
+        cond = disable,
+      },
+      {'romgrk/nvim-treesitter-context', cond = disable},
+    },
   }
 
   -- IDE Stuffs
   use {'neovim/nvim-lspconfig'}
   use {'glepnir/lspsaga.nvim'}
   use {'Vimjas/vim-python-pep8-indent'}
-  use {
-    'mbbill/undotree',
-    opt = true,
-    cmd = {'UndotreeToggle'}
-  }
+  use {'mbbill/undotree', opt = true, cmd = {'UndotreeToggle'}}
   use {'hrsh7th/nvim-compe'}
 
-  use {
-    'SirVer/ultisnips',
-    requires = {
-      {'honza/vim-snippets'},
-    }
-  }
+  use {'SirVer/ultisnips', requires = {{'honza/vim-snippets'}}}
 
   use {'ludovicchabant/vim-gutentags'}
   use {'wincent/ferret'}
@@ -94,13 +82,10 @@ local plugins = function(use)
     requires = {
       {'mfussenegger/nvim-dap-python'},
       {'theHamsta/nvim-dap-virtual-text'},
-    }
+    },
   }
 
-  use {
-    'hoob3rt/lualine.nvim',
-    requires = {'kyazdani42/nvim-web-devicons', opt = true},
-  }
+  use {'hoob3rt/lualine.nvim'}
 
   -- Holiness
   use {'tpope/vim-surround'}
@@ -116,7 +101,7 @@ local plugins = function(use)
     'tpope/vim-scriptease',
     opt = true,
     cmd = {'Scriptnames', 'Messages'},
-    keys = {'zS'}
+    keys = {'zS'},
   }
   use {'tpope/vim-rhubarb'}
   use {'tpope/vim-apathy'}
@@ -136,20 +121,13 @@ local plugins = function(use)
   use {'f-person/git-blame.nvim'}
   use {
     'lewis6991/gitsigns.nvim',
-    config = function()
-      require('gitsigns').setup {
-        signcolumn = false,
-      }
-    end
+    config = function() require('gitsigns').setup {signcolumn = false} end,
   }
   use {'TimUntersberger/neogit'}
   use {
     'ruifm/gitlinker.nvim',
-    config = function()
-      require('gitlinker').setup()
-    end
+    config = function() require('gitlinker').setup() end,
   }
 end
-
 
 return packer.startup(plugins)

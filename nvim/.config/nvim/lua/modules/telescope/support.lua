@@ -1,6 +1,5 @@
 -- NOTE: This file was named support.lua because it's supposed
 -- to act like a support like in the parts of a telescope.
-
 local builtin = require('telescope.builtin')
 local M = {}
 
@@ -13,14 +12,12 @@ function M.edit_neovim()
     width = .25,
 
     layout_strategy = 'horizontal',
-    layout_config = {
-      preview_width = 0.65,
-    }
+    layout_config = {preview_width = 0.65},
   }
 end
 
 function M.find_files()
-  require('telescope').extensions.fzf_writer.files{}
+  require('telescope').extensions.fzf_writer.files {}
   -- require('telescope.builtin').find_files()
 
 end
@@ -33,9 +30,7 @@ function M.live_grep()
   --   border = true,
   --   shorten_path = true,
   -- }
-  local opts = {
-    shorten_path = false,
-  }
+  local opts = {shorten_path = false}
   -- require('telescope').extensions.fzf_writer.staged_grep(opts)
   require('telescope.builtin').live_grep(opts)
 end
@@ -60,14 +55,16 @@ function M.grep_prompt()
   }
 end
 
-return setmetatable({}, {
-  __index = function(_, k)
-    -- reloader()
+return setmetatable(
+  {}, {
+    __index = function(_, k)
+      -- reloader()
 
-    if M[k] then
-      return M[k]
-    else
-      return require('telescope.builtin')[k]
-    end
-  end
-})
+      if M[k] then
+        return M[k]
+      else
+        return require('telescope.builtin')[k]
+      end
+    end,
+  }
+)
