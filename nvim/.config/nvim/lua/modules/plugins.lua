@@ -34,7 +34,8 @@ local plugins = function(use)
     'kyazdani42/nvim-tree.lua',
     requires = {'kyazdani42/nvim-web-devicons', opt = true},
   }
-  use {'justinmk/vim-dirvish'}
+  use {'justinmk/vim-dirvish', cond = disable}
+  use {'tamago324/lir.nvim'}
 
   -- Colors / Syntax
   use {'SidOfc/mkdx'}
@@ -44,7 +45,10 @@ local plugins = function(use)
   use {'Th3Whit3Wolf/onebuddy'}
   use {'tjdevries/colorbuddy.vim'}
   use {'RishabhRD/nvim-gruvbox'}
-  use {'norcalli/nvim-colorizer.lua'} -- colorize hex/rgb/hsl value
+  use {
+    'norcalli/nvim-colorizer.lua',
+    config = function() require('colorizer').setup {} end,
+  } -- colorize hex/rgb/hsl value
   use {
     'nvim-treesitter/nvim-treesitter',
     -- run = ':TSUpdate',
@@ -56,14 +60,16 @@ local plugins = function(use)
         config = function() require('nvim-ts-autotag').setup() end,
       },
       {'JoosepAlviste/nvim-ts-context-commentstring'},
-      {
-        'code-biscuits/nvim-biscuits',
-        config = function() require('nvim-biscuits').setup({}) end,
-        cond = disable,
-      },
-      {'romgrk/nvim-treesitter-context', cond = disable},
     },
   }
+
+  use {
+    'code-biscuits/nvim-biscuits',
+    -- config = function() require('nvim-biscuits').setup({}) end,
+    opt = true,
+    cond = disable,
+  }
+  use {'romgrk/nvim-treesitter-context', cond = disable, opt = true}
 
   -- IDE Stuffs
   use {'neovim/nvim-lspconfig'}
@@ -126,8 +132,14 @@ local plugins = function(use)
   use {'TimUntersberger/neogit'}
   use {
     'ruifm/gitlinker.nvim',
-    config = function() require('gitlinker').setup() end,
+    config = function() require('gitlinker').setup {} end,
   }
+  use {
+    'folke/lsp-trouble.nvim',
+    config = function() require('trouble').setup {} end,
+  }
+  use {'marcushwz/nvim-workbench'}
+  use {'nvim-treesitter/playground'}
 end
 
 return packer.startup(plugins)
