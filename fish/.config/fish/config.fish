@@ -28,6 +28,7 @@ set -gx EDITOR (type -p nvim)
 set -gx LANG en_US.UTF-8
 set -gx MYVIMRC $HOME/.vimrc
 set -gx MANPAGER "sh -c 'col -bx | bat -l man -p'"
+set -gx XDG_CONFIG_HOME $HOME/.config
 
 contains $HOME/.local/bin $fish_user_paths; or set -Ua fish_user_paths $HOME/.local/bin
 
@@ -62,7 +63,7 @@ ulimit -n 2048
 alias brewup="brew update; brew upgrade; brew cleanup; brew doctor"
 alias cat="bat"
 alias cp="cp -v"
-alias dc="docker-compose"
+alias dc="docker compose"
 alias doom="~/.emacs.d/bin/doom"
 alias dotfiles="/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
 alias dotlocal="/usr/bin/git --git-dir=$HOME/.dotlocal/ --work-tree=$HOME"
