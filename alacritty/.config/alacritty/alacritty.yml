@@ -19,7 +19,7 @@ font:
     y: 0
   normal:
     family: FiraCode Nerd Font Mono
-    style: Regular
+    style: Retina
   use_thin_strokes: true
 schemes:
   gruvbox: &gruvbox

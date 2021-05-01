@@ -5,28 +5,28 @@ local nnoremap = vim.keymap.nnoremap
 local cmd = require('modules.lib.nvim_helpers').cmd_map
 
 -- vim-fugitive
-nnoremap { '<leader>gs', cmd 'G' }
-nnoremap { '<leader>gc', cmd 'G commit' }
+nnoremap {'<leader>gs', cmd 'G'}
+nnoremap {'<leader>gc', cmd 'G commit'}
 
 -- vim-dirvish
-nnoremap { '<leader>.', cmd 'Dirvish %' }
-nnoremap { '<leader>/', cmd 'Dirvish' }
+-- nnoremap { '<leader>.', cmd 'Dirvish %' }
+-- nnoremap { '<leader>/', cmd 'Dirvish' }
 
 -- Disable netrw
-vim.g.loaded_netrwPlugin = 1
+-- vim.g.loaded_netrwPlugin = 1
 
 -- undotree
 vim.g.undotree_HighlightChangedWithSign = 0
 vim.g.undotree_WindowLayout = 4
 vim.g.undotree_SetFocusWhenToggle = 1
-nnoremap { '<leader>u', cmd 'UndotreeToggle' }
+nnoremap {'<leader>u', cmd 'UndotreeToggle'}
 
 -- ferret
 vim.g.FerretMap = 0
-nmap { '<leader>fa', '<Plug>(FerretAck)' }
+nmap {'<leader>fa', '<Plug>(FerretAck)'}
 
 -- loupe
-nmap { '<C-l>', '<Plug>(LoupeClearHighlight)', silent = true }
+nmap {'<C-l>', '<Plug>(LoupeClearHighlight)', silent = true}
 
 -- vim-go
 vim.g.go_def_mapping_enabled = 0
@@ -42,6 +42,9 @@ vim.g.dap_virtual_text = true
 vim.g.UltiSnipsExpandTrigger = '<C-l>'
 
 -- unimpaired overrides
-nnoremap { 'yol', cmd 'IndentBlanklineToggle!' }
-nnoremap { 'yob', [[<Cmd>GitBlameToggle<CR><Cmd>lua require("gitsigns").toggle_signs()<CR>]] }
-nnoremap { 'yog', cmd 'Neogit' }
+nnoremap {'yol', cmd 'IndentBlanklineToggle!'}
+nnoremap {
+  'yob',
+  [[<Cmd>GitBlameToggle<CR><Cmd>lua require("gitsigns").toggle_signs()<CR>]],
+}
+nnoremap {'yog', cmd 'Neogit'}
