@@ -1,9 +1,10 @@
 local telescope = require('telescope')
 local actions = require('telescope.actions')
-local previewers = require('telescope.previewers')
 
 local nnoremap = vim.keymap.nnoremap
 local cmd = require('modules.lib.nvim_helpers').cmd_map
+
+local trouble = require('trouble.providers.telescope')
 
 -- Change mappings  because of memory muscle from fzf
 local mappings = {
@@ -15,13 +16,13 @@ local mappings = {
   ['<C-k>'] = actions.move_selection_previous,
   -- use esc for exit in normal mode
   ['<Esc>'] = actions.close,
+  ['<C-i>'] = trouble.open_with_trouble,
+  ['<C-q>'] = actions.send_to_qflist + actions.open_qflist,
+
 }
 
 telescope.setup {
   defaults = {
-    file_previewer = previewers.vim_buffer_cat.new,
-    grep_previewer = previewers.vim_buffer_vimgrep.new,
-    qflist_previewer = previewers.vim_buffer_qflist.new,
     mappings = {i = mappings, n = mappings},
   },
   extensions = {
