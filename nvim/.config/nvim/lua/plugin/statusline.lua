@@ -16,7 +16,7 @@ end
 
 lualine.setup {
   options = {
-    theme = 'gruvbox',
+    theme = 'tokyonight',
     -- separator = '|',
     icons_enabled = true,
   },
