@@ -45,6 +45,7 @@ local plugins = function(use)
   use {'Th3Whit3Wolf/onebuddy'}
   use {'tjdevries/colorbuddy.vim'}
   use {'RishabhRD/nvim-gruvbox'}
+  use {'folke/tokyonight.nvim'}
   use {
     'norcalli/nvim-colorizer.lua',
     config = function() require('colorizer').setup {} end,
