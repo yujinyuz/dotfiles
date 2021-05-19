@@ -17,8 +17,8 @@ function M.edit_neovim()
 end
 
 function M.find_files()
-  require('telescope').extensions.fzf_writer.files {}
-  -- require('telescope.builtin').find_files()
+  -- require('telescope').extensions.fzf_writer.files {}
+  require('telescope.builtin').find_files {}
 
 end
 
@@ -30,7 +30,7 @@ function M.live_grep()
   --   border = true,
   --   shorten_path = true,
   -- }
-  local opts = {shorten_path = false}
+  local opts = {shorten_path = false, only_sort_text = true}
   -- require('telescope').extensions.fzf_writer.staged_grep(opts)
   require('telescope.builtin').live_grep(opts)
 end
@@ -43,9 +43,14 @@ function M.ctags()
   --   previewer = false,
   --   shorten_path = false,
   -- }
-  local opts = nil
+  -- local opts = {
+  --   prompt = 'Tags',
+  -- }
 
-  require('telescope.builtin').tags(opts)
+  require('telescope.builtin').tags {
+    prompt_title = 'Tags',
+    only_sort_tags = true,
+  }
 end
 
 function M.grep_prompt()
