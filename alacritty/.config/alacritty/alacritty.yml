@@ -1,4 +1,9 @@
 background_opacity: 0.98
+shell:
+  program: /usr/local/bin/fish
+  args:
+    - --login
+
 window:
   padding:
     x: 3
@@ -78,12 +83,48 @@ schemes:
     cursor:
       cursor: '#fbfbfb'
 
-colors: *gruvbox-material
+  tokyo-night-storm: &tokyo-night-storm
+    # Default colors
+    primary:
+      background: '#24283b'
+      foreground: '#c0caf5'
+
+    # Normal colors
+    normal:
+      black:   '#1d202f'
+      red:     '#f7768e'
+      green:   '#9ece6a'
+      yellow:  '#e0af68'
+      blue:    '#7aa2f7'
+      magenta: '#bb9af7'
+      cyan:    '#7dcfff'
+      white:   '#a9b1d6'
+
+    # Bright colors
+    bright:
+      black:   '#414868' # used in venv name and branch
+      red:     '#f7768e'
+      green:   '#9ece6a'
+      yellow:  '#e0af68'
+      blue:    '#7aa2f7'
+      magenta: '#bb9af7'
+      cyan:    '#7dcfff'
+      white:   '#c0caf5'
+
+    indexed_colors:
+      - { index: 16, color: '#ff9e64' }
+      - { index: 17, color: '#db4b4b' }
+
+    # cursor:
+    #   cursor: '#c0caf5'
+
+colors: *tokyo-night-storm
 
 key_bindings:
   - { key: N,           mods: Command|Shift,        action: SpawnNewInstance               }
   - { key: K,           mods: Command,              action: ClearHistory                   }
-  - { key: F,           mods: Command|Control,      action: ToggleSimpleFullscreen         }
+  - { key: F,           mods: Command|Shift,        action: ToggleSimpleFullscreen         }
+  - { key: F,           mods: Command|Control,      action: ToggleFullScreen               }
   - { key: Return,      mods: Shift,                chars: "\x1b[13;2u"                    }
   - { key: Return,      mods: Control,              chars: "\x1b[13;5u"                    }
 
