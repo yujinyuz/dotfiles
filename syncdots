@@ -3,7 +3,7 @@
 user_dirs=(
     alacritty
     bin
-    emacs
+    # emacs
     fish
     git
     karabiner
