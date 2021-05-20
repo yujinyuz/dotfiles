@@ -1,4 +1,5 @@
 local lspconfig = require('lspconfig')
+local lspinstall = require('lspinstall')
 
 local nnoremap = vim.keymap.nnoremap
 local inoremap = vim.keymap.inoremap
@@ -90,72 +91,80 @@ vim.lsp.handlers['textDocument/publishDiagnostics'] =
     }
   )
 
-local system_name
-if vim.fn.has('mac') == 1 then
-  system_name = 'macOS'
-elseif vim.fn.has('unix') == 1 then
-  system_name = 'Linux'
-elseif vim.fn.has('win32') == 1 then
-  system_name = 'Windows'
-else
-  print('Unsupported system for sumneko')
-end
-local sumneko_root_path = vim.fn.stdpath('cache') ..
-                            '/lspconfig/sumneko_lua/lua-language-server'
-local sumneko_binary = sumneko_root_path .. '/bin/' .. system_name ..
-                         '/lua-language-server'
 
-local servers = {
-  vimls = {},
-  tsserver = {},
-  jsonls = {},
-  jedi_language_server = {},
-  -- pyls_ms = {},
-  -- pyright = {},
-  sumneko_lua = {
-    cmd = {sumneko_binary, '-E', sumneko_root_path .. '/main.lua'},
-    settings = {
-      Lua = {
-        runtime = {version = 'LuaJIT', path = vim.split(package.path, ';')},
-        diagnostics = {globals = {'vim'}},
-        workspace = {
-          library = {
-            [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-            [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
-          },
-        },
+
+
+local lua_settings = {
+  Lua = {
+    runtime = {
+      -- LuaJIT in the case of Neovim
+      version = 'LuaJIT',
+      path = vim.split(package.path, ';'),
+    },
+    diagnostics = {
+      -- Get the language server to recognize the `vim` global
+      globals = {'vim'},
+    },
+    workspace = {
+      -- Make the server aware of Neovim runtime files
+      library = {
+        [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+        [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
       },
     },
-  },
+  }
 }
 
-local prettier = require('modules.lsp.efm.prettier')
-local eslint = require('modules.lsp.efm.eslint')
-local autopep8 = require('modules.lsp.efm.autopep8')
-local isort = require('modules.lsp.efm.isort')
-local flake8 = require('modules.lsp.efm.flake8')
-local jq = require('modules.lsp.efm.jq')
-local luafmt = require('modules.lsp.efm.luafmt')
-local misspell = require('modules.lsp.efm.misspell')
+local function make_config()
+  local capabilities = vim.lsp.protocol.make_client_capabilities()
+  capabilities.textDocument.completion.completionItem.snippetSupport = true
+  return {
+    -- enable snippet support
+    capabilities = capabilities,
+    -- map buffer local keybindings when the language server attaches
+    on_attach = on_attach,
+    on_init = function(client) print('LSP: ' .. client.name .. ' started') end
+  }
+end
 
-local languages = {
-  ["="] = {misspell},
-  lua = {luafmt},
-  typescript = {prettier, eslint},
-  javascript = {prettier, eslint},
-  python = {isort, autopep8, flake8},
-  json = {jq},
-}
+lspinstall.setup()
+local servers = lspinstall.installed_servers()
 
-servers.efm = {
-  init_options = {documentFormatting = true, gotoDefinition = false},
-  settings = {rootMarkers = {'.git/'}, languages = languages},
-  filetypes = vim.tbl_keys(languages),
-}
+for _, server in pairs(servers) do
+  local config = make_config()
 
-for server, config in pairs(servers) do
-  config.on_attach = on_attach
-  config.on_init =
-    function(client) print('LSP: ' .. client.name .. ' started') end
+  if server == "lua" then
+    config.settings = lua_settings
+  end
+
+  if server == "efm" then
+    local prettier = require('modules.lsp.efm.prettier')
+    local eslint = require('modules.lsp.efm.eslint')
+    local autopep8 = require('modules.lsp.efm.autopep8')
+    local isort = require('modules.lsp.efm.isort')
+    local flake8 = require('modules.lsp.efm.flake8')
+    local jq = require('modules.lsp.efm.jq')
+    local luafmt = require('modules.lsp.efm.luafmt')
+    local misspell = require('modules.lsp.efm.misspell')
+
+    local languages = {
+      ["="] = {misspell},
+      lua = {luafmt},
+      typescript = {prettier, eslint},
+      javascript = {prettier, eslint},
+      python = {isort, autopep8, flake8},
+      json = {jq},
+    }
+    config.init_options = {
+      documentFormatting = true,
+      gotoDefinition = false,
+    }
+
+    config.settings = {
+      languages = languages,
+    }
+    config.filetypes = vim.tbl_keys(languages)
+  end
+
   lspconfig[server].setup(config)
 end

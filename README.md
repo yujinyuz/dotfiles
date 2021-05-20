@@ -7,3 +7,8 @@ $ brew install stow
 $ git clone git@github.com:yujinyuz/dotfiles.git
 $ ./syncdots
 ```
+
+## Update Brewfile
+```
+$ brew bundle dump --file=macos/Brewfile --force
+```

@@ -2,6 +2,7 @@ local actions = require'lir.actions'
 local mark_actions = require 'lir.mark.actions'
 local clipboard_actions = require'lir.clipboard.actions'
 local nnoremap = vim.keymap.nnoremap
+local xnoremap = vim.keymap.xnoremap
 local cmd = require('modules.lib.nvim_helpers').cmd_map
 
 require'lir'.setup {
@@ -61,7 +62,7 @@ require'nvim-web-devicons'.setup({
 -- use visual mode
 function _G.lirsettings()
   vim.cmd [[setlocal nu rnu]]
-  vim.api.nvim_buf_set_keymap(0, 'x', 'J', ':<c-u>lua require"lir.mark.actions".toggle_mark("v")<cr>', {noremap = true, silent = true})
+  xnoremap {'J', cmd [[<C-u>lua require('lir.mark.actions').toggle_mark('v')]], silent = true, buffer = true}
 
   -- echo cwd
   vim.api.nvim_echo({{vim.fn.expand('%:p'), 'normal'}}, false, {})
