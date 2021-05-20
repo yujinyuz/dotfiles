@@ -45,6 +45,7 @@ local plugins = function(use)
   use {'Th3Whit3Wolf/onebuddy'}
   use {'tjdevries/colorbuddy.vim'}
   use {'RishabhRD/nvim-gruvbox'}
+  use {'folke/tokyonight.nvim'}
   use {
     'norcalli/nvim-colorizer.lua',
     config = function() require('colorizer').setup {} end,
@@ -73,6 +74,7 @@ local plugins = function(use)
 
   -- IDE Stuffs
   use {'neovim/nvim-lspconfig'}
+  use {'kabouzeid/nvim-lspinstall'}
   use {'glepnir/lspsaga.nvim'}
   use {'Vimjas/vim-python-pep8-indent'}
   use {'mbbill/undotree', opt = true, cmd = {'UndotreeToggle'}}
@@ -135,11 +137,18 @@ local plugins = function(use)
     config = function() require('gitlinker').setup {} end,
   }
   use {
-    'folke/lsp-trouble.nvim',
+    'folke/trouble.nvim',
     config = function() require('trouble').setup {} end,
+  }
+  use {
+    'folke/todo-comments.nvim',
+    config = function() require('todo-comments').setup {} end,
   }
   use {'marcushwz/nvim-workbench'}
   use {'nvim-treesitter/playground'}
+  use {'windwp/nvim-spectre'}
+  use {'tversteeg/registers.nvim'}
+  use {'NTBBloodbath/rest.nvim'}
 end
 
 return packer.startup(plugins)

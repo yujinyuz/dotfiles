@@ -97,8 +97,22 @@ end
 _G.completion_confirm = function()
   if vim.fn.pumvisible() ~= 0  then
     if vim.fn.complete_info()["selected"] ~= -1 then
-      return vim.fn["compe#confirm"](npairs.esc("<c-r>"))
+      return vim.fn["compe#confirm"](npairs.esc("<cr>"))
     else
+      -- When using `pyright` language server, there are instances where typing `[` will trigger
+      -- and autocompletion, and when I press enter, it doesn't work as intended
+      -- e.g. `[|]` where | is the cursor, pressing enter will make it
+      --  [
+      -- |]
+      -- vs. expected
+      -- [
+      --   |
+      -- ]
+
+      if vim.bo.filetype == 'python' then
+        return npairs.autopairs_cr()
+      end
+
       return npairs.esc("<cr>")
     end
   else
