@@ -16,8 +16,6 @@ local packer = require('packer')
 local disable = function() return false end
 local plugins = function(use)
   use {'wbthomason/packer.nvim', opt = true}
-  use {'tjdevries/astronauta.nvim'}
-
   -- File management
   use {
     'nvim-telescope/telescope.nvim',
@@ -38,7 +36,7 @@ local plugins = function(use)
   use {'tamago324/lir.nvim'}
 
   -- Colors / Syntax
-  use {'SidOfc/mkdx'}
+  use {'SidOfc/mkdx', cond = disable}
   use {'gruvbox-community/gruvbox'}
   use {'sainnhe/gruvbox-material'}
   use {'tjdevries/gruvbuddy.nvim'}
@@ -46,6 +44,7 @@ local plugins = function(use)
   use {'tjdevries/colorbuddy.vim'}
   use {'RishabhRD/nvim-gruvbox'}
   use {'folke/tokyonight.nvim'}
+  use {'eddyekofo94/gruvbox-flat.nvim'}
   use {
     'norcalli/nvim-colorizer.lua',
     config = function() require('colorizer').setup {} end,
@@ -84,7 +83,8 @@ local plugins = function(use)
 
   use {'ludovicchabant/vim-gutentags'}
   use {'wincent/ferret'}
-  use {'wincent/loupe'}
+  use {'wincent/loupe', cond = disable}
+  use {'kevinhwang91/nvim-hlslens'}
   use {
     'mfussenegger/nvim-dap',
     requires = {
@@ -131,7 +131,17 @@ local plugins = function(use)
     'lewis6991/gitsigns.nvim',
     config = function() require('gitsigns').setup {signcolumn = false} end,
   }
-  use {'TimUntersberger/neogit'}
+  use {
+    'TimUntersberger/neogit',
+    config = function()
+      require('neogit').setup {
+        integrations = {
+          diffview = true,
+        }
+      }
+    end,
+  }
+  use {'sindrets/diffview.nvim'}
   use {
     'ruifm/gitlinker.nvim',
     config = function() require('gitlinker').setup {} end,
