@@ -1,6 +1,8 @@
 local lualine = require('lualine')
 local filename = function()
-  local data = vim.fn.pathshorten(vim.fn.expand('%'))
+  -- local data = vim.fn.pathshorten(vim.fn.expand('%'))
+  -- echo fnamemodify(expand("%"), ":~:.")
+  local data = vim.fn.fnamemodify(vim.fn.expand('%'), ':~:.')
 
   if data == '' then
     data = '[No Name]'
