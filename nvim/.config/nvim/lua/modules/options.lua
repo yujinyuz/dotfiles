@@ -5,6 +5,8 @@ local data_dir = vim.fn.stdpath('data')
 opt.tabstop = 2
 -- Shift 2 spaces when pressing < or >
 opt.shiftwidth = 2
+-- Round indent spacing with the multiples of shiftwidth
+opt.shiftround = true
 -- Use spaces instead of tabs
 opt.expandtab = true
 -- Indents
