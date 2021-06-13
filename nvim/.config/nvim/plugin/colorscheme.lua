@@ -1,6 +1,6 @@
 vim.cmd [[colorscheme tokyonight]]
 
--- vim.cmd [[colorscheme gruvbox]]
+-- vim.cmd [[colorscheme gruvbox-material]]
 -- require('colorbuddy').colorscheme('onebuddy')
 
 -- -- Errors in Red
