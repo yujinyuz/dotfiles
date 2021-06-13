@@ -61,7 +61,9 @@ require'nvim-web-devicons'.setup({
 
 -- use visual mode
 function _G.lirsettings()
-  vim.cmd [[setlocal nu rnu]]
+  -- vim.cmd [[setlocal nu rnu]]
+  vim.opt_local.number = true
+  vim.opt_local.relativenumber = true
   xnoremap {'J', cmd [[<C-u>lua require('lir.mark.actions').toggle_mark('v')]], silent = true, buffer = true}
 
   -- echo cwd

@@ -17,28 +17,6 @@ function M.augroup(name, commands)
   vim.cmd('augroup END')
 end
 
--- TODO: Remove when https://github.com/neovim/neovim/pull/13479 is merged
--- There isn't an alternative to `set <option>` in Lua as of writing this
--- so we need to set the global `vim.o` first and then set is as a window local or a buffer local
-function M.get_vim_opts()
-  local opts_info = vim.api.nvim_get_all_options_info()
-  local opt = setmetatable(
-    {}, {
-      __index = vim.o,
-      __newindex = function(_, key, value)
-        vim.o[key] = value
-        local scope = opts_info[key].scope
-        if scope == 'win' then
-          vim.wo[key] = value
-        elseif scope == 'buf' then
-          vim.bo[key] = value
-        end
-      end,
-    }
-  )
-  return opt
-end
-
 function M.save_and_execute()
   local filetype = vim.bo.filetype
 

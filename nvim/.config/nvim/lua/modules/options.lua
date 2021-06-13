@@ -1,12 +1,12 @@
--- Wait for vim.opts to get merged
---  https://github.com/neovim/neovim/pull/13479
-local opt = require('modules.lib.nvim_helpers').get_vim_opts()
+local opt = vim.opt
 local data_dir = vim.fn.stdpath('data')
 
 -- Shift 2 spaces when pressing tab
 opt.tabstop = 2
 -- Shift 2 spaces when pressing < or >
 opt.shiftwidth = 2
+-- Round indent spacing with the multiples of shiftwidth
+opt.shiftround = true
 -- Use spaces instead of tabs
 opt.expandtab = true
 -- Indents
@@ -23,8 +23,18 @@ opt.number = true
 -- Allow vim to set title of the terminal
 opt.title = true
 -- Change list characters
-opt.listchars =
-  [[tab:→ ,trail:·,space:·,eol:↲,nbsp:☠,precedes:«,extends:»,conceal:┊]]
+opt.listchars = {
+  tab = '→ ',
+  trail = '·',
+  space = '·',
+  eol = '↲',
+  nbsp = '☠',
+  precedes = '«',
+  extends = '»',
+  conceal = '┊',
+}
+-- opt.listchars =
+--   [[tab:→ ,trail:·,space:·,eol:↲,nbsp:☠,precedes:«,extends:»,conceal:┊]]
 -- Hide buffer when switching to other files
 opt.hidden = true
 -- Prefer bash for shell-related tasks
@@ -49,17 +59,29 @@ opt.mouse = 'nicr'
 -- Use ripgrep instead of grep
 -- opt.grepprg = [[rg --vimgrep --no-heading --smart-case]]
 
-opt.shortmess = opt.shortmess .. 'a'
-opt.shortmess = opt.shortmess .. 'I' -- Disable intro message
-opt.shortmess = opt.shortmess .. 'c' -- Don't give |ins-completion-menu| messages
+opt.shortmess = opt.shortmess
+  + 'a'
+  + 'I' -- Disable intro message
+  + 'c' -- Don't give |ins-completion-menu| messages
 
 -- Formatting
 -- vim.cmd [[set formatoptions-=o]] -- O and o, do not continue comments
-opt.formatoptions = 'jcrql'
+-- opt.formatoptions = 'jcrql'
+opt.formatoptions = opt.formatoptions
+  - "a" -- Auto formatting is BAD.
+  - "t" -- Don't auto format my code. I got linters for that.
+  + "c" -- In general, I like it when comments respect textwidth
+  + "q" -- Allow formatting comments w/ gq
+  - "o" -- O and o, don't continue comments
+  + "r" -- But do continue when pressing enter.
+  + "n" -- Indent past the formatlistpat, not underneath it.
+  + "j" -- Auto-remove comments if possible.
+  - "2" -- I'm not in gradeschool anymore
 
 -- opt.completeopt = 'menu,menuone,noselect'
 -- opt.completeopt = 'menuone,noselect'
-opt.completeopt = 'menuone,noselect,noinsert'
+-- vim.opt.completeopt = 'menuone,noselect,noinsert'
+opt.completeopt = {'menuone', 'noselect', 'noinsert'}
 -- Always show sign columns
 opt.signcolumn = 'yes'
 -- Having longer update time leads to noticeable delays and poor UX
@@ -81,7 +103,7 @@ opt.undofile = true
 opt.wildmenu = true
 opt.wildcharm = 26 -- Equivalent of <C-z>
 
-opt.wildmode = 'longest,full'
+opt.wildmode = {'longest', 'full'}
 
 opt.wildoptions = 'pum'
 -- Transparent pums
