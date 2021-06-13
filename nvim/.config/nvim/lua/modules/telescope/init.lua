@@ -60,4 +60,4 @@ nnoremap {
   '<leader>en',
   cmd [[lua require('modules.telescope.support').edit_neovim()]],
 }
-nnoremap {'<leader>of', cmd [[Telescope oldfiles]]}
+nnoremap {'<leader>fo', cmd [[Telescope oldfiles]]}

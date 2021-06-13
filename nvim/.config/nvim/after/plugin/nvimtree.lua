@@ -1,7 +1,7 @@
 local nnoremap = vim.keymap.nnoremap
 
 local cmd = require('modules.lib.nvim_helpers').cmd_map
-local augroup = require('modules.lib.nvim_helpers').augroup
+-- local augroup = require('modules.lib.nvim_helpers').augroup
 
 
 vim.g.nvim_tree_side = 'left'
@@ -18,6 +18,7 @@ vim.g.nvim_tree_git_hl = 1
 vim.g.nvim_tree_root_folder_modifier = ':~'
 vim.g.nvim_tree_tab_open = 0
 vim.g.nvim_tree_show_icons = {git = 0, folders = 1, files = 1}
+vim.g.nvim_tree_hijack_cursor = 0
 
 -- default will show icon by default if no icon is provided
 -- default shows no icon by default
@@ -36,11 +37,11 @@ vim.g.nvim_tree_icons = {
 nnoremap { '<C-n>', cmd 'NvimTreeToggle' }
 
 
-augroup('LuaTreeCallback', {
-    {
-      events = {'FileType'},
-      targets = {'LuaTree'},
-      command = [[setlocal nowrap cursorline signcolumn=no]]
+-- augroup('LuaTreeCallback', {
+--     {
+--       events = {'FileType'},
+--       targets = {'NvimTree'},
+--       command = [[setlocal nowrap cursorline signcolumn=no]]
 
-    };
-})
+--     };
+-- })

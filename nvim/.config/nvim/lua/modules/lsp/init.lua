@@ -130,14 +130,23 @@ end
 lspinstall.setup()
 local servers = lspinstall.installed_servers()
 
-for _, server in pairs(servers) do
+for _, lang in pairs(servers) do
   local config = make_config()
 
-  if server == "lua" then
+  if lang == "lua" then
     config.settings = lua_settings
   end
 
-  if server == "efm" then
+  if lang == "typescript" then
+    config.on_attach = function(client)
+      -- https://jose-elias-alvarez.medium.com/configuring-neovims-lsp-client-for-typescript-development-5789d58ea9c
+      -- disable document formatting for typescript so it doesn't conflict with eslint/prettier
+      client.resolved_capabilities.document_formatting = false
+      on_attach(client)
+    end
+  end
+
+  if lang == "efm" then
     local prettier = require('modules.lsp.efm.prettier')
     local eslint = require('modules.lsp.efm.eslint')
     local autopep8 = require('modules.lsp.efm.autopep8')
@@ -166,5 +175,5 @@ for _, server in pairs(servers) do
     config.filetypes = vim.tbl_keys(languages)
   end
 
-  lspconfig[server].setup(config)
+  lspconfig[lang].setup(config)
 end
