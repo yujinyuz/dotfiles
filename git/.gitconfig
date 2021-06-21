@@ -132,9 +132,13 @@
 	default = simple
 	; https://stackoverflow.com/a/26438076/3788603
 	followTags = true
+[rebase]
+  autostash = true
 [user]
 	email = eevoliveros@gmail.com
 	name = Eugene Oliveros
 	signingkey = A05BDF3FF69CA6A8
+[ghq]
+	root = ~/Sources
 [include]
 	path = ~/.gitconfig.local
