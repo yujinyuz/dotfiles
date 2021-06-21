@@ -16,10 +16,14 @@ stowit() {
     usr=$1
     app=$2
 
-    stow -v -R -t ${usr} ${app}
+    # --no-folding: Prevents symlinking directories so it only symlinks files
+    #               One known caveat is that I need to run ./syncdots again whenever I add newfiles
+    # -v: verbose
+    # -R: restow
+    # -t: target
+    stow --no-folding -v -R -t ${usr} ${app}
 }
 
-echo ""
 echo "Stowing apps for user: ${whoami}"
 
 for app in ${user_dirs[@]}; do
