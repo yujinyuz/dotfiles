@@ -1,10 +1,3 @@
-# Manually unset then set the PATH because it's duplicating in tmux.
-# Only pyenv, rbenv, goenv are known to have duplicates because it doesn't
-# check if the environment variable already exists
-# set -gx PATH ""
-# List can be found under /etc/paths on MacOS
-# set -gx PATH /usr/local/bin /usr/bin /bin /usr/sbin /sbin $PATH
-
 # Ensure fisherman and plugins are install
 # if not functions -q fisher
 #   echo "===> Installing fisher..."

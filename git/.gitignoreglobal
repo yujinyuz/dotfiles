@@ -36,8 +36,3 @@ temp/
 .DS_Store
 logs
 *.log
-
-# fish stuffs that are actually auto generated via fisherman
-**/fish/functions/
-**/fish/completions/
-**/fish/conf.d/
