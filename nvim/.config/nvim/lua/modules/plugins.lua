@@ -36,7 +36,7 @@ local plugins = function(use)
   use {'tamago324/lir.nvim'}
 
   -- Colors / Syntax
-  use {'SidOfc/mkdx', cond = disable}
+  use {'SidOfc/mkdx'}
   use {'gruvbox-community/gruvbox'}
   use {'sainnhe/gruvbox-material'}
   use {'tjdevries/gruvbuddy.nvim'}
