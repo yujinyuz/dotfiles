@@ -1,14 +1,14 @@
 -- NOTE: This file was named support.lua because it's supposed
 -- to act like a support like in the parts of a telescope.
-local builtin = require('telescope.builtin')
 local M = {}
 
 function M.edit_neovim()
-  builtin.find_files {
+  require('telescope.builtin').find_files {
     prompt_title = '~ dotfiles ~',
     prompt_prefix = ' 🔍',
     shorten_path = false,
-    cwd = '~/.config/nvim',
+    cwd = "~/.config/nvim",
+    follow = true,
     width = .25,
 
     layout_strategy = 'horizontal',

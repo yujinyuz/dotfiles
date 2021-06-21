@@ -50,6 +50,7 @@ augroup T
   autocmd!
   autocmd User TelescopePreviewerLoaded setlocal wrap
   autocmd FileType markdown nmap <CR> <Plug>WorkbenchToggleCheckbox
+  autocmd FileType TelescopePrompt iunmap <C-X><C-A>
   autocmd BufWinEnter NvimTree setlocal cursorline nowrap signcolumn=no
   " autocmd OptionSet wrap :if &wrap | nnoremap j gj | nnoremap k gk | endif
 augroup END
