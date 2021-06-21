@@ -23,8 +23,10 @@ font:
     x: 0
     y: 0
   normal:
-    family: FiraCode Nerd Font Mono
-    style: Retina
+    family: MesloLGS NF
+    # family: FiraCode Nerd Font Mono
+    # family: FiraCode Nerd Font
+    style: Regular
   use_thin_strokes: true
 schemes:
   gruvbox: &gruvbox
@@ -117,6 +119,37 @@ schemes:
 
     # cursor:
     #   cursor: '#c0caf5'
+  gruvbox-flat: &gruvbox-flat
+      primary:
+        background: '0x282828'
+        foreground: '0xd4be98'
+
+      # Normal colors
+      normal:
+        black:   '0x262627'
+        red:     '0xea6962'
+        green:   '0xa9b665'
+        yellow:  '0xd8a657'
+        blue:    '0x7daea3'
+        magenta: '0xd3869b'
+        cyan:    '0x89b482'
+        white:   '0xd4be98'
+
+      # Bright colors
+      bright:
+        black:   '0x1d2021'
+        red:     '0xea6962'
+        green:   '0xa9b665'
+        yellow:  '0xd8a657'
+        blue:    '0x7daea3'
+        magenta: '0xd3869b'
+        cyan:    '0x89b482'
+        white:   '0xd4be98'
+
+      indexed_colors:
+        - { index: 16, color: '0xe78a4e' }
+        - { index: 17, color: '0xc14a4a' }
+
 
 colors: *tokyo-night-storm
 
