@@ -16,19 +16,10 @@ require('compe').setup {
     nvim_lua = {
       priority = 100,
     },
-    -- omni = true,
-    -- treesitter = {
-    --   priority = 90,
-    --   dup = false,
-    -- },
     tags = {
       priority = 50,
       dup = false,
     },
-    -- buffer = {
-    --   priority = 40,
-    --   dup = false,
-    -- },
     path = true,
   }
 }

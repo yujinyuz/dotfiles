@@ -19,6 +19,11 @@ local mappings = {
   ['<C-i>'] = trouble.open_with_trouble,
   ['<C-q>'] = actions.send_to_qflist + actions.open_qflist,
 
+  ['<C-s>'] = actions.select_horizontal,
+  ['<C-x>'] = actions.select_horizontal,
+  ['<C-v>'] = actions.select_vertical,
+  ['<C-t>'] = actions.select_tab,
+
 }
 
 telescope.setup {
