@@ -71,5 +71,10 @@ tnoremap {'<M-j>', [[<C-\><C-n><C-w>j]]}
 tnoremap {'<M-k>', [[<C-\><C-n><C-w>k]]}
 tnoremap {'<M-l>', [[<C-\><C-n><C-w>l]]}
 
+
+-- Persistent highlights
+nnoremap {'<leader>ll', [[<Cmd>call matchadd('Visual', '\%'.line('.').'l')<CR>]], silent = true}
+nnoremap {'<leader>lc', cmd [[call clearmatches()]]}
+
 -- nnoremap { '<leader>.', cmd 'edit %:p:h' }
 -- nnoremap { '<leader>/', cmd 'edit .' }
