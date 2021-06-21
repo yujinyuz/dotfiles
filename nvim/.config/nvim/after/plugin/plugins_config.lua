@@ -8,12 +8,6 @@ local cmd = require('modules.lib.nvim_helpers').cmd_map
 nnoremap {'<leader>gs', cmd 'G'}
 nnoremap {'<leader>gc', cmd 'G commit'}
 
--- vim-dirvish
--- nnoremap { '<leader>.', cmd 'Dirvish %' }
--- nnoremap { '<leader>/', cmd 'Dirvish' }
-
--- Disable netrw
--- vim.g.loaded_netrwPlugin = 1
 
 -- undotree
 vim.g.undotree_HighlightChangedWithSign = 0
@@ -22,7 +16,6 @@ vim.g.undotree_SetFocusWhenToggle = 1
 nnoremap {'<leader>u', cmd 'UndotreeToggle'}
 
 -- ferret
-vim.g.FerretMap = 0
 nmap {'<leader>fa', '<Plug>(FerretAck)'}
 
 -- loupe
@@ -47,9 +40,6 @@ vim.g.go_fmt_command = 'goimports'
 -- nvim-dap
 vim.g.dap_virtual_text = true
 
--- ultisnips
-vim.g.UltiSnipsExpandTrigger = '<C-l>'
-
 -- unimpaired overrides
 nnoremap {'yol', cmd 'IndentBlanklineToggle!'}
 nnoremap {
@@ -60,7 +50,7 @@ nnoremap {'yog', cmd 'Neogit'}
 
 
 
--- Lua
+-- LSPTroueble
 vim.api.nvim_set_keymap("n", "<leader>xx", "<cmd>LspTroubleToggle<cr>",
   {silent = true, noremap = true}
 )
@@ -83,7 +73,7 @@ vim.api.nvim_set_keymap("n", "gR", "<cmd>LspTrouble lsp_references<cr>",
 
 nmap {'<leader>pb', '<Plug>ToggleBranchWorkbench'}
 nmap {'<leader>pp', '<Plug>ToggleProjectWorkbench'}
-nmap {',a', '<Plug>WorkbenchAddCheckbox'}
+
 
 nnoremap {'<leader>S', cmd [[lua require('spectre').open()]]}
 -- nmap {'<CR>', '<Plug>WorkbenchToggleCheckbox'}
