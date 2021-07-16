@@ -21,11 +21,21 @@ vim.g.gitblame_enabled = 0
 
 -- ultisnips
 vim.g.UltiSnipsExpandTrigger = '<C-l>'
--- vim.g.tokyonight_style = "day"
+
+-- wincent/ferret
 vim.g.FerretMap = 0
+
+-- mbbill/undotree
+vim.g.undotree_HighlightChangedWithSign = 0
+vim.g.undotree_WindowLayout = 4
+vim.g.undotree_SetFocusWhenToggle = 1
+
+-- mfussenegger/nvim-dap
+vim.g.dap_virtual_text = true
 
 -- Load the keymap modifications first
 require('modules.lib.keymap_mod')
+require('modules/lib/rg_source')
 -- Load neovim options
 require('modules.options')
 -- Load packer.nvim config

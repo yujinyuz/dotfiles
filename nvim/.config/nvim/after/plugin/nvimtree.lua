@@ -1,13 +1,14 @@
 local nnoremap = vim.keymap.nnoremap
 
-local cmd = require('modules.lib.nvim_helpers').cmd_map
--- local augroup = require('modules.lib.nvim_helpers').augroup
-
-
 vim.g.nvim_tree_side = 'left'
 vim.g.nvim_tree_width = 30
 vim.g.nvim_tree_ignore = {
-  '.git', 'node_modules', '__sapper__', '.routify', 'dist', '.cache'
+  '.git',
+  'node_modules',
+  '__sapper__',
+  '.routify',
+  'dist',
+  '.cache',
 }
 vim.g.nvim_tree_auto_open = 0
 vim.g.nvim_tree_auto_close = 0
@@ -26,22 +27,12 @@ vim.g.nvim_tree_icons = {
   default = '',
   symlink = '',
   git = {
-    unstaged = "✗",
-    staged = "✓",
-    unmerged = "",
-    renamed = "➜",
-    untracked = "★"
+    unstaged = '✗',
+    staged = '✓',
+    unmerged = '',
+    renamed = '➜',
+    untracked = '★',
   },
 }
 
-nnoremap { '<C-n>', cmd 'NvimTreeToggle' }
-
-
--- augroup('LuaTreeCallback', {
---     {
---       events = {'FileType'},
---       targets = {'NvimTree'},
---       command = [[setlocal nowrap cursorline signcolumn=no]]
-
---     };
--- })
+nnoremap {'<C-n>', function() require('nvim-tree').toggle() end}

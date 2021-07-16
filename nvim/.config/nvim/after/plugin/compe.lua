@@ -2,12 +2,9 @@ local inoremap = vim.keymap.inoremap
 
 require('compe').setup {
   enabled = true,
-  autocomplete = true,
   debug = false,
   min_length = 1,
-  preselect = 'enable',
-  allow_prefix_unmatch = false,
-
+  preselect = 'disable',
   -- priority: Higher means top of the list
   source = {
     nvim_lsp = {
@@ -19,8 +16,14 @@ require('compe').setup {
     tags = {
       priority = 50,
       dup = false,
+      ignored_filetypes = {'markdown'},
     },
+    -- spell = {
+    --   filetypes = {'markdown'}
+    -- },
     path = true,
+    calc = true,
+    ripgrep = true,
   }
 }
 
@@ -131,7 +134,12 @@ npairs.setup {
 
 inoremap { '<Tab>', [[v:lua.tab_complete()]], expr = true, silent = true }
 inoremap { '<S-Tab>', [[v:lua.s_tab_complete()]], expr = true, silent = true }
+inoremap { '<C-Space>', [[compe#complete()]], silent = true, expr = true }
+inoremap { '<Up>', [[compe#scroll({ 'delta': +4})]], silent = true, expr = true }
+inoremap { '<Down>', [[compe#scroll({ 'delta': -4})]], silent = true, expr = true }
 inoremap { '<C-Space>', [[compe#complete() ]], silent = true, expr = true }
 -- inoremap { '<C-y>', [[compe#confirm('<CR>')]], silent = true, expr = true }
-inoremap { '<C-e>', [[compe#close()]], silent = true, expr = true }
+-- inoremap { '<C-e>', [[compe#close()]], silent = true, expr = true } -- conflicts with vim-rsi
 inoremap { '<CR>', [[v:lua.completion_confirm()]], silent = true, expr = true }
+
+vim.cmd([[autocmd User CompeConfirmDone silent! lua vim.lsp.buf.signature_help()]])

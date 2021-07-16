@@ -2,7 +2,6 @@ local telescope = require('telescope')
 local actions = require('telescope.actions')
 
 local nnoremap = vim.keymap.nnoremap
-local cmd = require('modules.lib.nvim_helpers').cmd_map
 
 local trouble = require('trouble.providers.telescope')
 
@@ -42,27 +41,14 @@ telescope.setup {
 -- telescope.load_extension('fzy_native')
 telescope.load_extension('fzf')
 
-nnoremap {
-  '<C-p>',
-  cmd [[lua require('modules.telescope.support').find_files()]],
-}
-nnoremap {'<leader>]', cmd [[lua require('modules.telescope.support').ctags()]]}
-nnoremap {
-  '<leader><Space>',
-  cmd [[lua require('modules.telescope.support').git_files()]],
-}
-nnoremap {
-  '<leader>F',
-  cmd [[lua require('modules.telescope.support').live_grep()]],
-}
-nnoremap {
-  '<leader>fw',
-  cmd [[lua require('modules.telescope.support').grep_prompt()]],
-}
-nnoremap {'<leader>b', cmd [[Telescope buffers]]}
-nnoremap {'<leader>gw', cmd [[Telescope grep_string]]}
-nnoremap {
-  '<leader>en',
-  cmd [[lua require('modules.telescope.support').edit_neovim()]],
-}
-nnoremap {'<leader>fo', cmd [[Telescope oldfiles]]}
+
+nnoremap {'<C-p>', function() require('modules.telescope.support').find_files() end}
+nnoremap {'<leader>]', function() require('modules.telescope.support').ctags() end}
+-- nnoremap {'<leader><Space>', function() require('modules.telescope.support').git_files() end}
+-- nnoremap {'<leader>F', function() require('modules.telescope.support').live_grep() end}
+nnoremap {'<leader>fw', function() require('modules.telescope.support').grep_prompt() end}
+nnoremap {'<leader>b', function() require('telescope.builtin').buffers() end}
+nnoremap {'<leader>gw', function() require('telescope.builtin').grep_string() end}
+
+nnoremap {'<leader>en', function() require('modules.telescope.support').edit_neovim() end}
+nnoremap {'<leader>fo', function() require('telescope.builtin').oldfiles() end}

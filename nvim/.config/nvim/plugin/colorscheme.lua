@@ -1,5 +1,8 @@
 vim.cmd [[colorscheme tokyonight]]
 
+vim.cmd [[hi link SnapPosition Special]]
+vim.cmd [[hi link SnapBorder TelescopeBorder]]
+
 -- vim.cmd [[colorscheme gruvbox-material]]
 -- require('colorbuddy').colorscheme('onebuddy')
 

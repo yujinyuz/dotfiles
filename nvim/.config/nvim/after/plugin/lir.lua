@@ -3,7 +3,6 @@ local mark_actions = require 'lir.mark.actions'
 local clipboard_actions = require'lir.clipboard.actions'
 local nnoremap = vim.keymap.nnoremap
 local xnoremap = vim.keymap.xnoremap
-local cmd = require('modules.lib.nvim_helpers').cmd_map
 
 require'lir'.setup {
   show_hidden_files = true,
@@ -36,14 +35,20 @@ require'lir'.setup {
     ['P'] = clipboard_actions.paste,
   },
   float = {
-    size_percentage = 0.5,
     winblend = 10,
-    border = false,
-    borderchars = {"╔" , "═" , "╗" , "║" , "╝" , "═" , "╚", "║"},
+    -- win_opts = function()
+    --   return {
+    --     -- size_percentage = 0.5,
+    --     width = math.floor(vim.o.columns * 0.5),
+    --     height = math.floor(vim.o.lines * 0.5),
+    --     border = {"╔" , "═" , "╗" , "║" , "╝" , "═" , "╚", "║"},
 
-    -- If you want to use `shadow`, set `shadow` to `true`.
-    -- Also, if you set shadow to true, the value of `borderchars` will be ignored.
-    shadow = true,
+    --     -- If you want to use `shadow`, set `shadow` to `true`.
+    --     -- Also, if you set shadow to true, the value of `borderchars` will be ignored.
+    --     -- shadow = true,
+    --   }
+
+    -- end,
   },
   hide_cursor = false,
 }
@@ -64,11 +69,7 @@ function _G.lirsettings()
   -- vim.cmd [[setlocal nu rnu]]
   vim.opt_local.number = true
   vim.opt_local.relativenumber = true
-  xnoremap {'J', cmd [[<C-u>lua require('lir.mark.actions').toggle_mark('v')]], silent = true, buffer = true}
-
-  -- echo cwd
-  vim.api.nvim_echo({{vim.fn.expand('%:p'), 'normal'}}, false, {})
-
+  xnoremap {'J', function() require('lir.mark.actions').toggle_mark('v') end, silent = true, buffer = true}
 end
 
 vim.cmd [[augroup lir-settings]]
@@ -77,5 +78,5 @@ vim.cmd [[  autocmd filetype lir :lua lirsettings()]]
 vim.cmd [[augroup end]]
 
 
-nnoremap { '<leader>.', cmd [[lua require('lir.float').toggle()]] }
-nnoremap { '<leader>/', cmd [[lua require('lir.float').toggle('.')]] }
+nnoremap {'<leader>.', function() require('lir.float').toggle() end}
+nnoremap {'<leader>/', function() require('lir.float').toggle('.') end}
