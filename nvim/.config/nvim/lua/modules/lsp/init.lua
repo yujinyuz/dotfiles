@@ -12,22 +12,27 @@ local cmd = require('modules.lib.nvim_helpers').cmd_map
 local on_attach = function(client)
   local resolved_capabilities = client.resolved_capabilities
 
-  nnoremap {'gD', cmd [[lua vim.lsp.buf.declaration()]], buffer = true}
-  nnoremap {'gd', cmd [[lua vim.lsp.buf.definition()]], buffer = true}
-  nnoremap {'<leader>gd', cmd [[Lspsaga preview_definition]], buffer = true}
+  nnoremap {'gD', function() vim.lsp.buf.declaration() end, buffer = true}
+  nnoremap {'gd', function() vim.lsp.buf.definition() end, buffer = true}
 
-  nnoremap {'ga', cmd [[Lspsaga code_action]], buffer = true}
-  nnoremap {'K', cmd [[Lspsaga hover_doc]], buffer = true}
+  nnoremap {'<leader>gd', function() vim.cmd [[Lspsaga preview_definition]] end, buffer = true}
+  nnoremap {'ga', function() vim.cmd [[Lspsaga code_action]] end, buffer = true}
+  nnoremap {'K', function() vim.lsp.buf.hover() end, buffer = true}
 
-  nnoremap {'gi', cmd [[lua vim.lsp.buf.implementation()]], buffer = true}
-  nnoremap {'gr', cmd [[Lspsaga lsp_finder]], buffer = true}
+  nnoremap {'gi', function () vim.lsp.buf.implementation() end, buffer = true}
 
-  nnoremap {'<leader>gr', cmd [[Lspsaga rename]], buffer = true}
-  nnoremap {'<leader>ld', cmd [[Lspsaga show_line_diagnostics]], buffer = true}
-  nnoremap {'<C-s>', cmd [[Lspsaga signature_help]], buffer = true}
-  inoremap {'<C-s>', cmd [[Lspsaga signature_help]], buffer = true}
+  nnoremap {'gr', function() vim.lsp.buf.references() end, buffer = true}
+  -- nnoremap {'gr', cmd [[Lspsaga lsp_finder]], buffer = true}
 
-  nnoremap {'<leader>lf', cmd [[lua vim.lsp.buf.formatting()]], buffer = true}
+  -- nnoremap {'<leader>gr', cmd [[Lspsaga rename]], buffer = true}
+  nnoremap {'<leader>gr', function() vim.lsp.buf.rename() end, buffer = true}
+  nnoremap {'<leader>ld', function() vim.cmd [[Lspsaga show_line_diagnostics]] end, buffer = true}
+  nnoremap {'<C-s>', function() vim.lsp.buf.signature_help() end, buffer = true}
+  inoremap {'<C-s>', function() vim.lsp.buf.signature_help() end, buffer = true}
+  -- nnoremap {'<C-s>', cmd [[Lspsaga signature_help]], buffer = true}
+  -- inoremap {'<C-s>', cmd [[Lspsaga signature_help]], buffer = true}
+
+  nnoremap {'<leader>lf', function() vim.lsp.buf.formatting() end, buffer = true}
 
   nnoremap {']w', cmd [[Lspsaga diagnostic_jump_next]], buffer = true}
   nnoremap {'[w', cmd [[Lspsaga diagnostic_jump_prev]], buffer = true}
@@ -72,27 +77,23 @@ local on_attach = function(client)
 end
 
 -- vim.lsp.handlers["textDocument/hover"] = require('lspsaga.hover').handler
-vim.lsp.handlers['textDocument/publishDiagnostics'] =
-  vim.lsp.with(
-    vim.lsp.diagnostic.on_publish_diagnostics, {
-      -- underline = false,
-      -- virtual_text = false,
-      -- signs = true,
-      -- update_in_insert = false,
-      -- virtual_text = {
-      --   prefix = "»",
-      --   spacing = 4,
-      -- },
-      -- virtual_text = true,
-      virtual_text = {spacing = 2, severity_limit = 'Error'},
-      signs = false,
-      update_in_insert = false,
-      underline = true,
-    }
-  )
-
-
-
+vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
+  vim.lsp.diagnostic.on_publish_diagnostics, {
+    -- underline = false,
+    -- virtual_text = false,
+    -- signs = true,
+    -- update_in_insert = false,
+    -- virtual_text = {
+    --   prefix = "»",
+    --   spacing = 4,
+    -- },
+    -- virtual_text = true,
+    virtual_text = {spacing = 2, severity_limit = 'Error'},
+    signs = false,
+    update_in_insert = false,
+    underline = true,
+  }
+)
 
 local lua_settings = {
   Lua = {
@@ -112,7 +113,7 @@ local lua_settings = {
         [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
       },
     },
-  }
+  },
 }
 
 local function make_config()
@@ -123,21 +124,25 @@ local function make_config()
     capabilities = capabilities,
     -- map buffer local keybindings when the language server attaches
     on_attach = on_attach,
-    on_init = function(client) print('LSP: ' .. client.name .. ' started') end
+    on_init = function(client) print('LSP: ' .. client.name .. ' started') end,
+    flags = {debounce_text_changes = 150},
   }
 end
 
 lspinstall.setup()
 local servers = lspinstall.installed_servers()
 
+
 for _, lang in pairs(servers) do
   local config = make_config()
 
-  if lang == "lua" then
+  if lang == 'lua' then
     config.settings = lua_settings
+    -- config = require('lua-dev').setup(config)
+     -- config.settings = require('lua-dev').setup({}).settings
   end
 
-  if lang == "typescript" then
+  if lang == 'typescript' then
     config.on_attach = function(client)
       -- https://jose-elias-alvarez.medium.com/configuring-neovims-lsp-client-for-typescript-development-5789d58ea9c
       -- disable document formatting for typescript so it doesn't conflict with eslint/prettier
@@ -146,7 +151,7 @@ for _, lang in pairs(servers) do
     end
   end
 
-  if lang == "efm" then
+  if lang == 'efm' then
     local prettier = require('modules.lsp.efm.prettier')
     local eslint = require('modules.lsp.efm.eslint')
     local autopep8 = require('modules.lsp.efm.autopep8')
@@ -157,20 +162,18 @@ for _, lang in pairs(servers) do
     local misspell = require('modules.lsp.efm.misspell')
 
     local languages = {
-      ["="] = {misspell},
+      ['='] = {misspell},
       lua = {luafmt},
       typescript = {prettier, eslint},
       javascript = {prettier, eslint},
       python = {isort, autopep8, flake8},
       json = {jq},
     }
-    config.init_options = {
-      documentFormatting = true,
-      gotoDefinition = false,
-    }
+    config.init_options = {documentFormatting = true, gotoDefinition = false}
 
     config.settings = {
       languages = languages,
+      lintDebounce = 0.5 * (1000 * 1000 * 1000), -- coz go uses nanoseconds instead of milliseconds
     }
     config.filetypes = vim.tbl_keys(languages)
   end

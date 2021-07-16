@@ -9,7 +9,7 @@ function M.edit_neovim()
     shorten_path = false,
     cwd = "~/.config/nvim",
     follow = true,
-    width = .25,
+    layout_width = .25,
 
     layout_strategy = 'horizontal',
     layout_config = {preview_width = 0.65},

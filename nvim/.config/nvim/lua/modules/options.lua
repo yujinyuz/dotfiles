@@ -85,7 +85,7 @@ opt.completeopt = {'menuone', 'noselect', 'noinsert'}
 -- Always show sign columns
 opt.signcolumn = 'yes'
 -- Having longer update time leads to noticeable delays and poor UX
-opt.updatetime = 300
+opt.updatetime = 250
 -- Start scrolling when we're 8 lines below
 opt.scrolloff = 8
 -- and 15 lines from the side
@@ -120,5 +120,12 @@ opt.breakindent = true
 opt.showbreak = string.rep(' ', 3)
 opt.linebreak = true
 
+-- Something I added 2021-06-08. If something fucks up, blame this.
+-- This basically removes the flickering when using nvim-autopairs
+opt.lazyredraw = true
+
 -- Enable 24-bit RGB color
 opt.termguicolors = true
+
+
+opt.pumheight = 15

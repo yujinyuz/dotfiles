@@ -16,6 +16,7 @@ local packer = require('packer')
 local disable = function() return false end
 local plugins = function(use)
   use {'wbthomason/packer.nvim', opt = true}
+  use {'lambdalisue/suda.vim', cond = disable}
   -- File management
   use {
     'nvim-telescope/telescope.nvim',
@@ -32,7 +33,6 @@ local plugins = function(use)
     'kyazdani42/nvim-tree.lua',
     requires = {'kyazdani42/nvim-web-devicons', opt = true},
   }
-  use {'justinmk/vim-dirvish', cond = disable}
   use {'tamago324/lir.nvim'}
 
   -- Colors / Syntax
@@ -77,74 +77,68 @@ local plugins = function(use)
   use {'glepnir/lspsaga.nvim'}
   use {'Vimjas/vim-python-pep8-indent'}
   use {'mbbill/undotree', opt = true, cmd = {'UndotreeToggle'}}
+  use {'windwp/nvim-autopairs'}
   use {'hrsh7th/nvim-compe'}
-
-  use {'SirVer/ultisnips', requires = {{'honza/vim-snippets'}}}
-
   use {'ludovicchabant/vim-gutentags'}
   use {'wincent/ferret'}
-  use {'wincent/loupe', cond = disable}
   use {'kevinhwang91/nvim-hlslens'}
+  use {'mfussenegger/nvim-dap'}
+  use {'mfussenegger/nvim-dap-python'}
+  use {'theHamsta/nvim-dap-virtual-text'}
+  use {'hoob3rt/lualine.nvim'}
+  use {'SirVer/ultisnips'}
+  use {'honza/vim-snippets'}
+  use {'windwp/nvim-spectre'}
   use {
-    'mfussenegger/nvim-dap',
-    requires = {
-      {'mfussenegger/nvim-dap-python'},
-      {'theHamsta/nvim-dap-virtual-text'},
-    },
+    "numtostr/FTerm.nvim",
+    config = function()
+      require("FTerm").setup()
+    end
+  }
+  use {
+    'folke/lua-dev.nvim'
   }
 
-  use {'hoob3rt/lualine.nvim'}
+  -- Git stuffs
+  use {'sindrets/diffview.nvim'}
+  use {
+    'ruifm/gitlinker.nvim',
+    config = function() require('gitlinker').setup {} end,
+  }
+  use {'f-person/git-blame.nvim'}
+  use {
+    'TimUntersberger/neogit',
+    config = function()
+      require('neogit').setup {integrations = {diffview = true}, disable_commit_confirmation = true}
+    end,
+  }
 
   -- Holiness
   use {'tpope/vim-surround'}
   use {'tpope/vim-commentary'}
   use {'tpope/vim-fugitive'}
-  use {'camdencheek/sgbrowse'}
-  -- use {'tpope/vim-endwise'}
   use {'tpope/vim-repeat'}
-  -- use {'tpope/vim-obsession'}
   use {'tpope/vim-unimpaired'}
-  use {'tpope/vim-eunuch'}
   use {
     'tpope/vim-scriptease',
     opt = true,
     cmd = {'Scriptnames', 'Messages'},
     keys = {'zS'},
   }
-  use {'tpope/vim-rhubarb'}
   use {'tpope/vim-apathy'}
   use {'tpope/vim-rsi'}
-  use {'windwp/nvim-autopairs'}
-  use {'tpope/vim-dispatch'}
   use {'tpope/vim-projectionist'}
 
   -- Misc
-  -- use {'honza/vim-snippets'}
   use {'junegunn/vim-easy-align'}
   use {'kana/vim-textobj-user'}
   use {'kana/vim-textobj-entire'} -- [ae]
   use {'kana/vim-textobj-indent'} -- [ai]/[ii]
   use {'wakatime/vim-wakatime'} -- track usage time using wakatime
-  use {'lukas-reineke/indent-blankline.nvim', branch = 'lua'}
-  use {'f-person/git-blame.nvim'}
+  use {'lukas-reineke/indent-blankline.nvim'}
   use {
     'lewis6991/gitsigns.nvim',
     config = function() require('gitsigns').setup {signcolumn = false} end,
-  }
-  use {
-    'TimUntersberger/neogit',
-    config = function()
-      require('neogit').setup {
-        integrations = {
-          diffview = true,
-        }
-      }
-    end,
-  }
-  use {'sindrets/diffview.nvim'}
-  use {
-    'ruifm/gitlinker.nvim',
-    config = function() require('gitlinker').setup {} end,
   }
   use {
     'folke/trouble.nvim',
@@ -154,11 +148,63 @@ local plugins = function(use)
     'folke/todo-comments.nvim',
     config = function() require('todo-comments').setup {} end,
   }
+  use {
+    "folke/twilight.nvim",
+    config = function()
+      require("twilight").setup {
+      }
+    end
+  }
+  use {
+    "folke/zen-mode.nvim",
+    config = function()
+      require("zen-mode").setup {
+        plugins = {
+          twilight = { enabled = false }
+        }
+      }
+    end
+  }
   use {'marcushwz/nvim-workbench'}
   use {'nvim-treesitter/playground'}
-  use {'windwp/nvim-spectre'}
   use {'tversteeg/registers.nvim'}
   use {'NTBBloodbath/rest.nvim'}
+  use {
+    '~/Sources/tablea.nvim',
+    config = function()
+      require('tablea').setup {show_index = false, show_modify = true}
+    end,
+  }
+  use {
+    'camspiers/snap',
+    config = function()
+
+      local snap = require('snap')
+      local file = snap.config.file:with{reverse = false, consumer = 'fzf'}
+      local vimgrep = snap.config.vimgrep:with{
+        reverse = false,
+        consumer = 'fzf',
+        limit = 50000,
+      }
+
+      snap.maps {
+        {
+          '<leader><leader>', file {
+            try = {
+              snap.get('producer.git.file').args({'--cached', '--others', '--exclude-standard'}),
+              'ripgrep.file',
+            },
+            prompt = 'Files',
+          },
+        },
+        {'<leader>F', vimgrep {
+          -- https://github.com/camspiers/snap/pull/66#issuecomment-873678089
+          producer = snap.get('producer.ripgrep.vimgrep').line {'--hidden'},
+          prompt = 'Live Grep'
+        }},
+      }
+    end,
+  }
 end
 
 return packer.startup(plugins)

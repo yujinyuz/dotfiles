@@ -49,12 +49,14 @@ vmap {'<M-k>', [[:m'<-2<CR>`>my`<mzgv`yo`z]], silent = true}
 nnoremap {'<leader>fn', [[:e %:h<C-z>]]}
 
 -- Delete other buffers except the current one
-nnoremap {'<leader>1', cmd [[execute "%bd|e#|bd#"]]}
+nnoremap {'<leader>f1', cmd [[execute "%bd|e#|bd#"]]}
 
 -- Save and execute
 nnoremap {
   '<leader>x',
-  cmd [[lua require('modules.lib.nvim_helpers').save_and_execute()]],
+  function()
+    require('modules.lib.nvim_helpers').save_and_execute()
+  end
 }
 
 -- Command-line like navigation
@@ -75,6 +77,3 @@ tnoremap {'<M-l>', [[<C-\><C-n><C-w>l]]}
 -- Persistent highlights
 nnoremap {'<leader>ll', [[<Cmd>call matchadd('Visual', '\%'.line('.').'l')<CR>]], silent = true}
 nnoremap {'<leader>lc', cmd [[call clearmatches()]]}
-
--- nnoremap { '<leader>.', cmd 'edit %:p:h' }
--- nnoremap { '<leader>/', cmd 'edit .' }

@@ -1,5 +1,10 @@
 require('nvim-treesitter.configs').setup {
   ensure_installed = 'maintained',
+  ignore_install = {
+    'ql',
+    'ledger',
+    'c_sharp',
+  },
   incremental_selection = {
     enable = true,
     keymaps = {
@@ -31,12 +36,34 @@ require('nvim-treesitter.configs').setup {
   textobjects = {
     select = {
       enable = true,
+      lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
       keymaps = {
         ['af'] = '@function.outer',
         ['if'] = '@function.inner',
         ['ac'] = '@class.outer',
         ['ic'] = '@class.inner',
       }
+    },
+    -- taken from mjlback/defaults.nvim
+    move = {
+      enable = true,
+      set_jumps = true,
+      goto_next_start = {
+        [']m'] = '@function.outer',
+        [']]'] = '@class.outer',
+      },
+      goto_next_end = {
+        [']M'] = '@function.outer',
+        [']['] = '@class.outer',
+      },
+      goto_previous_start = {
+        ['[m'] = '@function.outer',
+        ['[['] = '@class.outer',
+      },
+      goto_previous_end = {
+        ['[M'] = '@function.outer',
+        ['[]'] = '@class.outer',
+      },
     },
     swap = {
       enable = true,
