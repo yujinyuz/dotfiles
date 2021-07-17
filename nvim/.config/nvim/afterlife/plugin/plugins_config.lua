@@ -68,14 +68,6 @@ vim.api.nvim_set_keymap(
 )
 
 -- nvim-workbench
-nnoremap {
-  '<leader>pp',
-  function() require('workbench').toggle_project_workbench() end,
-}
-nnoremap {
-  '<leader>pb',
-  function() require('workbench').toggle_branch_workbench() end,
-}
 
 -- nvim-spectre
 nnoremap {'<leader>S', function() require('spectre').open() end}

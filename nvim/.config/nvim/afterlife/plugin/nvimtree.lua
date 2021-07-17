@@ -5,10 +5,6 @@ vim.g.nvim_tree_width = 30
 vim.g.nvim_tree_ignore = {
   '.git',
   'node_modules',
-  '__sapper__',
-  '.routify',
-  'dist',
-  '.cache',
 }
 vim.g.nvim_tree_auto_open = 0
 vim.g.nvim_tree_auto_close = 0

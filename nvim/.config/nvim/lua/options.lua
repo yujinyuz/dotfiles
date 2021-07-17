@@ -1,5 +1,7 @@
 local opt = vim.opt
-local data_dir = vim.fn.stdpath('data')
+
+vim.g.mapleader = ' '
+vim.g.python3_host_prog = os.getenv('PYTHON_3_HOST_PROG')
 
 -- Shift 2 spaces when pressing tab
 opt.tabstop = 2
@@ -11,7 +13,6 @@ opt.shiftround = true
 opt.expandtab = true
 -- Indents
 opt.autoindent = true
-opt.cindent = true
 -- Make search case insensitive
 opt.ignorecase = true
 -- .. unless it contains atleast one capital letter
@@ -96,7 +97,7 @@ opt.showmode = false
 -- Enable backups
 opt.backup = true
 -- Ensure filename uniqueness with //
-opt.backupdir = data_dir .. '/backup//'
+opt.backupdir = vim.fn.stdpath('data').. '/backup//'
 -- Enable persistent undo
 opt.undofile = true
 
@@ -122,10 +123,9 @@ opt.linebreak = true
 
 -- Something I added 2021-06-08. If something fucks up, blame this.
 -- This basically removes the flickering when using nvim-autopairs
-opt.lazyredraw = true
+-- opt.lazyredraw = true
 
 -- Enable 24-bit RGB color
 opt.termguicolors = true
-
 
 opt.pumheight = 15
