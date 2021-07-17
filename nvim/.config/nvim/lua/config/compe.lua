@@ -1,5 +1,3 @@
-local inoremap = vim.keymap.inoremap
-
 require('compe').setup {
   enabled = true,
   debug = false,
@@ -18,12 +16,8 @@ require('compe').setup {
       dup = false,
       ignored_filetypes = {'markdown'},
     },
-    -- spell = {
-    --   filetypes = {'markdown'}
-    -- },
     path = true,
     calc = true,
-    ripgrep = true,
   }
 }
 
@@ -65,30 +59,10 @@ _G.s_tab_complete = function()
   end
 end
 
-local npairs = require('nvim-autopairs')
-
-_G.completion_confirm_backup = function()
-  if vim.fn.pumvisible() ~= 0 then
-    if vim.fn.complete_info()["selected"] ~= -1 then
-      vim.fn["compe#confirm"]()
-      return t ""
-    else
-      -- vim.defer_fn(function()
-      --   vim.fn["compe#confirm"]("<CR>")
-      -- end, 20)
-      -- return t "<C-n>"
-      -- vim.fn["compe#close"]()
-
-      -- When I press enter and nothing is selected, just do regular <CR>
-      return t "<CR>"
-    end
-  else
-    return npairs.check_break_line_char()
-  end
-end
-
 -- From nvim-autopairs documentation
 _G.completion_confirm = function()
+  local npairs = require('nvim-autopairs')
+
   if vim.fn.pumvisible() ~= 0  then
     if vim.fn.complete_info()["selected"] ~= -1 then
       return vim.fn["compe#confirm"](npairs.esc("<cr>"))
@@ -114,32 +88,15 @@ _G.completion_confirm = function()
   end
 end
 
--- -- From nvim-autopairs documentation
--- _G.completion_confirm = function()
---   if vim.fn.pumvisible() ~= 0  then
---     if vim.fn.complete_info()["selected"] ~= -1 then
---       return vim.fn["compe#confirm"](npairs.esc("<cr>"))
---     else
---       return npairs.esc("<CR>")
---     end
---   else
---     return npairs.autopairs_cr()
---   end
--- end
+local inoremap = vim.keymap.inoremap
 
-npairs.setup {
-  disable_filetype = { "TelescopePrompt", "vim" },
-  close_triple_quotes = true,
-}
+inoremap { '<C-Space>', [[compe#complete()]], silent = true, expr = true }
+inoremap { '<CR>', [[v:lua.completion_confirm()]], silent = true, expr = true }
 
 inoremap { '<Tab>', [[v:lua.tab_complete()]], expr = true, silent = true }
 inoremap { '<S-Tab>', [[v:lua.s_tab_complete()]], expr = true, silent = true }
-inoremap { '<C-Space>', [[compe#complete()]], silent = true, expr = true }
 inoremap { '<Up>', [[compe#scroll({ 'delta': +4})]], silent = true, expr = true }
 inoremap { '<Down>', [[compe#scroll({ 'delta': -4})]], silent = true, expr = true }
-inoremap { '<C-Space>', [[compe#complete() ]], silent = true, expr = true }
--- inoremap { '<C-y>', [[compe#confirm('<CR>')]], silent = true, expr = true }
 -- inoremap { '<C-e>', [[compe#close()]], silent = true, expr = true } -- conflicts with vim-rsi
-inoremap { '<CR>', [[v:lua.completion_confirm()]], silent = true, expr = true }
 
 vim.cmd([[autocmd User CompeConfirmDone silent! lua vim.lsp.buf.signature_help()]])

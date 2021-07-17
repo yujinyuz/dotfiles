@@ -4,7 +4,10 @@ local clipboard_actions = require'lir.clipboard.actions'
 local nnoremap = vim.keymap.nnoremap
 local xnoremap = vim.keymap.xnoremap
 
-require'lir'.setup {
+local utils = require('utils')
+
+require('lir').setup {
+  border = 'single',
   show_hidden_files = true,
   devicons_enable = true,
   mappings = {
@@ -36,33 +39,9 @@ require'lir'.setup {
   },
   float = {
     winblend = 10,
-    -- win_opts = function()
-    --   return {
-    --     -- size_percentage = 0.5,
-    --     width = math.floor(vim.o.columns * 0.5),
-    --     height = math.floor(vim.o.lines * 0.5),
-    --     border = {"╔" , "═" , "╗" , "║" , "╝" , "═" , "╚", "║"},
-
-    --     -- If you want to use `shadow`, set `shadow` to `true`.
-    --     -- Also, if you set shadow to true, the value of `borderchars` will be ignored.
-    --     -- shadow = true,
-    --   }
-
-    -- end,
   },
   hide_cursor = false,
 }
-
--- custom folder icon
-require'nvim-web-devicons'.setup({
-  override = {
-    lir_folder_icon = {
-      icon = "",
-      color = "#7ebae4",
-      name = "lirfoldernode"
-    },
-  }
-})
 
 -- use visual mode
 function _G.lirsettings()
@@ -78,5 +57,7 @@ vim.cmd [[  autocmd filetype lir :lua lirsettings()]]
 vim.cmd [[augroup end]]
 
 
-nnoremap {'<leader>.', function() require('lir.float').toggle() end}
-nnoremap {'<leader>/', function() require('lir.float').toggle('.') end}
+utils.nnoremap('<leader>.', function() require('lir.float').toggle() end)
+utils.nnoremap('<leader>/', function() require('lir.float').toggle('.') end )
+-- nnoremap {'<leader>.', function() require('lir.float').toggle() end}
+-- nnoremap {'<leader>/', function() require('lir.float').toggle('.') end}

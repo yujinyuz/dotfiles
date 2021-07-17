@@ -17,7 +17,7 @@ local on_attach = function(client)
 
   nnoremap {'<leader>gd', function() vim.cmd [[Lspsaga preview_definition]] end, buffer = true}
   nnoremap {'ga', function() vim.cmd [[Lspsaga code_action]] end, buffer = true}
-  nnoremap {'K', function() vim.lsp.buf.hover() end, buffer = true}
+  nnoremap {'K', function() function() vim.lsp.buf.hover() end, buffer = true}
 
   nnoremap {'gi', function () vim.lsp.buf.implementation() end, buffer = true}
 
