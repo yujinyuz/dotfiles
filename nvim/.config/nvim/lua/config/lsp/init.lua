@@ -18,20 +18,20 @@ local on_attach = function(client, bufnr)
   end
 end
 
+-- local sumneko_binary = vim.fn.stdpath('data')..'/lspinstall/lua/extension/server/bin/macOS/lua-language-server'
+-- local sumneko_root = vim.fn.stdpath('data')..'/lspinstall/lua/extension/server'
 
--- local lua_cmd = {'lua-language-server'}
 
--- local sumneko_root = vim.fn.stdpath('data') ..'./lspinstall/lua/sumneko-lua/extension/'
--- local lua_bin = vim.fn.stdpath('data') .. '/lspinstall/lua/sumneko-lua/extension/server/bin/macOS/lua-language-server'
+local lua_cmd = {'/Users/trafalgar/.local/share/nvim/lspinstall/lua/./sumneko-lua-language-server'}
 
--- local lua_cmd = vim.fn.stdpath('data') .. './lspinstall/lua/sumneko-lua-language-server'
 
 local servers = {
   pyright = {},
   ["null-ls"] = {},
-  -- sumneko_lua = require("lua-dev").setup({
-  --   lspconfig = { cmd = lua_cmd  },
-  -- }),
+  -- sumneko_lua  = { cmd = {sumneko_binary, '-E', sumneko_root .. '/main.lua'}  },
+  sumneko_lua = require("lua-dev").setup({
+    lspconfig = { cmd = lua_cmd  },
+  }),
   -- bashls = {},
   -- dockerls = {},
   -- tsserver = {},
@@ -64,22 +64,21 @@ for server, config in pairs(servers) do
   if not nvim_lsp[server] then
     utils.error("Warning " .. server, "Lsp Error")
   end
-  -- print(server)
-  -- lspconfig[server].setup(vim.tbl_deep_extend("force", {
-  --   on_attach = on_attach,
-  --   capabilities = capabilities,
-  --   flags = {
-  --     debounce_text_changes = 150,
-  --   },
-  -- }, config))
-  -- if nvim_lsp[server] then
-    nvim_lsp[server].setup {
-      on_attach = on_attach,
-      capabilities = capabilities,
-      flags = {
-        debounce_text_changes = 150,
-      }
-    }
+  nvim_lsp[server].setup(vim.tbl_deep_extend("force", {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    flags = {
+      debounce_text_changes = 150,
+    },
+  }, config))
+
+    -- nvim_lsp[server].setup {
+    --   on_attach = on_attach,
+    --   capabilities = capabilities,
+    --   flags = {
+    --     debounce_text_changes = 150,
+    --   }
+    -- }
 
     local cfg = nvim_lsp[server]
     if not (cfg and cfg.cmd and vim.fn.executable(cfg.cmd[1]) == 1) then

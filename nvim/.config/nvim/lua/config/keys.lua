@@ -5,7 +5,7 @@ local tnoremap = vim.keymap.tnoremap
 local nmap = vim.keymap.nmap
 local vmap = vim.keymap.vmap
 
-local cmd = require('modules.lib.nvim_helpers').cmd_map
+vim.opt.timeoutlen = 300
 
 local wk = require('which-key')
 
@@ -57,7 +57,7 @@ tnoremap {'<M-l>', [[<C-\><C-n><C-w>l]]}
 
 -- Persistent highlights
 nnoremap {'<leader>ll', [[<Cmd>call matchadd('Visual', '\%'.line('.').'l')<CR>]], silent = true}
-nnoremap {'<leader>lc', cmd [[call clearmatches()]]}
+nnoremap {'<leader>lc', [[<Cmd>call clearmatches()<CR>]], silent = true}
 
 nnoremap {'yob', [[<Cmd>GitBlameToggle<CR>]]}
 
@@ -116,8 +116,19 @@ wk.register({
     q = {'<Cmd>q<CR>', 'Quit quick'},
     a = {'<Cmd>qa!<CR>', 'Quit all without saving'},
   },
+  r = {
+    n = {'Rename *Treesitter*'}
+  },
   S = {"Spectre Search"},
   w = {'<Cmd>update<CR>', 'Write File *only when updated*'},
   x = {":update<CR>|:source<CR>", "Save and Source Current File"},
 
-}, {prefix = "<leader>"})
+}, {prefix = '<leader>', mode = 'n'})
+
+
+local text_objects = {
+
+  ["af"] = "Around Function",
+  ["ac"] = "Around Class",
+}
+wk.register(text_objects, { mode = "o", prefix = ""})
