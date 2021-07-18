@@ -1,5 +1,3 @@
-local nnoremap = vim.keymap.nnoremap
-
 vim.g.nvim_tree_side = 'left'
 vim.g.nvim_tree_width = 30
 vim.g.nvim_tree_ignore = {
@@ -30,5 +28,3 @@ vim.g.nvim_tree_icons = {
     untracked = '★',
   },
 }
-
-nnoremap {'<C-n>', function() require('nvim-tree').toggle() end}

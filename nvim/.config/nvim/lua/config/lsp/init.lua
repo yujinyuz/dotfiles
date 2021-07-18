@@ -6,7 +6,7 @@ require('config.lsp.diagnostics').setup()
 require('config.lsp.kind').setup()
 
 local on_attach = function(client, bufnr)
-  utils.info("Attaching client: " .. client.name, "LSP")
+  utils.info(client.name, "LSP")
   require("config.lsp.formatting").setup(client, bufnr)
   require("config.lsp.keys").setup(client, bufnr)
   require("config.lsp.completion").setup(client, bufnr)
@@ -17,10 +17,6 @@ local on_attach = function(client, bufnr)
     require("config.lsp.ts-utils").setup(client)
   end
 end
-
--- local sumneko_binary = vim.fn.stdpath('data')..'/lspinstall/lua/extension/server/bin/macOS/lua-language-server'
--- local sumneko_root = vim.fn.stdpath('data')..'/lspinstall/lua/extension/server'
-
 
 local lua_cmd = {'/Users/trafalgar/.local/share/nvim/lspinstall/lua/./sumneko-lua-language-server'}
 
@@ -58,12 +54,14 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
 }
 
 
-require("config.lsp.null-ls").setup {}
+require("config.lsp.null-ls").setup()
 
 for server, config in pairs(servers) do
+
   if not nvim_lsp[server] then
     utils.error("Warning " .. server, "Lsp Error")
   end
+
   nvim_lsp[server].setup(vim.tbl_deep_extend("force", {
     on_attach = on_attach,
     capabilities = capabilities,
@@ -71,14 +69,6 @@ for server, config in pairs(servers) do
       debounce_text_changes = 150,
     },
   }, config))
-
-    -- nvim_lsp[server].setup {
-    --   on_attach = on_attach,
-    --   capabilities = capabilities,
-    --   flags = {
-    --     debounce_text_changes = 150,
-    --   }
-    -- }
 
     local cfg = nvim_lsp[server]
     if not (cfg and cfg.cmd and vim.fn.executable(cfg.cmd[1]) == 1) then

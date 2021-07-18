@@ -1,7 +1,6 @@
 local actions = require'lir.actions'
 local mark_actions = require 'lir.mark.actions'
 local clipboard_actions = require'lir.clipboard.actions'
-local nnoremap = vim.keymap.nnoremap
 local xnoremap = vim.keymap.xnoremap
 
 local utils = require('utils')
@@ -57,7 +56,5 @@ vim.cmd [[  autocmd filetype lir :lua lirsettings()]]
 vim.cmd [[augroup end]]
 
 
-utils.nnoremap('<leader>.', function() require('lir.float').toggle() end)
-utils.nnoremap('<leader>/', function() require('lir.float').toggle('.') end )
--- nnoremap {'<leader>.', function() require('lir.float').toggle() end}
--- nnoremap {'<leader>/', function() require('lir.float').toggle('.') end}
+-- utils.nnoremap('<leader>.', function() require('lir.float').toggle() end)
+-- utils.nnoremap('<leader>/', function() require('lir.float').toggle('.') end)

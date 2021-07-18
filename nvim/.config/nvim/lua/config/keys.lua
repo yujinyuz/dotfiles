@@ -9,6 +9,22 @@ vim.opt.timeoutlen = 300
 
 local wk = require('which-key')
 
+wk.setup {
+  -- show_help = false,
+  -- triggers = "auto",
+  plugins = {
+    spelling = true,
+  },
+  key_labels = {
+    ["<leader>"] = "SPC",
+    ["<space>"] = "SPC",
+    ["<CR>"] = "RET",
+    ["<TAB>"] = "TAB",
+  },
+  window = { padding = { 0, 0, 0, 0 } },
+  layout = { height = { min = 1, max = 10 } }
+}
+
 -- Remove highlights
 nnoremap {
   '<C-l>',
@@ -59,23 +75,10 @@ tnoremap {'<M-l>', [[<C-\><C-n><C-w>l]]}
 nnoremap {'<leader>ll', [[<Cmd>call matchadd('Visual', '\%'.line('.').'l')<CR>]], silent = true}
 nnoremap {'<leader>lc', [[<Cmd>call clearmatches()<CR>]], silent = true}
 
-nnoremap {'yob', [[<Cmd>GitBlameToggle<CR>]]}
-
-wk.setup {
-  -- show_help = false,
-  triggers = "auto",
-  plugins = {
-    spelling = true,
-  },
-  key_labels = {
-    ["<leader>"] = "SPC"
-  }
-}
-
 wk.register({
   [" "] = "Find Files",
-  ["/"] = {"Browse Files"},
-  ["."] = {"Browse Files Related to Current File"},
+  ["/"] = {"<Cmd>lua require('lir.float').toggle('.')<CR>", "Browse Files"},
+  ["."] = {"<Cmd>lua require('lir.float').toggle()<CR>", "Browse Files Related to Current File"},
   ["2"] = {'<Cmd>ZenMode<CR>', 'Zen Mode'},
   ["3"] = {'Twilight Mode'},
   b = {
@@ -102,13 +105,13 @@ wk.register({
   F = "Live Grep",
   o = {
     name = "+open",
-    t = {'Toggle Terminal'},
+    t = {'<Cmd>lua require("FTerm").toggle()<CR>', 'Toggle Terminal'},
     u = {'<Cmd>UndotreeToggle<CR>', 'Undotree Toggle'},
   },
   p = {
     name = "+project",
-    p = {'Project Workbench'},
-    b = {'Branch Workbench'},
+    p = {'<Cmd>lua require("workbench").toggle_project_workbench()<CR>', 'Project Workbench'},
+    b = {'<Cmd>lua require("workbench").toggle_branch_workbench()<CR>', 'Branch Workbench'},
   },
   q = {
     name = "+quit/session",
@@ -119,7 +122,7 @@ wk.register({
   r = {
     n = {'Rename *Treesitter*'}
   },
-  S = {"Spectre Search"},
+  S = {'<Cmd>lua require("spectre").open()<CR>', "Spectre Search"},
   w = {'<Cmd>update<CR>', 'Write File *only when updated*'},
   x = {":update<CR>|:source<CR>", "Save and Source Current File"},
 
@@ -127,8 +130,21 @@ wk.register({
 
 
 local text_objects = {
-
   ["af"] = "Around Function",
   ["ac"] = "Around Class",
 }
+
+local switches = {
+  o = {
+    l = {"<Cmd>IndentBlanklineToggle<CR>", "Toggle Indent Lines"},
+    b = {"<Cmd>GitBlameToggle<CR>", "Toggle Git Blame"},
+  }
+}
+
 wk.register(text_objects, { mode = "o", prefix = ""})
+
+wk.register(switches, { prefix = 'y', mode = 'n' })
+
+wk.register({
+  ["<C-n>"] = {"<Cmd>NvimTreeToggle<CR>", "Toggle Nvim Tree"},
+}, {prefix = '', mode = 'n'})
