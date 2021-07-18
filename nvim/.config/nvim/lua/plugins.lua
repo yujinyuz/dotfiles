@@ -17,6 +17,12 @@ local disable = function() return false end
 local plugins = function(use)
 
   use {'wbthomason/packer.nvim', opt = true}
+  -- Neovim Plugin requirements
+  use {
+    'nvim-lua/popup.nvim',
+    'nvim-lua/plenary.nvim',
+  }
+
   use {
     "neovim/nvim-lspconfig",
     opt = true,
@@ -32,12 +38,37 @@ local plugins = function(use)
       "folke/lua-dev.nvim",
     }
   }
-  -- Neovim Plugin requirements
+
   use {
-    'nvim-lua/popup.nvim',
-    'nvim-lua/plenary.nvim',
+    "b3nj5m1n/kommentary",
+    opt = true,
+    wants = "nvim-ts-context-commentstring",
+    keys = { "gc", "gcc" },
+    config = function()
+      require("config.kommentary")
+    end,
+    requires = "JoosepAlviste/nvim-ts-context-commentstring",
   }
 
+  use {
+    'nvim-treesitter/nvim-treesitter',
+    run = ':TSUpdate',
+    opt = true,
+    event = 'BufRead',
+    requires = {
+      {'nvim-treesitter/playground', cmd = 'TSHighlightCapturesUnderCursor'},
+      'nvim-treesitter/nvim-treesitter-textobjects',
+      -- 'nvim-treesitter/nvim-treesitter-refactor',
+      -- {
+      --   'windwp/nvim-ts-autotag',
+      --   config = function() require('nvim-ts-autotag').setup() end,
+      -- },
+    },
+    config = [[require('config.treesitter')]]
+    -- config = function()
+    --   require('config.treesitter')
+    -- end,
+  }
 
   -- File management
   use {
@@ -112,24 +143,6 @@ local plugins = function(use)
       require('config.blankline')
     end,
   }
-  use {
-    'nvim-treesitter/nvim-treesitter',
-    run = ':TSUpdate',
-    opt = true,
-    event = 'BufRead',
-    requires = {
-      {'nvim-treesitter/nvim-treesitter-textobjects'},
-      {'nvim-treesitter/nvim-treesitter-refactor'},
-      {'nvim-treesitter/playground', cmd = 'TSHighlightCapturesUnderCursor'},
-      {
-        'windwp/nvim-ts-autotag',
-        config = function() require('nvim-ts-autotag').setup() end,
-      },
-    },
-    config = function()
-      require('config.treesitter')
-    end,
-  }
 
   use {
     'windwp/nvim-autopairs',
@@ -147,15 +160,6 @@ local plugins = function(use)
     end,
   }
 
-  use {
-    "b3nj5m1n/kommentary",
-    opt = true,
-    keys = { "gc", "gcc" },
-    config = function()
-      require("config.kommentary")
-    end,
-    requires = "JoosepAlviste/nvim-ts-context-commentstring",
-  }
 
   use {
     'hoob3rt/lualine.nvim',
@@ -176,7 +180,7 @@ local plugins = function(use)
 
     },
     'ludovicchabant/vim-gutentags',
-    'wincent/ferret',
+    {'wincent/ferret', setup = function() vim.g.FerretMap = 0 end},
     'SirVer/ultisnips',
     'honza/vim-snippets',
   }
