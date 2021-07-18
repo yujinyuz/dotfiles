@@ -1,1 +1,1 @@
-require('twilight').setup {}
+require('twilight').setup({})

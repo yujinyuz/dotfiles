@@ -11,4 +11,6 @@ require('colorizer').setup(nil, {
   mode = 'background', -- Set the display mode.
 })
 
-vim.cmd([[autocmd ColorScheme * lua package.loaded['colorizer'] = nil; require('colorizer').setup(); require('colorizer').attach_to_buffer(0)]])
+vim.cmd(
+  [[autocmd ColorScheme * lua package.loaded['colorizer'] = nil; require('colorizer').setup(); require('colorizer').attach_to_buffer(0)]]
+)

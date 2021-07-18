@@ -26,20 +26,18 @@ local make_mapper = function(mode, defaults, opts)
 
   local lhs = opts.lhs or args[1]
   local rhs = opts.rhs or args[2]
-  local map_opts = vim.tbl_extend("force", defaults, map_args)
+  local map_opts = vim.tbl_extend('force', defaults, map_args)
 
   local mapping
   if type(rhs) == 'string' then
     mapping = rhs
   elseif type(rhs) == 'function' then
-    assert(map_opts.noremap, "If `rhs` is a function, `opts.noremap` must be true")
+    assert(map_opts.noremap, 'If `rhs` is a function, `opts.noremap` must be true')
 
     local func_id = keymap._create(rhs)
-    mapping = string.format(
-      [[<cmd>lua vim.keymap._execute(%s)<CR>]], func_id
-    )
+    mapping = string.format([[<cmd>lua vim.keymap._execute(%s)<CR>]], func_id)
   else
-    error("Unexpected type for rhs:" .. tostring(rhs))
+    error('Unexpected type for rhs:' .. tostring(rhs))
   end
 
   if not map_opts.buffer then
@@ -223,4 +221,3 @@ end
 vim.keymap = vim.keymap or keymap
 
 return keymap
-

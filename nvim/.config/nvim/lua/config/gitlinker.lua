@@ -1,1 +1,1 @@
-require('gitlinker').setup {}
+require('gitlinker').setup({})
