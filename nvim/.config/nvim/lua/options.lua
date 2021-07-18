@@ -69,20 +69,20 @@ opt.shortmess = opt.shortmess
 -- vim.cmd [[set formatoptions-=o]] -- O and o, do not continue comments
 -- opt.formatoptions = 'jcrql'
 opt.formatoptions = opt.formatoptions
-  - "a" -- Auto formatting is BAD.
-  - "t" -- Don't auto format my code. I got linters for that.
-  + "c" -- In general, I like it when comments respect textwidth
-  + "q" -- Allow formatting comments w/ gq
-  - "o" -- O and o, don't continue comments
-  + "r" -- But do continue when pressing enter.
-  + "n" -- Indent past the formatlistpat, not underneath it.
-  + "j" -- Auto-remove comments if possible.
-  - "2" -- I'm not in gradeschool anymore
+  - 'a' -- Auto formatting is BAD.
+  - 't' -- Don't auto format my code. I got linters for that.
+  + 'c' -- In general, I like it when comments respect textwidth
+  + 'q' -- Allow formatting comments w/ gq
+  - 'o' -- O and o, don't continue comments
+  + 'r' -- But do continue when pressing enter.
+  + 'n' -- Indent past the formatlistpat, not underneath it.
+  + 'j' -- Auto-remove comments if possible.
+  - '2' -- I'm not in gradeschool anymore
 
 -- opt.completeopt = 'menu,menuone,noselect'
 -- opt.completeopt = 'menuone,noselect'
 -- vim.opt.completeopt = 'menuone,noselect,noinsert'
-opt.completeopt = {'menuone', 'noselect', 'noinsert'}
+opt.completeopt = { 'menuone', 'noselect', 'noinsert' }
 -- Always show sign columns
 opt.signcolumn = 'yes'
 -- Having longer update time leads to noticeable delays and poor UX
@@ -97,14 +97,14 @@ opt.showmode = false
 -- Enable backups
 opt.backup = true
 -- Ensure filename uniqueness with //
-opt.backupdir = vim.fn.stdpath('data').. '/backup//'
+opt.backupdir = vim.fn.stdpath('data') .. '/backup//'
 -- Enable persistent undo
 opt.undofile = true
 
 opt.wildmenu = true
 opt.wildcharm = 26 -- Equivalent of <C-z>
 
-opt.wildmode = {'longest', 'full'}
+opt.wildmode = { 'longest', 'full' }
 
 opt.wildoptions = 'pum'
 -- Transparent pums

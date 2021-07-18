@@ -1,8 +1,8 @@
-require('zen-mode').setup {
+require('zen-mode').setup({
   plugins = {
     twilight = {
-      enabled = false
+      enabled = false,
     },
     tmux = true,
-  }
-}
+  },
+})

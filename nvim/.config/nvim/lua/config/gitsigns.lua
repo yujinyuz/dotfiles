@@ -1,1 +1,1 @@
-require('gitsigns').setup {signcolumn = false}
+require('gitsigns').setup({ signcolumn = false })
