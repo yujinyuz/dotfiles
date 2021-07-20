@@ -3,8 +3,6 @@ local mark_actions = require('lir.mark.actions')
 local clipboard_actions = require('lir.clipboard.actions')
 local xnoremap = vim.keymap.xnoremap
 
-local utils = require('utils')
-
 require('lir').setup({
   border = 'single',
   show_hidden_files = true,
@@ -57,10 +55,6 @@ function _G.lirsettings()
   })
 end
 
-vim.cmd([[augroup lir-settings]])
-vim.cmd([[  autocmd!]])
-vim.cmd([[  autocmd filetype lir :lua lirsettings()]])
-vim.cmd([[augroup end]])
-
--- utils.nnoremap('<leader>.', function() require('lir.float').toggle() end)
--- utils.nnoremap('<leader>/', function() require('lir.float').toggle('.') end)
+aug('LirConfig', {
+  { events = { 'FileType' }, patterns = { 'lir' }, command = 'lua lirsettings()' },
+})

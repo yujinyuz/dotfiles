@@ -1,82 +1,64 @@
-require('utils._keymap_port')
-
+-- @usage dump(vim.opt)
 _G.dump = function(...)
   print(vim.inspect(...))
+end
+
+-- Just a simple wrapper around :autocmd in vim
+-- @field events See :h autocmd-events for a list of events
+-- @field user See :h User
+-- @field patterns List of patterns for the command to execute on
+-- @field modifiers [++once], [++nested]
+-- @field command Command to run
+-- @table opts
+-- @usage au { events = {'BufEnter'}, patterns = {'*.lua'}, command = 'setlocal ft=lua }
+_G.au = function(opts)
+  local events = table.concat(opts.events, ',')
+  local user = opts.user or false
+  local patterns = table.concat(opts.patterns or {}, ',')
+  local modifiers = table.concat(opts.modifiers or {}, ' ')
+  local command = opts.command
+
+  if not command then
+    error('no command provided')
+  end
+
+  if user then
+    user = 'User'
+  else
+    user = ''
+  end
+
+  opts.user = nil
+
+  local cmd = string.format('autocmd %s %s %s %s %s', user, events, patterns, modifiers, command)
+
+  vim.cmd(cmd)
+end
+
+-- A simple wrapper around :augroup in vim
+-- @usage aug('LuaConfig', {
+--             { events = {'BufNewFile', 'BufRead'}, patterns = {'*.lua'}, command = 'setlocal ft=lua' },
+--             { events = {'BufReadPost'}, patterns = {'*'}, command = 'echo hello' } })
+_G.aug = function(name, commands)
+  vim.cmd('augroup ' .. name)
+  vim.cmd('autocmd!')
+  for _, c in ipairs(commands) do
+    local cmd = string.format(
+      'autocmd %s %s %s %s',
+      table.concat(c.events, ','),
+      table.concat(c.patterns or {}, ','),
+      table.concat(c.modifiers or {}, ' '),
+      c.command
+    )
+
+    vim.cmd(cmd)
+  end
+  vim.cmd('augroup END')
 end
 
 local M = {}
 
 M.functions = {}
-
-function M.execute(id)
-  local func = M.functions[id]
-  if not func then
-    error('Function doest not exist: ' .. id)
-  end
-  return func()
-end
-
-local map = function(mode, key, cmd, opts, defaults)
-  opts = vim.tbl_deep_extend('force', { silent = true }, defaults or {}, opts or {})
-
-  if type(cmd) == 'function' then
-    table.insert(M.functions, cmd)
-    if opts.expr then
-      cmd = ([[luaeval('require("utils").execute(%d)')]]):format(#M.functions)
-    else
-      cmd = ("<cmd>lua require('utils').execute(%d)<cr>"):format(#M.functions)
-    end
-  end
-  if opts.buffer ~= nil then
-    local buffer = opts.buffer
-    opts.buffer = nil
-    return vim.api.nvim_buf_set_keymap(buffer, mode, key, cmd, opts)
-  else
-    return vim.api.nvim_set_keymap(mode, key, cmd, opts)
-  end
-end
-
-function M.map(mode, key, cmd, opt, defaults)
-  return map(mode, key, cmd, opt, defaults)
-end
-
-function M.nmap(key, cmd, opts)
-  return map('n', key, cmd, opts)
-end
-function M.vmap(key, cmd, opts)
-  return map('v', key, cmd, opts)
-end
-function M.xmap(key, cmd, opts)
-  return map('x', key, cmd, opts)
-end
-function M.imap(key, cmd, opts)
-  return map('i', key, cmd, opts)
-end
-function M.omap(key, cmd, opts)
-  return map('o', key, cmd, opts)
-end
-function M.smap(key, cmd, opts)
-  return map('s', key, cmd, opts)
-end
-
-function M.nnoremap(key, cmd, opts)
-  return map('n', key, cmd, opts, { noremap = true })
-end
-function M.vnoremap(key, cmd, opts)
-  return map('v', key, cmd, opts, { noremap = true })
-end
-function M.xnoremap(key, cmd, opts)
-  return map('x', key, cmd, opts, { noremap = true })
-end
-function M.inoremap(key, cmd, opts)
-  return map('i', key, cmd, opts, { noremap = true })
-end
-function M.onoremap(key, cmd, opts)
-  return map('o', key, cmd, opts, { noremap = true })
-end
-function M.snoremap(key, cmd, opts)
-  return map('s', key, cmd, opts, { noremap = true })
-end
 
 function M.t(str)
   return vim.api.nvim_replace_termcodes(str, true, true, true)
@@ -100,8 +82,9 @@ function M.info(msg, name)
   M.log(msg, 'LspDiagnosticsDefaultInformation', name)
 end
 
--- Usage:
--- require('util').toggle('relativenumber')
+-- @param option
+-- @param [opt] silent
+-- @usage require("utils").toggle('relativenumber')
 function M.toggle(option, silent)
   local info = vim.api.nvim_get_option_info(option)
   local scopes = { buf = 'bo', win = 'wo', global = 'o' }
@@ -138,6 +121,14 @@ function M.float_terminal(cmd)
   }
   vim.cmd(table.concat(autocmd, ' '))
   vim.cmd([[startinsert]])
+end
+
+function M.lsp_config()
+  local ret = {}
+  for _, client in pairs(vim.lsp.get_active_clients()) do
+    ret[client.name] = { root_dir = client.config.root_dir, settings = client.config.settings }
+  end
+  dump(ret)
 end
 
 return M
