@@ -1,12 +1,8 @@
 local wk = require('which-key')
-local utils = require('utils')
-
 local M = {}
 
 function M.setup(client, bufnr)
   -- Mappings.
-  local opts = { noremap = true, silent = true, buffer = bufnr }
-
   local keymap = {
     c = {
       name = '+code',
@@ -55,18 +51,35 @@ function M.setup(client, bufnr)
     -- t = { "<cmd>lua vim.lsp.buf.type_definition()<CR>", "Goto Type Definition" },
   }
 
-  utils.nnoremap('K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  utils.nnoremap('[w', '<cmd>lua vim.lsp.diagnostic.goto_prev({popup_opts = {focusable = false}})<CR>', opts)
-  utils.nnoremap(']w', '<cmd>lua vim.lsp.diagnostic.goto_next({popup_opts = {focusable = false}})<CR>', opts)
+  vim.keymap.nnoremap({ 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', buffer = true, silent = true })
+  vim.keymap.nnoremap({
+    '[w',
+    '<cmd>lua vim.lsp.diagnostic.goto_prev({popup_opts = {focusable = false}})<CR>',
+    buffer = true,
+    silent = true,
+  })
+  vim.keymap.nnoremap({
+    ']w',
+    '<cmd>lua vim.lsp.diagnostic.goto_next({popup_opts = {focusable = false}})<CR>',
+    buffer = true,
+    silent = true,
+  })
+  vim.keymap.inoremap({ '<C-s>', '<Cmd>lua vim.lsp.buf.signature_help()<CR>', silent = true, buffer = true })
 
-  for _, c in ipairs(client.resolved_capabilities.signature_help_trigger_characters) do
-    utils.inoremap(c, function()
-      vim.defer_fn(vim.lsp.buf.signature_help, 0)
-      return c
-    end, {
-      noremap = true,
+  -- @warning: This will map {'(', ')', ','} in insert mode
+  -- It might conflict with autopairs plugin
+  local trigger_chars = client.resolved_capabilities.signature_help_trigger_characters
+  -- So override it to just comma for now since we don't use it much.
+  trigger_chars = { ',' }
+  for _, c in ipairs(trigger_chars) do
+    vim.keymap.inoremap({
+      c,
+      function()
+        vim.defer_fn(vim.lsp.buf.signature_help, 0)
+        return c
+      end,
+      buffer = true,
       silent = true,
-      buffer = bufnr,
       expr = true,
     })
   end
