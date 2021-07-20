@@ -17,21 +17,4 @@ require('options')
 
 vim.defer_fn(function()
   require('plugins')
-
-  -- TODO: Figure this out later
-  -- I don't know why this does not work on my packer.nvim
-
-  -- use({
-  --   "nvim-treesitter/nvim-treesitter",
-  --   run = ":TSUpdate",
-  --   opt = true,
-  --   event = "BufRead",
-  --   requires = {
-  --     { "nvim-treesitter/playground", cmd = "TSHighlightCapturesUnderCursor" },
-  --     "nvim-treesitter/nvim-treesitter-textobjects",
-  --   },
-  --   config = [[require('config.treesitter')]],
-
-  -- I have to make it as a non-opt plugin and load the treesitter config
-  require('config.treesitter')
 end, 0)
