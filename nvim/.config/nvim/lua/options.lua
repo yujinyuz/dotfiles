@@ -34,8 +34,6 @@ opt.listchars = {
   extends = '»',
   conceal = '┊',
 }
--- opt.listchars =
---   [[tab:→ ,trail:·,space:·,eol:↲,nbsp:☠,precedes:«,extends:»,conceal:┊]]
 -- Hide buffer when switching to other files
 opt.hidden = true
 -- Prefer bash for shell-related tasks
@@ -43,7 +41,6 @@ opt.shell = '/bin/bash'
 -- Disable annoying swapfiles
 opt.swapfile = false
 -- Use system clipboard
--- go.clipboard = go.clipboard .. "unnamedplus"
 opt.clipboard = 'unnamedplus'
 -- Search relative to current file and directory
 opt.path = '.,**'
@@ -58,7 +55,7 @@ opt.inccommand = 'split'
 -- Enable mouse coz why not?
 opt.mouse = 'nicr'
 -- Use ripgrep instead of grep
--- opt.grepprg = [[rg --vimgrep --no-heading --smart-case]]
+opt.grepprg = [[rg --vimgrep --no-heading --smart-case]]
 
 opt.shortmess = opt.shortmess
   + 'a'
@@ -66,8 +63,6 @@ opt.shortmess = opt.shortmess
   + 'c' -- Don't give |ins-completion-menu| messages
 
 -- Formatting
--- vim.cmd [[set formatoptions-=o]] -- O and o, do not continue comments
--- opt.formatoptions = 'jcrql'
 opt.formatoptions = opt.formatoptions
   - 'a' -- Auto formatting is BAD.
   - 't' -- Don't auto format my code. I got linters for that.
@@ -79,10 +74,11 @@ opt.formatoptions = opt.formatoptions
   + 'j' -- Auto-remove comments if possible.
   - '2' -- I'm not in gradeschool anymore
 
--- opt.completeopt = 'menu,menuone,noselect'
--- opt.completeopt = 'menuone,noselect'
--- vim.opt.completeopt = 'menuone,noselect,noinsert'
+-- Pums
 opt.completeopt = { 'menuone', 'noselect', 'noinsert' }
+opt.pumheight = 15
+-- Transparent pums
+opt.pumblend = 17
 -- Always show sign columns
 opt.signcolumn = 'yes'
 -- Having longer update time leads to noticeable delays and poor UX
@@ -103,16 +99,16 @@ opt.undofile = true
 
 opt.wildmenu = true
 opt.wildcharm = 26 -- Equivalent of <C-z>
-
 opt.wildmode = { 'longest', 'full' }
-
 opt.wildoptions = 'pum'
--- Transparent pums
-opt.pumblend = 17
 
-opt.foldlevel = 99
-opt.foldmethod = 'expr'
-opt.foldexpr = 'nvim_treesitter#foldexpr()'
+-- opt.foldlevel = 99
+opt.foldlevelstart = 99
+opt.foldmethod = 'indent'
+
+-- @note: I never got this to work with treesitter
+-- opt.foldmethod = 'expr'
+-- opt.foldexpr = 'nvim_treesitter#foldexpr()'
 
 -- Enable line wraps. Still testing things out
 opt.wrap = true
@@ -121,11 +117,8 @@ opt.breakindent = true
 opt.showbreak = string.rep(' ', 3)
 opt.linebreak = true
 
--- Something I added 2021-06-08. If something fucks up, blame this.
--- This basically removes the flickering when using nvim-autopairs
 -- opt.lazyredraw = true
 
 -- Enable 24-bit RGB color
 opt.termguicolors = true
 
-opt.pumheight = 15
