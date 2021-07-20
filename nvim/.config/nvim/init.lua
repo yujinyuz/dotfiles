@@ -7,14 +7,19 @@
 --     __/ |      _/ |            __/ |
 --    |___/      |__/            |___/
 --
---    Author: yujinyuz
---    GitHub: https://github.com/yujinyuz
---    Repository URL: https://github.com/yujinyuz/dotfiles
---    Desc: Collection of dotfiles gathered across different dotfiles repos
+--    @author yujinyuz
+--    @gitHub https://github.com/yujinyuz
+--    @repository https://github.com/yujinyuz/dotfiles
+--    @descriptionn Collection of dotfiles gathered across different dotfiles repos
 
+-- Make vim.keymap available
+require('utils._keymap_port')
+-- Load global helpers
 require('utils')
+-- Load options
 require('options')
 
+-- Since we have packer_compiled.lua, we don't need to load this immediately
 vim.defer_fn(function()
   require('plugins')
 end, 0)
