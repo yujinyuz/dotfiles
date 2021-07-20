@@ -11,7 +11,7 @@ function M.setup(client, bufnr)
       d = { '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics({focusable = false})<CR>', 'Line Diagnostics' },
       l = {
         name = '+lsp',
-        i = { '<cmd>LspInfo<cr>', 'Lsp Info' },
+        i = { '<cmd>LspInfo<CR>', 'Lsp Info' },
         a = { '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', 'Add Folder' },
         r = { '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', 'Remove Folder' },
         l = {
@@ -21,8 +21,8 @@ function M.setup(client, bufnr)
       },
     },
     x = {
-      s = { '<cmd>Telescope lsp_document_diagnostics<cr>', 'Search Document Diagnostics' },
-      w = { '<cmd>Telescope lsp_workspace_diagnostics<cr>', 'Workspace Diagnostics' },
+      s = { '<cmd>Telescope lsp_document_diagnostics<CR>', 'Search Document Diagnostics' },
+      w = { '<cmd>Telescope lsp_workspace_diagnostics<CR>', 'Workspace Diagnostics' },
     },
   }
 
@@ -40,15 +40,13 @@ function M.setup(client, bufnr)
 
   local keymap_goto = {
     name = '+goto',
-    r = { '<cmd>Telescope lsp_references<cr>', 'References' },
-    R = { '<cmd>Trouble lsp_references<cr>', 'Trouble References' },
+    r = { '<Cmd>Telescope lsp_references<CR>', 'References' },
+    R = { '<Cmd>Trouble lsp_references<CR>', 'Trouble References' },
     d = { '<Cmd>lua vim.lsp.buf.definition()<CR>', 'Goto Definition' },
     dv = { '<Cmd>vsplit | lua vim.lsp.buf.definition()<CR>', 'Goto Definition' },
     ds = { '<Cmd>split | lua vim.lsp.buf.definition()<CR>', 'Goto Definition' },
     s = { '<cmd>lua vim.lsp.buf.signature_help()<CR>', 'Signature Help' },
     I = { '<cmd>lua vim.lsp.buf.implementation()<CR>', 'Goto Implementation' },
-    -- I = { "<Cmd>lua vim.lsp.buf.declaration()<CR>", "Goto Declaration" },
-    -- t = { "<cmd>lua vim.lsp.buf.type_definition()<CR>", "Goto Type Definition" },
   }
 
   vim.keymap.nnoremap({ 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', buffer = true, silent = true })
@@ -69,8 +67,7 @@ function M.setup(client, bufnr)
   -- @warning: This will map {'(', ')', ','} in insert mode
   -- It might conflict with autopairs plugin
   local trigger_chars = client.resolved_capabilities.signature_help_trigger_characters
-  -- So override it to just comma for now since we don't use it much.
-  trigger_chars = { ',' }
+  trigger_chars = {}
   for _, c in ipairs(trigger_chars) do
     vim.keymap.inoremap({
       c,
