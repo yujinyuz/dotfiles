@@ -11,7 +11,7 @@ keymap._create = function(f)
 end
 
 keymap._execute = function(id)
-  keymap._store[id]()
+  return keymap._store[id]()
 end
 
 local make_mapper = function(mode, defaults, opts)
@@ -35,7 +35,13 @@ local make_mapper = function(mode, defaults, opts)
     assert(map_opts.noremap, 'If `rhs` is a function, `opts.noremap` must be true')
 
     local func_id = keymap._create(rhs)
-    mapping = string.format([[<cmd>lua vim.keymap._execute(%s)<CR>]], func_id)
+
+    if opts.expr then
+      -- mapping = string.format([[luaeval('require("utils").execute(%d)')]], func_id)
+      mapping = string.format([[luaeval('require("utils._keymap_port")._execute(%s)')]], func_id)
+    else
+      mapping = string.format([[<cmd>lua vim.keymap._execute(%s)<CR>]], func_id)
+    end
   else
     error('Unexpected type for rhs:' .. tostring(rhs))
   end
