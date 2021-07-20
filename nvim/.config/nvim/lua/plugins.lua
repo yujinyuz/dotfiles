@@ -7,18 +7,20 @@ if not packer_exists then
 end
 
 local packer = require('packer')
-local disable = function()
-  return false
-end
 
 local plugins = function(use)
+  local function disable()
+    return true
+  end
+
   use({ 'wbthomason/packer.nvim', opt = true })
-  -- Neovim Plugin requirements
+
   use({
     { 'nvim-lua/popup.nvim', module = 'popup' },
     { 'nvim-lua/plenary.nvim', module = 'plenary' },
   })
 
+  -- LSP Stuffs
   use({
     'neovim/nvim-lspconfig',
     opt = true,
@@ -29,12 +31,12 @@ local plugins = function(use)
     end,
     requires = {
       'jose-elias-alvarez/nvim-lsp-ts-utils',
-      -- "jose-elias-alvarez/null-ls.nvim",
-      { 'folke/null-ls.nvim', branch = 'lspconfig_updates' },
+      'jose-elias-alvarez/null-ls.nvim',
       'folke/lua-dev.nvim',
     },
   })
 
+  -- Comments
   use({
     'b3nj5m1n/kommentary',
     opt = true,
@@ -46,9 +48,19 @@ local plugins = function(use)
     requires = 'JoosepAlviste/nvim-ts-context-commentstring',
   })
 
+  -- AST Syntax Highlighting
   use({
     'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate',
+    opt = true,
+    event = 'BufRead',
+    config = function()
+      -- @note: For some reason, nvim-treesitter-textobjects.select doesn't work if I don't defer its loading.
+      -- e.g. `yac`, `yif` won't work. Though incremental_selection and `nvim-treesitter-text-objects.move` does.
+      vim.defer_fn(function()
+        require('config.treesitter')
+      end, 0)
+    end,
     requires = {
       { 'nvim-treesitter/playground', cmd = 'TSHighlightCapturesUnderCursor' },
       'nvim-treesitter/nvim-treesitter-textobjects',
@@ -73,11 +85,14 @@ local plugins = function(use)
 
   use({
     'nvim-telescope/telescope.nvim',
-    config = function() end,
+    config = function()
+      require('config.telescope')
+    end,
     requires = {
       { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
     },
     cmd = { 'Telescope' },
+    module = 'telescope',
   })
 
   use({
@@ -103,8 +118,7 @@ local plugins = function(use)
       require('config.theme')
     end,
   })
-  use({ 'eddyekofo94/gruvbox-flat.nvim', opt = true})
-  -- colorize hex/rgb/hsl value
+  use({ 'eddyekofo94/gruvbox-flat.nvim', opt = true })
   use({
     'norcalli/nvim-colorizer.lua',
     event = 'BufReadPre',
@@ -138,7 +152,6 @@ local plugins = function(use)
     end,
     cmd = { 'IndentBlanklineToggle' },
   })
-
   use({
     'hrsh7th/nvim-compe',
     event = 'InsertEnter',
@@ -245,13 +258,12 @@ local plugins = function(use)
     {
       'tpope/vim-scriptease',
       opt = true,
-      cmd = { 'Scriptnames', 'Messages' },
+      cmd = { 'Scriptnames', 'Messages', 'Verbose' },
       keys = { 'zS' },
     },
   })
 
   -- Misc
-  --
   use({
     'folke/which-key.nvim',
     event = 'VimEnter',
@@ -259,6 +271,16 @@ local plugins = function(use)
       require('config.keys')
     end,
   })
+
+  use({
+    'karb94/neoscroll.nvim',
+    keys = { '<C-u>', '<C-d>', 'gg', 'G' },
+    config = function()
+      require('config.scroll')
+    end,
+    cond = disable,
+  })
+
   use({
     'kana/vim-textobj-user',
     'kana/vim-textobj-entire', -- [ae]
@@ -299,7 +321,7 @@ local plugins = function(use)
     config = function()
       require('config.twilight')
     end,
-    keys = { '<leader>3' },
+    cmd = { 'Twilight' },
   })
   use({
     'marcushwz/nvim-workbench',
