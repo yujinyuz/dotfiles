@@ -99,4 +99,4 @@ inoremap({ '<Up>', [[compe#scroll({ 'delta': +4})]], silent = true, expr = true 
 inoremap({ '<Down>', [[compe#scroll({ 'delta': -4})]], silent = true, expr = true })
 -- inoremap { '<C-e>', [[compe#close()]], silent = true, expr = true } -- conflicts with vim-rsi
 
-vim.cmd([[autocmd User CompeConfirmDone silent! lua vim.lsp.buf.signature_help()]])
+au({ events = { 'CompeConfirmDone' }, command = 'lua vim.lsp.buf.signature_help()', user = true })
