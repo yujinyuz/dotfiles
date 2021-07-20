@@ -23,27 +23,11 @@ local lua_cmd = { '/Users/trafalgar/.local/share/nvim/lspinstall/lua/./sumneko-l
 local servers = {
   pyright = {},
   ['null-ls'] = {},
-  -- sumneko_lua  = { cmd = {sumneko_binary, '-E', sumneko_root .. '/main.lua'}  },
+  -- sumneko_lua = { { cmd = lua_cmd } },
   sumneko_lua = require('lua-dev').setup({
     lspconfig = { cmd = lua_cmd },
   }),
-  -- bashls = {},
-  -- dockerls = {},
   tsserver = {},
-  -- cssls = { cmd = { "css-languageserver", "--stdio" } },
-  -- rnix = {},
-  -- jsonls = { cmd = { "vscode-json-languageserver", "--stdio" } },
-  -- html = { cmd = { "html-languageserver", "--stdio" } },
-  -- clangd = {},
-  -- gopls = {},
-  -- intelephense = {},
-  -- sumneko_lua = require("lua-dev").setup({
-  --   -- library = { plugins = { "nvim-treesitter", "plenary.nvim", "telescope.nvim" } },
-  --   lspconfig = { cmd = lua_cmd },
-  -- }),
-  -- efm = require("config.lsp.efm").config,
-  -- vimls = {},
-  -- tailwindcss = {},
 }
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
