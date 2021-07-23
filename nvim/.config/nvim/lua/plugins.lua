@@ -52,19 +52,13 @@ local plugins = function(use)
   use({
     'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate',
-    opt = true,
-    event = 'BufRead',
     config = function()
-      -- @note: For some reason, nvim-treesitter-textobjects.select doesn't work if I don't defer its loading.
-      -- e.g. `yac`, `yif` won't work. Though incremental_selection and `nvim-treesitter-text-objects.move` does.
-      vim.defer_fn(function()
-        require('config.treesitter')
-      end, 0)
+      require('config.treesitter')
     end,
     requires = {
       { 'nvim-treesitter/playground', cmd = 'TSHighlightCapturesUnderCursor' },
-      'nvim-treesitter/nvim-treesitter-textobjects',
-      'nvim-treesitter/nvim-treesitter-refactor',
+      { 'nvim-treesitter/nvim-treesitter-textobjects' },
+      { 'nvim-treesitter/nvim-treesitter-refactor' },
       {
         'windwp/nvim-ts-autotag',
         config = function()
