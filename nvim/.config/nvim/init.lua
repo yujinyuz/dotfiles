@@ -18,8 +18,5 @@ require('utils._keymap_port')
 require('utils')
 -- Load options
 require('options')
-
--- Since we have packer_compiled.lua, we don't need to load this immediately
-vim.defer_fn(function()
-  require('plugins')
-end, 0)
+-- Load plugins last
+require('plugins')

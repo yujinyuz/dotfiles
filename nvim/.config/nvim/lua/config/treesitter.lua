@@ -1,4 +1,8 @@
-local ts_configs = require('nvim-treesitter.configs')
+local exists, ts_configs = pcall(require, 'nvim-treesitter.configs')
+if not exists then
+  return
+end
+
 ts_configs.setup({
   ensure_installed = {
     'bash',
