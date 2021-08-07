@@ -8,10 +8,11 @@ local sources = {
   nls.builtins.formatting.black,
   nls.builtins.formatting.isort,
   nls.builtins.formatting.stylua,
-  nls.builtins.diagnostics.misspell,
-  nls.builtins.diagnostics.write_good,
+  nls.builtins.diagnostics.misspell.with({filetypes = {'markdown', 'txt'}}),
+  -- nls.builtins.diagnostics.write_good,
   nls.builtins.diagnostics.flake8,
-  -- nls.builtins.diagnostics.eslint.with({command = "eslint_d"}),
+  nls.builtins.diagnostics.eslint.with({command = "eslint_d"}),
+  -- nls.builtins.diagnostics.eslint,
   nls.builtins.code_actions.gitsigns,
 }
 
@@ -20,12 +21,6 @@ function M.setup()
     debounce = 150,
     save_after_format = false,
     sources = sources,
-    -- sources = {
-    --   -- nls.builtins.formatting.stylua,
-    --   -- nls.builtins.diagnostics.shellcheck,
-    --   -- nls.builtins.diagnostics.markdownlint,
-    --   -- nls.builtins.diagnostics.selene,
-    -- },
   })
 end
 

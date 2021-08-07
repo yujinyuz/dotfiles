@@ -27,8 +27,8 @@ wk.setup({
   layout = { height = { min = 1, max = 10 } },
 })
 
--- Blackhole register
-nnoremap({ '_', '"_' })
+-- Prevent accidentally opening ex mode
+nnoremap({ 'Q', '"_' })
 
 -- Create new file
 nnoremap({ '<leader>fn', [[:e %:h<C-z>]] })
@@ -38,7 +38,7 @@ nnoremap({ '<C-l>', [[<Cmd>nohlsearch<CR><Cmd>diffupdate<CR><C-l>]], silent = tr
 -- Make Y work like other upcase commands
 nnoremap({ 'Y', 'y$' })
 -- Buffer Switch
-nnoremap({ '<BS>', '<C-^>' })
+nnoremap({ '<BS>', '<C-^>`"zz' })
 -- Resize splits with arrows
 nnoremap({ '<Up>', '<C-w>+' })
 nnoremap({ '<Down>', '<C-w>-' })
@@ -77,6 +77,9 @@ tnoremap({ '<M-l>', [[<C-\><C-n><C-w>l]] })
 -- Persistent highlights
 nnoremap({ '<leader>ll', [[<Cmd>call matchadd('Visual', '\%'.line('.').'l')<CR>]], silent = true })
 nnoremap({ '<leader>lc', [[<Cmd>call clearmatches()<CR>]], silent = true })
+
+-- nvim-tree
+nnoremap({ '<C-n>', '<Cmd>NvimTreeToggle<CR>' })
 
 wk.register({
   [' '] = 'Find Files',
@@ -119,7 +122,8 @@ wk.register({
     g = { '<Cmd>Neogit<CR>', 'NeoGit' },
     c = { '<Cmd>Telescope git_commits<CR>', 'commits' },
     b = { '<Cmd>Telescope git_branches<CR>', 'branches' },
-    s = { '<Cmd>Telescope git_status<CR>', 'status' },
+    s = { '<Cmd>G<CR>', 'Fugitive' },
+    -- s = { '<Cmd>Telescope git_status<CR>', 'status' },
     d = { '<Cmd>DiffviewOpen<Cr>', 'DiffView' },
     y = { 'Show Permalink' },
   },

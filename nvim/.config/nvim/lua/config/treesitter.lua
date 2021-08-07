@@ -32,9 +32,8 @@ ts_configs.setup({
     -- "json",
     -- "markdown",
   },
-  highlight = { enable = true, use_languagetree = true },
-  indent = { enable = false },
-  context_commentstring = { enable = true },
+  highlight = { enable = true, use_languagetree = true, disable = { 'json' } },
+  indent = { enable = true, disable = { 'python', 'javascript' } },
   incremental_selection = {
     enable = true,
     keymaps = {
@@ -87,6 +86,11 @@ ts_configs.setup({
       goto_previous_start = { ['[m'] = '@function.outer', ['[['] = '@class.outer' },
       goto_previous_end = { ['[M'] = '@function.outer', ['[]'] = '@class.outer' },
     },
+    swap = {
+      enable = true,
+      swap_next = { ['<leader>>'] = '@parameter.inner' },
+      swap_previous = { ['<leader><'] = '@parameter.outer' },
+    },
     lsp_interop = {
       enable = true,
       peek_definition_code = {
@@ -94,4 +98,7 @@ ts_configs.setup({
       },
     },
   },
+  autopairs = { enable = true },
+  context_commentstring = { enable = true },
+  rainbow = { enable = true, extended_mode = true, max_file_lines = 1000},
 })

@@ -1,7 +1,6 @@
 local actions = require('lir.actions')
 local mark_actions = require('lir.mark.actions')
 local clipboard_actions = require('lir.clipboard.actions')
-local xnoremap = vim.keymap.xnoremap
 
 require('lir').setup({
   border = 'single',
@@ -42,16 +41,24 @@ require('lir').setup({
 
 -- use visual mode
 function _G.lirsettings()
-  -- vim.cmd [[setlocal nu rnu]]
   vim.opt_local.number = true
   vim.opt_local.relativenumber = true
-  xnoremap({
+  vim.keymap.xnoremap({
     'J',
     function()
       require('lir.mark.actions').toggle_mark('v')
     end,
     silent = true,
     buffer = true,
+  })
+
+  vim.keymap.nnoremap({
+    'X',
+    function()
+      require('lir.actions').delete()
+    end,
+    silent = true,
+    buffer = true
   })
 end
 

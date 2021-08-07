@@ -1,4 +1,3 @@
--- local lspconfig = require("lspconfig")
 local nvim_lsp = require('lspconfig')
 local utils = require('utils')
 
@@ -10,7 +9,6 @@ local on_attach = function(client, bufnr)
   require('config.lsp.formatting').setup(client, bufnr)
   require('config.lsp.keys').setup(client, bufnr)
   require('config.lsp.completion').setup(client, bufnr)
-  -- require("config.lsp.highlighting").setup(client)
 
   -- TypeScript specific stuff
   if client.name == 'typescript' or client.name == 'tsserver' then
@@ -18,16 +16,34 @@ local on_attach = function(client, bufnr)
   end
 end
 
-local lua_cmd = { '/Users/trafalgar/.local/share/nvim/lspinstall/lua/./sumneko-lua-language-server' }
+local lua_cmd = {vim.env.HOME .. '/.local/share/nvim/lspinstall/lua/./sumneko-lua-language-server' }
 
 local servers = {
   pyright = {},
+  html = {
+    init_options = {
+      provideFormatter = true,
+    },
+    root_dir = require'lspconfig'.util.root_pattern(".git", vim.fn.getcwd()),
+  },
+  cssls = {
+    root_dir = require'lspconfig'.util.root_pattern(".git", vim.fn.getcwd()),
+    init_options = {
+      provideFormatter = true,
+    }
+  },
   ['null-ls'] = {},
   -- sumneko_lua = { { cmd = lua_cmd } },
   sumneko_lua = require('lua-dev').setup({
     lspconfig = { cmd = lua_cmd },
   }),
   tsserver = {},
+  jsonls = {
+    init_options = {
+      provideFormatter = true,
+    },
+    root_dir = require'lspconfig'.util.root_pattern(".git", vim.fn.getcwd()),
+  },
 }
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -39,16 +55,10 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
 require('config.lsp.null-ls').setup()
 
 for server, config in pairs(servers) do
-  if not nvim_lsp[server] then
-    utils.error('Warning ' .. server, 'Lsp Error')
-  end
-
   nvim_lsp[server].setup(vim.tbl_deep_extend('force', {
     on_attach = on_attach,
     capabilities = capabilities,
-    flags = {
-      debounce_text_changes = 150,
-    },
+    flags = { debounce_text_changes = 150 },
   }, config))
 
   local cfg = nvim_lsp[server]

@@ -59,6 +59,7 @@ local plugins = function(use)
       { 'nvim-treesitter/playground', cmd = 'TSHighlightCapturesUnderCursor' },
       { 'nvim-treesitter/nvim-treesitter-textobjects' },
       { 'nvim-treesitter/nvim-treesitter-refactor' },
+      { 'p00f/nvim-ts-rainbow' },
       {
         'windwp/nvim-ts-autotag',
         config = function()
@@ -153,7 +154,10 @@ local plugins = function(use)
     config = function()
       require('config.compe')
     end,
+    wants = {'LuaSnip'},
     requires = {
+      {'L3MON4D3/LuaSnip', config = function() require('config.snippets') end},
+      {'rafamadriz/friendly-snippets'},
       {
         'windwp/nvim-autopairs',
         config = function()
@@ -161,6 +165,16 @@ local plugins = function(use)
         end,
       },
     },
+  })
+
+  use({
+    'L3MON4D3/LuaSnip',
+    config = function()
+      require('config.snippets')
+    end,
+  })
+  use({
+    'rafamadriz/friendly-snippets'
   })
 
   use({
@@ -179,7 +193,7 @@ local plugins = function(use)
       end,
       cmd = { 'UndotreeToggle' },
     },
-    'ludovicchabant/vim-gutentags',
+    { 'ludovicchabant/vim-gutentags', event = 'BufRead' },
     {
       'wincent/ferret',
       setup = function()
@@ -187,8 +201,6 @@ local plugins = function(use)
       end,
       cmd = { 'Ack', 'Lack' },
     },
-    'SirVer/ultisnips',
-    'honza/vim-snippets',
   })
 
   use({
@@ -197,8 +209,6 @@ local plugins = function(use)
     module = 'spectre',
   })
 
-  use({ 'kabouzeid/nvim-lspinstall' })
-  use({ 'glepnir/lspsaga.nvim', cond = disable })
   use({ 'kevinhwang91/nvim-hlslens' })
   use({
     'mfussenegger/nvim-dap',
@@ -240,14 +250,17 @@ local plugins = function(use)
     keys = { '<leader>gy' },
   })
   use({ 'f-person/git-blame.nvim', cmd = { 'GitBlameToggle' } })
+  use({ 'rhysd/committia.vim', ft = { 'commit', 'gitcommit' } })
 
   -- Holiness
   use({
     'tpope/vim-surround',
-    'tpope/vim-fugitive',
+    {'tpope/vim-markdown'},
+    {'tpope/vim-characterize'},
+    { 'tpope/vim-fugitive', event = 'BufRead', cmd = { 'G', 'Git' } },
     'tpope/vim-repeat',
-    'tpope/vim-unimpaired',
-    'tpope/vim-apathy',
+    { 'tpope/vim-unimpaired', event = 'BufRead' },
+    { 'tpope/vim-apathy', event = 'BufRead' },
     'tpope/vim-rsi',
     {
       'tpope/vim-scriptease',
@@ -266,20 +279,20 @@ local plugins = function(use)
     end,
   })
 
-  use({
-    'karb94/neoscroll.nvim',
-    keys = { '<C-u>', '<C-d>', 'gg', 'G' },
-    config = function()
-      require('config.scroll')
-    end,
-    cond = disable,
-  })
+  -- use({
+  --   'karb94/neoscroll.nvim',
+  --   keys = { '<C-u>', '<C-d>', 'gg', 'G' },
+  --   config = function()
+  --     require('config.scroll')
+  --   end,
+  --   cond = disable,
+  -- })
 
   use({
     'kana/vim-textobj-user',
     'kana/vim-textobj-entire', -- [ae]
     'kana/vim-textobj-indent', -- [ai]/[ii]
-    'wakatime/vim-wakatime', -- track usage time using wakatime
+    { 'wakatime/vim-wakatime', event = 'BufRead' }, -- track usage time using wakatime
   })
   use({
     'lewis6991/gitsigns.nvim',
@@ -330,7 +343,7 @@ local plugins = function(use)
     config = function()
       require('rest-nvim').setup()
     end,
-    ft = 'http',
+    ft = { 'http' },
   })
   use({
     '~/Sources/tablea.nvim',
