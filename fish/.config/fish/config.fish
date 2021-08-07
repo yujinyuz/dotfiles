@@ -20,7 +20,11 @@
 set -gx EDITOR (type -p nvim)
 set -gx LANG en_US.UTF-8
 set -gx MYVIMRC $HOME/.vimrc
-set -gx MANPAGER "sh -c 'col -bx | bat -l man -p'"
+
+# Use neovim as the default man pager. Type :h Man for more info
+set -gx MANPAGER "nvim +Man!"
+set -gx MANWIDTH 999
+
 set -gx XDG_CONFIG_HOME $HOME/.config
 
 contains $HOME/.local/bin $fish_user_paths; or set -Ua fish_user_paths $HOME/.local/bin
