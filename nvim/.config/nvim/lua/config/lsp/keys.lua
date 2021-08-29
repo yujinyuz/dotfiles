@@ -19,6 +19,7 @@ function M.setup(client, bufnr)
           '<Cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>',
           'List Folders',
         },
+        f = { function() require('config.lsp.formatting').toggle() end, 'Toggle Autoformat' }
       },
     },
     x = {
