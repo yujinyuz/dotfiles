@@ -88,6 +88,7 @@ local plugins = function(use)
     },
     cmd = { 'Telescope' },
     module = 'telescope',
+    keys = { '<leader><space>', '<leader>F' },
   })
 
   use({
