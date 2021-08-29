@@ -40,7 +40,7 @@ local make_mapper = function(mode, defaults, opts)
       -- mapping = string.format([[luaeval('require("utils").execute(%d)')]], func_id)
       mapping = string.format([[luaeval('require("utils._keymap_port")._execute(%s)')]], func_id)
     else
-      mapping = string.format([[<cmd>lua vim.keymap._execute(%s)<CR>]], func_id)
+      mapping = string.format([[<Cmd>lua vim.keymap._execute(%s)<CR>]], func_id)
     end
   else
     error('Unexpected type for rhs:' .. tostring(rhs))
