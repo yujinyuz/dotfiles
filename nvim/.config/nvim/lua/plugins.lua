@@ -41,7 +41,7 @@ local plugins = function(use)
     'terrortylor/nvim-comment',
     opt = true,
     wants = 'nvim-ts-context-commentstring',
-    -- keys = { 'gc', 'gcc' },
+    keys = { 'gc', 'gcc' },
     config = function()
       require('config.comments')
     end,
@@ -51,7 +51,7 @@ local plugins = function(use)
     'b3nj5m1n/kommentary',
     opt = true,
     wants = 'nvim-ts-context-commentstring',
-    keys = { 'gc', 'gcc' },
+    -- keys = { 'gc', 'gcc' },
     config = function()
       require('config.comments')
     end,
