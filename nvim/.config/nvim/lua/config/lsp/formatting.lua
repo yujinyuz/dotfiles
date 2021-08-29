@@ -32,7 +32,7 @@ function M.setup(client, buf)
   -- format on save
   if client.resolved_capabilities.document_formatting then
     aug('LspFormat', {
-      { events = { 'BufWritePre' }, command = 'lua require("config.lsp.formatting").format()' },
+      { events = { 'BufWritePre' }, patterns = {'*'}, command = 'lua require("config.lsp.formatting").format()' },
     })
   end
 end
