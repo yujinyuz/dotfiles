@@ -38,7 +38,7 @@ nnoremap({ '<C-l>', [[<Cmd>nohlsearch<CR><Cmd>diffupdate<CR><C-l>]], silent = tr
 -- Make Y work like other upcase commands
 nnoremap({ 'Y', 'y$' })
 -- Buffer Switch
-nnoremap({ '<BS>', '<C-^>`"zz' })
+nnoremap({ '<BS>', '<C-^>' })
 -- Resize splits with arrows
 nnoremap({ '<Up>', '<C-w>+' })
 nnoremap({ '<Down>', '<C-w>-' })
@@ -78,8 +78,12 @@ tnoremap({ '<M-l>', [[<C-\><C-n><C-w>l]] })
 nnoremap({ '<leader>ll', [[<Cmd>call matchadd('Visual', '\%'.line('.').'l')<CR>]], silent = true })
 nnoremap({ '<leader>lc', [[<Cmd>call clearmatches()<CR>]], silent = true })
 
+cnoremap({ 'w!!', [[:lua require('utils').sudo_write()<CR>]] })
+
 -- nvim-tree
 nnoremap({ '<C-n>', '<Cmd>NvimTreeToggle<CR>' })
+
+-- nnoremap({'<leader><Space>', require('config.telescope').project_files})
 
 wk.register({
   [' '] = 'Find Files',
