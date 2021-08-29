@@ -1,3 +1,5 @@
+" TODO: Port this file to Lua. Though I'm not sure how I'm gonna do the other shits
+
 " Return to last edit position when opening files (You want this!)
 augroup ReturnToLastEditPosition
   autocmd!
@@ -51,7 +53,6 @@ augroup T
   autocmd User TelescopePreviewerLoaded setlocal wrap
   autocmd FileType TelescopePrompt iunmap <C-X><C-A>
   autocmd FileType markdown nmap <buffer> <CR> <Plug>WorkbenchToggleCheckbox
-  autocmd FileType markdown setlocal spell
   autocmd FileType gitcommit setlocal spell
   autocmd BufWinEnter NvimTree setlocal cursorline nowrap signcolumn=no
   autocmd BufWritePost plugins.lua PackerCompile
