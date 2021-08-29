@@ -161,18 +161,15 @@ local plugins = function(use)
   })
 
   use({
-    'hrsh7th/nvim-compe',
+    'hrsh7th/nvim-cmp',
     event = 'InsertEnter',
     opt = true,
-    config = function()
-      require('config.compe')
-    end,
-    wants = { 'LuaSnip' },
     requires = {
-      -- {'hrsh7th/cmp-buffer'},
-      -- {'hrsh7th/cmp-nvim-lua'},
-      -- {'hrsh7th/cmp-nvim-lsp'},
-      -- {'saadparwaiz1/cmp_luasnip'},
+      'hrsh7th/cmp-buffer',
+      'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/cmp-nvim-lua',
+      'hrsh7th/cmp-path',
+      'quangnguyen30192/cmp-nvim-tags',
 
       {
         'L3MON4D3/LuaSnip',
@@ -188,16 +185,9 @@ local plugins = function(use)
         end,
       },
     },
-  })
-
-  use({
-    'L3MON4D3/LuaSnip',
     config = function()
-      require('config.snippets')
+      require('config.cmp')
     end,
-  })
-  use({
-    'rafamadriz/friendly-snippets',
   })
 
   use({
