@@ -1,4 +1,5 @@
 " TODO: Port this file to Lua. Though I'm not sure how I'm gonna do the other shits
+
 " Return to last edit position when opening files (You want this!)
 augroup ReturnToLastEditPosition
   autocmd!
