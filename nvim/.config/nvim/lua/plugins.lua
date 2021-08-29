@@ -38,12 +38,22 @@ local plugins = function(use)
 
   -- Comments
   use({
+    'terrortylor/nvim-comment',
+    opt = true,
+    wants = 'nvim-ts-context-commentstring',
+    -- keys = { 'gc', 'gcc' },
+    config = function()
+      require('config.comments')
+    end,
+    requires = 'JoosepAlviste/nvim-ts-context-commentstring',
+  })
+  use({
     'b3nj5m1n/kommentary',
     opt = true,
     wants = 'nvim-ts-context-commentstring',
     keys = { 'gc', 'gcc' },
     config = function()
-      require('config.kommentary')
+      require('config.comments')
     end,
     requires = 'JoosepAlviste/nvim-ts-context-commentstring',
   })
@@ -137,6 +147,7 @@ local plugins = function(use)
     end,
   })
   use({ 'SidOfc/mkdx', ft = { 'markdown' } })
+  use({ 'rwxrob/vim-pandoc-syntax-simple', ft = { 'markdown' } })
   use({ 'Vimjas/vim-python-pep8-indent', ft = { 'python' } })
 
   -- IDE Stuffs
@@ -148,6 +159,7 @@ local plugins = function(use)
     end,
     cmd = { 'IndentBlanklineToggle' },
   })
+
   use({
     'hrsh7th/nvim-compe',
     event = 'InsertEnter',
@@ -155,10 +167,20 @@ local plugins = function(use)
     config = function()
       require('config.compe')
     end,
-    wants = {'LuaSnip'},
+    wants = { 'LuaSnip' },
     requires = {
-      {'L3MON4D3/LuaSnip', config = function() require('config.snippets') end},
-      {'rafamadriz/friendly-snippets'},
+      -- {'hrsh7th/cmp-buffer'},
+      -- {'hrsh7th/cmp-nvim-lua'},
+      -- {'hrsh7th/cmp-nvim-lsp'},
+      -- {'saadparwaiz1/cmp_luasnip'},
+
+      {
+        'L3MON4D3/LuaSnip',
+        config = function()
+          require('config.snippets')
+        end,
+      },
+      { 'rafamadriz/friendly-snippets' },
       {
         'windwp/nvim-autopairs',
         config = function()
@@ -175,7 +197,7 @@ local plugins = function(use)
     end,
   })
   use({
-    'rafamadriz/friendly-snippets'
+    'rafamadriz/friendly-snippets',
   })
 
   use({
@@ -256,8 +278,8 @@ local plugins = function(use)
   -- Holiness
   use({
     'tpope/vim-surround',
-    {'tpope/vim-markdown'},
-    {'tpope/vim-characterize'},
+    { 'tpope/vim-markdown' },
+    { 'tpope/vim-characterize' },
     { 'tpope/vim-fugitive', event = 'BufRead', cmd = { 'G', 'Git' } },
     'tpope/vim-repeat',
     { 'tpope/vim-unimpaired', event = 'BufRead' },
