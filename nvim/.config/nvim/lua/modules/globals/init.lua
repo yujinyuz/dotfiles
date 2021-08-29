@@ -1,2 +1,0 @@
--- `vim.opt`
--- require('modules.globals.opt')
