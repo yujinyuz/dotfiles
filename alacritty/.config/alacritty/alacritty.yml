@@ -184,7 +184,7 @@ schemes:
       - { index: 16, color: "#e78a4e" }
       - { index: 17, color: "#c14a4a" }
 
-colors: *tokyonight-day
+colors: *tokyonight-storm
 
 key_bindings:
   - { key: N, mods: Command|Shift, action: SpawnNewInstance }
