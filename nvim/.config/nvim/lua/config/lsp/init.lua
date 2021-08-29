@@ -5,7 +5,7 @@ require('config.lsp.diagnostics').setup()
 require('config.lsp.kind').setup()
 
 local on_attach = function(client, bufnr)
-  utils.info(client.name, 'LSP')
+  -- utils.info(client.name, 'LSP')
   require('config.lsp.formatting').setup(client, bufnr)
   require('config.lsp.keys').setup(client, bufnr)
   require('config.lsp.completion').setup(client, bufnr)
