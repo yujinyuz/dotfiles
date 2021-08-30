@@ -2,7 +2,6 @@ local nvim_lsp = require('lspconfig')
 local utils = require('utils')
 
 require('config.lsp.diagnostics').setup()
-require('config.lsp.kind').setup()
 
 local on_attach = function(client, bufnr)
   -- utils.info(client.name, 'LSP')

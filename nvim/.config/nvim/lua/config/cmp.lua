@@ -1,4 +1,5 @@
 local cmp = require('cmp')
+local utils = require('utils')
 
 local check_back_space = function()
   local col = vim.fn.col('.') - 1
@@ -27,14 +28,11 @@ cmp.setup({
     }),
     ['<Tab>'] = function(fallback)
       if vim.fn.pumvisible() == 1 then
-        vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-n>', true, true, true), 'n')
+        vim.fn.feedkeys(utils.t('<C-n>'), 'n')
       elseif require('luasnip').expand_or_jumpable() then
-        vim.fn.feedkeys(
-          vim.api.nvim_replace_termcodes('<Cmd>lua require("luasnip").jump(1)<CR>', true, true, true),
-          'n'
-        )
+        vim.fn.feedkeys(utils.t('<Cmd>lua require("luasnip").jump(1)<CR>'), 'n')
       elseif check_back_space() then
-        vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Tab>', true, true, true), 'n')
+        vim.fn.feedkeys(utils.t('<Tab>'), 'n')
       else
         fallback()
       end
@@ -48,5 +46,28 @@ cmp.setup({
     { name = 'path' },
     { name = 'nvim_lua' },
   },
-})
+  formatting = {
+    format = function(entry, vim_item)
+      local icon = require('config.lsp.kind').icons[vim_item.kind]
+      local kind
 
+      if icon then
+        kind = icon .. ' ' .. vim_item.kind
+      else
+        kind = vim_item.kind
+      end
+
+      vim_item.kind = require('config.lsp.kind').icons[vim_item.kind] .. ' ' .. vim_item.kind
+      vim_item.menu = ({
+        nvim_lsp = '[LSP]',
+        tags = '[Tags]',
+        luasnip = '[LuaSnip]',
+        buffer = '[Buffer]',
+        path = '[Path]',
+        nvim_lua = '[Lua]',
+      })[entry.source.name]
+
+      return vim_item
+    end,
+  },
+})
