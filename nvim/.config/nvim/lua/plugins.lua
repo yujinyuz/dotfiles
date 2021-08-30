@@ -112,7 +112,7 @@ local plugins = function(use)
   use({
     'tamago324/lir.nvim',
     module = 'lir',
-    setup = function()
+    config = function()
       require('config.lir')
     end,
   })
@@ -170,14 +170,6 @@ local plugins = function(use)
       'hrsh7th/cmp-nvim-lua',
       'hrsh7th/cmp-path',
       'quangnguyen30192/cmp-nvim-tags',
-
-      {
-        'L3MON4D3/LuaSnip',
-        config = function()
-          require('config.snippets')
-        end,
-      },
-      { 'rafamadriz/friendly-snippets' },
       {
         'windwp/nvim-autopairs',
         config = function()
@@ -188,6 +180,17 @@ local plugins = function(use)
     config = function()
       require('config.cmp')
     end,
+  })
+
+  use({
+    'L3MON4D3/LuaSnip',
+    event = 'InsertEnter',
+    config = function()
+      require('config.snippets')
+    end,
+    requires = {
+      'rafamadriz/friendly-snippets',
+    },
   })
 
   use({
