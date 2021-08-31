@@ -23,3 +23,6 @@ require('utils')
 require('options')
 -- Load plugins last
 require('plugins')
+
+-- Faster (?) startup time
+require('impatient')

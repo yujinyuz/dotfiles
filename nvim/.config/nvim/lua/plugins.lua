@@ -1,3 +1,5 @@
+-- https://github.com/wbthomason/packer.nvim/issues/180#issuecomment-871634199
+vim.fn.setenv('MACOSX_DEPLOYMENT_TARGET', '10.15')
 local packer_exists = pcall(vim.cmd, [[packadd packer.nvim]])
 
 if not packer_exists then
@@ -14,6 +16,7 @@ local plugins = function(use)
   end
 
   use({ 'wbthomason/packer.nvim', opt = true })
+  use({ 'lewis6991/impatient.nvim', rocks = 'mpack' })
 
   use({
     { 'nvim-lua/popup.nvim', module = 'popup' },
@@ -297,7 +300,8 @@ local plugins = function(use)
 
   use({
     'karb94/neoscroll.nvim',
-    keys = { '<C-u>', '<C-d>', 'gg', 'G' },
+    -- keys = { '<C-u>', '<C-d>', 'gg', 'G' },
+    opt = true,
     config = function()
       require('config.scroll')
     end,
