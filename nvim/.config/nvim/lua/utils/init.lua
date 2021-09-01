@@ -88,16 +88,13 @@ end
 -- @param [opt] silent
 -- @usage require("utils").toggle('relativenumber')
 function M.toggle(option, silent)
-  local info = vim.api.nvim_get_option_info(option)
-  local scopes = { buf = 'bo', win = 'wo', global = 'o' }
-  local scope = scopes[info.scope]
-  local options = vim[scope]
-  options[option] = not options[option]
+  vim.opt_local[option] = not vim.opt_local[option]:get()
+
   if silent ~= true then
-    if options[option] then
-      M.info('enabled vim.' .. scope .. '.' .. option, 'Toggle')
+    if vim.opt_local[option]:get() then
+      M.info('enabled vim.opt_local.' .. option, 'Toggle')
     else
-      M.warn('disabled vim.' .. scope .. '.' .. option, 'Toggle')
+      M.warn('disabled vim.opt_local.' .. option, 'Toggle')
     end
   end
 end
@@ -154,7 +151,7 @@ local password = vim.fn.inputsecret("Password: ")
     M.error(out)
     return false
   end
-  -- if print_output then print("\r\n", out) end
+  if print_output then print("\r\n", out) end
   return true
 end
 
