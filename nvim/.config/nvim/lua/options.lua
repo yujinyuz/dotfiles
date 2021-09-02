@@ -1,8 +1,5 @@
 local opt = vim.opt
 
-vim.g.mapleader = ' '
-vim.g.python3_host_prog = os.getenv('PYTHON_3_HOST_PROG')
-
 -- Shift 2 spaces when pressing tab
 opt.tabstop = 2
 -- Shift 2 spaces when pressing < or >
@@ -117,8 +114,9 @@ opt.breakindent = true
 opt.showbreak = string.rep(' ', 3)
 opt.linebreak = true
 
--- opt.lazyredraw = true
+opt.lazyredraw = true
 
 -- Enable 24-bit RGB color
 opt.termguicolors = true
 
+-- opt.switchbuf = 'usetab' -- try to reuse windows/tabs when switching buffers

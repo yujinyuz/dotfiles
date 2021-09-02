@@ -1,4 +1,8 @@
+-- @note: Anything related to globals that are required before neovim is loaded should be in here since
+--        this is a file that gets loaded first when neovim starts
 vim.g.tokyonight_style = 'storm'
+vim.g.mapleader = ' '
+vim.g.python3_host_prog = os.getenv('PYTHON_3_HOST_PROG')
 
 vim.g.loaded_gzip = 1
 vim.g.loaded_zip = 1
