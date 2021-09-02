@@ -28,7 +28,7 @@ function M.setup(client, bufnr)
     },
   }
 
-  if client.name == 'typescript' then
+  if client.name == 'typescript' or client.name == 'tsserver' then
     keymap.c.o = { '<Cmd>:TSLspOrganize<CR>', 'Organize Imports' }
     keymap.c.R = { '<Cmd>:TSLspRenameFile<CR>', 'Rename File' }
   end

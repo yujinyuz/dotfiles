@@ -4,15 +4,12 @@ local utils = require('utils')
 require('config.lsp.diagnostics').setup()
 
 local on_attach = function(client, bufnr)
-  -- utils.info(client.name, 'LSP')
   require('config.lsp.formatting').setup(client, bufnr)
   require('config.lsp.keys').setup(client, bufnr)
   require('config.lsp.completion').setup(client, bufnr)
 
   -- TypeScript specific stuff
-  if client.name == 'typescript' or client.name == 'tsserver' then
-    require('config.lsp.ts-utils').setup(client)
-  end
+  require('config.lsp.ts-utils').setup(client)
 end
 
 local lua_cmd = {vim.env.HOME .. '/.local/share/nvim/lspinstall/lua/./sumneko-lua-language-server' }
