@@ -12,9 +12,9 @@
 --    @repository https://github.com/yujinyuz/dotfiles
 --    @descriptionn Collection of dotfiles gathered across different dotfiles repos
 
-vim.g.tokyonight_style = 'storm'
 
-
+-- Load globals
+require('globals')
 -- Make `vim.keymap` available
 require('utils._keymap_port')
 -- Load global helpers
