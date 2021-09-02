@@ -49,22 +49,22 @@ cmp.setup({
   },
   sources = {
     { name = 'nvim_lsp' },
+    { name = 'nvim_lua' },
     { name = 'tags' },
-    { name = 'luasnip' },
     { name = 'buffer' },
     { name = 'path' },
-    { name = 'nvim_lua' },
+    { name = 'luasnip' },
   },
   formatting = {
     format = function(entry, vim_item)
       vim_item.kind = require('config.lsp.kind').icons[vim_item.kind] .. ' ' .. vim_item.kind
       vim_item.menu = ({
         nvim_lsp = '[LSP]',
+        nvim_lua = '[Lua]',
         tags = '[Tags]',
-        luasnip = '[LuaSnip]',
         buffer = '[Buffer]',
         path = '[Path]',
-        nvim_lua = '[Lua]',
+        luasnip = '[LuaSnip]',
       })[entry.source.name]
 
       return vim_item
