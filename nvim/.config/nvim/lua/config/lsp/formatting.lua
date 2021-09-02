@@ -24,6 +24,8 @@ function M.setup(client, buf)
   local nls = require('config.lsp.null-ls')
 
   local enable = false
+
+  -- If both null-ls and X-LSP server have formatters, let's disable X-LSP's document_formatting
   if nls.has_formatter(ft) then
     enable = client.name == 'null-ls'
   end
