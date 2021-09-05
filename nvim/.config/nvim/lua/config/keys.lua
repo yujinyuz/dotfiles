@@ -140,9 +140,10 @@ wk.register({
     p = {
       name = '+packer',
       p = { '<Cmd>PackerSync<CR>', 'Sync' },
+      f = { '<Cmd>PackerProfile<CR>', 'Profile' },
       s = { '<Cmd>PackerStatus<CR>', 'Status' },
       i = { '<Cmd>PackerInstall<CR>', 'Install' },
-      c = { '<Cmd>PackerCompile<CR>', 'Compile' },
+      c = { '<Cmd>PackerCompile profile=true<CR>', 'Compile' },
     },
   },
   l = {},
