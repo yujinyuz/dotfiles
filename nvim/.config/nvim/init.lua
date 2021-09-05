@@ -12,7 +12,6 @@
 --    @repository https://github.com/yujinyuz/dotfiles
 --    @descriptionn Collection of dotfiles gathered across different dotfiles repos
 
-
 -- Load globals
 require('globals')
 -- Make `vim.keymap` available
@@ -25,4 +24,4 @@ require('options')
 require('plugins')
 
 -- Faster (?) startup time
-require('impatient')
+require('impatient').enable_profile()
