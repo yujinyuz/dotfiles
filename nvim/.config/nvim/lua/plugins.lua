@@ -73,6 +73,7 @@ local plugins = function(use)
       { 'nvim-treesitter/nvim-treesitter-textobjects' },
       { 'nvim-treesitter/nvim-treesitter-refactor' },
       { 'p00f/nvim-ts-rainbow' },
+      { 'RRethy/nvim-treesitter-textsubjects' },
       {
         'windwp/nvim-ts-autotag',
         config = function()

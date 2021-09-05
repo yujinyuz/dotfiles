@@ -98,6 +98,13 @@ ts_configs.setup({
       },
     },
   },
+  textsubjects = {
+    enable = true,
+    keymaps = {
+      ['.'] = 'textsubjects-smart',
+      [';'] = 'textsubjects-container-outer',
+    },
+  },
   autopairs = { enable = true },
   context_commentstring = { enable = true },
   rainbow = { enable = true, extended_mode = true, max_file_lines = 1000},
