@@ -6,20 +6,67 @@ function M.setup(client, bufnr)
   local keymap = {
     c = {
       name = '+code',
-      r = { function() vim.lsp.buf.rename() end, 'Rename' },
-      a = { function() vim.lsp.buf.code_action() end, 'Code Action' },
-      d = { function() vim.lsp.diagnostic.show_line_diagnostics({focusable = false}) end, 'Line Diagnostics' },
+      r = {
+        function()
+          vim.lsp.buf.rename()
+        end,
+        'Rename',
+      },
+      a = {
+        function()
+          vim.lsp.buf.code_action()
+        end,
+        'Code Action',
+      },
+      d = {
+        function()
+          vim.lsp.diagnostic.show_line_diagnostics({ focusable = false })
+        end,
+        'Line Diagnostics',
+      },
       l = {
         name = '+lsp',
-        c = { function() require('utils').lsp_config() end, 'Lsp Config' },
+        c = {
+          function()
+            require('utils').lsp_config()
+          end,
+          'Lsp Config',
+        },
         i = { '<Cmd>LspInfo<CR>', 'Lsp Info' },
-        a = { function() vim.lsp.buf.add_workspace_folder() end, 'Add Folder' },
-        r = { function() vim.lsp.buf.remove_workspace_folder() end, 'Remove Folder' },
+        a = {
+          function()
+            vim.lsp.buf.add_workspace_folder()
+          end,
+          'Add Folder',
+        },
+        r = {
+          function()
+            vim.lsp.buf.remove_workspace_folder()
+          end,
+          'Remove Folder',
+        },
         l = {
           '<Cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>',
           'List Folders',
         },
-        f = { function() require('config.lsp.formatting').toggle() end, 'Toggle Autoformat' }
+        f = {
+          function()
+            require('config.lsp.formatting').toggle()
+          end,
+          'Toggle Autoformat',
+        },
+        s = {
+          name = '+server',
+          r = {
+            function()
+              vim.cmd([[LspStop]])
+              vim.defer_fn(function()
+                vim.cmd([[LspStart]])
+              end, 0)
+            end,
+            'Restart Server',
+          },
+        },
       },
     },
     x = {
