@@ -12,7 +12,7 @@ local on_attach = function(client, bufnr)
   require('config.lsp.ts-utils').setup(client)
 end
 
-local lua_cmd = {vim.env.HOME .. '/.local/share/nvim/lspinstall/lua/./sumneko-lua-language-server' }
+local lua_cmd = { vim.env.HOME .. '/.local/share/nvim/lspinstall/lua/./sumneko-lua-language-server' }
 
 local servers = {
   pyright = {},
@@ -20,15 +20,17 @@ local servers = {
     init_options = {
       provideFormatter = true,
     },
-    root_dir = require'lspconfig'.util.root_pattern(".git", vim.fn.getcwd()),
+    root_dir = require('lspconfig').util.root_pattern('.git', vim.fn.getcwd()),
   },
   cssls = {
-    root_dir = require'lspconfig'.util.root_pattern(".git", vim.fn.getcwd()),
+    root_dir = require('lspconfig').util.root_pattern('.git', vim.fn.getcwd()),
     init_options = {
       provideFormatter = true,
-    }
+    },
   },
-  ['null-ls'] = {},
+  ['null-ls'] = {
+    root_dir = require('lspconfig').util.root_pattern('.git', vim.fn.getcwd()),
+  },
   -- sumneko_lua = { { cmd = lua_cmd } },
   sumneko_lua = require('lua-dev').setup({
     lspconfig = { cmd = lua_cmd },
@@ -38,7 +40,7 @@ local servers = {
     init_options = {
       provideFormatter = true,
     },
-    root_dir = require'lspconfig'.util.root_pattern(".git", vim.fn.getcwd()),
+    root_dir = require('lspconfig').util.root_pattern('.git', vim.fn.getcwd()),
   },
 }
 
@@ -56,7 +58,7 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
     'documentation',
     'detail',
     'additionalTextEdits',
-  }
+  },
 }
 
 require('config.lsp.null-ls').setup()
@@ -72,5 +74,4 @@ for server, config in pairs(servers) do
   if not (cfg and cfg.cmd and vim.fn.executable(cfg.cmd[1]) == 1) then
     utils.error(server .. ': cmd not found: ' .. vim.inspect(cfg.cmd))
   end
-  -- end
 end
