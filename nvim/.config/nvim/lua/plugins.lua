@@ -26,9 +26,6 @@ local plugins = function(use)
   -- LSP Stuffs
   use({
     'neovim/nvim-lspconfig',
-    opt = true,
-    event = 'BufReadPre',
-    wants = { 'nvim-lsp-ts-utils', 'null-ls.nvim', 'lua-dev.nvim' },
     config = function()
       require('config.lsp')
     end,
@@ -52,9 +49,6 @@ local plugins = function(use)
   })
   use({
     'b3nj5m1n/kommentary',
-    opt = true,
-    wants = 'nvim-ts-context-commentstring',
-    keys = { 'gc', 'gcc' },
     config = function()
       require('config.comments')
     end,
@@ -100,9 +94,6 @@ local plugins = function(use)
     requires = {
       { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
     },
-    cmd = { 'Telescope' },
-    module = 'telescope',
-    keys = { '<leader><space>', '<leader>F' },
   })
 
   use({
@@ -115,7 +106,6 @@ local plugins = function(use)
 
   use({
     'tamago324/lir.nvim',
-    module = 'lir',
     config = function()
       require('config.lir')
     end,
@@ -166,8 +156,6 @@ local plugins = function(use)
 
   use({
     'hrsh7th/nvim-cmp',
-    event = 'InsertEnter',
-    opt = true,
     requires = {
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-nvim-lsp',
@@ -250,6 +238,7 @@ local plugins = function(use)
   -- Git stuffs
   use({
     'TimUntersberger/neogit',
+    opt = true,
     config = function()
       require('config.neogit')
     end,
@@ -257,7 +246,6 @@ local plugins = function(use)
     requires = {
       {
         'sindrets/diffview.nvim',
-        opt = true,
         cmd = { 'DiffviewOpen', 'DiffviewClose', 'DiffviewToggleFiles', 'DiffviewFocusFiles' },
       },
     },
@@ -315,11 +303,9 @@ local plugins = function(use)
   })
 
   use({
-    'kana/vim-textobj-user',
-    'kana/vim-textobj-entire', -- [ae]
-    'kana/vim-textobj-indent', -- [ai]/[ii]
-    { 'wakatime/vim-wakatime', event = 'BufRead' }, -- track usage time using wakatime
+    'wakatime/vim-wakatime',
   })
+
   use({
     'lewis6991/gitsigns.nvim',
     event = 'BufReadPre',
