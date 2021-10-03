@@ -9,6 +9,7 @@ window:
     x: 0
     y: 0
   dynamic_padding: true # Spread additional padding evenly around the terminal content.
+  dynamic_title: false
   startup_mode:
     Maximized
     # Windowed
