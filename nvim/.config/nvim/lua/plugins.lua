@@ -303,6 +303,10 @@ local plugins = function(use)
   })
 
   use({
+    'nathom/filetype.nvim',
+  })
+
+  use({
     'wakatime/vim-wakatime',
   })
 
