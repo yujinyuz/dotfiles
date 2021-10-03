@@ -2,6 +2,7 @@ local nnoremap = vim.keymap.nnoremap
 local cnoremap = vim.keymap.cnoremap
 local xnoremap = vim.keymap.xnoremap
 local tnoremap = vim.keymap.tnoremap
+local inoremap = vim.keymap.inoremap
 local nmap = vim.keymap.nmap
 local vmap = vim.keymap.vmap
 
@@ -79,6 +80,10 @@ nnoremap({ '<leader>ll', [[<Cmd>call matchadd('Visual', '\%'.line('.').'l')<CR>]
 nnoremap({ '<leader>lc', [[<Cmd>call clearmatches()<CR>]], silent = true })
 
 cnoremap({ 'w!!', [[:lua require('utils').sudo_write()<CR>]] })
+
+-- Make undoable
+inoremap({ '<C-w>', '<C-g>u<C-w>' })
+inoremap({ '<C-u>', '<C-g>u<C-u>' })
 
 -- nvim-tree
 nnoremap({ '<C-n>', '<Cmd>NvimTreeToggle<CR>' })
