@@ -119,4 +119,7 @@ opt.lazyredraw = true
 -- Enable 24-bit RGB color
 opt.termguicolors = true
 
+-- Do not highlight on long lines
+opt.synmaxcol = 512
+
 -- opt.switchbuf = 'usetab' -- try to reuse windows/tabs when switching buffers
