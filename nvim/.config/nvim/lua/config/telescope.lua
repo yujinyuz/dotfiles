@@ -10,7 +10,7 @@ local mappings = {
   ['<C-k>'] = actions.move_selection_previous,
 
   ['<Esc>'] = actions.close,
-  ['<C-q>'] = actions.send_to_qflist + actions.open_qflist,
+  ['<C-q>'] = actions.smart_send_to_qflist + actions.open_qflist,
 
   ['<C-s>'] = actions.select_horizontal,
   ['<C-x>'] = actions.select_horizontal,
@@ -83,6 +83,6 @@ M.live_grep = function(opts)
 end
 
 vim.keymap.nnoremap({ '<leader><Space>', M.project_files })
-vim.keymap.nnoremap({ '<leader>F', M.live_grep })
+-- vim.keymap.nnoremap({ '<leader>F', M.live_grep })
 
 return M
