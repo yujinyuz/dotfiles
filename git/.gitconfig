@@ -14,7 +14,6 @@
 	cm = commit -m
 	co = checkout
 	contributors = shortlog --summary --numbered
-	ctags = !.git/hooks/ctags
 	d = difftool
 	dl = !git ll -1
 	; Show what files changed in current branch
@@ -49,10 +48,11 @@
 	staged = diff --cached --ignore-submodules=dirty
 	unpushed = "cherry -v"
 	unstage = "restore --staged ."
-	wc = whatchanged
 	wip = "!git add . && git commit -m '[WIP] Just reset via git reset HEAD~1'"
   ; https://stackoverflow.com/a/62303/3788603
 	l = log --reverse --no-merges --stat @{1}..
+	; Diff changes against last pull
+	lcrev = log --reverse --no-merges --stat @{1}..
 [core]
 	excludesfile = ~/.gitignoreglobal
 	; S = chop long lines (rather than wrap them onto next line)
