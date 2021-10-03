@@ -10,7 +10,7 @@
 --    @author yujinyuz
 --    @gitHub https://github.com/yujinyuz
 --    @repository https://github.com/yujinyuz/dotfiles
---    @descriptionn Collection of dotfiles gathered across different dotfiles repos
+--    @description Collection of dotfiles gathered across different dotfiles repos
 
 -- Load globals
 require('globals')
@@ -18,10 +18,10 @@ require('globals')
 require('utils._keymap_port')
 -- Load global helpers
 require('utils')
+-- Faster (?) startup time
+require('impatient')
+require('packer_compiled')
 -- Load options
 require('options')
 -- Load plugins last
 require('plugins')
-
--- Faster (?) startup time
-require('impatient').enable_profile()
