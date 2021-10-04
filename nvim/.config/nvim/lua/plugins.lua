@@ -19,8 +19,8 @@ local plugins = function(use)
   use({ 'lewis6991/impatient.nvim', rocks = 'mpack' })
 
   use({
-    { 'nvim-lua/popup.nvim', module = 'popup' },
-    { 'nvim-lua/plenary.nvim', module = 'plenary' },
+    { 'nvim-lua/popup.nvim' },
+    { 'nvim-lua/plenary.nvim' },
   })
 
   -- LSP Stuffs
@@ -80,6 +80,7 @@ local plugins = function(use)
   -- File management
   use({
     'camspiers/snap',
+    opt = true,
     event = 'VimEnter',
     config = function()
       require('config.snap')
@@ -101,7 +102,7 @@ local plugins = function(use)
     config = function()
       require('config.tree')
     end,
-    cmd = { 'NvimTreeToggle' },
+    -- cmd = { 'NvimTreeToggle' },
   })
 
   use({
@@ -161,6 +162,7 @@ local plugins = function(use)
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-nvim-lua',
       'hrsh7th/cmp-path',
+      'hrsh7th/cmp-calc',
       'quangnguyen30192/cmp-nvim-tags',
       {
         'windwp/nvim-autopairs',
@@ -184,10 +186,18 @@ local plugins = function(use)
       'rafamadriz/friendly-snippets',
     },
   })
+  use({
+    'famiu/feline.nvim',
+    event = 'VimEnter',
+    config = function()
+      require('config.statusline')
+    end,
+  })
 
   use({
     'hoob3rt/lualine.nvim',
-    event = 'VimEnter',
+    opt = true,
+    -- event = 'VimEnter',
     config = function()
       require('config.lualine')
     end,
@@ -268,14 +278,15 @@ local plugins = function(use)
 
   -- Holiness
   use({
-    'tpope/vim-surround',
-    { 'tpope/vim-markdown' },
+    { 'tpope/vim-surround' },
+    { 'tpope/vim-markdown', ft = { 'markdown' } },
     { 'tpope/vim-characterize' },
     { 'tpope/vim-fugitive', event = 'BufRead', cmd = { 'G', 'Git' } },
-    'tpope/vim-repeat',
+    { 'tpope/vim-repeat' },
     { 'tpope/vim-unimpaired', event = 'BufRead' },
     { 'tpope/vim-apathy', event = 'BufRead' },
-    'tpope/vim-rsi',
+    { 'tpope/vim-rsi' },
+    { 'tpope/vim-eunuch', opt = true, cmd = { 'Delete', 'Move', 'Rename' } },
     {
       'tpope/vim-scriptease',
       opt = true,
@@ -287,7 +298,7 @@ local plugins = function(use)
   -- Misc
   use({
     'folke/which-key.nvim',
-    event = 'VimEnter',
+    -- event = 'VimEnter',
     config = function()
       require('config.keys')
     end,
@@ -308,11 +319,12 @@ local plugins = function(use)
 
   use({
     'wakatime/vim-wakatime',
+    event = 'BufReadPre',
   })
 
   use({
     'lewis6991/gitsigns.nvim',
-    event = 'BufReadPre',
+    opt = true,
     config = function()
       require('config.gitsigns')
     end,
