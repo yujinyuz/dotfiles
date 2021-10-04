@@ -33,7 +33,7 @@ ts_configs.setup({
     -- "markdown",
   },
   highlight = { enable = true, use_languagetree = true, disable = { 'json' } },
-  indent = { enable = true, disable = { 'python', 'javascript' } },
+  indent = { enable = true, disable = { 'python' } },
   incremental_selection = {
     enable = true,
     keymaps = {
@@ -107,5 +107,5 @@ ts_configs.setup({
   },
   autopairs = { enable = true },
   context_commentstring = { enable = true },
-  rainbow = { enable = true, extended_mode = true, max_file_lines = 1000},
+  rainbow = { enable = true, extended_mode = true, max_file_lines = 1000 },
 })
