@@ -23,12 +23,12 @@ cmp.setup({
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<CR>'] = cmp.mapping.confirm({
-      behavior = cmp.ConfirmBehavior.Insert,
-      select = true,
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = false, -- If I press enter, I don't want to select anything. Just create a new line
     }),
     ['<Tab>'] = function(fallback)
-      if vim.fn.pumvisible() == 1 then
-        vim.fn.feedkeys(utils.t('<C-n>'), 'n')
+      if cmp.visible() then
+        cmp.select_next_item()
       elseif require('luasnip').expand_or_jumpable() then
         vim.fn.feedkeys(utils.t('<Cmd>lua require("luasnip").jump(1)<CR>'), 'n')
       elseif check_back_space() then
@@ -38,8 +38,8 @@ cmp.setup({
       end
     end,
     ['<S-Tab>'] = function(fallback)
-      if vim.fn.pumvisible() == 1 then
-        vim.fn.feedkeys(utils.t('<C-p>'), 'n')
+      if cmp.visible() then
+        cmp.select_prev_item()
       elseif require('luasnip').jumpable(-1) then
         vim.fn.feedkeys(utils.t('<Cmd>lua require("luasnip").jump(-1)<CR>'), 'n')
       else
@@ -49,11 +49,9 @@ cmp.setup({
   },
   sources = {
     { name = 'nvim_lsp' },
-    { name = 'nvim_lua' },
     { name = 'tags' },
     { name = 'buffer' },
     { name = 'path' },
-    { name = 'luasnip' },
   },
   formatting = {
     format = function(entry, vim_item)
@@ -70,6 +68,7 @@ cmp.setup({
         buffer = '[Buffer]',
         path = '[Path]',
         luasnip = '[LuaSnip]',
+        calc = '[Calc]',
       })[entry.source.name]
 
       return vim_item
