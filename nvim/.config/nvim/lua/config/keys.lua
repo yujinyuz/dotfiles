@@ -93,15 +93,9 @@ nnoremap({ '<C-n>', '<Cmd>NvimTreeToggle<CR>' })
 wk.register({
   [' '] = 'Find Files',
   ['/'] = {
-    function()
-      require('lir.float').toggle('.')
-    end,
     'Browse Files',
   },
   ['.'] = {
-    function()
-      require('lir.float').toggle()
-    end,
     'Browse Files Related to Current File',
   },
   [']'] = {
