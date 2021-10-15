@@ -55,5 +55,10 @@ augroup T
   autocmd FileType markdown nmap <buffer> <CR> <Plug>WorkbenchToggleCheckbox
   autocmd FileType gitcommit setlocal spell
   autocmd BufWinEnter NvimTree setlocal cursorline nowrap signcolumn=no
-  autocmd BufWritePost plugins.lua PackerCompile
+augroup END
+
+
+augroup FTDetect
+  autocmd!
+  autocmd BufNewFile,BufRead *.env*,*.template setf conf
 augroup END
