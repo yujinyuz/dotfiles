@@ -3,7 +3,6 @@ local mark_actions = require('lir.mark.actions')
 local clipboard_actions = require('lir.clipboard.actions')
 
 require('lir').setup({
-  border = 'single',
   show_hidden_files = true,
   devicons_enable = true,
   mappings = {
@@ -35,6 +34,11 @@ require('lir').setup({
   },
   float = {
     winblend = 10,
+    win_opts = function()
+      return {
+        border = "rounded",
+      }
+    end,
   },
   hide_cursor = false,
 })
@@ -64,4 +68,21 @@ end
 
 aug('LirConfig', {
   { events = { 'FileType' }, patterns = { 'lir' }, command = 'lua lirsettings()' },
+})
+
+
+vim.keymap.nnoremap({
+  '<leader>.',
+  function()
+    require('lir.float').toggle()
+  end,
+  silent = true,
+})
+
+vim.keymap.nnoremap({
+  '<leader>/',
+  function()
+    require('lir.float').toggle('.')
+  end,
+  silent = true,
 })
