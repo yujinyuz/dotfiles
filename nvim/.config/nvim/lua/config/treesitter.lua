@@ -106,6 +106,6 @@ ts_configs.setup({
     },
   },
   autopairs = { enable = true },
-  context_commentstring = { enable = true },
+  context_commentstring = { enable = true, enable_autocmd = false },
   rainbow = { enable = true, extended_mode = true, max_file_lines = 1000 },
 })

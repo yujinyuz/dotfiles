@@ -5,7 +5,8 @@ local packer_exists = pcall(vim.cmd, [[packadd packer.nvim]])
 if not packer_exists then
   local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/opt/packer.nvim'
   print('Downloading packer.nvim...')
-  vim.fn.system(string.format('git clone %s %s', 'https://github.com/wbthomason/packer.nvim', install_path))
+  vim.fn.system(string.format('git clone %s %s --depth 1', 'https://github.com/wbthomason/packer.nvim', install_path))
+  vim.cmd([[packadd packer.nvim]])
 end
 
 local packer = require('packer')
@@ -89,6 +90,7 @@ local plugins = function(use)
 
   use({
     'kyazdani42/nvim-tree.lua',
+    opt = true,
     config = function()
       require('config.tree')
     end,
@@ -109,7 +111,6 @@ local plugins = function(use)
       require('config.theme')
     end,
   })
-  use({ 'eddyekofo94/gruvbox-flat.nvim', opt = true })
   use({
     'norcalli/nvim-colorizer.lua',
     event = 'BufReadPre',
@@ -146,6 +147,13 @@ local plugins = function(use)
   })
 
   use({
+    'lukas-reineke/headlines.nvim',
+    config = function()
+      require('headlines').setup()
+    end,
+  })
+
+  use({
     'hrsh7th/nvim-cmp',
     requires = {
       'hrsh7th/cmp-buffer',
@@ -176,20 +184,13 @@ local plugins = function(use)
       'rafamadriz/friendly-snippets',
     },
   })
-  use({
-    'famiu/feline.nvim',
-    event = 'VimEnter',
-    config = function()
-      require('config.statusline')
-    end,
-  })
 
   use({
     'hoob3rt/lualine.nvim',
-    opt = true,
-    -- event = 'VimEnter',
+    -- opt = true,
+    event = 'VimEnter',
     config = function()
-      require('config.lualine')
+      require('config.statusline')
     end,
   })
 
