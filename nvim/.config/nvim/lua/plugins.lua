@@ -36,6 +36,7 @@ local plugins = function(use)
       'folke/lua-dev.nvim',
     },
   })
+  use({ 'williamboman/nvim-lsp-installer' })
 
   -- Comments
   use({
