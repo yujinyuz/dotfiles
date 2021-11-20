@@ -1,4 +1,5 @@
 local actions = require('telescope.actions')
+local previewers = require('telescope.previewers')
 
 -- Change mappings because of memory muscle from fzf
 local mappings = {
@@ -18,6 +19,26 @@ local mappings = {
   ['<C-t>'] = actions.select_tab,
 }
 
+local _bad = { '.*%.csv', '.*%.min.js' }
+local bad_files = function(filepath)
+  for _, v in ipairs(_bad) do
+    if filepath:match(v) then
+      return false
+    end
+  end
+
+  return true
+end
+
+local new_maker = function(filepath, bufnr, opts)
+  opts = opts or {}
+  if opts.use_ft_detect == nil then
+    opts.use_ft_detect = true
+  end
+  opts.use_ft_detect = opts.use_ft_detect == false and false or bad_files(filepath)
+  previewers.buffer_previewer_maker(filepath, bufnr, opts)
+end
+
 require('telescope').setup({
   defaults = {
     prompt_prefix = '❯ ',
@@ -29,8 +50,8 @@ require('telescope').setup({
       height = 0.85,
       prompt_position = 'top',
     },
-
     mappings = { i = mappings, n = mappings },
+    buffer_previewer_maker = new_maker,
   },
   extensions = {
     fzf = {
@@ -40,7 +61,6 @@ require('telescope').setup({
     },
   },
 })
-
 require('telescope').load_extension('fzf')
 
 local M = {}
@@ -48,18 +68,11 @@ local M = {}
 M.project_files = function(opts)
   opts = opts or {}
 
-  local _ = vim.fn.systemlist('git rev-parse --show-toplevel')[1]
+  local ok = pcall(require('telescope.builtin').git_files, opts)
 
-  if vim.v.shell_error ~= 0 then
-    local client = vim.lsp.get_active_clients()[1]
-    if client then
-      opts.cwd = client.config.root_dir
-    end
+  if not ok then
     require('telescope.builtin').find_files(opts)
-    return
   end
-
-  require('telescope.builtin').git_files(opts)
 end
 
 M.live_grep = function(opts)
@@ -75,7 +88,7 @@ M.live_grep = function(opts)
         '--line-number',
         '--column',
         '--hidden',
-        '--glob=!.git' -- ignore .git folders when doing live grep
+        '--glob=!.git', -- ignore .git folders when doing live grep
       },
     }
 
