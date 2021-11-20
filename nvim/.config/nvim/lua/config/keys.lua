@@ -92,7 +92,7 @@ inoremap({ '<C-u>', '<C-g>u<C-u>' })
 -- nvim-tree
 nnoremap({ '<C-n>', '<Cmd>NvimTreeToggle<CR>' })
 
--- nnoremap({'<leader><Space>', require('config.telescope').project_files})
+nnoremap({ '<localleader>b', '<Cmd>Vista!!<CR>' })
 
 wk.register({
   [' '] = 'Find Files',
@@ -114,6 +114,8 @@ wk.register({
     name = '+buffer',
     ['1'] = { '<Cmd>%bd|e#|bd#<CR>', 'Delete other buffers except this one' },
     b = { '<Cmd>Telescope buffers<CR>', 'Buffer List' },
+    d = { '<Cmd>bdelete<CR>', 'Buffer Delete' },
+    t = { '<Cmd>Vista!!<CR>', 'Buffer Tags' },
   },
   f = {
     name = '+file',
