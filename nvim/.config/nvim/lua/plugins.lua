@@ -190,8 +190,7 @@ local plugins = function(use)
   })
 
   use({
-    'hoob3rt/lualine.nvim',
-    -- opt = true,
+    'nvim-lualine/lualine.nvim',
     event = 'VimEnter',
     config = function()
       require('config.statusline')
