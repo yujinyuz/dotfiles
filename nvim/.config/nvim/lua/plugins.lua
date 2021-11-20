@@ -190,7 +190,7 @@ local plugins = function(use)
 
   use({
     'L3MON4D3/LuaSnip',
-    event = 'InsertEnter',
+    -- event = 'InsertEnter',
     config = function()
       require('config.snippets')
     end,
