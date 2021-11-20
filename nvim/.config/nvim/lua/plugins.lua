@@ -91,11 +91,9 @@ local plugins = function(use)
 
   use({
     'kyazdani42/nvim-tree.lua',
-    opt = true,
     config = function()
       require('config.tree')
     end,
-    -- cmd = { 'NvimTreeToggle' },
   })
 
   use({
