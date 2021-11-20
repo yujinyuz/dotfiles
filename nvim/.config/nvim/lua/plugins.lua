@@ -162,7 +162,10 @@ local plugins = function(use)
       'hrsh7th/cmp-nvim-lua',
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-calc',
+      'lukas-reineke/cmp-rg',
       'quangnguyen30192/cmp-nvim-tags',
+      'octaltree/cmp-look',
+      'lukas-reineke/cmp-under-comparator',
       {
         'windwp/nvim-autopairs',
         config = function()
@@ -174,6 +177,8 @@ local plugins = function(use)
       require('config.cmp')
     end,
   })
+
+  use({ 'onsails/lspkind-nvim' })
 
   use({
     'L3MON4D3/LuaSnip',
