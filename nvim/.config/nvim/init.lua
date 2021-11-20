@@ -20,7 +20,7 @@ require('utils._keymap_port')
 require('utils')
 -- Faster (?) startup time
 require('impatient')
-require('packer_compiled')
+prequire('packer_compiled')
 -- Load options
 require('options')
 -- Load plugins last
