@@ -26,6 +26,10 @@ wk.setup({
   },
   window = { padding = { 0, 0, 0, 0 } },
   layout = { height = { min = 1, max = 10 } },
+  triggers_blacklist = {
+    c = { 'w' },
+    n = { '`' },
+  },
 })
 
 -- Prevent accidentally opening ex mode
