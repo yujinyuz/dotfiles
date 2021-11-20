@@ -134,6 +134,7 @@ local plugins = function(use)
   use({ 'SidOfc/mkdx', ft = { 'markdown' } })
   use({ 'rwxrob/vim-pandoc-syntax-simple', ft = { 'markdown' } })
   use({ 'Vimjas/vim-python-pep8-indent', ft = { 'python' } })
+  use({ 'michaeljsmith/vim-indent-object' })
 
   -- IDE Stuffs
   use({
@@ -149,6 +150,15 @@ local plugins = function(use)
     'lukas-reineke/headlines.nvim',
     config = function()
       require('headlines').setup()
+    end,
+  })
+
+  use({ 'liuchengxu/vista.vim' })
+
+  use({
+    'rmagatti/goto-preview',
+    config = function()
+      require('config.preview')
     end,
   })
 
@@ -272,10 +282,11 @@ local plugins = function(use)
 
   -- Holiness
   use({
+    { 'tpope/vim-sleuth' },
     { 'tpope/vim-surround' },
     { 'tpope/vim-markdown', ft = { 'markdown' } },
     { 'tpope/vim-characterize' },
-    { 'tpope/vim-fugitive', event = 'BufRead', cmd = { 'G', 'Git' } },
+    { 'tpope/vim-fugitive' },
     { 'tpope/vim-repeat' },
     { 'tpope/vim-unimpaired', event = 'BufRead' },
     { 'tpope/vim-apathy', event = 'BufRead' },
@@ -318,11 +329,14 @@ local plugins = function(use)
 
   use({
     'lewis6991/gitsigns.nvim',
-    opt = true,
+    requires = {
+      'nvim-lua/plenary.nvim',
+    },
     config = function()
       require('config.gitsigns')
     end,
   })
+
   use({
     'folke/trouble.nvim',
     event = 'BufReadPre',
