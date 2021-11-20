@@ -29,10 +29,10 @@ ts_configs.setup({
     'typescript',
     'vue',
     'yaml',
-    -- "json",
+    'json',
     -- "markdown",
   },
-  highlight = { enable = true, use_languagetree = true, disable = { 'json' } },
+  highlight = { enable = true, use_languagetree = true, disable = { 'json' }, additional_vim_regex_highlighting = false },
   indent = { enable = true, disable = { 'python' } },
   incremental_selection = {
     enable = true,
@@ -109,3 +109,15 @@ ts_configs.setup({
   context_commentstring = { enable = true, enable_autocmd = false },
   rainbow = { enable = true, extended_mode = true, max_file_lines = 1000 },
 })
+
+local parsers = prequire('nvim-treesitter.parsers')
+if parsers then
+  local configs = parsers.get_parser_configs()
+  local ft_str = table.concat(
+    vim.tbl_map(function(ft)
+      return configs[ft].filetype or ft
+    end, parsers.available_parsers()),
+    ','
+  )
+  vim.cmd('autocmd Filetype ' .. ft_str .. ' setlocal foldmethod=expr foldexpr=nvim_treesitter#foldexpr()')
+end
