@@ -9,6 +9,7 @@ require('lir').setup({
     ['l'] = actions.edit,
     ['<CR>'] = actions.edit,
     ['<C-s>'] = actions.split,
+    ['<C-x>'] = actions.split, -- Duplicated because of muscle memory
     ['<C-v>'] = actions.vsplit,
     ['<C-t>'] = actions.tabedit,
 
@@ -66,10 +67,6 @@ function _G.lirsettings()
   })
 end
 
-aug('LirConfig', {
-  { events = { 'FileType' }, patterns = { 'lir' }, command = 'lua lirsettings()' },
-})
-
 
 vim.keymap.nnoremap({
   '<leader>.',
@@ -86,3 +83,10 @@ vim.keymap.nnoremap({
   end,
   silent = true,
 })
+
+
+aug('LirConfig', {
+  { events = { 'FileType' }, patterns = { 'lir' }, command = 'lua lirsettings()' },
+})
+
+
