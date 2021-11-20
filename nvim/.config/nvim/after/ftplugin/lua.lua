@@ -5,7 +5,7 @@ require('cmp').setup.buffer({
   sources = {
     { name = 'nvim_lsp' },
     { name = 'nvim_lua' },
-    { name = 'tags' },
+    { name = 'rg' },
     { name = 'path' },
   },
 })
