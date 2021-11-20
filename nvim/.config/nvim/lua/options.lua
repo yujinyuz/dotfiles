@@ -99,16 +99,16 @@ opt.wildcharm = 26 -- Equivalent of <C-z>
 opt.wildmode = { 'longest', 'full' }
 opt.wildoptions = 'pum'
 
--- opt.foldlevel = 99
+-- Don't open folds by default
 opt.foldlevelstart = 99
 opt.foldmethod = 'indent'
+opt.foldtext = [[substitute(getline(v:foldstart),'\\t',repeat('\ ',&tabstop),'g').'...'.trim(getline(v:foldend))]]
+opt.fillchars = opt.fillchars + "vert:│"
+opt.foldnestmax = 3
+opt.foldminlines = 1
 
--- @note: I never got this to work with treesitter
--- opt.foldmethod = 'expr'
--- opt.foldexpr = 'nvim_treesitter#foldexpr()'
 
--- Enable line wraps. Still testing things out
-opt.wrap = true
+-- Used when `wrap` is enabled
 opt.breakindent = true
 -- Make it so long that lines wrap smartly
 opt.showbreak = string.rep(' ', 3)
