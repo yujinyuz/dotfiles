@@ -34,6 +34,14 @@ _G.dump = function(...)
   return ...
 end
 
+_G.prequire = function (...)
+  local status, lib = pcall(require, ...)
+  if status then
+    return lib
+  end
+  return nil
+end
+
 -- Just a simple wrapper around :autocmd in vim
 -- @field events See :h autocmd-events for a list of events
 -- @field user See :h User
