@@ -1,16 +1,27 @@
 local cmp = require('cmp')
-local utils = require('utils')
+local luasnip = require('luasnip')
 
-local check_back_space = function()
-  local col = vim.fn.col('.') - 1
-  if col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
-    return true
-  else
-    return false
-  end
+local has_words_before = function()
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
 end
 
 cmp.setup({
+  -- completion = {
+  --   autocomplete = false,
+  -- },
+  sorting = {
+    comparators = {
+      cmp.config.compare.offset,
+      cmp.config.compare.exact,
+      cmp.config.compare.score,
+      require('cmp-under-comparator').under, -- for python
+      cmp.config.compare.kind,
+      cmp.config.compare.sort_text,
+      cmp.config.compare.length,
+      cmp.config.compare.order,
+    },
+  },
   snippet = {
     expand = function(args)
       require('luasnip').lsp_expand(args.body)
@@ -26,42 +37,42 @@ cmp.setup({
       behavior = cmp.ConfirmBehavior.Replace,
       select = false, -- If I press enter, I don't want to select anything. Just create a new line
     }),
-    ['<Tab>'] = function(fallback)
+    ['<Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
-      elseif require('luasnip').expand_or_jumpable() then
-        vim.fn.feedkeys(utils.t('<Cmd>lua require("luasnip").jump(1)<CR>'), 'n')
-      elseif check_back_space() then
-        vim.fn.feedkeys(utils.t('<Tab>'), 'n')
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+      elseif has_words_before() then
+        cmp.complete()
       else
         fallback()
       end
-    end,
-    ['<S-Tab>'] = function(fallback)
+    end, {
+      'i',
+      's',
+    }),
+    ['<S-Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
-      elseif require('luasnip').jumpable(-1) then
-        vim.fn.feedkeys(utils.t('<Cmd>lua require("luasnip").jump(-1)<CR>'), 'n')
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
       else
         fallback()
       end
-    end,
+    end, {
+      'i',
+      's',
+    }),
   },
   sources = {
-    { name = 'nvim_lsp' },
-    { name = 'tags' },
-    { name = 'buffer' },
-    { name = 'path' },
+    { name = 'rg', max_item_count = 10, keyword_length = 3 },
+    { name = 'path', max_item_count = 10, keyword_length = 3 },
   },
   formatting = {
-    format = function(entry, vim_item)
-      local icon = require('config.lsp.kind').icons[vim_item.kind]
-
-      if icon then
-        vim_item.kind = icon .. ' ' .. vim_item.kind
-      end
-
-      vim_item.menu = ({
+    format = require('lspkind').cmp_format({
+      with_text = true,
+      max_width = 50,
+      menu = {
         nvim_lsp = '[LSP]',
         nvim_lua = '[Lua]',
         tags = '[Tags]',
@@ -69,9 +80,17 @@ cmp.setup({
         path = '[Path]',
         luasnip = '[LuaSnip]',
         calc = '[Calc]',
-      })[entry.source.name]
-
-      return vim_item
-    end,
+        look = '[Look]',
+        rg = '[ripgrep]',
+      },
+    }),
   },
+  -- experimental = {
+  --   ghost_text = {
+  --     hl_group = 'LineNr',
+  --   },
+  -- },
 })
+
+local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
