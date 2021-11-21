@@ -7,9 +7,9 @@ local has_words_before = function()
 end
 
 cmp.setup({
-  -- completion = {
-  --   autocomplete = false,
-  -- },
+  completion = {
+    autocomplete = false,
+  },
   sorting = {
     comparators = {
       cmp.config.compare.offset,
