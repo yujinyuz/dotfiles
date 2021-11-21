@@ -135,6 +135,18 @@ wk.register({
     -- s = { '<Cmd>Telescope git_status<CR>', 'status' },
     d = { '<Cmd>DiffviewOpen<Cr>', 'DiffView' },
     y = { 'Show Permalink' },
+    h = {
+      name = '+hunk',
+      s = { 'Hunk Stage' },
+      S = { 'Hunk Stage Buffer' },
+      u = { 'Hunk Undo Stage' },
+      U = { 'Hunk Reset Buffer Index' },
+      r = { 'Hunk Reset' },
+      R = { 'Hunk Reset Buffer' },
+      p = { 'Hunk Preview' },
+      b = { 'Hunk Blame Line' },
+      t = { function() require('gitsigns').setqflist() end, 'Hunk Trouble'}
+    },
   },
   h = {
     name = '+help',
@@ -213,12 +225,23 @@ wk.register({
 local text_objects = {
   ['af'] = 'Around Function',
   ['ac'] = 'Around Class',
+  ['ih'] = 'Inside Hunk',
 }
 
 local switches = {
   o = {
     name = '+switch',
-    b = { '<Cmd>GitBlameToggle<CR>', 'Toggle Git Blame' },
+    b = {
+      function()
+        local gitsigns = require('gitsigns')
+        gitsigns.toggle_signs()
+        -- gitsigns.toggle_numhl()
+        gitsigns.toggle_linehl()
+        gitsigns.toggle_word_diff()
+        gitsigns.toggle_current_line_blame()
+      end,
+      'Toggle Git Signs',
+    },
     f = { require('config.lsp.formatting').toggle, 'Format on Save' },
     l = { '<Cmd>IndentBlanklineToggle<CR>', 'Toggle Indent Lines' },
     n = {

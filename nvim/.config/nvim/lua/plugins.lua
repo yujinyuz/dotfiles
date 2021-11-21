@@ -271,13 +271,6 @@ local plugins = function(use)
     end,
     keys = { '<leader>gy' },
   })
-  use({
-    'f-person/git-blame.nvim',
-    config = function()
-      vim.g.gitblame_enabled = 0
-    end,
-    cmd = { 'GitBlameToggle' },
-  })
   use({ 'rhysd/committia.vim', ft = { 'commit', 'gitcommit' } })
 
   -- Holiness
