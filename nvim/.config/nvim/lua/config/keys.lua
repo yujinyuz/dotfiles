@@ -5,7 +5,6 @@ local tnoremap = vim.keymap.tnoremap
 local inoremap = vim.keymap.inoremap
 local nmap = vim.keymap.nmap
 local vmap = vim.keymap.vmap
-
 local utils = require('utils')
 
 vim.opt.timeoutlen = 300
@@ -145,7 +144,12 @@ wk.register({
       R = { 'Hunk Reset Buffer' },
       p = { 'Hunk Preview' },
       b = { 'Hunk Blame Line' },
-      t = { function() require('gitsigns').setqflist() end, 'Hunk Trouble'}
+      t = {
+        function()
+          require('gitsigns').setqflist()
+        end,
+        'Hunk Trouble',
+      },
     },
   },
   h = {
@@ -233,12 +237,20 @@ local switches = {
     name = '+switch',
     b = {
       function()
-        local gitsigns = require('gitsigns')
-        gitsigns.toggle_signs()
-        -- gitsigns.toggle_numhl()
-        gitsigns.toggle_linehl()
-        gitsigns.toggle_word_diff()
-        gitsigns.toggle_current_line_blame()
+        local config = require('gitsigns.config').config
+
+        if not config.signcolumn then
+          utils.info('enabled gitsigns', 'Toggle')
+        else
+          utils.info('disabled gitsigns', 'Toggle')
+        end
+
+        vim.cmd([[
+          Gitsigns toggle_current_line_blame |
+          Gitsigns toggle_signs |
+          Gitsigns toggle_linehl |
+          Gitsigns toggle_word_diff
+        ]])
       end,
       'Toggle Git Signs',
     },
