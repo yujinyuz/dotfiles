@@ -147,6 +147,13 @@ local plugins = function(use)
   })
 
   use({
+    'code-biscuits/nvim-biscuits',
+    config = function()
+      require('nvim-biscuits').setup({})
+    end,
+  })
+
+  use({
     'lukas-reineke/headlines.nvim',
     config = function()
       require('headlines').setup()
