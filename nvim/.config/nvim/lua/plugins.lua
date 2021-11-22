@@ -231,7 +231,13 @@ local plugins = function(use)
     module = 'spectre',
   })
 
-  use({ 'kevinhwang91/nvim-hlslens' })
+  use({
+    'kevinhwang91/nvim-hlslens',
+    config = function()
+      require('config.lens')
+    end,
+  })
+
   use({
     'mfussenegger/nvim-dap',
     opt = true,
