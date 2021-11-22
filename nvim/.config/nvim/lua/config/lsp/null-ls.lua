@@ -31,14 +31,9 @@ end
 
 function M.has_formatter(ft)
   local sources = require('null-ls.sources')
-  local all_sources = sources.get_all()
   local formatting_method = require('null-ls.methods').internal.FORMATTING
-
-  for _, source in ipairs(all_sources) do
-    if sources.is_available(source, ft, formatting_method) then
-      return true
-    end
-  end
+  local available = sources.get_available(ft, formatting_method)
+  return #available > 0
 end
 
 return M
