@@ -254,31 +254,37 @@ local switches = {
       end,
       'Toggle Git Signs',
     },
+    d = {
+      function()
+        require('nvim-biscuits').toggle_biscuits()
+      end,
+      'Toggle Biscuits Debug',
+    },
     f = { require('config.lsp.formatting').toggle, 'Format on Save' },
     l = { '<Cmd>IndentBlanklineToggle<CR>', 'Toggle Indent Lines' },
     n = {
       function()
         utils.toggle('number')
       end,
-      'Line Numbers',
+      'Toggle Line Numbers',
     },
     r = {
       function()
         utils.toggle('relativenumber')
       end,
-      'Relative Numbers',
+      'Toggle Relative Numbers',
     },
     s = {
       function()
         utils.toggle('spell')
       end,
-      'Spelling',
+      'Toggle Spelling',
     },
     w = {
       function()
         utils.toggle('wrap')
       end,
-      'Word Wrap',
+      'Toggle Word Wrap',
     },
   },
 }
