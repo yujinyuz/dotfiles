@@ -1,4 +1,5 @@
 local actions = require('telescope.actions')
+local action_set = require('telescope.actions.set')
 local previewers = require('telescope.previewers')
 
 -- Change mappings because of memory muscle from fzf
@@ -39,6 +40,18 @@ local new_maker = function(filepath, bufnr, opts)
   previewers.buffer_previewer_maker(filepath, bufnr, opts)
 end
 
+local fixfolds = {
+  hidden = true,
+  attach_mappings = function(_)
+    action_set.select:enhance({
+      post = function()
+        vim.cmd(':normal! zx')
+      end,
+    })
+    return true
+  end,
+}
+
 require('telescope').setup({
   defaults = {
     prompt_prefix = '❯ ',
@@ -52,6 +65,15 @@ require('telescope').setup({
     },
     mappings = { i = mappings, n = mappings },
     buffer_previewer_maker = new_maker,
+  },
+  pickers = {
+    buffers = fixfolds,
+    file_browser = fixfolds,
+    find_files = fixfolds,
+    git_files = fixfolds,
+    grep_string = fixfolds,
+    live_grep = fixfolds,
+    oldfiles = fixfolds,
   },
   extensions = {
     fzf = {
@@ -96,6 +118,7 @@ M.live_grep = function(opts)
 end
 
 vim.keymap.nnoremap({ '<leader><Space>', M.project_files })
+vim.keymap.nnoremap({ '<leader>bb', require('telescope.builtin').buffers })
 -- vim.keymap.nnoremap({ '<leader>F', M.live_grep })
 
 return M
