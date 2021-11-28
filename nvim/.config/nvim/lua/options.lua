@@ -99,13 +99,19 @@ opt.wildcharm = 26 -- Equivalent of <C-z>
 opt.wildmode = { 'longest', 'full' }
 opt.wildoptions = 'pum'
 
--- Don't open folds by default
-opt.foldlevelstart = 99
+-- Number of folds available when starting to edit files
+-- Set to 0 all folds closed, 1 some folds closed, 99 no folds closed
+opt.foldlevelstart = 1
+-- Use indend by default when tresesitter folds are not available
 opt.foldmethod = 'indent'
-opt.foldtext = [[substitute(getline(v:foldstart),'\\t',repeat('\ ',&tabstop),'g').'...'.trim(getline(v:foldend))]]
-opt.fillchars = opt.fillchars + "vert:│"
-opt.foldnestmax = 3
-opt.foldminlines = 1
+-- Display better folds
+opt.foldtext = [[substitute(getline(v:foldstart),'\\t',repeat('\ ',&tabstop),'g').'...'.trim(getline(v:foldend)) . ' (' . (v:foldend - v:foldstart + 1) . ' lines)']]
+opt.fillchars = { fold = " ", vert = "|" }
+
+-- Maximum number of nesting of folds for indend and syntax method
+opt.foldnestmax = 4
+--Number of screenlines above which a fold can be displayed closed
+opt.foldminlines = 2
 
 
 -- Used when `wrap` is enabled
