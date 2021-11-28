@@ -17,7 +17,7 @@ local plugins = function(use)
   end
 
   use({ 'wbthomason/packer.nvim', opt = true })
-  use({ 'lewis6991/impatient.nvim', rocks = 'mpack' })
+  use({ 'lewis6991/impatient.nvim' })
 
   use({
     { 'nvim-lua/popup.nvim' },
