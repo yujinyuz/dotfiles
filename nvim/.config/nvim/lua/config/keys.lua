@@ -37,10 +37,6 @@ nnoremap({ 'Q', '"_' })
 -- Create new file
 nnoremap({ '<leader>fn', [[:e %:h<C-z>]] })
 
--- Remove highlights
-nnoremap({ '<C-l>', [[<Cmd>nohlsearch<CR><Cmd>diffupdate<CR><C-l>]], silent = true })
--- Make Y work like other upcase commands
-nnoremap({ 'Y', 'y$' })
 -- Buffer Switch
 nnoremap({ '<BS>', '<C-^>' })
 -- Resize splits with arrows
@@ -83,10 +79,6 @@ nnoremap({ '<leader>ll', [[<Cmd>call matchadd('Visual', '\%'.line('.').'l')<CR>]
 nnoremap({ '<leader>lc', [[<Cmd>call clearmatches()<CR>]], silent = true })
 
 cnoremap({ 'w!!', [[:lua require('utils').sudo_write()<CR>]] })
-
--- Make undoable
-inoremap({ '<C-w>', '<C-g>u<C-w>' })
-inoremap({ '<C-u>', '<C-g>u<C-u>' })
 
 -- nvim-tree
 nnoremap({ '<C-n>', '<Cmd>NvimTreeToggle<CR>' })
