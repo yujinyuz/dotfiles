@@ -74,8 +74,6 @@ opt.formatoptions = opt.formatoptions
 -- Pums
 opt.completeopt = { 'menuone', 'noselect', 'noinsert' }
 opt.pumheight = 15
--- Transparent pums
-opt.pumblend = 17
 -- Always show sign columns
 opt.signcolumn = 'yes'
 -- Having longer update time leads to noticeable delays and poor UX
