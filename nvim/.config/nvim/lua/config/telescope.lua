@@ -74,6 +74,7 @@ require('telescope').setup({
     grep_string = fixfolds,
     live_grep = fixfolds,
     oldfiles = fixfolds,
+    tags = fixfolds,
   },
   extensions = {
     fzf = {
@@ -117,8 +118,9 @@ M.live_grep = function(opts)
   require('telescope.builtin').live_grep(opts)
 end
 
-vim.keymap.nnoremap({ '<leader><Space>', M.project_files })
-vim.keymap.nnoremap({ '<leader>bb', require('telescope.builtin').buffers })
+-- vim.keymap.nnoremap({ '<leader><Space>', M.project_files })
+-- vim.keymap.nnoremap({ '<leader>oo', M.project_files })
+-- vim.keymap.nnoremap({ '<leader>bb', require('telescope.builtin').buffers })
 -- vim.keymap.nnoremap({ '<leader>F', M.live_grep })
 
 return M

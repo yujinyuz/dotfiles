@@ -70,6 +70,14 @@ local plugins = function(use)
   })
 
   -- File management
+
+  use({
+    'ibhagwan/fzf-lua',
+    config = function()
+      require('config.fzf')
+    end,
+  })
+
   use({
     'camspiers/snap',
     opt = true,
