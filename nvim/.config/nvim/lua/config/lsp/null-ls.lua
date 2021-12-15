@@ -19,14 +19,11 @@ function M.setup(options)
     nls.builtins.diagnostics.eslint.with({ command = 'eslint_d' }),
     -- nls.builtins.diagnostics.eslint,
     nls.builtins.code_actions.gitsigns,
+    nls.builtins.code_actions.refactoring,
   }
 
-  nls.config({
-    debounce = 150,
-    save_after_format = false,
-    sources = sources,
-  })
-  require('lspconfig')['null-ls'].setup(options)
+  local opts = vim.tbl_extend('force', options, { sources = sources })
+  nls.setup(opts)
 end
 
 function M.has_formatter(ft)
