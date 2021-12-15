@@ -32,6 +32,13 @@ font:
     # family: FiraCode Nerd Font Mono
     # family: FiraCode Nerd Font
     style: Regular
+  bold:
+    family: MesloLGS NF
+    style: Bold
+  italic:
+    family: MesloLGS NF
+    style: Italic
+
   use_thin_strokes: true
 schemes:
   gruvbox: &gruvbox
