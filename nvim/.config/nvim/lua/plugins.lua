@@ -58,8 +58,10 @@ local plugins = function(use)
       { 'nvim-treesitter/playground', cmd = 'TSHighlightCapturesUnderCursor' },
       { 'nvim-treesitter/nvim-treesitter-textobjects' },
       { 'nvim-treesitter/nvim-treesitter-refactor' },
+      -- { 'haringsrob/nvim_context_vt'},
       { 'p00f/nvim-ts-rainbow' },
       { 'RRethy/nvim-treesitter-textsubjects' },
+      { 'eddiebergman/nvim-treesitter-pyfold' },
       {
         'windwp/nvim-ts-autotag',
         config = function()
@@ -67,6 +69,15 @@ local plugins = function(use)
         end,
       },
     },
+  })
+  use({ 'ThePrimeagen/refactoring.nvim' })
+
+  use({
+    'SmiteshP/nvim-gps',
+    config = function()
+      require('nvim-gps').setup()
+    end,
+    requires = 'nvim-treesitter/nvim-treesitter',
   })
 
   -- File management
@@ -104,6 +115,16 @@ local plugins = function(use)
     end,
   })
 
+  -- Lua
+  use({
+    'folke/persistence.nvim',
+    event = 'BufReadPre', -- this will only start session saving when an actual file was opened
+    module = 'persistence',
+    config = function()
+      require('persistence').setup()
+    end,
+  })
+
   use({
     'tamago324/lir.nvim',
     config = function()
@@ -118,6 +139,7 @@ local plugins = function(use)
       require('config.theme')
     end,
   })
+
   use({
     'norcalli/nvim-colorizer.lua',
     event = 'BufReadPre',
@@ -125,6 +147,7 @@ local plugins = function(use)
       require('config.colorizer')
     end,
   })
+
   use({
     'kyazdani42/nvim-web-devicons',
     config = function()
@@ -139,6 +162,7 @@ local plugins = function(use)
       })
     end,
   })
+
   use({ 'SidOfc/mkdx', ft = { 'markdown' } })
   use({ 'rwxrob/vim-pandoc-syntax-simple', ft = { 'markdown' } })
   use({ 'Vimjas/vim-python-pep8-indent', ft = { 'python' } })
@@ -161,13 +185,6 @@ local plugins = function(use)
     end,
   })
 
-  use({
-    'lukas-reineke/headlines.nvim',
-    config = function()
-      require('headlines').setup()
-    end,
-  })
-
   use({ 'liuchengxu/vista.vim' })
 
   use({
@@ -185,7 +202,7 @@ local plugins = function(use)
       'hrsh7th/cmp-nvim-lua',
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-calc',
-      'lukas-reineke/cmp-rg',
+      { 'lukas-reineke/cmp-rg' },
       'quangnguyen30192/cmp-nvim-tags',
       'octaltree/cmp-look',
       'lukas-reineke/cmp-under-comparator',
@@ -254,6 +271,13 @@ local plugins = function(use)
   })
 
   use({
+    'luukvbaal/stabilize.nvim',
+    config = function()
+      require('stabilize').setup()
+    end,
+  })
+
+  use({
     'mfussenegger/nvim-dap',
     opt = true,
     module = 'dap',
@@ -263,11 +287,10 @@ local plugins = function(use)
     },
   })
   use({
-    'numtostr/FTerm.nvim',
+    'numToStr/FTerm.nvim',
     config = function()
       require('config.fterm')
     end,
-    module = 'FTerm',
   })
 
   -- Git stuffs
@@ -296,7 +319,6 @@ local plugins = function(use)
 
   -- Holiness
   use({
-    { 'tpope/vim-sleuth' },
     { 'tpope/vim-surround' },
     { 'tpope/vim-markdown', ft = { 'markdown' } },
     { 'tpope/vim-characterize' },
@@ -325,7 +347,7 @@ local plugins = function(use)
 
   use({
     'karb94/neoscroll.nvim',
-    -- keys = { '<C-u>', '<C-d>', 'gg', 'G' },
+    keys = { '<C-u>', '<C-d>', 'gg', 'G' },
     opt = true,
     config = function()
       require('config.scroll')
@@ -395,13 +417,38 @@ local plugins = function(use)
     end,
     ft = { 'http' },
   })
+  -- use({
+  --   '~/Sources/tablea.nvim',
+  --   config = function()
+  --     require('tablea').setup({ show_index = false, show_modify = true })
+  --   end,
+  -- })
+  use({ 'Pocco81/HighStr.nvim' })
+
   use({
-    '~/Sources/tablea.nvim',
+    'simrat39/symbols-outline.nvim',
+    setup = function()
+      vim.g.symbols_outline = {
+        auto_preview = false,
+      }
+    end,
+    cmd = { 'SymbolsOutline' },
+  })
+
+  use({
+    'RRethy/vim-illuminate',
+    event = 'CursorHold',
+    module = 'illuminate',
     config = function()
-      require('tablea').setup({ show_index = false, show_modify = true })
+      vim.g.Illuminate_delay = 1000
     end,
   })
+
+  use({ 'kazhala/close-buffers.nvim', cmd = 'BDelete' })
   use({ 'simrat39/rust-tools.nvim' })
+  use({ 'junegunn/vim-easy-align' })
+  use({ 'stevearc/dressing.nvim' })
+  use({ 'rcarriga/nvim-notify' })
 end
 
 return packer.startup({
