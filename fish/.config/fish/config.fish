@@ -28,13 +28,15 @@ set -gx MANWIDTH 999
 set -gx XDG_CONFIG_HOME $HOME/.config
 
 contains $HOME/.local/bin $fish_user_paths; or set -Ua fish_user_paths $HOME/.local/bin
+contains /usr/local/sbin $fish_user_paths; or set -Ua fish_user_paths /usr/local/sbin
+contains /usr/local/opt/mysql-client/bin $fish_user_paths; or set -Ua fish_user_paths /usr/local/opt/mysql-client/bin
 
 # Autojump
-set -x Z_CMD "j"
+set -x Z_CMD j
 
 # FZF
 set -l FD_OPTIONS "--hidden --follow --exclude .git --exclude node_modules"
-set -gx FZF_DEFAULT_COMMAND "git ls-files --cached --others --exclude-standard | fd --type f --type l $FD_OPTIONS"
+set -gx FZF_DEFAULT_COMMAND "git ls-files --cached --others --exclude-standard || fd --type f --type l $FD_OPTIONS"
 set -gx FZF_DEFAULT_OPTS "--height 40% --layout=reverse --border --preview-window down:1"
 set -gx FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
 set -gx FZF_ALT_C_COMMAND "fd --type d $FD_OPTIONS"
@@ -47,10 +49,13 @@ set -gx PYTHON_BUILD_ARIA2_OPTS "-x 10 -k 1M" # Use aria2c when downloading
 # neovim
 set -gx PYTHON_3_HOST_PROG $VIRTUALENVS_DIR/nvim/bin/python3
 
+
 # asdf
 # Installation method via git since brew --prefix asdf is slow
+# Manually added ~/.asdf/bin to the path so we don't have to use shims in favor of direnv
+# Load the asdf wrapper function
 source $HOME/.asdf/asdf.fish
-set -gx ASDF_SKIM_RESHIM 1
+set -gx ASDF_SKIP_RESHIM 1
 
 # System
 # Increase resource usage limits to 2048. Default is 256
@@ -64,8 +69,6 @@ alias dc="docker compose"
 alias doom="~/.emacs.d/bin/doom"
 alias dotfiles="/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
 alias dotlocal="/usr/bin/git --git-dir=$HOME/.dotlocal/ --work-tree=$HOME"
-alias eb="~/.ebcli-virtual-env/bin/eb"
-alias fastvi="vi -u ~/.vimrcmin"
 alias getip="curl ipinfo.io/ip"
 alias g="git"
 alias groot="cd ./(git rev-parse --show-cdup)"
@@ -77,7 +80,13 @@ alias rscp="rsync -avhW --progress" # for copying local files
 alias rsmv="rsync -avhW --no-compress --progress --remove-source-files"
 alias t="tmux"
 alias tree="exa --tree"
-# alias vi="nvim -c 'let g:tty='\'(tty)'\''"
+alias kd="killall Dock"
 alias vi="nvim"
 alias vifish="vi ~/.config/fish/config.fish"
 alias pmr="pm runserver"
+
+alias tmux_light="~/Sources/github.com/yujinyuz/dotfiles/./tokyonight_day.tmux"
+alias tmux_dark="~/Sources/github.com/yujinyuz/dotfiles/./tokyonight_storm.tmux"
+alias lzdocker="TERM=xterm-kitty lazydocker"
+alias minvim="nvim -u NORC"
+alias ssht="TERM=screen ssh"
