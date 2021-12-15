@@ -8,9 +8,12 @@ vim.cmd([[
 
 require('cmp').setup.buffer({
   sources = {
-    { name = 'look', keyword_length = 2, max_item_count = 10, opts = { convert_case = true, loud = true } },
+    { name = 'look', keyword_length = 2, max_item_count = 10, options = { convert_case = true, loud = true } },
     { name = 'rg', max_item_count = 10, keyword_length = 3 },
     { name = 'buffer', max_item_count = 10, keyword_length = 3 },
     { name = 'calc' },
   },
 })
+
+vim.keymap.inoremap({';H', '<Esc>yypv$r='})
+vim.keymap.inoremap({';h', '<Esc>yypv$r-'})
