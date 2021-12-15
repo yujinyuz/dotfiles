@@ -401,6 +401,7 @@ local plugins = function(use)
       require('tablea').setup({ show_index = false, show_modify = true })
     end,
   })
+  use({ 'simrat39/rust-tools.nvim' })
 end
 
 return packer.startup({
