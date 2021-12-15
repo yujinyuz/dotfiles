@@ -2,46 +2,60 @@ local path = require('fzf-lua.path')
 local fzf = require('fzf-lua')
 
 fzf.setup({
-  -- winopts = {
-  --   preview = {
-  --     default = 'bat_native',
-  --   },
-  -- },
+  fzf_colors = {
+    ['fg'] = { 'fg', 'CursorLine' },
+    ['bg'] = { 'bg', 'Normal' },
+    ['hl'] = { 'fg', 'Comment' },
+    ['fg+'] = { 'fg', 'Normal' },
+    ['bg+'] = { 'bg', 'CursorLine' },
+    ['hl+'] = { 'fg', 'Statement' },
+    ['info'] = { 'fg', 'PreProc' },
+    ['prompt'] = { 'fg', 'Conditional' },
+    ['pointer'] = { 'fg', 'Exception' },
+    ['marker'] = { 'fg', 'Keyword' },
+    ['spinner'] = { 'fg', 'Label' },
+    ['header'] = { 'fg', 'Comment' },
+    ['gutter'] = { 'bg', 'Normal' },
+    ['border'] = { 'bg', 'Normal' },
+  },
+  keymap = {
+    builtin = {
+      ['<C-d>'] = 'preview-page-down',
+      ['<C-u>'] = 'preview-page-up',
+    },
+  },
   hl = {
     normal = 'TelescopePromptNormal',
     border = 'TelescopeBorder',
   },
-  -- files = {
-  --   git_icons = false,
-  --   file_icons = false,
-  -- },
-  -- tags = {
-  --   git_icons = false,
-  --   file_icons = false,
-  -- },
+  files = {
+    git_icons = false,
+  },
   git = {
     files = {
-      prompt = 'GitFiles❯ ',
       cmd = 'git ls-files --exclude-standard --cached --others --deduplicate',
-      -- git_icons = false, -- show git icons?
-      -- file_icons = true, -- show file icons?
-      -- color_icons = true, -- colorize file|git icons
+      git_icons = false,
     },
   },
   grep = {
-    rg_opts = string.format('%s %s', fzf.config.globals.grep.rg_opts, '--hidden'),
+    rg_opts = string.format('%s %s', fzf.config.globals.grep.rg_opts, '--hidden -g "!.git"'),
+    git_icons = false,
   },
 })
 
--- vim.keymap.nnoremap({ '<leader>]', '<Cmd>FzfLua tags<CR>' })
 vim.keymap.nnoremap({
   '<leader>]',
   function()
-    fzf.tags({ fzf_cli_args = '--nth=3..' })
+    fzf.tags({ fzf_cli_args = '--nth=2..' })
   end,
 })
--- vim.keymap.nnoremap({ '<leader>n', '<Cmd>FzfLua files<CR>' })
-vim.keymap.nnoremap({ '<leader>F', '<Cmd>FzfLua live_grep_resume<CR>' })
+
+vim.keymap.nnoremap({
+  '<leader>F',
+  function()
+    fzf.live_grep({ fzf_cli_args = '--nth=2..' })
+  end,
+})
 vim.keymap.nnoremap({
   '<leader>n',
   function()
@@ -49,7 +63,6 @@ vim.keymap.nnoremap({
       fzf.git_files()
       return
     end
-
     fzf.files()
   end,
 })
