@@ -9,20 +9,26 @@ function M.setup(client, bufnr)
       r = {
         function()
           vim.lsp.buf.rename()
+          -- require('lspactions').rename()
         end,
         'Rename',
       },
       a = {
         function()
           vim.lsp.buf.code_action()
+          -- require('lspactions').code_action()
         end,
         'Code Action',
       },
       d = {
         function()
-          vim.lsp.diagnostic.show_line_diagnostics({ focusable = false })
+          vim.diagnostic.open_float()
         end,
         'Line Diagnostics',
+      },
+      t = {
+        '<Cmd>Telescope lsp_dynamic_workspace_symbols<CR>',
+        'Dynamic Workspace Symbols',
       },
       l = {
         name = '+lsp',
@@ -101,13 +107,19 @@ function M.setup(client, bufnr)
   vim.keymap.nnoremap({ 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', buffer = true, silent = true })
   vim.keymap.nnoremap({
     '[w',
-    '<Cmd>lua vim.lsp.diagnostic.goto_prev({popup_opts = {focusable = false}})<CR>',
+    function()
+      vim.diagnostic.goto_prev({ opts = { focusable = false } })
+      -- '<Cmd>lua vim.lsp.diagnostic.goto_prev({popup_opts = {focusable = false}})<CR>'
+    end,
     buffer = true,
     silent = true,
   })
   vim.keymap.nnoremap({
     ']w',
-    '<Cmd>lua vim.lsp.diagnostic.goto_next({popup_opts = {focusable = false}})<CR>',
+    function()
+      -- '<Cmd>lua vim.lsp.diagnostic.goto_next({popup_opts = {focusable = false}})<CR>',
+      vim.diagnostic.goto_next({ opts = { focusable = false } })
+    end,
     buffer = true,
     silent = true,
   })

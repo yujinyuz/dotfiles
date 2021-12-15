@@ -3,7 +3,6 @@ require('config.lsp.diagnostics').setup()
 local on_attach = function(client, bufnr)
   require('config.lsp.formatting').setup(client, bufnr)
   require('config.lsp.keys').setup(client, bufnr)
-  -- FIXME: This has prevented me from upgrading to 0.5.1
   -- require('config.lsp.completion').setup(client, bufnr)
 
   -- TypeScript specific stuff

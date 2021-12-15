@@ -18,22 +18,24 @@ end
 
 lualine.setup({
   options = {
-    theme = 'tokyonight',
+    theme = 'auto',
     -- separator = '|',
     icons_enabled = true,
   },
   sections = {
     lualine_a = { 'mode' },
-    lualine_b = { 'branch' },
-    lualine_c = { filename },
-    lualine_x = { 'encoding', 'fileformat', 'filetype' },
+    lualine_b = { 'branch', 'diff', { 'diagnostics', sources = { 'nvim_diagnostic' } } },
+    -- lualine_c = { filename },
+    lualine_c = { 'filename' },
+    lualine_x = { { require('nvim-gps').get_location, cond = require('nvim-gps').is_available }, 'encoding', 'filetype' },
     lualine_y = { 'progress' },
     lualine_z = { 'location' },
   },
   inactive_sections = {
     lualine_a = {},
     lualine_b = {},
-    lualine_c = { filename },
+    -- lualine_c = { filename },
+    lualine_c = { 'filename' },
     lualine_x = { 'location' },
     lualine_y = {},
     lualine_z = {},
