@@ -105,7 +105,8 @@ sub handle_line {
 		# characters.
 
 		# Dark gray
-		$orig =~ s/\t/\x1b[38;5;238m▷┅┅┅$COLORS[0]/g;
+		# $orig =~ s/\t/\x1b[38;5;238m▷┅┅┅$COLORS[0]/g;
+		$orig =~ s/\t/\x1b[38;5;238m▷⋯$COLORS[0]/g;
 	}
 
 	if (!$in_hunk) {
