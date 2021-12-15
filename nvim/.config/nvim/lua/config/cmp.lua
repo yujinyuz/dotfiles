@@ -10,6 +10,10 @@ cmp.setup({
   completion = {
     autocomplete = false,
   },
+  documentation = {
+    border = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
+    winhighlight = 'NormalFloat:NormalFloat,FloatBorder:TelescopeBorder',
+  },
   sorting = {
     comparators = {
       cmp.config.compare.offset,
