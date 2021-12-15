@@ -83,7 +83,7 @@ opt.scrolloff = 8
 -- and 15 lines from the side
 opt.sidescrolloff = 15
 -- Use a simple statusline
--- opt.statusline = [[[%n] %<%.99f %y%h%w%m%r%=%-14.(%l,%c%V%) %P]]
+-- opt.statusline = [[[%n] %<%.99f %h%w%m%r %=%y %(%l,%c%V%) %P]]
 opt.showmode = false
 -- Enable backups
 opt.backup = true
@@ -99,24 +99,31 @@ opt.wildoptions = 'pum'
 
 -- Number of folds available when starting to edit files
 -- Set to 0 all folds closed, 1 some folds closed, 99 no folds closed
-opt.foldlevelstart = 1
+opt.foldlevelstart = 2
 -- Use indend by default when tresesitter folds are not available
 opt.foldmethod = 'indent'
 -- Display better folds
-opt.foldtext = [[substitute(getline(v:foldstart),'\\t',repeat('\ ',&tabstop),'g').'...'.trim(getline(v:foldend)) . ' (' . (v:foldend - v:foldstart + 1) . ' lines)']]
-opt.fillchars = { fold = " ", vert = "|" }
+opt.foldtext =
+  [[substitute(getline(v:foldstart),'\\t',repeat('\ ',&tabstop),'g').' ... '.trim(getline(v:foldend)) . ' (' . (v:foldend - v:foldstart + 1) . ' lines)']]
+-- opt.fillchars = { fold = " ", vert = "|" }
+opt.fillchars = {
+  diff = '∙', -- BULLET OPERATOR (U+2219, UTF-8: E2 88 99)
+  eob = ' ', -- NO-BREAK SPACE (U+00A0, UTF-8: C2 A0) to suppress ~ at EndOfBuffer
+  fold = ' ', -- MIDDLE DOT (U+00B7, UTF-8: C2 B7)
+  vert = '┃', -- BOX DRAWINGS HEAVY VERTICAL (U+2503, UTF-8: E2 94 83)
+}
 
 -- Maximum number of nesting of folds for indend and syntax method
 opt.foldnestmax = 4
 --Number of screenlines above which a fold can be displayed closed
 opt.foldminlines = 2
 
-
 -- Used when `wrap` is enabled
 opt.breakindent = true
 -- Make it so long that lines wrap smartly
-opt.showbreak = string.rep(' ', 3)
+-- opt.showbreak = string.rep(' ', 3)
 opt.linebreak = true
+opt.showbreak = ' ↳ '
 
 opt.lazyredraw = true
 
@@ -127,3 +134,5 @@ opt.termguicolors = true
 opt.synmaxcol = 512
 
 -- opt.switchbuf = 'usetab' -- try to reuse windows/tabs when switching buffers
+
+vim.notify = require('notify')

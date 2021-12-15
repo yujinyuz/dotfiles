@@ -2,8 +2,10 @@ local M = {}
 
 function M.setup(client, buffer)
   vim.api.nvim_buf_set_option(buffer, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-  -- fix function completion on all lsp servers
-  if not client.request_orig then
+
+  -- FIXME: This has prevented me from upgrading to 0.5.1
+  -- Fix function completion on all lsp servers
+  --[[ if not client.request_orig then
     client.request_orig = client.request
     client.request = function(method, params, handler, bufnr)
       if method == 'textDocument/completion' then
@@ -25,7 +27,7 @@ function M.setup(client, buffer)
       end
       return client.request_orig(method, params, handler, bufnr)
     end
-  end
+  end ]]
 end
 
 return M

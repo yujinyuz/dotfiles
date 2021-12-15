@@ -48,15 +48,15 @@ augroup NumberToggle
   autocmd BufLeave,FocusLost,InsertEnter,WinLeave * if &nu | set nornu | endif
 augroup END
 
-augroup T
+augroup MiscCallback
   autocmd!
-  autocmd User TelescopePreviewerLoaded setlocal wrap
-  autocmd FileType TelescopePrompt iunmap <C-X><C-A>
-  autocmd FileType markdown nmap <buffer> <CR> <Plug>WorkbenchToggleCheckbox
+  autocmd VimResized * wincmd =
+
   autocmd FileType gitcommit setlocal spell
+  autocmd FileType markdown nmap <buffer> <CR> <Plug>WorkbenchToggleCheckbox
+
   autocmd BufWinEnter NvimTree setlocal cursorline nowrap signcolumn=no
 augroup END
-
 
 augroup FTDetect
   autocmd!

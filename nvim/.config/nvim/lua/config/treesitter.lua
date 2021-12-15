@@ -11,12 +11,12 @@ ts_configs.setup({
     'comment',
     'cpp',
     'css',
+    'fennel',
     'fish',
     'go',
     'graphql',
     'html',
     'javascript',
-    'jsonc',
     'latex',
     'lua',
     'nix',
@@ -29,10 +29,15 @@ ts_configs.setup({
     'typescript',
     'vue',
     'yaml',
-    'json',
-    -- "markdown",
+    -- 'jsonc',
+    -- 'json',
+    'markdown',
   },
-  highlight = { enable = true, use_languagetree = true, disable = { 'json' }, additional_vim_regex_highlighting = false },
+  highlight = {
+    enable = true,
+    disable = { 'json' },
+    additional_vim_regex_highlighting = false,
+  },
   indent = { enable = true, disable = { 'python' } },
   incremental_selection = {
     enable = true,
@@ -108,6 +113,7 @@ ts_configs.setup({
   autopairs = { enable = true },
   context_commentstring = { enable = true, enable_autocmd = false },
   rainbow = { enable = true, extended_mode = true, max_file_lines = 1000 },
+  pyfold = { enable = true, custom_foldtext = false },
 })
 
 local parsers = prequire('nvim-treesitter.parsers')

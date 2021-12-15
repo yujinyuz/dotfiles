@@ -1,21 +1,18 @@
 require('FTerm').setup({})
 
-vim.keymap.tnoremap({
-  '<leader>ot',
-  function()
-    require('FTerm').toggle()
-  end,
+local fterm = require('FTerm')
+
+local htop = fterm:new({
+  ft = 'fterm_btop',
+  cmd = 'htop',
 })
 
-vim.keymap.nnoremap({
-  '<A-i>',
-  function()
-    require('FTerm').toggle()
-  end,
-})
-vim.keymap.tnoremap({
-  '<A-i>',
-  function()
-    require('FTerm').toggle()
-  end,
-})
+-- Use this to toggle btop in a floating terminal
+local function fterm_htop()
+  htop:toggle()
+end
+
+
+
+vim.keymap.nnoremap({ '<A-h>', fterm_htop })
+vim.keymap.tnoremap({ '<A-h>', fterm_htop })

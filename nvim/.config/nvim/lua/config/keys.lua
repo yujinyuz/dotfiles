@@ -1,10 +1,12 @@
 local nnoremap = vim.keymap.nnoremap
 local cnoremap = vim.keymap.cnoremap
 local xnoremap = vim.keymap.xnoremap
+local vnoremap = vim.keymap.xnoremap
 local tnoremap = vim.keymap.tnoremap
 local inoremap = vim.keymap.inoremap
 local nmap = vim.keymap.nmap
 local vmap = vim.keymap.vmap
+local xmap = vim.keymap.xmap
 local utils = require('utils')
 
 vim.opt.timeoutlen = 300
@@ -39,16 +41,23 @@ nnoremap({ '<leader>fn', [[:e %:h<C-z>]] })
 
 -- Buffer Switch
 nnoremap({ '<BS>', '<C-^>' })
--- Resize splits with arrows
-nnoremap({ '<Up>', '<C-w>+' })
-nnoremap({ '<Down>', '<C-w>-' })
-nnoremap({ '<Left>', '<C-w><' })
-nnoremap({ '<Right>', '<C-w>>' })
+
+-- Resize splits with Shift + Arrow Keys
+nnoremap({ '<S-Up>', '<C-w>+' })
+nnoremap({ '<S-Down>', '<C-w>-' })
+nnoremap({ '<S-Left>', '<C-w><' })
+nnoremap({ '<S-Right>', '<C-w>>' })
 nnoremap({ '<leader>=', '<C-w>=' })
 
 -- Windows
 nnoremap({ '<C-j>', '<C-w>w' })
 nnoremap({ '<C-k>', '<C-w>W' })
+
+-- Navigate to splits with arrow keys
+nnoremap({ '<Left>', '<C-w>h' })
+nnoremap({ '<Right>', '<C-w>l' })
+nnoremap({ '<Up>', '<C-w>k' })
+nnoremap({ '<Down>', '<C-w>j' })
 
 -- Smooth scroll
 nnoremap({ '<C-y>', '3<C-y>' })
@@ -85,6 +94,46 @@ nnoremap({ '<C-n>', '<Cmd>NvimTreeToggle<CR>' })
 
 nnoremap({ '<localleader>b', '<Cmd>Vista!!<CR>' })
 
+nnoremap({
+  '<A-i>',
+  '<Cmd>lua require("FTerm").toggle()<CR>',
+})
+
+tnoremap({
+  '<A-i>',
+  '<Cmd>lua require("FTerm").toggle()<CR>',
+})
+
+xnoremap({ '<leader>h0', ':<c-u>HSHighlight 0<CR>' })
+xnoremap({ '<leader>h1', ':<c-u>HSHighlight 1<CR>' })
+xnoremap({ '<leader>h2', ':<c-u>HSHighlight 2<CR>' })
+xnoremap({ '<leader>h3', ':<c-u>HSHighlight 3<CR>' })
+xnoremap({ '<leader>h4', ':<c-u>HSHighlight 4<CR>' })
+xnoremap({ '<leader>h5', ':<c-u>HSHighlight 5<CR>' })
+xnoremap({ '<leader>h6', ':<c-u>HSHighlight 6<CR>' })
+xnoremap({ '<leader>h7', ':<c-u>HSHighlight 7<CR>' })
+xnoremap({ '<leader>h8', ':<c-u>HSHighlight 8<CR>' })
+xnoremap({ '<leader>h9', ':<c-u>HSHighlight 9<CR>' })
+
+nnoremap({
+  '<space>cu',
+  function()
+    local number = math.random(math.pow(2, 127) + 1, math.pow(2, 128))
+    return 'i' .. string.format('%.0f', number)
+  end,
+  expr = true,
+})
+
+-- nnoremap({
+--   '<leader><Space>',
+--   function()
+--     utils.warn([[Find Files deprecated. Use one of the following: <leader>(n, oo, ff)]], 'Muscle Memory Training')
+--   end,
+-- })
+
+nmap({ 'ga', '<Plug>(EasyAlign)' })
+xmap({ 'ga', '<Plug>(EasyAlign)' })
+
 wk.register({
   [' '] = 'Find Files',
   ['/'] = {
@@ -94,9 +143,6 @@ wk.register({
     'Browse Files Related to Current File',
   },
   [']'] = {
-    function()
-      require('telescope.builtin').tags({ only_sort_tags = true })
-    end,
     'Open tags',
   },
   ['2'] = { '<Cmd>ZenMode<CR>', 'Zen Mode' },
@@ -104,9 +150,10 @@ wk.register({
   b = {
     name = '+buffer',
     ['1'] = { '<Cmd>%bd|e#|bd#<CR>', 'Delete other buffers except this one' },
-    b = { '<Cmd>Telescope buffers<CR>', 'Buffer List' },
-    d = { '<Cmd>bdelete<CR>', 'Buffer Delete' },
+    b = { 'Buffer List' },
+    d = { '<Cmd>BDelete this<CR>', 'Buffer Delete' },
     t = { '<Cmd>Vista!!<CR>', 'Buffer Tags' },
+    o = { '<Cmd>SymbolsOutline<CR>', 'Symbols Outline' },
   },
   f = {
     name = '+file',
@@ -126,6 +173,7 @@ wk.register({
     -- s = { '<Cmd>Telescope git_status<CR>', 'status' },
     d = { '<Cmd>DiffviewOpen<Cr>', 'DiffView' },
     y = { 'Show Permalink' },
+    v = { '<Cmd>Gvdiffsplit<CR>', 'Vertical Diff Split' },
     h = {
       name = '+hunk',
       s = { 'Hunk Stage' },
@@ -149,7 +197,7 @@ wk.register({
     t = { '<<Cmd>Telescope builtin<CR>', 'Telescope' },
     c = { '<Cmd>Telescope commands<CR>', 'Commands' },
     h = { '<Cmd>Telescope help_tags<CR>', 'Help Pages' },
-    l = { '<Cmd>TSHighlightCapturesUnderCursor<CR>', 'Highlight Groups under cursor' },
+    -- l = { '<Cmd>TSHighlightCapturesUnderCursor<CR>', 'Highlight Groups under cursor' },
     p = {
       name = '+packer',
       p = { '<Cmd>PackerSync<CR>', 'Sync' },
@@ -163,6 +211,7 @@ wk.register({
   o = {
     name = '+open',
     t = { '<Cmd>lua require("FTerm").toggle()<CR>', 'Toggle Terminal' },
+    o = { 'Open Files' },
   },
   p = {
     name = '+project',
@@ -183,6 +232,24 @@ wk.register({
     name = '+quit/session',
     q = { '<Cmd>q!<CR>', 'Quick quit without saving' },
     a = { '<Cmd>qa!<CR>', 'Quit all without saving' },
+    l = {
+      function()
+        require('persistence').load({ last = true })
+      end,
+      'Restore Last Session',
+    },
+    s = {
+      function()
+        require('persistence').load({})
+      end,
+      'Restore Session',
+    },
+    d = {
+      function()
+        require('persistence').stop()
+      end,
+      'Stop Current Session',
+    },
   },
   r = {
     n = { 'Rename *Treesitter*' },
@@ -213,6 +280,8 @@ wk.register({
     l = { '<Cmd>lopen<CR>', 'Open Location List' },
     q = { '<Cmd>copen<CR>', 'Open Quickfix List' },
   },
+  Z = { [[<cmd>lua require("zen-mode").reset()<cr>]], 'Zen Mode' },
+  z = { [[<cmd>ZenMode<cr>]], 'Zen Mode' },
 }, {
   prefix = '<leader>',
   mode = 'n',
@@ -275,6 +344,20 @@ local switches = {
     w = {
       function()
         utils.toggle('wrap')
+
+        -- TODO: Replace with
+        -- https://github.com/wincent/wincent/blob/a4e5d0/aspects/nvim/files/.config/nvim/plugin/mappings/normal.lua#L38-L40
+        if vim.wo.wrap then
+          vim.cmd([[
+            nnoremap <expr> j (v:count > 4 ? "m'" . v:count . 'j' : 'gj')
+            nnoremap <expr> k (v:count > 4 ? "m'" . v:count . 'k' : 'gk')
+          ]])
+        else
+          vim.cmd([[
+            unmap j
+            unmap k
+          ]])
+        end
       end,
       'Toggle Word Wrap',
     },
@@ -283,3 +366,13 @@ local switches = {
 
 wk.register(text_objects, { prefix = '', mode = 'o' })
 wk.register(switches, { prefix = 'y', mode = 'n' })
+-- wk.register({
+--   h = {
+--     name = '+highlight',
+--     q = { ':<c-u>HSHighlight 1<CR>' },
+--     w = { ':<c-u>HSHighlight 2<CR>' },
+--   },
+-- }, {
+--   prefix = '<leader>',
+--   mode = 'v',
+-- })
