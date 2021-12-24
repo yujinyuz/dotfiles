@@ -133,8 +133,16 @@ local plugins = function(use)
   })
 
   -- Theme: Colors / Syntax / Icons
+  -- use({
+  --   'folke/tokyonight.nvim',
+  --   config = function()
+  --     require('config.theme')
+  --   end,
+  -- })
+
   use({
-    'folke/tokyonight.nvim',
+    'rose-pine/neovim',
+    as = 'rose-pine',
     config = function()
       require('config.theme')
     end,
