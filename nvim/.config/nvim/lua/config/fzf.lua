@@ -64,6 +64,10 @@ fzf.setup({
   end,
 })
 
+if vim.loop.os_getenv('NVIM_FILE_FINDER') ~= 'fzf' then
+  return
+end
+
 vim.keymap.nnoremap({
   '<leader>]',
   function()

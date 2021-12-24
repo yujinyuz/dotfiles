@@ -17,7 +17,7 @@ snap.register.command(
 
       -- Passing in the `--sort path` would make it single threaded but at the benefit of having predictable files list
       -- Besides, it doesn't really matter since we are just listing files and there should be little no performance impact
-      snap.get('producer.ripgrep.file').args({ '--hidden', '--iglob', '!.git/*', '--sort', 'path'}),
+      snap.get('producer.ripgrep.file').args({ '--hidden', '--iglob', '!.git/*', '--sort', 'path' }),
     },
     prompt = 'Files',
     select = snap.get('select.vimgrep').select,
@@ -26,13 +26,14 @@ snap.register.command(
   })
 )
 
-
-
 snap.register.command(
   'nvim',
   file({
     try = {
-      snap.get('producer.git.file').args({ '--cached', '--others', '--exclude-standard', '--deduplicate' }, '~/.config/nvim'),
+      snap.get('producer.git.file').args(
+        { '--cached', '--others', '--exclude-standard', '--deduplicate' },
+        '~/.config/nvim'
+      ),
 
       -- Passing in the `--sort path` would make it single threaded but at the benefit of having predictable files list
       -- Besides, it doesn't really matter since we are just listing files and there should be little no performance impact
@@ -62,8 +63,6 @@ snap.register.command(
   })
 )
 
-
-
 -- TODO: Pass the result of vimgrep to fzf. Check docs
 snap.register.command(
   'grep_word',
@@ -91,36 +90,28 @@ snap.register.command(
   })
 )
 
-
-
 -- rg --no-filename --no-heading --no-line-number --word-regexp --color never --only-matching  'from[a-zA-Z_-]+' .
 snap.register.command(
   'psuedo_tags',
   vimgrep({
     -- https://github.com/camspiers/snap/pull/66#issuecomment-873678089
-    producer = snap.get('producer.ripgrep.vimgrep').line({ '--smart-case', '--hidden', '--glob=!.git', '--word-regexp'}),
+    producer = snap.get('producer.ripgrep.vimgrep').line({ '--smart-case', '--hidden', '--glob=!.git', '--word-regexp' }),
     prompt = 'Psuedo Tags',
   })
 )
 
--- snap.register.command(
---   'grep_word',
---   vimgrep({
---     -- https://github.com/camspiers/snap/pull/66#issuecomment-873678089
---     producer = snap.get('producer.ripgrep.vimgrep').line({ '--smart-case', '--hidden', '--glob=!.git' }),
---     prompt = 'Grep Word',
---     filter_with = 'cword',
---   })
--- )
-
--- vim.keymap.nnoremap({ '<leader>F', '<Cmd>Snap live_grep<CR>' })
--- vim.keymap.nnoremap({ '<leader><Space>', '<Cmd>Snap find_files<CR>' })
--- vim.keymap.nnoremap({ '<leader>n', '<Cmd>Snap find_files<CR>' })
--- vim.keymap.nnoremap({ '<leader>en', '<Cmd>Snap nvim<CR>' })
-vim.keymap.nnoremap({ '<leader>gw', '<Cmd>Snap grep_word<CR>' })
-vim.keymap.nnoremap({ '<leader>fw', '<Cmd>Snap grep_prompt<CR>' })
--- vim.keymap.nnoremap({ '<leader>bb', '<Cmd>Snap buffers<CR>' })
-vim.keymap.nnoremap({ '<leader>of', '<Cmd>Snap old_files<CR>' })
-
 vim.cmd([[hi link SnapPosition Special]])
 vim.cmd([[hi link SnapBorder TelescopeBorder]])
+
+if vim.loop.os_getenv('NVIM_FILE_FINDER') ~= 'snap' then
+  return
+end
+
+vim.keymap.nnoremap({ '<leader>F', '<Cmd>Snap live_grep<CR>' })
+vim.keymap.nnoremap({ '<leader><Space>', '<Cmd>Snap find_files<CR>' })
+vim.keymap.nnoremap({ '<leader>n', '<Cmd>Snap find_files<CR>' })
+vim.keymap.nnoremap({ '<leader>en', '<Cmd>Snap nvim<CR>' })
+vim.keymap.nnoremap({ '<leader>gw', '<Cmd>Snap grep_word<CR>' })
+vim.keymap.nnoremap({ '<leader>fw', '<Cmd>Snap grep_prompt<CR>' })
+vim.keymap.nnoremap({ '<leader>bb', '<Cmd>Snap buffers<CR>' })
+vim.keymap.nnoremap({ '<leader>of', '<Cmd>Snap old_files<CR>' })
