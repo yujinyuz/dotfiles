@@ -37,7 +37,7 @@ require('lir').setup({
     winblend = 10,
     win_opts = function()
       return {
-        border = "rounded",
+        border = 'rounded',
       }
     end,
   },
@@ -63,10 +63,9 @@ function _G.lirsettings()
       require('lir.actions').delete()
     end,
     silent = true,
-    buffer = true
+    buffer = true,
   })
 end
-
 
 vim.keymap.nnoremap({
   '<leader>.',
@@ -84,9 +83,9 @@ vim.keymap.nnoremap({
   silent = true,
 })
 
-
-aug('LirConfig', {
-  { events = { 'FileType' }, patterns = { 'lir' }, command = 'lua lirsettings()' },
-})
-
-
+vim.cmd([[
+  augroup LirCallback
+    autocmd!
+    autocmd FileType lir lua lirsettings()
+  augroup END
+]])
