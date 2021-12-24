@@ -33,9 +33,12 @@ function M.setup(client, buf)
   client.resolved_capabilities.document_formatting = enable
   -- format on save
   if client.resolved_capabilities.document_formatting then
-    aug('LspFormat', {
-      { events = { 'BufWritePre' }, patterns = {'*'}, command = 'lua require("config.lsp.formatting").format()' },
-    })
+    vim.cmd([[
+      augroup LspFormatCallback
+        autocmd!
+        autocmd BufWritePre * lua require('config.lsp.formatting').format()
+      augroup END
+    ]])
   end
 end
 
