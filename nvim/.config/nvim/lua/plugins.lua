@@ -172,7 +172,6 @@ local plugins = function(use)
   })
 
   use({ 'SidOfc/mkdx', ft = { 'markdown' } })
-  use({ 'rwxrob/vim-pandoc-syntax-simple', ft = { 'markdown' } })
   use({ 'Vimjas/vim-python-pep8-indent', ft = { 'python' } })
   use({ 'michaeljsmith/vim-indent-object' })
 
