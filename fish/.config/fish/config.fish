@@ -50,6 +50,7 @@ set -gx PYTHON_BUILD_ARIA2_OPTS "-x 10 -k 1M" # Use aria2c when downloading
 set -gx PYTHON_3_HOST_PROG $VIRTUALENVS_DIR/nvim/bin/python3
 
 
+
 # asdf
 # Installation method via git since brew --prefix asdf is slow
 # Manually added ~/.asdf/bin to the path so we don't have to use shims in favor of direnv
@@ -85,8 +86,30 @@ alias vi="nvim"
 alias vifish="vi ~/.config/fish/config.fish"
 alias pmr="pm runserver"
 
-alias tmux_light="~/Sources/github.com/yujinyuz/dotfiles/./tokyonight_day.tmux"
-alias tmux_dark="~/Sources/github.com/yujinyuz/dotfiles/./tokyonight_storm.tmux"
+alias tmux_light="~/Sources/github.com/yujinyuz/dotfiles/tmux/./tokyonight_day.tmux"
+alias tmux_dark="~/Sources/github.com/yujinyuz/dotfiles/tmux/./tokyonight_storm.tmux"
 alias lzdocker="TERM=xterm-kitty lazydocker"
 alias minvim="nvim -u NORC"
 alias ssht="TERM=screen ssh"
+
+
+function toggle-theme
+	if [ "$THEME" = "Rosé Pine" ]
+		set -U THEME "Rosé Pine Dawn"
+    set -gx USE_LIGHT 1
+    tmux set-option -g status-style "bg=#faf4ed,fg=white,bold,italics"
+    tmux set-option -w -g window-status-current-style bg=yellow
+    rose_pine dawn
+	else
+		set -U THEME "Rosé Pine"
+    set -gx USE_LIGHT 0
+    tmux set-option -g status-style "bg=#191724,fg=white,bold,italics"
+    tmux set-option -w -g window-status-current-style bg=red
+    rose_pine
+	end
+
+  tmux set-option -g status-style "bg=$BG_TMUX,fg=white,bold,italics"
+  # tmux set-environment USE_LIGHT $USE_LIGHT
+
+	kitty +kitten themes --reload-in=all $THEME
+end
