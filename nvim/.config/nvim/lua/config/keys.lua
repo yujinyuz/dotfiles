@@ -159,7 +159,6 @@ wk.register({
     name = '+file',
     t = { '<Cmd>NvimTreeToggle<CR>', 'Toggle NvimTree' },
     n = { 'Create new file relative to current file' },
-    f = { '<Cmd>Telescope find_files<CR>', 'Find Files *Telescope*' },
     x = { ':update<CR>|:source<CR>', 'Save and Execute Current File' },
   },
   F = { 'Live Grep' },

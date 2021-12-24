@@ -118,9 +118,13 @@ M.live_grep = function(opts)
   require('telescope.builtin').live_grep(opts)
 end
 
--- vim.keymap.nnoremap({ '<leader><Space>', M.project_files })
--- vim.keymap.nnoremap({ '<leader>oo', M.project_files })
--- vim.keymap.nnoremap({ '<leader>bb', require('telescope.builtin').buffers })
--- vim.keymap.nnoremap({ '<leader>F', M.live_grep })
+if vim.loop.os_getenv('NVIM_FILE_FINDER') ~= 'telescope' then
+  return
+end
+
+vim.keymap.nnoremap({ '<leader><Space>', M.project_files })
+vim.keymap.nnoremap({ '<leader>oo', M.project_files })
+vim.keymap.nnoremap({ '<leader>bb', require('telescope.builtin').buffers })
+vim.keymap.nnoremap({ '<leader>F', M.live_grep })
 
 return M
