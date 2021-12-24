@@ -118,7 +118,7 @@ M.live_grep = function(opts)
   require('telescope.builtin').live_grep(opts)
 end
 
-if vim.loop.os_getenv('NVIM_FILE_FINDER') ~= 'telescope' then
+if vim.env.NVIM_FILE_FINDER ~= 'telescope' then
   return
 end
 
