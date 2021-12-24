@@ -36,3 +36,6 @@ temp/
 .DS_Store
 logs
 *.log
+
+# custom docker data folder
+dkdata
