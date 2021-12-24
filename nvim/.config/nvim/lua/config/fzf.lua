@@ -64,7 +64,7 @@ fzf.setup({
   end,
 })
 
-if vim.loop.os_getenv('NVIM_FILE_FINDER') ~= 'fzf' then
+if vim.env.NVIM_FILE_FINDER ~= 'fzf' then
   return
 end
 

@@ -15,12 +15,12 @@ vim.g.tokyonight_dark_float = true
 vim.g.tokyonight_colors = {}
 
 vim.g.rose_pine_variant = 'main'
-if vim.loop.os_getenv('USE_LIGHT') == '1' then
+if vim.env.USE_LIGHT == '1' then
   vim.g.rose_pine_variant = 'dawn'
 end
 
 vim.g.mapleader = ' '
-vim.g.python3_host_prog = os.getenv('PYTHON_3_HOST_PROG')
+vim.g.python3_host_prog = vim.env.PYTHON_3_HOST_PROG
 
 vim.g.loaded_gzip = 1
 vim.g.loaded_zip = 1

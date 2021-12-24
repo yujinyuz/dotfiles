@@ -103,7 +103,7 @@ snap.register.command(
 vim.cmd([[hi link SnapPosition Special]])
 vim.cmd([[hi link SnapBorder TelescopeBorder]])
 
-if vim.loop.os_getenv('NVIM_FILE_FINDER') ~= 'snap' then
+if vim.env.NVIM_FILE_FINDER ~= 'snap' then
   return
 end
 
