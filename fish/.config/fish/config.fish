@@ -36,7 +36,7 @@ set -x Z_CMD j
 
 # FZF
 set -l FD_OPTIONS "--hidden --follow --exclude .git --exclude node_modules"
-set -gx FZF_DEFAULT_COMMAND "git ls-files --cached --others --exclude-standard || fd --type f --type l $FD_OPTIONS"
+set -gx FZF_DEFAULT_COMMAND "git ls-files --cached --others --exclude-standard &> /dev/null | fd --type f --type l $FD_OPTIONS"
 set -gx FZF_DEFAULT_OPTS "--height 40% --layout=reverse --border --preview-window down:1"
 set -gx FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
 set -gx FZF_ALT_C_COMMAND "fd --type d $FD_OPTIONS"
