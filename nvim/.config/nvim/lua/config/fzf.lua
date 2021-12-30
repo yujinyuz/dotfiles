@@ -56,6 +56,7 @@ fzf.setup({
   grep = {
     rg_opts = string.format('%s %s', fzf.config.globals.grep.rg_opts, '--hidden -g "!.git"'),
     git_icons = false,
+    file_icons = false,
     multiprocess = true,
   },
   file_icon_padding = '',
@@ -71,7 +72,7 @@ end
 vim.keymap.nnoremap({
   '<leader>]',
   function()
-    fzf.tags({ fzf_cli_args = '--nth=2.. --no-hscroll' })
+    fzf.tags({ fzf_cli_args = '--with-nth=2,1 --no-hscroll' })
   end,
 })
 
