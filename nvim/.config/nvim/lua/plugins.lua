@@ -141,8 +141,7 @@ local plugins = function(use)
   -- })
 
   use({
-    'rose-pine/neovim',
-    as = 'rose-pine',
+    'rebelot/kanagawa.nvim',
     config = function()
       require('config.theme')
     end,
