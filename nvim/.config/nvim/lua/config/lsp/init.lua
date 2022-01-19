@@ -3,6 +3,10 @@ require('config.lsp.diagnostics').setup()
 local on_attach = function(client, bufnr)
   require('config.lsp.formatting').setup(client, bufnr)
   require('config.lsp.keys').setup(client, bufnr)
+
+  if client.resolved_capabilities.goto_definition == true then
+    vim.bo.tagfunc = 'v:lua.vim.lsp.tagfunc'
+  end
   -- require('config.lsp.completion').setup(client, bufnr)
 
   -- TypeScript specific stuff
