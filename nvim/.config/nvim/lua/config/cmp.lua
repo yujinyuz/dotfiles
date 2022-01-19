@@ -34,8 +34,8 @@ cmp.setup({
   mapping = {
     ['<C-p>'] = cmp.mapping.select_prev_item(),
     ['<C-n>'] = cmp.mapping.select_next_item(),
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
+    ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<CR>'] = cmp.mapping.confirm({
       behavior = cmp.ConfirmBehavior.Replace,
@@ -68,10 +68,10 @@ cmp.setup({
       's',
     }),
   },
-  sources = {
+  sources = cmp.config.sources({
     { name = 'rg', max_item_count = 10, keyword_length = 3 },
     { name = 'path', max_item_count = 10, keyword_length = 3 },
-  },
+  }),
   formatting = {
     format = require('lspkind').cmp_format({
       with_text = true,
@@ -95,6 +95,7 @@ cmp.setup({
   --   },
   -- },
 })
+-- })
 
 local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
