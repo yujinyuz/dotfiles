@@ -15,6 +15,11 @@ fzf.setup({
       search = 'Search', -- search matches (ctags)
       -- title       = 'Normal',        -- preview border title (file/buffer)
     },
+
+    preview = {
+      hidden = 'hidden',
+      delay = 0.1,
+    },
   },
   fzf_opts = {
     ['--border'] = 'none',
@@ -38,6 +43,7 @@ fzf.setup({
     builtin = {
       ['<C-d>'] = 'preview-page-down',
       ['<C-u>'] = 'preview-page-up',
+      ['<C-h>'] = 'toggle-preview',
     },
   },
   files = {
@@ -47,7 +53,6 @@ fzf.setup({
   git = {
     files = {
       cmd = 'git ls-files --exclude-standard --cached --others --deduplicate',
-      previewer = { _ctor = false },
       git_icons = false,
       file_icons = false,
       multiprocess = true,
@@ -79,7 +84,7 @@ vim.keymap.nnoremap({
 vim.keymap.nnoremap({
   '<leader>F',
   function()
-    fzf.live_grep({ fzf_cli_args = '--nth=2..', exec_empty_query = true })
+    fzf.live_grep_native({ fzf_cli_args = '--nth=2..', exec_empty_query = true })
   end,
 })
 vim.keymap.nnoremap({
@@ -94,3 +99,4 @@ vim.keymap.nnoremap({
 })
 vim.keymap.nnoremap({ '<leader>bb', '<Cmd>FzfLua buffers<CR>' })
 vim.keymap.nnoremap({ '<leader>fw', '<Cmd>FzfLua grep_cword<CR>' })
+vim.keymap.nnoremap({ 'gr', '<Cmd>FzfLua lsp_references<CR>' })
