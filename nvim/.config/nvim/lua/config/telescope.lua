@@ -122,9 +122,9 @@ if vim.env.NVIM_FILE_FINDER ~= 'telescope' then
   return
 end
 
-vim.keymap.nnoremap({ '<leader><Space>', M.project_files })
-vim.keymap.nnoremap({ '<leader>oo', M.project_files })
-vim.keymap.nnoremap({ '<leader>bb', require('telescope.builtin').buffers })
-vim.keymap.nnoremap({ '<leader>F', M.live_grep })
+vim.keymap.set('n', '<leader><Space>', M.project_files )
+vim.keymap.set('n', '<leader>oo', M.project_files )
+vim.keymap.set('n', '<leader>bb', require('telescope.builtin').buffers )
+vim.keymap.set('n', '<leader>F', M.live_grep )
 
 return M

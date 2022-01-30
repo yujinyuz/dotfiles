@@ -14,5 +14,4 @@ end
 
 
 
-vim.keymap.nnoremap({ '<A-h>', fterm_htop })
-vim.keymap.tnoremap({ '<A-h>', fterm_htop })
+vim.keymap.set({'n', 't'}, '<A-h>', fterm_htop )

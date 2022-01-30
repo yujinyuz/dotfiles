@@ -9,14 +9,12 @@ function M.setup(client, bufnr)
       r = {
         function()
           vim.lsp.buf.rename()
-          -- require('lspactions').rename()
         end,
         'Rename',
       },
       a = {
         function()
           vim.lsp.buf.code_action()
-          -- require('lspactions').code_action()
         end,
         'Code Action',
       },
@@ -103,43 +101,20 @@ function M.setup(client, bufnr)
     I = { '<Cmd>lua vim.lsp.buf.implementation()<CR>', 'Goto Implementation' },
   }
 
-  vim.keymap.nnoremap({ 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', buffer = true, silent = true })
-  vim.keymap.nnoremap({
-    '[w',
-    function()
-      vim.diagnostic.goto_prev({ opts = { focusable = false } })
-      -- '<Cmd>lua vim.lsp.diagnostic.goto_prev({popup_opts = {focusable = false}})<CR>'
-    end,
-    buffer = true,
+  vim.keymap.set('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', { buffer = 0, silent = true })
+  vim.keymap.set('n', '[w', function()
+    vim.diagnostic.goto_prev({ opts = { focusable = false } })
+  end, {
+    buffer = 0,
     silent = true,
   })
-  vim.keymap.nnoremap({
-    ']w',
-    function()
-      -- '<Cmd>lua vim.lsp.diagnostic.goto_next({popup_opts = {focusable = false}})<CR>',
-      vim.diagnostic.goto_next({ opts = { focusable = false } })
-    end,
-    buffer = true,
+  vim.keymap.set('n', ']w', function()
+    vim.diagnostic.goto_next({ opts = { focusable = false } })
+  end, {
+    buffer = 0,
     silent = true,
   })
-  vim.keymap.inoremap({ '<C-s>', '<Cmd>lua vim.lsp.buf.signature_help()<CR>', silent = true, buffer = true })
-
-  -- @warning: This will map {'(', ')', ','} in insert mode
-  -- It might conflict with autopairs plugin
-  local trigger_chars = client.resolved_capabilities.signature_help_trigger_characters
-  trigger_chars = {}
-  for _, c in ipairs(trigger_chars) do
-    vim.keymap.inoremap({
-      c,
-      function()
-        vim.defer_fn(vim.lsp.buf.signature_help, 0)
-        return c
-      end,
-      buffer = true,
-      silent = true,
-      expr = true,
-    })
-  end
+  vim.keymap.set('i', '<C-s>', '<Cmd>lua vim.lsp.buf.signature_help()<CR>', { silent = true, buffer = 0 })
 
   -- Set some keybinds conditional on server capabilities
   if client.resolved_capabilities.document_formatting then

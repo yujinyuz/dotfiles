@@ -3,4 +3,4 @@ vim.bo.tabstop = 4
 
 vim.cmd([[ command! Format :%!jq .]])
 
-vim.keymap.nnoremap({ '<leader>cf', '<Cmd>Format<CR>', silent = true, buffer = true })
+vim.keymap.set('n', '<leader>cf', '<Cmd>Format<CR>', { silent = true, buffer = 0 })

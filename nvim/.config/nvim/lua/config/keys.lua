@@ -1,12 +1,3 @@
-local nnoremap = vim.keymap.nnoremap
-local cnoremap = vim.keymap.cnoremap
-local xnoremap = vim.keymap.xnoremap
-local vnoremap = vim.keymap.xnoremap
-local tnoremap = vim.keymap.tnoremap
-local inoremap = vim.keymap.inoremap
-local nmap = vim.keymap.nmap
-local vmap = vim.keymap.vmap
-local xmap = vim.keymap.xmap
 local utils = require('utils')
 
 vim.opt.timeoutlen = 300
@@ -34,105 +25,95 @@ wk.setup({
 })
 
 -- Prevent accidentally opening ex mode
-nnoremap({ 'Q', '"_' })
+vim.keymap.set('n', 'Q', '"_' )
 
 -- Create new file
-nnoremap({ '<leader>fn', [[:e %:h<C-z>]] })
+vim.keymap.set('n', '<leader>fn', [[:e %:h<C-z>]] )
 
 -- Buffer Switch
-nnoremap({ '<BS>', '<C-^>' })
+vim.keymap.set('n', '<BS>', '<C-^>')
 
 -- Resize splits with Shift + Arrow Keys
-nnoremap({ '<S-Up>', '<C-w>+' })
-nnoremap({ '<S-Down>', '<C-w>-' })
-nnoremap({ '<S-Left>', '<C-w><' })
-nnoremap({ '<S-Right>', '<C-w>>' })
-nnoremap({ '<leader>=', '<C-w>=' })
+vim.keymap.set('n', '<S-Up>', '<C-w>+')
+vim.keymap.set('n', '<S-Down>', '<C-w>-' )
+vim.keymap.set('n', '<S-Left>', '<C-w><' )
+vim.keymap.set('n', '<S-Right>', '<C-w>>' )
+vim.keymap.set('n', '<leader>=', '<C-w>=' )
 
 -- Windows
-nnoremap({ '<C-j>', '<C-w>w' })
-nnoremap({ '<C-k>', '<C-w>W' })
+vim.keymap.set('n', '<C-j>', '<C-w>w' )
+vim.keymap.set('n', '<C-k>', '<C-w>W' )
 
 -- Navigate to splits with arrow keys
-nnoremap({ '<Left>', '<C-w>h' })
-nnoremap({ '<Right>', '<C-w>l' })
-nnoremap({ '<Up>', '<C-w>k' })
-nnoremap({ '<Down>', '<C-w>j' })
+vim.keymap.set('n', '<Left>', '<C-w>h' )
+vim.keymap.set('n', '<Right>', '<C-w>l' )
+vim.keymap.set('n', '<Up>', '<C-w>k' )
+vim.keymap.set('n', '<Down>', '<C-w>j' )
 
 -- Smooth scroll
-nnoremap({ '<C-y>', '3<C-y>' })
-nnoremap({ '<C-e>', '3<C-e>' })
+vim.keymap.set('n', '<C-y>', '3<C-y>' )
+vim.keymap.set('n', '<C-e>', '3<C-e>' )
 
 -- Use Alt for moving lines up/down
-nmap({ '<M-j>', [[mz:m+<CR>`z]], silent = true })
-nmap({ '<M-k>', [[mz:m-2<CR>`z]], silent = true })
-vmap({ '<M-j>', [[:m'>+<CR>`<my`>mzgv`yo`z]], silent = true })
-vmap({ '<M-k>', [[:m'<-2<CR>`>my`<mzgv`yo`z]], silent = true })
+vim.keymap.set('n', '<M-j>', [[mz:m+<CR>`z]], {silent = true})
+vim.keymap.set('n', '<M-k>', [[mz:m-2<CR>`z]], {silent = true} )
+vim.keymap.set('v', '<M-j>', [[:m'>+<CR>`<my`>mzgv`yo`z]], {silent = true} )
+vim.keymap.set('v', '<M-k>', [[:m'<-2<CR>`>my`<mzgv`yo`z]], {silent = true} )
 
 -- Command-line like navigation
-cnoremap({ '<C-j>', '<C-n>' })
-cnoremap({ '<C-k>', '<C-p>' })
+vim.keymap.set('c', '<C-j>', '<C-n>' )
+vim.keymap.set('c', '<C-k>', '<C-p>' )
 
 -- Don't lose selection when shifting sidewards
-xnoremap({ '<', '<gv' })
-xnoremap({ '>', '>gv' })
+vim.keymap.set('x', '<', '<gv' )
+vim.keymap.set('x', '>', '>gv' )
 
-tnoremap({ '<Esc>', [[<C-\><C-n>]] })
-tnoremap({ '<M-h>', [[<C-\><C-n><C-w>h]] })
-tnoremap({ '<M-j>', [[<C-\><C-n><C-w>j]] })
-tnoremap({ '<M-k>', [[<C-\><C-n><C-w>k]] })
-tnoremap({ '<M-l>', [[<C-\><C-n><C-w>l]] })
+vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]] )
+vim.keymap.set('t', '<M-h>', [[<C-\><C-n><C-w>h]] )
+vim.keymap.set('t', '<M-j>', [[<C-\><C-n><C-w>j]] )
+vim.keymap.set('t', '<M-k>', [[<C-\><C-n><C-w>k]] )
+vim.keymap.set('t', '<M-l>', [[<C-\><C-n><C-w>l]] )
 
 -- Persistent highlights
-nnoremap({ '<leader>ll', [[<Cmd>call matchadd('Visual', '\%'.line('.').'l')<CR>]], silent = true })
-nnoremap({ '<leader>lc', [[<Cmd>call clearmatches()<CR>]], silent = true })
+vim.keymap.set('n', '<leader>ll', [[<Cmd>call matchadd('Visual', '\%'.line('.').'l')<CR>]], {silent = true} )
+vim.keymap.set('n', '<leader>lc', [[<Cmd>call clearmatches()<CR>]], {silent = true} )
 
-cnoremap({ 'w!!', [[:lua require('utils').sudo_write()<CR>]] })
+vim.keymap.set('c', 'w!!', [[:lua require('utils').sudo_write()<CR>]] )
 
 -- nvim-tree
-nnoremap({ '<C-n>', '<Cmd>NvimTreeToggle<CR>' })
+vim.keymap.set('n', '<C-n>', '<Cmd>NvimTreeToggle<CR>' )
 
-nnoremap({ '<localleader>b', '<Cmd>Vista!!<CR>' })
+vim.keymap.set('n', '<localleader>b', '<Cmd>Vista!!<CR>' )
 
-nnoremap({
+vim.keymap.set('n',
   '<A-i>',
-  '<Cmd>lua require("FTerm").toggle()<CR>',
-})
+  '<Cmd>lua require("FTerm").toggle()<CR>')
 
-tnoremap({
+vim.keymap.set('t',
   '<A-i>',
-  '<Cmd>lua require("FTerm").toggle()<CR>',
-})
+  '<Cmd>lua require("FTerm").toggle()<CR>')
 
-xnoremap({ '<leader>h0', ':<c-u>HSHighlight 0<CR>' })
-xnoremap({ '<leader>h1', ':<c-u>HSHighlight 1<CR>' })
-xnoremap({ '<leader>h2', ':<c-u>HSHighlight 2<CR>' })
-xnoremap({ '<leader>h3', ':<c-u>HSHighlight 3<CR>' })
-xnoremap({ '<leader>h4', ':<c-u>HSHighlight 4<CR>' })
-xnoremap({ '<leader>h5', ':<c-u>HSHighlight 5<CR>' })
-xnoremap({ '<leader>h6', ':<c-u>HSHighlight 6<CR>' })
-xnoremap({ '<leader>h7', ':<c-u>HSHighlight 7<CR>' })
-xnoremap({ '<leader>h8', ':<c-u>HSHighlight 8<CR>' })
-xnoremap({ '<leader>h9', ':<c-u>HSHighlight 9<CR>' })
+vim.keymap.set('x', '<leader>h0', ':<c-u>HSHighlight 0<CR>' )
+vim.keymap.set('x', '<leader>h1', ':<c-u>HSHighlight 1<CR>' )
+vim.keymap.set('x', '<leader>h2', ':<c-u>HSHighlight 2<CR>' )
+vim.keymap.set('x', '<leader>h3', ':<c-u>HSHighlight 3<CR>' )
+vim.keymap.set('x', '<leader>h4', ':<c-u>HSHighlight 4<CR>' )
+vim.keymap.set('x', '<leader>h5', ':<c-u>HSHighlight 5<CR>' )
+vim.keymap.set('x', '<leader>h6', ':<c-u>HSHighlight 6<CR>' )
+vim.keymap.set('x', '<leader>h7', ':<c-u>HSHighlight 7<CR>' )
+vim.keymap.set('x', '<leader>h8', ':<c-u>HSHighlight 8<CR>' )
+vim.keymap.set('x', '<leader>h9', ':<c-u>HSHighlight 9<CR>' )
 
-nnoremap({
+vim.keymap.set('n',
   '<space>cu',
   function()
-    local number = math.random(math.pow(2, 127) + 1, math.pow(2, 128))
-    return 'i' .. string.format('%.0f', number)
+  local number = math.random(math.pow(2, 127) + 1, math.pow(2, 128))
+  return 'i' .. string.format('%.0f', number)
   end,
-  expr = true,
-})
+  {expr = true})
 
--- nnoremap({
---   '<leader><Space>',
---   function()
---     utils.warn([[Find Files deprecated. Use one of the following: <leader>(n, oo, ff)]], 'Muscle Memory Training')
---   end,
--- })
 
-nmap({ 'ga', '<Plug>(EasyAlign)' })
-xmap({ 'ga', '<Plug>(EasyAlign)' })
+vim.keymap.set({'n', 'x'}, 'ga', '<Plug>(EasyAlign)' )
 
 wk.register({
   [' '] = 'Find Files',

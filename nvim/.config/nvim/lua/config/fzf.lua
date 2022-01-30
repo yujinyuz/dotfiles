@@ -17,7 +17,6 @@ fzf.setup({
     },
 
     preview = {
-      hidden = 'hidden',
       delay = 0.1,
     },
   },
@@ -66,7 +65,7 @@ fzf.setup({
   },
   file_icon_padding = '',
   on_create = function()
-    vim.keymap.tnoremap({ '<Esc>', '<C-c>', buffer = true })
+    vim.keymap.set('t', '<Esc>', '<C-c>', { buffer = 0 })
   end,
 })
 
@@ -74,29 +73,40 @@ if vim.env.NVIM_FILE_FINDER ~= 'fzf' then
   return
 end
 
-vim.keymap.nnoremap({
-  '<leader>]',
-  function()
-    fzf.tags({ fzf_cli_args = '--with-nth=2,1 --no-hscroll' })
-  end,
-})
+vim.keymap.set('n', '<leader>]', function()
+  fzf.tags({ fzf_cli_args = '--with-nth=2,1 --no-hscroll', winopts = { preview = { hidden = 'nohidden' } } })
+end)
 
-vim.keymap.nnoremap({
-  '<leader>F',
-  function()
-    fzf.live_grep_native({ fzf_cli_args = '--nth=2..', exec_empty_query = true })
-  end,
-})
-vim.keymap.nnoremap({
-  '<leader>n',
-  function()
-    if path.is_git_repo(vim.loop.cwd(), true) then
-      fzf.git_files({ fzf_opts = { ['--ansi'] = false }, file_icons = false, git_icons = false })
-      return
-    end
-    fzf.files({ fzf_opts = { ['--ansi'] = false }, file_icons = false, git_icons = false })
-  end,
-})
-vim.keymap.nnoremap({ '<leader>bb', '<Cmd>FzfLua buffers<CR>' })
-vim.keymap.nnoremap({ '<leader>fw', '<Cmd>FzfLua grep_cword<CR>' })
-vim.keymap.nnoremap({ 'gr', '<Cmd>FzfLua lsp_references<CR>' })
+vim.keymap.set('n', '<leader>F', function()
+  fzf.live_grep_native({
+    fzf_cli_args = '--nth=2..',
+    exec_empty_query = true,
+    winopts = { preview = { hidden = 'nohidden' } },
+  })
+end)
+vim.keymap.set('n', '<leader>n', function()
+  local prompt = [[ProjectFiles> ]]
+  local winopts = { preview = { hidden = 'hidden' } }
+
+  if path.is_git_repo(vim.loop.cwd(), true) then
+    fzf.git_files({
+      fzf_opts = { ['--ansi'] = false },
+      file_icons = false,
+      git_icons = false,
+      prompt = prompt,
+      winopts = winopts,
+    })
+    return
+  end
+  fzf.files({
+    fzf_opts = { ['--ansi'] = false },
+    file_icons = false,
+    git_icons = false,
+    prompt = prompt,
+    winopts = winopts,
+  })
+end)
+
+vim.keymap.set('n', '<leader>bb', '<Cmd>FzfLua buffers<CR>')
+vim.keymap.set('n', '<leader>fw', '<Cmd>FzfLua grep_cword<CR>')
+vim.keymap.set('n', 'gr', '<Cmd>FzfLua lsp_references<CR>')
