@@ -107,11 +107,11 @@ if vim.env.NVIM_FILE_FINDER ~= 'snap' then
   return
 end
 
-vim.keymap.nnoremap({ '<leader>F', '<Cmd>Snap live_grep<CR>' })
-vim.keymap.nnoremap({ '<leader><Space>', '<Cmd>Snap find_files<CR>' })
-vim.keymap.nnoremap({ '<leader>n', '<Cmd>Snap find_files<CR>' })
-vim.keymap.nnoremap({ '<leader>en', '<Cmd>Snap nvim<CR>' })
-vim.keymap.nnoremap({ '<leader>gw', '<Cmd>Snap grep_word<CR>' })
-vim.keymap.nnoremap({ '<leader>fw', '<Cmd>Snap grep_prompt<CR>' })
-vim.keymap.nnoremap({ '<leader>bb', '<Cmd>Snap buffers<CR>' })
-vim.keymap.nnoremap({ '<leader>of', '<Cmd>Snap old_files<CR>' })
+vim.keymap.set('n', '<leader>F', '<Cmd>Snap live_grep<CR>')
+vim.keymap.set('n', '<leader><Space>', '<Cmd>Snap find_files<CR>')
+vim.keymap.set('n', '<leader>n', '<Cmd>Snap find_files<CR>')
+vim.keymap.set('n', '<leader>en', '<Cmd>Snap nvim<CR>')
+vim.keymap.set('n', '<leader>gw', '<Cmd>Snap grep_word<CR>')
+vim.keymap.set('n', '<leader>fw', '<Cmd>Snap grep_prompt<CR>')
+vim.keymap.set('n', '<leader>bb', '<Cmd>Snap buffers<CR>')
+vim.keymap.set('n', '<leader>of', '<Cmd>Snap old_files<CR>')

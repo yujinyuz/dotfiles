@@ -48,40 +48,25 @@ require('lir').setup({
 function _G.lirsettings()
   vim.opt_local.number = true
   vim.opt_local.relativenumber = true
-  vim.keymap.xnoremap({
-    'J',
-    function()
-      require('lir.mark.actions').toggle_mark('v')
-    end,
+  vim.keymap.set('x', 'J', function()
+    require('lir.mark.actions').toggle_mark('v')
+  end, {
     silent = true,
-    buffer = true,
+    buffer = 0,
   })
 
-  vim.keymap.nnoremap({
-    'X',
-    function()
-      require('lir.actions').delete()
-    end,
-    silent = true,
-    buffer = true,
-  })
+  vim.keymap.set('n', 'X', function()
+    require('lir.actions').delete()
+  end, { silent = true, buffer = 0 })
 end
 
-vim.keymap.nnoremap({
-  '<leader>.',
-  function()
-    require('lir.float').toggle()
-  end,
-  silent = true,
-})
+vim.keymap.set('n', '<leader>.', function()
+  require('lir.float').toggle()
+end, { silent = true })
 
-vim.keymap.nnoremap({
-  '<leader>/',
-  function()
-    require('lir.float').toggle('.')
-  end,
-  silent = true,
-})
+vim.keymap.set('n', '<leader>/', function()
+  require('lir.float').toggle('.')
+end, { silent = true })
 
 vim.cmd([[
   augroup LirCallback

@@ -14,8 +14,6 @@
 
 -- Load globals
 require('globals')
--- Make `vim.keymap` available
-require('utils._keymap_port')
 -- Load global helpers
 require('utils')
 -- Faster (?) startup time

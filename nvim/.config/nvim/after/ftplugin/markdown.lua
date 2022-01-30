@@ -15,5 +15,14 @@ require('cmp').setup.buffer({
   },
 })
 
-vim.keymap.inoremap({';H', '<Esc>yypv$r='})
-vim.keymap.inoremap({';h', '<Esc>yypv$r-'})
+vim.keymap.set('i', ';H', '<Esc>yypv$r=', { buffer = 0 })
+vim.keymap.set('i', ';h', '<Esc>yypv$r-', { buffer = 0 })
+vim.keymap.set('i', ';t', '## <C-R>=strftime("%H:%M")<CR><CR><CR><CR>', { buffer = 0 })
+
+-- Mnemonic for [i]dea
+vim.keymap.set(
+  'n',
+  '<leader>i',
+  'Go<CR>## <C-R>=strftime("%H:%M")<CR><Esc>zzA<CR><CR>',
+  { buffer = 0, silent = true }
+)

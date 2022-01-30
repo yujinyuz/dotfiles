@@ -6,7 +6,6 @@ require('cmp').setup.buffer({
   },
 })
 
-
 local fterm = require('FTerm')
 
 local pm_shell = fterm:new({
@@ -19,7 +18,4 @@ local function shell_plus()
   pm_shell:toggle()
 end
 
-
-
-vim.keymap.nnoremap({ '<A-x>', shell_plus })
-vim.keymap.tnoremap({ '<A-x>', shell_plus })
+vim.keymap.set({ 'n', 't' }, '<A-x>', shell_plus)
