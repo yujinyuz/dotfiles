@@ -2,7 +2,7 @@ local actions = require('lir.actions')
 local mark_actions = require('lir.mark.actions')
 local clipboard_actions = require('lir.clipboard.actions')
 
-require('lir').setup({
+require('lir').setup {
   show_hidden_files = true,
   devicons_enable = true,
   mappings = {
@@ -42,7 +42,7 @@ require('lir').setup({
     end,
   },
   hide_cursor = false,
-})
+}
 
 -- use visual mode
 function _G.lirsettings()

@@ -1,4 +1,4 @@
-require('gitsigns').setup({
+require('gitsigns').setup {
   signcolumn = false,
   current_line_blame = false,
   current_line_blame_opts = {
@@ -33,4 +33,4 @@ require('gitsigns').setup({
     ['o ih'] = ':<C-U>lua require"gitsigns.actions".select_hunk()<CR>',
     ['x ih'] = ':<C-U>lua require"gitsigns.actions".select_hunk()<CR>',
   },
-})
+}

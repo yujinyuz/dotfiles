@@ -16,7 +16,7 @@ local filename = function()
   return data
 end
 
-lualine.setup({
+lualine.setup {
   options = {
     theme = 'auto',
     -- separator = '|',
@@ -26,7 +26,11 @@ lualine.setup({
     lualine_a = { 'mode' },
     lualine_b = { 'branch', 'diff', { 'diagnostics', sources = { 'nvim_diagnostic' } } },
     lualine_c = { { 'filename', file_status = true, path = 1 } },
-    lualine_x = { { require('nvim-gps').get_location, cond = require('nvim-gps').is_available }, 'encoding', 'filetype' },
+    lualine_x = {
+      { require('nvim-gps').get_location, cond = require('nvim-gps').is_available },
+      'encoding',
+      'filetype',
+    },
     lualine_y = { 'progress' },
     lualine_z = { 'location' },
   },
@@ -38,4 +42,4 @@ lualine.setup({
     lualine_y = {},
     lualine_z = {},
   },
-})
+}

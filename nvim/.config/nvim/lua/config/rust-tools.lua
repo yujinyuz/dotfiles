@@ -117,7 +117,7 @@ function M.setup(options)
     -- },
   }
 
-  require("rust-tools").setup(opts)
+  require('rust-tools').setup(opts)
 end
 
 return M

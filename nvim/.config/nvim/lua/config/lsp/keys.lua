@@ -103,13 +103,13 @@ function M.setup(client, bufnr)
 
   vim.keymap.set('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', { buffer = 0, silent = true })
   vim.keymap.set('n', '[w', function()
-    vim.diagnostic.goto_prev({ opts = { focusable = false } })
+    vim.diagnostic.goto_prev { opts = { focus = false } }
   end, {
     buffer = 0,
     silent = true,
   })
   vim.keymap.set('n', ']w', function()
-    vim.diagnostic.goto_next({ opts = { focusable = false } })
+    vim.diagnostic.goto_next { opts = { focus = false } }
   end, {
     buffer = 0,
     silent = true,

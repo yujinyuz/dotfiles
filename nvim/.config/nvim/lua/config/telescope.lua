@@ -43,16 +43,16 @@ end
 local fixfolds = {
   hidden = true,
   attach_mappings = function(_)
-    action_set.select:enhance({
+    action_set.select:enhance {
       post = function()
         vim.cmd(':normal! zx')
       end,
-    })
+    }
     return true
   end,
 }
 
-require('telescope').setup({
+require('telescope').setup {
   defaults = {
     prompt_prefix = '❯ ',
     selection_caret = '❯ ',
@@ -83,7 +83,7 @@ require('telescope').setup({
       case_mode = 'smart_case',
     },
   },
-})
+}
 require('telescope').load_extension('fzf')
 
 local M = {}
@@ -122,9 +122,9 @@ if vim.env.NVIM_FILE_FINDER ~= 'telescope' then
   return
 end
 
-vim.keymap.set('n', '<leader><Space>', M.project_files )
-vim.keymap.set('n', '<leader>oo', M.project_files )
-vim.keymap.set('n', '<leader>bb', require('telescope.builtin').buffers )
-vim.keymap.set('n', '<leader>F', M.live_grep )
+vim.keymap.set('n', '<leader><Space>', M.project_files)
+vim.keymap.set('n', '<leader>oo', M.project_files)
+vim.keymap.set('n', '<leader>bb', require('telescope.builtin').buffers)
+vim.keymap.set('n', '<leader>F', M.live_grep)
 
 return M
