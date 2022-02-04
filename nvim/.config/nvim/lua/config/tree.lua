@@ -16,7 +16,7 @@ vim.g.nvim_tree_icons = {
   },
 }
 
-require('nvim-tree').setup({
+require('nvim-tree').setup {
   -- Fix the lir/nvim-tree issue
   update_to_buf_dir = {
     enable = false,
@@ -36,4 +36,4 @@ require('nvim-tree').setup({
     enable = true,
     updated_cwd = false,
   },
-})
+}

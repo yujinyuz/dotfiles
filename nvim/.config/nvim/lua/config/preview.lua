@@ -1,6 +1,6 @@
 local gp = require('goto-preview')
 
-gp.setup({})
+gp.setup {}
 
 vim.keymap.set('n', 'gpd', function()
   gp.goto_preview_definition()

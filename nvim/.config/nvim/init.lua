@@ -17,7 +17,7 @@ require('globals')
 -- Load global helpers
 require('utils')
 -- Faster (?) startup time
-require('impatient')
+prequire('impatient')
 prequire('packer_compiled')
 -- Load options
 require('options')

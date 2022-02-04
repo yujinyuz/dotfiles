@@ -135,4 +135,7 @@ opt.synmaxcol = 512
 
 -- opt.switchbuf = 'usetab' -- try to reuse windows/tabs when switching buffers
 
-vim.notify = require('notify')
+local notify = prequire('notify')
+if notify then
+  vim.notify = notify
+end

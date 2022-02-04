@@ -1,8 +1,7 @@
-require('hlslens').setup({
-    calm_down = true,
-    nearest_only = true,
-})
-
+require('hlslens').setup {
+  calm_down = true,
+  nearest_only = true,
+}
 
 vim.cmd([[
     noremap <silent> n <Cmd>execute('normal! ' . v:count1 . 'n')<CR>

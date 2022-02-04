@@ -4,7 +4,7 @@ vim.opt.timeoutlen = 300
 
 local wk = require('which-key')
 
-wk.setup({
+wk.setup {
   -- show_help = false,
   -- triggers = "auto",
   plugins = {
@@ -22,98 +22,92 @@ wk.setup({
     c = { 'w' },
     n = { '`' },
   },
-})
+}
 
 -- Prevent accidentally opening ex mode
-vim.keymap.set('n', 'Q', '"_' )
+vim.keymap.set('n', 'Q', '"_')
 
 -- Create new file
-vim.keymap.set('n', '<leader>fn', [[:e %:h<C-z>]] )
+vim.keymap.set('n', '<leader>fn', [[:e %:h<C-z>]])
 
 -- Buffer Switch
 vim.keymap.set('n', '<BS>', '<C-^>')
 
 -- Resize splits with Shift + Arrow Keys
 vim.keymap.set('n', '<S-Up>', '<C-w>+')
-vim.keymap.set('n', '<S-Down>', '<C-w>-' )
-vim.keymap.set('n', '<S-Left>', '<C-w><' )
-vim.keymap.set('n', '<S-Right>', '<C-w>>' )
-vim.keymap.set('n', '<leader>=', '<C-w>=' )
+vim.keymap.set('n', '<S-Down>', '<C-w>-')
+vim.keymap.set('n', '<S-Left>', '<C-w><')
+vim.keymap.set('n', '<S-Right>', '<C-w>>')
+vim.keymap.set('n', '<leader>=', '<C-w>=')
 
 -- Windows
-vim.keymap.set('n', '<C-j>', '<C-w>w' )
-vim.keymap.set('n', '<C-k>', '<C-w>W' )
+vim.keymap.set('n', '<C-j>', '<C-w>w')
+vim.keymap.set('n', '<C-k>', '<C-w>W')
 
 -- Navigate to splits with arrow keys
-vim.keymap.set('n', '<Left>', '<C-w>h' )
-vim.keymap.set('n', '<Right>', '<C-w>l' )
-vim.keymap.set('n', '<Up>', '<C-w>k' )
-vim.keymap.set('n', '<Down>', '<C-w>j' )
+vim.keymap.set('n', '<Left>', '<C-w>h')
+vim.keymap.set('n', '<Right>', '<C-w>l')
+vim.keymap.set('n', '<Up>', '<C-w>k')
+vim.keymap.set('n', '<Down>', '<C-w>j')
 
 -- Smooth scroll
-vim.keymap.set('n', '<C-y>', '3<C-y>' )
-vim.keymap.set('n', '<C-e>', '3<C-e>' )
+vim.keymap.set('n', '<C-y>', '3<C-y>')
+vim.keymap.set('n', '<C-e>', '3<C-e>')
 
 -- Use Alt for moving lines up/down
-vim.keymap.set('n', '<M-j>', [[mz:m+<CR>`z]], {silent = true})
-vim.keymap.set('n', '<M-k>', [[mz:m-2<CR>`z]], {silent = true} )
-vim.keymap.set('v', '<M-j>', [[:m'>+<CR>`<my`>mzgv`yo`z]], {silent = true} )
-vim.keymap.set('v', '<M-k>', [[:m'<-2<CR>`>my`<mzgv`yo`z]], {silent = true} )
+vim.keymap.set('n', '<M-j>', [[mz:m+<CR>`z]], { silent = true })
+vim.keymap.set('n', '<M-k>', [[mz:m-2<CR>`z]], { silent = true })
+vim.keymap.set('v', '<M-j>', [[:m'>+<CR>`<my`>mzgv`yo`z]], { silent = true })
+vim.keymap.set('v', '<M-k>', [[:m'<-2<CR>`>my`<mzgv`yo`z]], { silent = true })
 
 -- Command-line like navigation
-vim.keymap.set('c', '<C-j>', '<C-n>' )
-vim.keymap.set('c', '<C-k>', '<C-p>' )
+vim.keymap.set('c', '<C-j>', '<C-n>')
+vim.keymap.set('c', '<C-k>', '<C-p>')
 
 -- Don't lose selection when shifting sidewards
-vim.keymap.set('x', '<', '<gv' )
-vim.keymap.set('x', '>', '>gv' )
+vim.keymap.set('x', '<', '<gv')
+vim.keymap.set('x', '>', '>gv')
 
-vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]] )
-vim.keymap.set('t', '<M-h>', [[<C-\><C-n><C-w>h]] )
-vim.keymap.set('t', '<M-j>', [[<C-\><C-n><C-w>j]] )
-vim.keymap.set('t', '<M-k>', [[<C-\><C-n><C-w>k]] )
-vim.keymap.set('t', '<M-l>', [[<C-\><C-n><C-w>l]] )
+vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]])
+vim.keymap.set('t', '<M-h>', [[<C-\><C-n><C-w>h]])
+vim.keymap.set('t', '<M-j>', [[<C-\><C-n><C-w>j]])
+vim.keymap.set('t', '<M-k>', [[<C-\><C-n><C-w>k]])
+vim.keymap.set('t', '<M-l>', [[<C-\><C-n><C-w>l]])
 
 -- Persistent highlights
-vim.keymap.set('n', '<leader>ll', [[<Cmd>call matchadd('Visual', '\%'.line('.').'l')<CR>]], {silent = true} )
-vim.keymap.set('n', '<leader>lc', [[<Cmd>call clearmatches()<CR>]], {silent = true} )
+vim.keymap.set('n', '<leader>ll', [[<Cmd>call matchadd('Visual', '\%'.line('.').'l')<CR>]], { silent = true })
+vim.keymap.set('n', '<leader>lc', [[<Cmd>call clearmatches()<CR>]], { silent = true })
 
-vim.keymap.set('c', 'w!!', [[:lua require('utils').sudo_write()<CR>]] )
+vim.keymap.set('c', 'w!!', [[:lua require('utils').sudo_write()<CR>]])
 
 -- nvim-tree
-vim.keymap.set('n', '<C-n>', '<Cmd>NvimTreeToggle<CR>' )
+vim.keymap.set('n', '<C-n>', '<Cmd>NvimTreeToggle<CR>')
 
-vim.keymap.set('n', '<localleader>b', '<Cmd>Vista!!<CR>' )
+vim.keymap.set('n', '<localleader>b', '<Cmd>Vista!!<CR>')
 
-vim.keymap.set('n',
-  '<A-i>',
-  '<Cmd>lua require("FTerm").toggle()<CR>')
+vim.keymap.set('n', '<A-i>', '<Cmd>lua require("FTerm").toggle()<CR>')
 
-vim.keymap.set('t',
-  '<A-i>',
-  '<Cmd>lua require("FTerm").toggle()<CR>')
+vim.keymap.set('t', '<A-i>', '<Cmd>lua require("FTerm").toggle()<CR>')
 
-vim.keymap.set('x', '<leader>h0', ':<c-u>HSHighlight 0<CR>' )
-vim.keymap.set('x', '<leader>h1', ':<c-u>HSHighlight 1<CR>' )
-vim.keymap.set('x', '<leader>h2', ':<c-u>HSHighlight 2<CR>' )
-vim.keymap.set('x', '<leader>h3', ':<c-u>HSHighlight 3<CR>' )
-vim.keymap.set('x', '<leader>h4', ':<c-u>HSHighlight 4<CR>' )
-vim.keymap.set('x', '<leader>h5', ':<c-u>HSHighlight 5<CR>' )
-vim.keymap.set('x', '<leader>h6', ':<c-u>HSHighlight 6<CR>' )
-vim.keymap.set('x', '<leader>h7', ':<c-u>HSHighlight 7<CR>' )
-vim.keymap.set('x', '<leader>h8', ':<c-u>HSHighlight 8<CR>' )
-vim.keymap.set('x', '<leader>h9', ':<c-u>HSHighlight 9<CR>' )
+vim.keymap.set('x', '<leader>h0', ':<c-u>HSHighlight 0<CR>')
+vim.keymap.set('x', '<leader>h1', ':<c-u>HSHighlight 1<CR>')
+vim.keymap.set('x', '<leader>h2', ':<c-u>HSHighlight 2<CR>')
+vim.keymap.set('x', '<leader>h3', ':<c-u>HSHighlight 3<CR>')
+vim.keymap.set('x', '<leader>h4', ':<c-u>HSHighlight 4<CR>')
+vim.keymap.set('x', '<leader>h5', ':<c-u>HSHighlight 5<CR>')
+vim.keymap.set('x', '<leader>h6', ':<c-u>HSHighlight 6<CR>')
+vim.keymap.set('x', '<leader>h7', ':<c-u>HSHighlight 7<CR>')
+vim.keymap.set('x', '<leader>h8', ':<c-u>HSHighlight 8<CR>')
+vim.keymap.set('x', '<leader>h9', ':<c-u>HSHighlight 9<CR>')
 
-vim.keymap.set('n',
-  '<space>cu',
-  function()
+vim.keymap.set('n', '<space>cu', function()
   local number = math.random(math.pow(2, 127) + 1, math.pow(2, 128))
   return 'i' .. string.format('%.0f', number)
-  end,
-  {expr = true})
+end, {
+  expr = true,
+})
 
-
-vim.keymap.set({'n', 'x'}, 'ga', '<Plug>(EasyAlign)' )
+vim.keymap.set({ 'n', 'x' }, 'ga', '<Plug>(EasyAlign)')
 
 wk.register({
   [' '] = 'Find Files',
@@ -214,13 +208,13 @@ wk.register({
     a = { '<Cmd>qa!<CR>', 'Quit all without saving' },
     l = {
       function()
-        require('persistence').load({ last = true })
+        require('persistence').load { last = true }
       end,
       'Restore Last Session',
     },
     s = {
       function()
-        require('persistence').load({})
+        require('persistence').load {}
       end,
       'Restore Session',
     },
@@ -240,9 +234,9 @@ wk.register({
     b = { '<Cmd>Telescope current_buffer_fuzzy_find<CR>', 'Buffer' },
     s = {
       function()
-        require('telescope.builtin').lsp_document_symbols({
+        require('telescope.builtin').lsp_document_symbols {
           symbols = { 'Class', 'Function', 'Method', 'Constructor', 'Interface', 'Module' },
-        })
+        }
       end,
       'Goto Symbol',
     },

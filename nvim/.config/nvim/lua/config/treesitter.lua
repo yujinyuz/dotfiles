@@ -3,7 +3,7 @@ if not exists then
   return
 end
 
-ts_configs.setup({
+ts_configs.setup {
   ensure_installed = {
     'bash',
     'c',
@@ -38,7 +38,7 @@ ts_configs.setup({
     disable = { 'json' },
     additional_vim_regex_highlighting = false,
   },
-  indent = { enable = true, disable = { 'python' } },
+  indent = { enable = true, disable = { 'python', 'lua', 'html' } },
   incremental_selection = {
     enable = true,
     keymaps = {
@@ -114,7 +114,8 @@ ts_configs.setup({
   context_commentstring = { enable = true, enable_autocmd = false },
   rainbow = { enable = true, extended_mode = true, max_file_lines = 1000 },
   pyfold = { enable = true, custom_foldtext = false },
-})
+  yati = { enable = true, disable = { 'python' } },
+}
 
 local parsers = prequire('nvim-treesitter.parsers')
 if parsers then

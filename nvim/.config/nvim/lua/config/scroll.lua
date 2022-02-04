@@ -1,4 +1,4 @@
-require('neoscroll').setup({})
+require('neoscroll').setup {}
 local map = {}
 
 map['<C-u>'] = { 'scroll', { '-vim.wo.scroll', 'true', '80' } }

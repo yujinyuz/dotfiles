@@ -1,9 +1,9 @@
-local utils = require("utils")
+local utils = require('utils')
 
 local M = {}
 
 function M.install_missing(servers)
-  local lspi_servers = require("nvim-lsp-installer.servers")
+  local lspi_servers = require('nvim-lsp-installer.servers')
   for server, _ in pairs(servers) do
     local ok, s = lspi_servers.get_server(server)
     if ok then
@@ -11,20 +11,19 @@ function M.install_missing(servers)
         s:install()
       end
     else
-      utils.error("Server " .. server .. " not found")
+      utils.error('Server ' .. server .. ' not found')
     end
   end
 end
 
-
 function M.setup(servers, options)
-  local lspi = require("nvim-lsp-installer")
+  local lspi = require('nvim-lsp-installer')
   lspi.on_server_ready(function(server)
-    local opts = vim.tbl_deep_extend("force", options, servers[server.name] or {})
+    local opts = vim.tbl_deep_extend('force', options, servers[server.name] or {})
 
-    if server.name == "rust_analyzer" then
-      opts = vim.tbl_deep_extend("force", server:get_default_options(), opts)
-      require("config.rust-tools").setup(opts)
+    if server.name == 'rust_analyzer' then
+      opts = vim.tbl_deep_extend('force', server:get_default_options(), opts)
+      require('config.rust-tools').setup(opts)
       server:attach_buffers()
     else
       server:setup(opts)

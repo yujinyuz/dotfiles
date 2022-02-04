@@ -22,7 +22,7 @@ M.icons = {
   Unit = ' ',
   Value = ' ',
   Variable = ' ',
-  Reference = "",
+  Reference = '',
 }
 
 -- function M.setup()

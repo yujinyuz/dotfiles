@@ -52,10 +52,22 @@ _G.dump = function(...)
   return ...
 end
 
-_G.prequire = function (...)
+_G.prequire = function(...)
   local status, lib = pcall(require, ...)
   if status then
     return lib
   end
   return nil
+end
+
+-- https://github.com/bfredl/bfredl.github.io/blob/73eb7/nvim/lua/bfredl/init.lua#L15-L17
+_G.each = function(z)
+  return (function(x)
+    return x(x)
+  end)(function(x)
+    return function(y)
+      z(y)
+      return x(x)
+    end
+  end)
 end

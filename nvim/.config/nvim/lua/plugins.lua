@@ -16,16 +16,16 @@ local plugins = function(use)
     return true
   end
 
-  use({ 'wbthomason/packer.nvim', opt = true })
-  use({ 'lewis6991/impatient.nvim' })
+  use { 'wbthomason/packer.nvim', opt = true }
+  use { 'lewis6991/impatient.nvim' }
 
-  use({
+  use {
     { 'nvim-lua/popup.nvim' },
     { 'nvim-lua/plenary.nvim' },
-  })
+  }
 
   -- LSP Stuffs
-  use({
+  use {
     'neovim/nvim-lspconfig',
     config = function()
       require('config.lsp')
@@ -35,20 +35,43 @@ local plugins = function(use)
       'jose-elias-alvarez/null-ls.nvim',
       'folke/lua-dev.nvim',
     },
-  })
-  use({ 'williamboman/nvim-lsp-installer' })
+  }
+  use { 'williamboman/nvim-lsp-installer' }
 
   -- Comments
-  use({
+  use {
     'numToStr/Comment.nvim',
     config = function()
       require('config.comments')
     end,
     requires = 'JoosepAlviste/nvim-ts-context-commentstring',
-  })
+  }
+
+  use {
+    'j-hui/fidget.nvim',
+    config = function()
+      require('fidget').setup {
+        text = {
+          spinner = 'moon',
+        },
+        align = {
+          bottom = true,
+        },
+      }
+    end,
+  }
+
+  use {
+    'danymat/neogen',
+    config = function()
+      require('neogen').setup {
+        enabled = true,
+      }
+    end,
+  }
 
   -- AST Syntax Highlighting
-  use({
+  use {
     'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate',
     config = function()
@@ -69,36 +92,36 @@ local plugins = function(use)
         end,
       },
     },
-  })
-  use({ 'ThePrimeagen/refactoring.nvim' })
-
-  use({
+  }
+  use { 'ThePrimeagen/refactoring.nvim' }
+  use {
     'SmiteshP/nvim-gps',
     config = function()
       require('nvim-gps').setup()
     end,
     requires = 'nvim-treesitter/nvim-treesitter',
-  })
+  }
+  use { 'yioneko/nvim-yati' }
 
   -- File management
 
-  use({
+  use {
     'ibhagwan/fzf-lua',
     config = function()
       require('config.fzf')
     end,
-  })
+  }
 
-  use({
+  use {
     'camspiers/snap',
     opt = true,
     event = 'VimEnter',
     config = function()
       require('config.snap')
     end,
-  })
+  }
 
-  use({
+  use {
     'nvim-telescope/telescope.nvim',
     config = function()
       require('config.telescope')
@@ -106,31 +129,31 @@ local plugins = function(use)
     requires = {
       { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
     },
-  })
+  }
 
-  use({
+  use {
     'kyazdani42/nvim-tree.lua',
     config = function()
       require('config.tree')
     end,
-  })
+  }
 
   -- Lua
-  use({
+  use {
     'folke/persistence.nvim',
     event = 'BufReadPre', -- this will only start session saving when an actual file was opened
     module = 'persistence',
     config = function()
       require('persistence').setup()
     end,
-  })
+  }
 
-  use({
+  use {
     'tamago324/lir.nvim',
     config = function()
       require('config.lir')
     end,
-  })
+  }
 
   -- Theme: Colors / Syntax / Icons
   -- use({
@@ -140,25 +163,25 @@ local plugins = function(use)
   --   end,
   -- })
 
-  use({
+  use {
     'rebelot/kanagawa.nvim',
     config = function()
       require('config.theme')
     end,
-  })
+  }
 
-  use({
+  use {
     'norcalli/nvim-colorizer.lua',
     event = 'BufReadPre',
     config = function()
       require('config.colorizer')
     end,
-  })
+  }
 
-  use({
+  use {
     'kyazdani42/nvim-web-devicons',
     config = function()
-      require('nvim-web-devicons').setup({
+      require('nvim-web-devicons').setup {
         override = {
           lir_folder_icon = {
             icon = '',
@@ -166,41 +189,44 @@ local plugins = function(use)
             name = 'lirfoldernode',
           },
         },
-      })
+      }
     end,
-  })
+  }
 
-  use({ 'SidOfc/mkdx', ft = { 'markdown' } })
-  use({ 'Vimjas/vim-python-pep8-indent', ft = { 'python' } })
-  use({ 'michaeljsmith/vim-indent-object' })
+  use { 'SidOfc/mkdx', ft = { 'markdown' } }
+
+  use { 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install', ft = { 'markdown' } }
+  use { 'Vimjas/vim-python-pep8-indent', ft = { 'python' } }
+  use { 'michaeljsmith/vim-indent-object' }
 
   -- IDE Stuffs
-  use({
+  use {
     'lukas-reineke/indent-blankline.nvim',
     event = 'BufReadPre',
     setup = function()
       require('config.blankline')
     end,
     cmd = { 'IndentBlanklineToggle' },
-  })
+  }
 
-  use({
+  use {
     'code-biscuits/nvim-biscuits',
     config = function()
-      require('nvim-biscuits').setup({})
+      require('nvim-biscuits').setup {}
     end,
-  })
+  }
 
-  use({ 'liuchengxu/vista.vim' })
+  use { 'liuchengxu/vista.vim' }
+  use { 'Darazaki/indent-o-matic' }
 
-  use({
+  use {
     'rmagatti/goto-preview',
     config = function()
       require('config.preview')
     end,
-  })
+  }
 
-  use({
+  use {
     'hrsh7th/nvim-cmp',
     requires = {
       'hrsh7th/cmp-buffer',
@@ -208,7 +234,8 @@ local plugins = function(use)
       'hrsh7th/cmp-nvim-lua',
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-calc',
-      { 'lukas-reineke/cmp-rg' },
+      'saadparwaiz1/cmp_luasnip',
+      'lukas-reineke/cmp-rg',
       'quangnguyen30192/cmp-nvim-tags',
       'octaltree/cmp-look',
       'lukas-reineke/cmp-under-comparator',
@@ -222,30 +249,38 @@ local plugins = function(use)
     config = function()
       require('config.cmp')
     end,
-  })
+  }
 
-  use({ 'onsails/lspkind-nvim' })
+  use {
+    'mickael-menu/zk-nvim',
+    config = function()
+      require('zk').setup {
+        picker = 'telescope',
+      }
+    end,
+  }
 
-  use({
+  use { 'onsails/lspkind-nvim' }
+
+  use {
     'L3MON4D3/LuaSnip',
-    -- event = 'InsertEnter',
     config = function()
       require('config.snippets')
     end,
     requires = {
       'rafamadriz/friendly-snippets',
     },
-  })
+  }
 
-  use({
+  use {
     'nvim-lualine/lualine.nvim',
     event = 'VimEnter',
     config = function()
       require('config.statusline')
     end,
-  })
+  }
 
-  use({
+  use {
     {
       'mbbill/undotree',
       config = function()
@@ -261,29 +296,29 @@ local plugins = function(use)
       end,
       cmd = { 'Ack', 'Lack' },
     },
-  })
+  }
 
-  use({
+  use {
     'windwp/nvim-spectre',
     opt = true,
     module = 'spectre',
-  })
+  }
 
-  use({
+  use {
     'kevinhwang91/nvim-hlslens',
     config = function()
       require('config.lens')
     end,
-  })
+  }
 
-  use({
+  use {
     'luukvbaal/stabilize.nvim',
     config = function()
       require('stabilize').setup()
     end,
-  })
+  }
 
-  use({
+  use {
     'mfussenegger/nvim-dap',
     opt = true,
     module = 'dap',
@@ -291,16 +326,16 @@ local plugins = function(use)
       'mfussenegger/nvim-dap-python',
       'theHamsta/nvim-dap-virtual-text',
     },
-  })
-  use({
+  }
+  use {
     'numToStr/FTerm.nvim',
     config = function()
       require('config.fterm')
     end,
-  })
+  }
 
   -- Git stuffs
-  use({
+  use {
     'TimUntersberger/neogit',
     opt = true,
     config = function()
@@ -313,18 +348,18 @@ local plugins = function(use)
         cmd = { 'DiffviewOpen', 'DiffviewClose', 'DiffviewToggleFiles', 'DiffviewFocusFiles' },
       },
     },
-  })
-  use({
+  }
+  use {
     'ruifm/gitlinker.nvim',
     config = function()
       require('config.gitlinker')
     end,
     keys = { '<leader>gy' },
-  })
-  use({ 'rhysd/committia.vim', ft = { 'commit', 'gitcommit' } })
+  }
+  use { 'rhysd/committia.vim', ft = { 'commit', 'gitcommit' } }
 
   -- Holiness
-  use({
+  use {
     { 'tpope/vim-surround' },
     { 'tpope/vim-markdown', ft = { 'markdown' } },
     { 'tpope/vim-characterize' },
@@ -340,36 +375,36 @@ local plugins = function(use)
       cmd = { 'Scriptnames', 'Messages', 'Verbose' },
       keys = { 'zS' },
     },
-  })
+  }
 
   -- Misc
-  use({
+  use {
     'folke/which-key.nvim',
     -- event = 'VimEnter',
     config = function()
       require('config.keys')
     end,
-  })
+  }
 
-  use({
+  use {
     'karb94/neoscroll.nvim',
-    keys = { '<C-u>', '<C-d>', 'gg', 'G' },
+    -- keys = { '<C-u>', '<C-d>', 'gg', 'G' },
     opt = true,
     config = function()
       require('config.scroll')
     end,
-  })
+  }
 
-  use({
+  use {
     'nathom/filetype.nvim',
-  })
+  }
 
-  use({
+  use {
     'wakatime/vim-wakatime',
     event = 'BufReadPre',
-  })
+  }
 
-  use({
+  use {
     'lewis6991/gitsigns.nvim',
     requires = {
       'nvim-lua/plenary.nvim',
@@ -377,61 +412,62 @@ local plugins = function(use)
     config = function()
       require('config.gitsigns')
     end,
-  })
+  }
 
-  use({
+  use {
     'folke/trouble.nvim',
     event = 'BufReadPre',
     cmd = { 'TroubleToggle', 'Trouble' },
     config = function()
       require('config.trouble')
     end,
-  })
-  use({
+  }
+  use {
     'folke/todo-comments.nvim',
     cmd = { 'TodoTrouble', 'TodoTelescope' },
     config = function()
-      require('todo-comments').setup({})
+      require('todo-comments').setup {}
     end,
-  })
-  use({
+  }
+  use {
     'folke/zen-mode.nvim',
     config = function()
       require('config.zen-mode')
     end,
     cmd = { 'ZenMode' },
-  })
-  use({
+  }
+  use {
     'folke/twilight.nvim',
     config = function()
       require('config.twilight')
     end,
     cmd = { 'Twilight' },
-  })
-  use({
+  }
+  use {
     'marcushwz/nvim-workbench',
     config = function()
       require('config.workbench')
     end,
     module = 'workbench',
-  })
-  use({ 'tversteeg/registers.nvim' })
-  use({
+  }
+  use { 'tversteeg/registers.nvim' }
+  use {
     'NTBBloodbath/rest.nvim',
     config = function()
       require('rest-nvim').setup()
     end,
     ft = { 'http' },
-  })
-  -- use({
-  --   '~/Sources/tablea.nvim',
-  --   config = function()
-  --     require('tablea').setup({ show_index = false, show_modify = true })
-  --   end,
-  -- })
-  use({ 'Pocco81/HighStr.nvim' })
+  }
+  use {
+    '~/Sources/tablea.nvim',
+    config = function()
+      require('tablea').setup { show_index = false, show_modify = true }
+    end,
+  }
 
-  use({
+  use { 'Pocco81/HighStr.nvim' }
+
+  use {
     'simrat39/symbols-outline.nvim',
     setup = function()
       vim.g.symbols_outline = {
@@ -439,25 +475,33 @@ local plugins = function(use)
       }
     end,
     cmd = { 'SymbolsOutline' },
-  })
+  }
 
-  use({
+  use {
     'RRethy/vim-illuminate',
     event = 'CursorHold',
     module = 'illuminate',
     config = function()
       vim.g.Illuminate_delay = 1000
     end,
-  })
+  }
 
-  use({ 'kazhala/close-buffers.nvim', cmd = 'BDelete' })
-  use({ 'simrat39/rust-tools.nvim' })
-  use({ 'junegunn/vim-easy-align' })
-  use({ 'stevearc/dressing.nvim' })
-  use({ 'rcarriga/nvim-notify' })
+  use { 'kazhala/close-buffers.nvim', cmd = 'BDelete' }
+  use { 'simrat39/rust-tools.nvim' }
+  use { 'junegunn/vim-easy-align' }
+  use { 'stevearc/dressing.nvim' }
+  use {
+    'rcarriga/nvim-notify',
+    config = function()
+      require('notify').setup {
+        stages = 'slide',
+        timeout = 3000,
+      }
+    end,
+  }
 end
 
-return packer.startup({
+return packer.startup {
   plugins,
   config = {
     compile_path = vim.fn.stdpath('config') .. '/lua/packer_compiled.lua',
@@ -471,4 +515,4 @@ return packer.startup({
     enable = true,
     threshold = 0, -- the amount in ms that a plugins load time must be over for it to be included in the profile
   },
-})
+}
