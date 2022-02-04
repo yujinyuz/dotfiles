@@ -6,7 +6,9 @@ local has_words_before = function()
   return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
 end
 
-cmp.setup({
+--- disabling redundant-parameter because `cmp.setup` uses setmetatable
+---@diagnostic disable-next-line:redundant-parameter
+cmp.setup {
   completion = {
     autocomplete = false,
   },
@@ -37,9 +39,19 @@ cmp.setup({
     ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
     ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
     ['<C-Space>'] = cmp.mapping.complete(),
-    ['<CR>'] = cmp.mapping.confirm({
-      behavior = cmp.ConfirmBehavior.Replace,
-      select = false, -- If I press enter, I don't want to select anything. Just create a new line
+    -- ['<CR>'] = cmp.mapping.confirm({
+    --   behavior = cmp.ConfirmBehavior.Replace,
+    --   select = false, -- If I press enter, I don't want to select anything. Just create a new line
+    -- }),
+    ['<C-y>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.confirm { select = true }
+      else
+        fallback()
+      end
+    end, {
+      'i',
+      's',
     }),
     ['<Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
@@ -68,12 +80,8 @@ cmp.setup({
       's',
     }),
   },
-  sources = cmp.config.sources({
-    { name = 'rg', max_item_count = 10, keyword_length = 3 },
-    { name = 'path', max_item_count = 10, keyword_length = 3 },
-  }),
   formatting = {
-    format = require('lspkind').cmp_format({
+    format = require('lspkind').cmp_format {
       with_text = true,
       max_width = 50,
       menu = {
@@ -87,15 +95,57 @@ cmp.setup({
         look = '[Look]',
         rg = '[ripgrep]',
       },
-    }),
+    },
   },
-  -- experimental = {
-  --   ghost_text = {
-  --     hl_group = 'LineNr',
-  --   },
-  -- },
-})
--- })
+  experimental = {
+    ghost_text = {
+      hl_group = 'LspCodeLens',
+    },
+  },
+}
+
+-- Following the vim philosophy keybindings
+-- @see `:h ins-completion`
+vim.keymap.set('i', '<C-x><C-o>', function()
+  cmp.complete {
+    config = {
+      sources = {
+        { name = 'nvim_lsp' },
+        { name = 'nvim_lua' },
+      },
+    },
+  }
+end)
+
+vim.keymap.set('i', '<C-x><C-s>', function()
+  cmp.complete {
+    config = {
+      sources = {
+        { name = 'snippet' },
+      },
+    },
+  }
+end)
+
+vim.keymap.set('i', '<C-x><C-]>', function()
+  cmp.complete {
+    config = {
+      sources = {
+        { name = 'rg', max_item_count = 10 },
+      },
+    },
+  }
+end)
+
+vim.keymap.set('i', '<C-x><C-f>', function()
+  cmp.complete {
+    config = {
+      sources = {
+        { name = 'path' },
+      },
+    },
+  }
+end)
 
 local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
+cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done { map_char = { tex = '' } })
