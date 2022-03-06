@@ -19,11 +19,13 @@ local on_attach = function(client, bufnr)
   require('config.lsp.formatting').setup(client, bufnr)
   require('config.lsp.keys').setup(client, bufnr)
 
-  if client.resolved_capabilities.goto_definition == true then
+  -- Because some LSPs can have other possible values
+  --    e.g. pyright has `client.resolved_capabilities.goto_definition = { workDoneProgress = true}`
+  --    and sumneko_lua has `client.resolved_capabilities.goto_definition = true`
+  -- we will just check if it's not false before setting tagfunc
+  if client.resolved_capabilities.goto_definition ~= false then
     vim.bo.tagfunc = 'v:lua.vim.lsp.tagfunc'
   end
-  -- require('config.lsp.completion').setup(client, bufnr)
-
   -- TypeScript specific stuff
   require('config.lsp.ts-utils').setup(client)
 end
@@ -90,7 +92,7 @@ local servers = {
     },
   },
   tsserver = {},
-  sumneko_lua = require('lua-dev').setup(),
+  sumneko_lua = require('lua-dev').setup {},
 }
 
 local border = {
