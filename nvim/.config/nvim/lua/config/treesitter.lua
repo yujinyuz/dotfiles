@@ -38,7 +38,7 @@ ts_configs.setup {
     disable = { 'json' },
     additional_vim_regex_highlighting = false,
   },
-  indent = { enable = true, disable = { 'python', 'lua', 'html' } },
+  indent = { enable = false }, -- Let nvim-yati handle this for now
   incremental_selection = {
     enable = true,
     keymaps = {
@@ -110,7 +110,19 @@ ts_configs.setup {
       [';'] = 'textsubjects-container-outer',
     },
   },
+  refactor = {
+    navigation = {
+      enable = true,
+    },
+    smart_rename = {
+      enable = true,
+      keymaps = {
+        smart_rename = '<leader>rn',
+      },
+    },
+  },
   autopairs = { enable = true },
+  autotag = { enable = true, disable = { 'markdown' } },
   context_commentstring = { enable = true, enable_autocmd = false },
   rainbow = { enable = true, extended_mode = true, max_file_lines = 1000 },
   pyfold = { enable = true, custom_foldtext = false },
