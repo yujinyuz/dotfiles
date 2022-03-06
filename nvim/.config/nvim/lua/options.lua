@@ -99,7 +99,7 @@ opt.wildoptions = 'pum'
 
 -- Number of folds available when starting to edit files
 -- Set to 0 all folds closed, 1 some folds closed, 99 no folds closed
-opt.foldlevelstart = 2
+opt.foldlevelstart = 99
 -- Use indend by default when tresesitter folds are not available
 opt.foldmethod = 'indent'
 -- Display better folds
