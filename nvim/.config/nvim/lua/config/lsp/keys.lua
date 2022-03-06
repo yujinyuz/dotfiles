@@ -20,7 +20,7 @@ function M.setup(client, bufnr)
       },
       d = {
         function()
-          vim.diagnostic.open_float()
+          vim.diagnostic.open_float { opts = { focus = false } }
         end,
         'Line Diagnostics',
       },
