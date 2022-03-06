@@ -108,6 +108,7 @@ end, {
 })
 
 vim.keymap.set({ 'n', 'x' }, 'ga', '<Plug>(EasyAlign)')
+vim.keymap.set('n', '<C-p>', ':e **/')
 
 wk.register({
   [' '] = 'Find Files',
