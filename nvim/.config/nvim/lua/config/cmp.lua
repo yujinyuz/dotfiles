@@ -1,5 +1,21 @@
 local cmp = require('cmp')
 local luasnip = require('luasnip')
+local utils = require('utils')
+
+local M = {}
+
+M.enable_cmp = true
+
+function M.toggle()
+  M.enable_cmp = not M.enable_cmp
+  if M.enable_cmp then
+    utils.info('enabled autocomplete ', 'Toggle')
+  else
+    utils.warn('disabled autocomplete', 'Toggle')
+  end
+end
+
+vim.keymap.set('n', 'yoq', M.toggle)
 
 local has_words_before = function()
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -9,9 +25,23 @@ end
 --- disabling redundant-parameter because `cmp.setup` uses setmetatable
 ---@diagnostic disable-next-line:redundant-parameter
 cmp.setup {
-  completion = {
-    autocomplete = false,
-  },
+  enabled = function()
+    if M.enable_cmp then
+      return true
+    end
+    return false
+  end,
+  preselect = cmp.PreselectMode.None,
+  -- completion = {
+  --   autocomplete = false,
+  -- },
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp' },
+    { name = 'luasnip' },
+  }, {
+    { name = 'rg' },
+    { name = 'buffer' },
+  }),
   documentation = {
     border = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
     winhighlight = 'NormalFloat:NormalFloat,FloatBorder:TelescopeBorder',
@@ -149,3 +179,5 @@ end)
 
 local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done { map_char = { tex = '' } })
+
+return M
