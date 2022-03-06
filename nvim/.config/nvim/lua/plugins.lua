@@ -195,7 +195,11 @@ local plugins = function(use)
 
   use { 'SidOfc/mkdx', ft = { 'markdown' } }
 
-  use { 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install', ft = { 'markdown' } }
+  use {
+    'iamcco/markdown-preview.nvim',
+    run = 'cd app && yarn install',
+    ft = { 'markdown' },
+  }
   use { 'Vimjas/vim-python-pep8-indent', ft = { 'python' } }
   use { 'michaeljsmith/vim-indent-object' }
 
@@ -369,6 +373,7 @@ local plugins = function(use)
     { 'tpope/vim-apathy', event = 'BufRead' },
     { 'tpope/vim-rsi' },
     { 'tpope/vim-eunuch', opt = true, cmd = { 'Delete', 'Move', 'Rename' } },
+    { 'tpope/vim-abolish' },
     {
       'tpope/vim-scriptease',
       opt = true,
@@ -496,6 +501,26 @@ local plugins = function(use)
       require('notify').setup {
         stages = 'slide',
         timeout = 3000,
+      }
+    end,
+  }
+  use {
+    'hoschi/yode-nvim',
+    config = function()
+      require('yode-nvim').setup {}
+    end,
+  }
+
+  use {
+    'turbio/bracey.vim',
+    cmd = 'Bracey',
+    run = 'npm install --prefix server',
+  }
+
+  use {
+    'Chaitanyabsprip/present.nvim',
+    config = function()
+      require('present').setup {
       }
     end,
   }
