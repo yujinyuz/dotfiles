@@ -450,8 +450,9 @@ local plugins = function(use)
   }
   use {
     'marcushwz/nvim-workbench',
-    config = function()
-      require('config.workbench')
+    setup = function()
+      vim.g.workbench_border = 'single'
+      vim.g.workbench_storage_path = vim.fn.expand('~/Sync/notes/workbench/')
     end,
     module = 'workbench',
   }
