@@ -51,14 +51,6 @@ augroup END
 augroup MiscCallback
   autocmd!
   autocmd VimResized * wincmd =
-
   autocmd FileType gitcommit setlocal spell
-  autocmd FileType markdown nmap <buffer> <CR> <Plug>WorkbenchToggleCheckbox
-
   autocmd BufWinEnter NvimTree setlocal cursorline nowrap signcolumn=no
-augroup END
-
-augroup FTDetect
-  autocmd!
-  autocmd BufNewFile,BufRead *.env*,*.template setf conf
 augroup END
