@@ -26,7 +26,7 @@ end
 ---@diagnostic disable-next-line:redundant-parameter
 cmp.setup {
   enabled = function()
-    if M.enable_cmp then
+    if M.enable_cmp and vim.api.nvim_buf_get_option(0, 'buftype') ~= 'prompt' then
       return true
     end
     return false
