@@ -17,9 +17,8 @@
 # it in this config, it will still exists until such time that we unset it.
 
 # General
-set -gx EDITOR (type -p nvim)
+set -gx EDITOR nvim
 set -gx LANG en_US.UTF-8
-set -gx MYVIMRC $HOME/.vimrc
 
 # Use neovim as the default man pager. Type :h Man for more info
 set -gx MANPAGER "nvim +Man!"
@@ -37,11 +36,9 @@ set -x Z_CMD j
 # FZF
 set -l FD_OPTIONS "--hidden --follow --exclude .git --exclude node_modules"
 set -gx FZF_DEFAULT_COMMAND "git ls-files --cached --others --exclude-standard &> /dev/null | fd --type f --type l $FD_OPTIONS"
-set -gx FZF_DEFAULT_OPTS "--height 40% --layout=reverse --border --preview-window down:1"
+set -gx FZF_DEFAULT_OPTS "--height 40% --layout=reverse --info=inline --color='bg+:$BG_TMUX'"
 set -gx FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
 set -gx FZF_ALT_C_COMMAND "fd --type d $FD_OPTIONS"
-
-set -gx VIRTUALENVS_DIR $HOME/.local/share/virtualenvs
 
 # pyenv
 set -gx PYTHON_BUILD_ARIA2_OPTS "-x 10 -k 1M" # Use aria2c when downloading
@@ -49,14 +46,12 @@ set -gx PYTHON_BUILD_ARIA2_OPTS "-x 10 -k 1M" # Use aria2c when downloading
 # neovim
 set -gx PYTHON_3_HOST_PROG $VIRTUALENVS_DIR/nvim/bin/python3
 
+# virtualfish
+set -gx VIRTUALFISH_HOME $HOME/.local/share/virtualenvs
 
-
-# asdf
-# Installation method via git since brew --prefix asdf is slow
-# Manually added ~/.asdf/bin to the path so we don't have to use shims in favor of direnv
-# Load the asdf wrapper function
-source $HOME/.asdf/asdf.fish
-set -gx ASDF_SKIP_RESHIM 1
+# asdf-direnv
+contains $HOME/.asdf/bin $fish_user_paths; or set -Ua fish_user_paths $HOME/.asdf/bin
+set -gx DIRENV_LOG_FORMAT ""
 
 # System
 # Increase resource usage limits to 2048. Default is 256
@@ -66,6 +61,7 @@ ulimit -n 2048
 alias brewup="brew update; brew upgrade; brew cleanup; brew doctor"
 alias cat="bat"
 alias cp="cp -v"
+alias direnv="$ASDF_DIRENV_BIN"
 alias dc="docker compose"
 alias doom="~/.emacs.d/bin/doom"
 alias dotfiles="/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
@@ -91,6 +87,8 @@ alias tmux_dark="~/Sources/github.com/yujinyuz/dotfiles/tmux/./tokyonight_storm.
 alias lzdocker="TERM=xterm-kitty lazydocker"
 alias minvim="nvim -u NORC"
 alias ssht="TERM=screen ssh"
+
+alias zki='ZK_NOTEBOOK_DIR=~/Sync/notes/ zk new --no-input "$ZK_NOTEBOOK_DIR/brain"'
 
 
 function toggle-theme
