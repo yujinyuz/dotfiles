@@ -37,14 +37,17 @@ cmp.setup {
   -- },
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
-    { name = 'luasnip' },
   }, {
     { name = 'rg' },
-    { name = 'buffer' },
+    { name = 'buffer', option = {
+      get_bufnrs = function()
+        return { vim.api.nvim_get_current_buf() }
+      end,
+    } },
   }),
-  documentation = {
-    border = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
-    winhighlight = 'NormalFloat:NormalFloat,FloatBorder:TelescopeBorder',
+  window = {
+    documentation = cmp.config.window.bordered {},
+    -- winhighlight = 'NormalFloat:NormalFloat,FloatBorder:TelescopeBorder',
   },
   sorting = {
     comparators = {
@@ -66,8 +69,8 @@ cmp.setup {
   mapping = {
     ['<C-p>'] = cmp.mapping.select_prev_item(),
     ['<C-n>'] = cmp.mapping.select_next_item(),
-    ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
-    ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
+    ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), {'i', 'c'}),
+    ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), {'i', 'c'}),
     ['<C-Space>'] = cmp.mapping.complete(),
     -- ['<CR>'] = cmp.mapping.confirm({
     --   behavior = cmp.ConfirmBehavior.Replace,
