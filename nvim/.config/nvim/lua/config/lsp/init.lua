@@ -15,6 +15,9 @@ vim.lsp.handlers['workspace/executeCommand'] = function(err, result, ctx, config
   return default_exe_handler(err, result, ctx, config)
 end
 
+vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'rounded' })
+vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'rounded' })
+
 local on_attach = function(client, bufnr)
   require('config.lsp.formatting').setup(client, bufnr)
   require('config.lsp.keys').setup(client, bufnr)
@@ -23,7 +26,7 @@ local on_attach = function(client, bufnr)
   --    e.g. pyright has `client.resolved_capabilities.goto_definition = { workDoneProgress = true}`
   --    and sumneko_lua has `client.resolved_capabilities.goto_definition = true`
   -- we will just check if it's not false before setting tagfunc
-  if client.resolved_capabilities.goto_definition ~= false then
+  if client.server_capabilities.definitionProvider ~= false then
     vim.bo.tagfunc = 'v:lua.vim.lsp.tagfunc'
   end
   -- TypeScript specific stuff
@@ -42,6 +45,7 @@ local servers = {
   },
   html = {},
   cssls = {},
+  emmet_ls = {},
   jsonls = {
     settings = {
       json = {
@@ -95,24 +99,6 @@ local servers = {
   sumneko_lua = require('lua-dev').setup {},
 }
 
-local border = {
-  { '╭', 'FloatBorder' },
-  { '─', 'FloatBorder' },
-  { '╮', 'FloatBorder' },
-  { '│', 'FloatBorder' },
-  { '╯', 'FloatBorder' },
-  { '─', 'FloatBorder' },
-  { '╰', 'FloatBorder' },
-  { '│', 'FloatBorder' },
-}
-
-local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
-function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
-  opts = opts or {}
-  opts.border = opts.border or border
-  return orig_util_open_floating_preview(contents, syntax, opts, ...)
-end
-
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 local options = {
@@ -123,5 +109,15 @@ local options = {
   },
 }
 
+
+require('nvim-lsp-installer').setup {
+  ensure_installed = vim.tbl_keys(servers),
+}
+
+for server, config in pairs(servers) do
+  local opts = vim.tbl_deep_extend('force', options, config or {})
+  require('lspconfig')[server].setup(opts)
+end
+
+
 require('config.lsp.null-ls').setup(options)
-require('config.lsp.install').setup(servers, options)
