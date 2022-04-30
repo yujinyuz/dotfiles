@@ -9,6 +9,7 @@ function M.setup(options)
     nls.builtins.formatting.black,
     nls.builtins.formatting.codespell.with { filetypes = { 'markdown', 'txt' } },
     nls.builtins.formatting.reorder_python_imports,
+    nls.builtins.formatting.taplo,
     -- nls.builtins.formatting.isort,
     nls.builtins.formatting.stylua,
     nls.builtins.diagnostics.codespell.with { filetypes = { 'markdown', 'txt' } },

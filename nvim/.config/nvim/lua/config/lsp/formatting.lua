@@ -15,7 +15,7 @@ end
 
 function M.format()
   if M.autoformat then
-    vim.lsp.buf.formatting_sync()
+    vim.lsp.buf.formatting_sync(nil, 1000)
   end
 end
 
@@ -30,15 +30,16 @@ function M.setup(client, buf)
     enable = client.name == 'null-ls'
   end
 
+  client.server_capabilities.documentFormattingProvider = enable
   client.resolved_capabilities.document_formatting = enable
+
   -- format on save
-  if client.resolved_capabilities.document_formatting then
-    vim.cmd([[
-      augroup LspFormatCallback
-        autocmd!
-        autocmd BufWritePre * lua require('config.lsp.formatting').format()
-      augroup END
-    ]])
+  if client.server_capabilities.documentFormattingProvider then
+    vim.api.nvim_create_autocmd('BufWritePre', {
+      pattern = { '*' },
+      callback = M.format,
+      group = 'IDECallbacks',
+    })
   end
 end
 
