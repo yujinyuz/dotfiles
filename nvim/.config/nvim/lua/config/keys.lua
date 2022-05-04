@@ -80,8 +80,8 @@ vim.keymap.set('n', '<leader>lc', [[<Cmd>call clearmatches()<CR>]], { silent = t
 
 vim.keymap.set('c', 'w!!', [[:lua require('utils').sudo_write()<CR>]])
 
--- nvim-tree
-vim.keymap.set('n', '<C-n>', '<Cmd>NvimTreeToggle<CR>')
+-- neo-tree
+vim.keymap.set('n', '<C-n>', '<Cmd>Neotree toggle<CR>')
 
 vim.keymap.set('n', '<localleader>b', '<Cmd>Vista!!<CR>')
 
