@@ -65,8 +65,8 @@ vim.api.nvim_create_autocmd({
   pattern = { '*' },
   group = ide_group,
   callback = function()
-    if vim.opt_local.number and vim.fn.mode ~= 'i' then
-      vim.opt_local.relativenumber = true
+    if vim.opt.number:get() and vim.fn.mode() ~= 'i' then
+      vim.opt.relativenumber = true
     end
   end,
   desc = 'Enable relativenumber',
@@ -81,8 +81,8 @@ vim.api.nvim_create_autocmd({
   pattern = { '*' },
   group = ide_group,
   callback = function()
-    if vim.opt_local.number then
-      vim.opt_local.relativenumber = false
+    if vim.opt.number:get() then
+      vim.opt.relativenumber = false
     end
   end,
   desc = 'Disable relative number',
