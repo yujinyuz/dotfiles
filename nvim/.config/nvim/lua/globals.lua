@@ -3,6 +3,8 @@
 vim.g.mapleader = ' '
 vim.g.python3_host_prog = vim.env.PYTHON_3_HOST_PROG
 
+vim.g.loaded_perl_provider = 0
+
 vim.g.loaded_gzip = 1
 vim.g.loaded_zip = 1
 vim.g.loaded_zipPlugin = 1
@@ -51,4 +53,8 @@ _G.each = function(z)
       return x(x)
     end
   end)
+end
+
+_G.false_cb = function()
+  return false
 end

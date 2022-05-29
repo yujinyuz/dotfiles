@@ -120,9 +120,4 @@ function M.sudo_write(tmpfile, filepath)
   vim.fn.delete(tmpfile)
 end
 
-
-function M.false_cb()
-  return false
-end
-
 return M
