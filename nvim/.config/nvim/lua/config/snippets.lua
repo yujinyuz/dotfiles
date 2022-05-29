@@ -10,4 +10,4 @@ require('luasnip.loaders.from_vscode').lazy_load()
 
 vim.keymap.set('i', '<C-l>', function()
   require('luasnip').expand()
-end)
+end, { desc = 'Expand Snippet' })
