@@ -124,6 +124,7 @@ ts_configs.setup {
   autopairs = { enable = true },
   autotag = { enable = true, disable = { 'markdown' } },
   context_commentstring = { enable = true, enable_autocmd = false },
+  matchup = {enable = true},
   rainbow = { enable = true, extended_mode = true, max_file_lines = 1000 },
   pyfold = { enable = true, custom_foldtext = false },
   yati = { enable = true, disable = { 'python' } },
