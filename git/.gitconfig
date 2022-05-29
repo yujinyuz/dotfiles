@@ -137,9 +137,8 @@
 [rebase]
   autostash = true
 [user]
-	email = eevoliveros@gmail.com
+	email = yujin@jinyuz.dev
 	name = Eugene Oliveros
-	signingkey = A05BDF3FF69CA6A8
 [ghq]
 	root = ~/Sources
 [include]
