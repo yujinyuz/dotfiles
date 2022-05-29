@@ -13,9 +13,21 @@ set -gx VISUAL $EDITOR
 set -gx SUDO_EDITOR $EDITOR
 set -gx LANG en_US.UTF-8
 
+## System
+# ulimit -n 2048 # Increase resource usage limits to 2048. Default is 256
+
+## Since we are either using tmux or just default shell we want to check if
+## PARENT_TERM is set by our tmux config so we can use it for other programs
+set -q PARENT_TERM || set PARENT_TERM $TERM
+
 # Load universal config when it's changed
 set -l fish_config_mtime
 set fish_config_mtime (/usr/bin/stat -Lf %m $__fish_config_dir/config.fish)
+
+set -l local_config $__fish_config_dir/config-local.fish
+if test -f $local_config
+    source $__fish_config_dir/config-local.fish
+end
 
 if test "$fish_config_changed" = "$fish_config_mtime"
     exit
@@ -29,6 +41,9 @@ set -Ux fish_user_paths
 fish_add_path ~/.local/bin
 fish_add_path /usr/local/sbin
 fish_add_path /usr/local/opt/mysql-client/bin
+
+# Add asdf binaries to path
+## Let asdf-direnv handle everything else
 fish_add_path ~/.asdf/bin
 
 # Exports
@@ -49,9 +64,6 @@ set -Ux FZF_ALT_C_COMMAND "fd --type d $FD_OPTIONS"
 ## pyenv
 set -Ux PYTHON_BUILD_ARIA2_OPTS "-x 10 -k 1M" # Use aria2c when downloading
 
-## neovim
-set -Ux PYTHON_3_HOST_PROG $VIRTUALENVS_DIR/nvim/bin/python3
-
 ## virtualfish
 set -Ux VIRTUALFISH_HOME $HOME/.local/share/virtualenvs
 
@@ -61,35 +73,36 @@ set -Ux DIRENV_LOG_FORMAT ""
 ## bat
 set -Ux BAT_THEME Dracula
 
-## System
-# Increase resource usage limits to 2048. Default is 256
-ulimit -n 2048
-
 # aliases
 alias -s brewup "brew update; brew upgrade; brew cleanup; brew doctor"
-alias -s cat "bat"
-alias -s direnv "$ASDF_DIRENV_BIN"
+alias -s cat bat
 alias -s dc "docker compose"
 alias -s getip "curl ipinfo.io/ip"
-alias -s g "git"
+alias -s g git
 alias -s groot "cd ./(git rev-parse --show-cdup)"
 alias -s localip "ipconfig getifaddr en0"
-alias -s ppath "echo $PATH | tr -s ':' '\n'"
-alias -s fupath "echo $fish_user_paths | tr ' ' '\n'"
 alias -s rscp "rsync -avhW --progress" # for copying local files
 alias -s rsmv "rsync -avhW --no-compress --progress --remove-source-files"
 alias -s tree "exa --tree"
 alias -s kd "killall Dock"
 alias -s vifish "$EDITOR ~/.config/fish/config.fish"
 alias -s pmr "pm runserver"
-alias -s lzdocker "TERM=xterm-kitty lazydocker"
+alias -s lzdocker "TERM=$PARENT_TERM lazydocker"
+alias -s vi nvim
 alias -s minvim "nvim -u NORC"
 alias -s ssht "TERM=screen ssh"
 alias -s zki 'ZK_NOTEBOOK_DIR=~/Sync/notes/ zk new --no-input "$ZK_NOTEBOOK_DIR/brain"'
+alias -s loadsshkeys "ls -d ~/.ssh/* -I '*.pub|config|environment|pems|known_hosts' | xargs ssh-add --apple-load-keychain &> /dev/null"
+
+alias -s ls "exa --color=always --icons --group-directories-first --classify"
+alias -s la "exa --color=always --icons --group-directories-first --classify --all"
+alias -s ll "exa --color=always --icons --group-directories-first --classify --all --long"
+
 
 # abbreviations
 abbr cp "cp -iv"
 abbr mv "mv -iv"
 
-abbr t "tmux"
-abbr vi "nvim"
+abbr t tmux
+
+abbr l ll
