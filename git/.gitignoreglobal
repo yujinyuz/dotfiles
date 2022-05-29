@@ -12,6 +12,7 @@ tags.temp
 .python-version
 *.py[co]
 __pycache__/
+.venv
 
 # .vscode stuffs
 .vscode/
@@ -30,12 +31,17 @@ node_modules
 # git bare
 .dotlocal
 
+# asdf
+.tool-versions
+.envrc
+
 # general
 tmp/
 temp/
 .DS_Store
 logs
 *.log
+
 
 # custom docker data folder
 dkdata
