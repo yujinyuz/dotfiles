@@ -1,5 +1,3 @@
--- https://github.com/wbthomason/packer.nvim/issues/180#issuecomment-871634199
-vim.fn.setenv('MACOSX_DEPLOYMENT_TARGET', '10.15')
 local packer_exists = pcall(vim.cmd, [[packadd packer.nvim]])
 
 if not packer_exists then
@@ -12,10 +10,6 @@ end
 local packer = require('packer')
 
 local plugins = function(use)
-  local function disable()
-    return true
-  end
-
   use { 'wbthomason/packer.nvim', opt = true }
   use { 'lewis6991/impatient.nvim' }
 
@@ -81,15 +75,11 @@ local plugins = function(use)
       { 'nvim-treesitter/playground', cmd = 'TSHighlightCapturesUnderCursor' },
       { 'nvim-treesitter/nvim-treesitter-textobjects' },
       { 'nvim-treesitter/nvim-treesitter-refactor' },
-      -- { 'haringsrob/nvim_context_vt'},
       { 'p00f/nvim-ts-rainbow' },
       { 'RRethy/nvim-treesitter-textsubjects' },
       { 'eddiebergman/nvim-treesitter-pyfold' },
       {
         'windwp/nvim-ts-autotag',
-        config = function()
-          require('nvim-ts-autotag').setup()
-        end,
       },
     },
   }
@@ -161,13 +151,6 @@ local plugins = function(use)
   }
 
   -- Theme: Colors / Syntax / Icons
-  -- use({
-  --   'folke/tokyonight.nvim',
-  --   config = function()
-  --     require('config.theme')
-  --   end,
-  -- })
-
   use {
     'rebelot/kanagawa.nvim',
     config = function()
@@ -218,13 +201,6 @@ local plugins = function(use)
     cmd = { 'IndentBlanklineToggle' },
   }
 
-  use {
-    'code-biscuits/nvim-biscuits',
-    config = function()
-      require('nvim-biscuits').setup {}
-    end,
-  }
-
   use { 'liuchengxu/vista.vim' }
   use { 'Darazaki/indent-o-matic' }
 
@@ -248,6 +224,8 @@ local plugins = function(use)
       'quangnguyen30192/cmp-nvim-tags',
       'octaltree/cmp-look',
       'lukas-reineke/cmp-under-comparator',
+      'hrsh7th/cmp-nvim-lsp-signature-help',
+      'uga-rosa/cmp-dictionary',
       {
         'windwp/nvim-autopairs',
         config = function()
@@ -297,7 +275,13 @@ local plugins = function(use)
       end,
       cmd = { 'UndotreeToggle' },
     },
-    { 'ludovicchabant/vim-gutentags', event = 'BufRead' },
+    {
+      'ludovicchabant/vim-gutentags',
+      setup = function()
+        vim.g.gutentags_project_root = { 'manage.py' }
+      end,
+      event = 'BufRead',
+    },
     {
       'wincent/ferret',
       setup = function()
@@ -323,7 +307,12 @@ local plugins = function(use)
   use {
     'luukvbaal/stabilize.nvim',
     config = function()
-      require('stabilize').setup()
+      require('stabilize').setup {
+        ignore = { -- do not manage windows matching these file/buftypes
+          filetype = { 'help', 'list', 'Trouble' },
+          buftype = { 'terminal', 'quickfix', 'loclist', 'nofile' },
+        },
+      }
     end,
   }
 
@@ -340,6 +329,23 @@ local plugins = function(use)
     'numToStr/FTerm.nvim',
     config = function()
       require('config.fterm')
+    end,
+  }
+  use {
+    'akinsho/toggleterm.nvim',
+    config = function()
+      require('toggleterm').setup {
+        shell = vim.env.SHELL,
+        shade_terminals = false,
+        highlights = {
+          Normal = {
+            guibg = 'NONE',
+          },
+          NormalFloat = {
+            link = 'Normal',
+          },
+        },
+      }
     end,
   }
 
@@ -390,7 +396,7 @@ local plugins = function(use)
   -- Misc
   use {
     'folke/which-key.nvim',
-    -- event = 'VimEnter',
+    event = 'VimEnter',
     config = function()
       require('config.keys')
     end,
@@ -398,7 +404,7 @@ local plugins = function(use)
 
   use {
     'karb94/neoscroll.nvim',
-    -- keys = { '<C-u>', '<C-d>', 'gg', 'G' },
+    cond = false_cb,
     opt = true,
     config = function()
       require('config.scroll')
@@ -407,6 +413,9 @@ local plugins = function(use)
 
   use {
     'nathom/filetype.nvim',
+    config = function()
+      require('filetype').setup {}
+    end,
   }
 
   use {
@@ -524,9 +533,55 @@ local plugins = function(use)
   }
 
   use {
-    'Chaitanyabsprip/present.nvim',
+    'wincent/command-t',
+    cond = false_cb,
+    event = 'VimEnter',
+    setup = function()
+      vim.g.CommandTEncoding = 'UTF-8'
+      vim.g.CommandTFileScanner = 'watchman'
+      -- vim.g.CommandTInputDebounce = 50
+      vim.g.CommandTMaxCachedDirectories = 10
+      vim.g.CommandTMaxFiles = 3000000
+      vim.g.CommandTScanDotDirectories = 1
+      vim.g.CommandTTraverseSCM = 'pwd'
+      vim.g.CommandTWildIgnore = vim.o.wildignore
+        .. ',*/.git/*'
+        .. ',*/.hg/*'
+        .. ',*/bower_components/*'
+        .. ',*/tmp/*'
+        .. ',*.class'
+        .. ',*/classes/*'
+        .. ',*/build/*'
+    end,
+  }
+  use { 'andymass/vim-matchup', event = 'BufEnter' }
+  use {
+    'antoinemadec/FixCursorHold.nvim',
+    setup = function()
+      vim.g.cursorhold_updatetime = 100
+    end,
+  }
+
+  use {
+    'ray-x/go.nvim',
+    requires = {
+      'ray-x/guihua.lua',
+    },
+    ft = { 'go' },
     config = function()
-      require('present').setup {
+      require('go').setup {
+        run_in_floaterm = false,
+      }
+    end,
+  }
+
+  use {
+    'declancm/cinnamon.nvim',
+    cond = false_cb,
+    config = function()
+      require('cinnamon').setup {
+        extra_keymaps = true,
+        scroll_limit = 100,
       }
     end,
   }
@@ -535,12 +590,8 @@ end
 return packer.startup {
   plugins,
   config = {
+    max_jobs = 32, -- Prevents from hanging, though higher == faster
     compile_path = vim.fn.stdpath('config') .. '/lua/packer_compiled.lua',
-    display = {
-      -- open_fn = function()
-      --   return require('packer.util').float({ border = 'single' })
-      -- end,
-    },
   },
   profile = {
     enable = true,
