@@ -1,18 +1,29 @@
 local fzf = require('fzf-lua')
+local actions = require('fzf-lua.actions')
 
 fzf.setup {
+  actions = {
+    files = {
+      ['default'] = actions.file_edit,
+      ['ctrl-x'] = actions.file_split,
+      ['ctrl-v'] = actions.file_vsplit,
+      ['ctrl-t'] = actions.file_tabedit,
+      ['alt-q'] = actions.file_sel_to_qf,
+    },
+    buffers = {
+      ['default'] = actions.buf_edit,
+      ['ctrl-x'] = actions.buf_split,
+      ['ctrl-v'] = actions.buf_vsplit,
+      ['ctrl-t'] = actions.buf_tabedit,
+    },
+  },
   winopts = {
-    height = 0.85, -- window height
-    width = 0.80, -- window width
-    row = 0.35, -- window row position (0=top, 1=bottom)
-    col = 0.50, -- window col position (0=left, 1=right)
     hl = {
       normal = 'TelescopePromptNormal',
       border = 'TelescopeBorder',
       cursor = 'Cursor', -- cursor highlight (grep/LSP matches)
       cursorline = 'CursorLine', -- cursor line
       search = 'Search', -- search matches (ctags)
-      -- title       = 'Normal',        -- preview border title (file/buffer)
     },
 
     preview = {
@@ -57,7 +68,6 @@ fzf.setup {
     },
   },
   grep = {
-    rg_opts = string.format('%s %s', fzf.config.globals.grep.rg_opts, '--hidden -g "!.git"'),
     git_icons = false,
     file_icons = false,
     multiprocess = true,
@@ -73,35 +83,24 @@ if vim.env.NVIM_FILE_FINDER ~= 'fzf' then
 end
 
 vim.keymap.set('n', '<leader>]', function()
-  fzf.tags { fzf_cli_args = '--with-nth=2,1 --no-hscroll', winopts = { preview = { hidden = 'nohidden' } } }
+  fzf.tags {
+    fzf_cli_args = '--with-nth=2,1 --no-hscroll',
+    winopts = { preview = { hidden = 'nohidden' } },
+    file_icons = false,
+    git_icons = false,
+  }
 end)
 
 vim.keymap.set('n', '<leader>F', function()
-  fzf.live_grep_native {
-    fzf_cli_args = '--nth=2..',
-    exec_empty_query = true,
-    winopts = { preview = { hidden = 'nohidden' } },
-  }
+  fzf.live_grep_glob { winopts = { preview = { hidden = 'hidden' } }, exec_empty_query = true }
 end)
 vim.keymap.set('n', '<leader>n', function()
-  -- local prompt = [[ProjectFiles> ]]
   local winopts = { preview = { hidden = 'hidden' } }
 
-  -- if path.is_git_repo(vim.loop.cwd(), true) then
-  --   fzf.git_files({
-  --     fzf_opts = { ['--ansi'] = false },
-  --     file_icons = false,
-  --     git_icons = false,
-  --     prompt = prompt,
-  --     winopts = winopts,
-  --   })
-  --   return
-  -- end
   fzf.files {
     fzf_opts = { ['--ansi'] = false },
     file_icons = false,
     git_icons = false,
-    -- prompt = prompt,
     winopts = winopts,
   }
 end)
