@@ -21,6 +21,7 @@ lualine.setup {
     theme = 'auto',
     -- separator = '|',
     icons_enabled = true,
+    globalstatus = true,
   },
   sections = {
     lualine_a = { 'mode' },
