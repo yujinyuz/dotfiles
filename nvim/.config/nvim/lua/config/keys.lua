@@ -282,9 +282,9 @@ local switches = {
         end
 
         vim.cmd([[
-          Gitsigns toggle_current_line_blame |
-          Gitsigns toggle_signs |
-          Gitsigns toggle_linehl |
+          Gitsigns toggle_current_line_blame
+          Gitsigns toggle_signs
+          Gitsigns toggle_linehl
           Gitsigns toggle_word_diff
         ]])
       end,
