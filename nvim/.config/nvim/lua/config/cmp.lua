@@ -32,22 +32,20 @@ cmp.setup {
     return false
   end,
   preselect = cmp.PreselectMode.None,
-  -- completion = {
-  --   autocomplete = false,
-  -- },
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
   }, {
-    { name = 'rg' },
-    { name = 'buffer', option = {
-      get_bufnrs = function()
-        return { vim.api.nvim_get_current_buf() }
-      end,
-    } },
+    {
+      name = 'buffer',
+      option = {
+        get_bufnrs = function()
+          return vim.api.nvim_list_bufs()
+        end,
+      },
+    },
   }),
   window = {
     documentation = cmp.config.window.bordered {},
-    -- winhighlight = 'NormalFloat:NormalFloat,FloatBorder:TelescopeBorder',
   },
   sorting = {
     comparators = {
@@ -69,13 +67,10 @@ cmp.setup {
   mapping = {
     ['<C-p>'] = cmp.mapping.select_prev_item(),
     ['<C-n>'] = cmp.mapping.select_next_item(),
-    ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), {'i', 'c'}),
-    ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), {'i', 'c'}),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    -- ['<CR>'] = cmp.mapping.confirm({
-    --   behavior = cmp.ConfirmBehavior.Replace,
-    --   select = false, -- If I press enter, I don't want to select anything. Just create a new line
-    -- }),
+    ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
+    ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
+    ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+    ['<C-e>'] = cmp.mapping { i = cmp.mapping.close(), c = cmp.mapping.close() },
     ['<C-y>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.confirm { select = true }
@@ -86,6 +81,20 @@ cmp.setup {
       'i',
       's',
     }),
+    ['<C-j>'] = cmp.mapping(function(fallback)
+      if luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+      else
+        fallback()
+      end
+    end, { 'i' }),
+    ['<C-k>'] = cmp.mapping(function(fallback)
+      if luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, { 'i' }),
     ['<Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
@@ -137,6 +146,24 @@ cmp.setup {
   },
 }
 
+cmp.setup.filetype('html', {
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp' },
+    { name = 'luasnip' },
+  }, {
+    { name = 'rg', max_item_count = 10 },
+    { name = 'buffer', max_item_count = 10 },
+  }),
+})
+
+cmp.setup.filetype('markdown', {
+  sources = cmp.config.sources {
+    { name = 'nvim_lsp' },
+    { name = 'rg', max_item_count = 10 },
+    { name = 'buffer', max_item_count = 10 },
+  },
+})
+
 -- Following the vim philosophy keybindings
 -- @see `:h ins-completion`
 vim.keymap.set('i', '<C-x><C-o>', function()
@@ -148,19 +175,29 @@ vim.keymap.set('i', '<C-x><C-o>', function()
       },
     },
   }
-end)
+end, { desc = 'LSP completion' })
 
 vim.keymap.set('i', '<C-x><C-s>', function()
   cmp.complete {
     config = {
       sources = {
-        { name = 'snippet' },
+        { name = 'luasnip' },
       },
     },
   }
-end)
+end, { desc = 'Snippet completion' })
 
 vim.keymap.set('i', '<C-x><C-]>', function()
+  cmp.complete {
+    config = {
+      sources = {
+        { name = 'tags', max_item_count = 10 },
+      },
+    },
+  }
+end, { desc = 'ctags completion' })
+
+vim.keymap.set('i', '<C-x><C-x>', function()
   cmp.complete {
     config = {
       sources = {
@@ -168,7 +205,7 @@ vim.keymap.set('i', '<C-x><C-]>', function()
       },
     },
   }
-end)
+end, { desc = 'ripgrep completion' })
 
 vim.keymap.set('i', '<C-x><C-f>', function()
   cmp.complete {
@@ -178,7 +215,7 @@ vim.keymap.set('i', '<C-x><C-f>', function()
       },
     },
   }
-end)
+end, { desc = 'Path completion' })
 
 local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done { map_char = { tex = '' } })
