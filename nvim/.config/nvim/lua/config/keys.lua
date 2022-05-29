@@ -297,7 +297,13 @@ local switches = {
       'Toggle Biscuits Debug',
     },
     f = { require('config.lsp.formatting').toggle, 'Format on Save' },
-    l = { '<Cmd>IndentBlanklineToggle<CR>', 'Toggle Indent Lines' },
+    l = {
+      function()
+        utils.toggle('list')
+      end,
+      'Toggle List Chars',
+    },
+    L = { '<Cmd>IndentBlanklineToggle<CR>', 'Toggle Indent Lines' },
     n = {
       function()
         utils.toggle('number')
