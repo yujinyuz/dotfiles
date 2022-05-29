@@ -77,7 +77,7 @@ opt.pumheight = 15
 -- Always show sign columns
 opt.signcolumn = 'yes'
 -- Having longer update time leads to noticeable delays and poor UX
-opt.updatetime = 250
+opt.updatetime = 100
 -- Start scrolling when we're 8 lines below
 opt.scrolloff = 8
 -- and 15 lines from the side
@@ -113,6 +113,16 @@ opt.fillchars = {
   vert = '┃', -- BOX DRAWINGS HEAVY VERTICAL (U+2503, UTF-8: E2 94 83)
 }
 
+vim.opt.fillchars:append({
+    horiz = '━',
+    horizup = '┻',
+    horizdown = '┳',
+    vert = '┃',
+    vertleft = '┨',
+    vertright = '┣',
+    verthoriz = '╋',
+})
+
 -- Maximum number of nesting of folds for indend and syntax method
 opt.foldnestmax = 4
 --Number of screenlines above which a fold can be displayed closed
@@ -135,7 +145,5 @@ opt.synmaxcol = 512
 
 -- opt.switchbuf = 'usetab' -- try to reuse windows/tabs when switching buffers
 
-local notify = prequire('notify')
-if notify then
-  vim.notify = notify
-end
+-- Use 1 Global statusline
+opt.laststatus = 3
