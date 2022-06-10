@@ -1,0 +1,13 @@
+fix_vf_auto_activation() {
+    # tr ':' '\n' <<< "$PATH"
+    if [[ ! -z "${TMUX}" && ! -z "${VIRTUAL_ENV}" && ! -z "${VF_AUTO_ACTIVATED}" ]]; then
+        # Since config.fish is loaded first, therefore triggering virtualfish auto activate,
+        # It's better to manually remove the virtual env binary and add it back again
+        # So there would be no duplicates and unexpected results such as deleting a random
+        # PATH[i] variable
+        PATH_rm "$VIRTUAL_ENV"/bin
+        PATH_add "$VIRTUAL_ENV"/bin
+    fi
+}
+
+# vim:ft=bash
