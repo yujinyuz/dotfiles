@@ -30,7 +30,7 @@ local plugins = function(use)
       'folke/lua-dev.nvim',
     },
   }
-  use { 'williamboman/nvim-lsp-installer' }
+  use { 'williamboman/nvim-lsp-installer', opt = true, module = 'nvim-lsp-installer' }
 
   -- Comments
   use {
@@ -57,6 +57,8 @@ local plugins = function(use)
 
   use {
     'danymat/neogen',
+    opt = true,
+    cmd = { 'Neogen' },
     config = function()
       require('neogen').setup {
         enabled = true,
@@ -77,10 +79,7 @@ local plugins = function(use)
       { 'nvim-treesitter/nvim-treesitter-refactor' },
       { 'p00f/nvim-ts-rainbow' },
       { 'RRethy/nvim-treesitter-textsubjects' },
-      { 'eddiebergman/nvim-treesitter-pyfold' },
-      {
-        'windwp/nvim-ts-autotag',
-      },
+      { 'windwp/nvim-ts-autotag' },
     },
   }
   use { 'ThePrimeagen/refactoring.nvim' }
@@ -105,7 +104,8 @@ local plugins = function(use)
   use {
     'camspiers/snap',
     opt = true,
-    event = 'VimEnter',
+    cmd = { 'Snap' },
+    module = 'snap',
     config = function()
       require('config.snap')
     end,
@@ -117,12 +117,16 @@ local plugins = function(use)
       require('config.telescope')
     end,
     requires = {
-      { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
+      {
+        'nvim-telescope/telescope-fzf-native.nvim',
+        run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
+      },
     },
   }
 
   use {
     'nvim-neo-tree/neo-tree.nvim',
+    cmd = { 'Neotree' },
     branch = 'v2.x',
     requires = {
       'nvim-lua/plenary.nvim',
@@ -201,8 +205,20 @@ local plugins = function(use)
     cmd = { 'IndentBlanklineToggle' },
   }
 
-  use { 'liuchengxu/vista.vim' }
-  use { 'Darazaki/indent-o-matic' }
+  use { 'liuchengxu/vista.vim', opt = true, cmd = { 'Vista' } }
+  use {
+    'Darazaki/indent-o-matic',
+    config = function()
+      require('indent-o-matic').setup {
+        filetype_html = {
+          standard_widths = { 2 },
+        },
+        filetype_htmldjango = {
+          standard_widths = { 2 },
+        },
+      }
+    end,
+  }
 
   use {
     'rmagatti/goto-preview',
@@ -213,9 +229,11 @@ local plugins = function(use)
 
   use {
     'hrsh7th/nvim-cmp',
+    opt = true,
+    event = 'InsertEnter',
     requires = {
       'hrsh7th/cmp-buffer',
-      'hrsh7th/cmp-nvim-lsp',
+      { 'hrsh7th/cmp-nvim-lsp', module = 'cmp_nvim_lsp' },
       'hrsh7th/cmp-nvim-lua',
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-calc',
@@ -223,7 +241,7 @@ local plugins = function(use)
       'lukas-reineke/cmp-rg',
       'quangnguyen30192/cmp-nvim-tags',
       'octaltree/cmp-look',
-      'lukas-reineke/cmp-under-comparator',
+      { 'lukas-reineke/cmp-under-comparator', module = 'cmp-under-comparator' },
       'hrsh7th/cmp-nvim-lsp-signature-help',
       'uga-rosa/cmp-dictionary',
       {
@@ -378,13 +396,13 @@ local plugins = function(use)
     { 'tpope/vim-surround' },
     { 'tpope/vim-markdown', ft = { 'markdown' } },
     { 'tpope/vim-characterize' },
-    { 'tpope/vim-fugitive' },
+    { 'tpope/vim-fugitive', cmd = { 'Git', 'G', 'Gwrite' } },
     { 'tpope/vim-repeat' },
     { 'tpope/vim-unimpaired', event = 'BufRead' },
     { 'tpope/vim-apathy', event = 'BufRead' },
     { 'tpope/vim-rsi' },
     { 'tpope/vim-eunuch', opt = true, cmd = { 'Delete', 'Move', 'Rename' } },
-    { 'tpope/vim-abolish' },
+    { 'tpope/vim-abolish', cmd = { 'Abolish' } },
     {
       'tpope/vim-scriptease',
       opt = true,
@@ -590,7 +608,7 @@ end
 return packer.startup {
   plugins,
   config = {
-    max_jobs = 32, -- Prevents from hanging, though higher == faster
+    max_jobs = 32, -- Prevents :PackerSync from hanging, though higher == faster
     compile_path = vim.fn.stdpath('config') .. '/lua/packer_compiled.lua',
   },
   profile = {
