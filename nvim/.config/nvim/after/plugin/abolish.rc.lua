@@ -1,4 +1,4 @@
-if not vim.fn.exists(':Abolish') then
+if not vim.g.loaded_abolish then
   return
 end
 
