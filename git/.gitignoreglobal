@@ -39,7 +39,7 @@ node_modules
 tmp/
 temp/
 .DS_Store
-logs
+logs/*
 *.log
 
 
