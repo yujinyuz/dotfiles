@@ -1,12 +1,3 @@
-# Notes:
-# -x : --export
-# -g : --global
-# -U : --universal
-# -q : --query
-# https://nothingbutsnark.svbtle.com/trying-out-the-fish-shell
-# Use -g for setting environment variables. When using the `-U`, even if we delete
-# it in this config, it will still exists until such time that we unset it.
-
 # General
 set -gx EDITOR nvim
 set -gx VISUAL $EDITOR
@@ -35,26 +26,13 @@ else
     set -U fish_config_changed $fish_config_mtime
 end
 
-set -Ux fish_user_paths
-
-# Path
-fish_add_path ~/.local/bin
-fish_add_path /usr/local/sbin
-fish_add_path /usr/local/opt/mysql-client/bin
-
-# Add asdf binaries to path
-## Let asdf-direnv handle everything else
-fish_add_path ~/.asdf/bin
-
 # Exports
 ## Use neovim as the default man pager. Type :h Man for more info
 set -Ux MANPAGER "nvim +Man!"
 set -Ux MANWIDTH 999
-
 ## Autojump
 set -Ux Z_CMD j
-
-## FZF
+## fzf
 set -l FD_OPTIONS "--hidden --follow --exclude .git --exclude node_modules"
 set -Ux FZF_DEFAULT_COMMAND "git ls-files --cached --others --exclude-standard &> /dev/null | fd --type f --type l $FD_OPTIONS"
 set -Ux FZF_DEFAULT_OPTS "--height 40% --layout=reverse --info=inline --color='bg+:$BG_TMUX'"
@@ -63,15 +41,30 @@ set -Ux FZF_ALT_C_COMMAND "fd --type d $FD_OPTIONS"
 
 ## pyenv
 set -Ux PYTHON_BUILD_ARIA2_OPTS "-x 10 -k 1M" # Use aria2c when downloading
-
 ## virtualfish
 set -Ux VIRTUALFISH_HOME $HOME/.local/share/virtualenvs
-
 ## asdf-direnv
 set -Ux DIRENV_LOG_FORMAT ""
-
 ## bat
 set -Ux BAT_THEME Dracula
+set -Ux fish_user_paths
+## gopath
+set -Ux GOPATH ~/go
+
+# Path
+## local binaries
+fish_add_path ~/.local/bin
+## sysad binaries
+fish_add_path /usr/local/sbin
+## mysql client
+fish_add_path /usr/local/opt/mysql-client/bin
+## python
+fish_add_path /usr/local/opt/python@3.{10,9,8}/bin
+## golang
+fish_add_path $GOPATH $GOPATH/bin
+## asdf + asdf-direnv
+fish_add_path ~/.asdf/bin
+
 
 # aliases
 alias -s brewup "brew update; brew upgrade; brew cleanup; brew doctor"
