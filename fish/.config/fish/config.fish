@@ -14,7 +14,7 @@ set -gx SUDO_EDITOR $EDITOR
 set -gx LANG en_US.UTF-8
 
 ## System
-# ulimit -n 2048 # Increase resource usage limits to 2048. Default is 256
+ulimit -n 2048 # Increase resource usage limits to 2048. Default is 256
 
 ## Since we are either using tmux or just default shell we want to check if
 ## PARENT_TERM is set by our tmux config so we can use it for other programs
