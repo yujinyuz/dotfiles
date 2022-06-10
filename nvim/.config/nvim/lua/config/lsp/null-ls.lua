@@ -2,8 +2,10 @@ local M = {}
 
 function M.setup(options)
   local nls = require('null-ls')
+
   local sources = {
     nls.builtins.formatting.prettierd,
+    nls.builtins.formatting.djhtml.with { extra_args = {'--tabwidth', '2'}},
     -- nls.builtins.formatting.prettier,
     nls.builtins.formatting.eslint_d,
     nls.builtins.formatting.black,
