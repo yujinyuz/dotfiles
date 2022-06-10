@@ -98,6 +98,13 @@ alias -s ls "exa --color=always --icons --group-directories-first --classify"
 alias -s la "exa --color=always --icons --group-directories-first --classify --all"
 alias -s ll "exa --color=always --icons --group-directories-first --classify --all --long"
 
+## Workaround so direnv is unloaded when tmux is ran
+## https://github.com/direnv/direnv/wiki/Tmux
+if type -q direnv
+    alias -s tat "direnv exec / tat"
+    alias -s tmux "direnv exec / tmux"
+end
+
 
 # abbreviations
 abbr cp "cp -iv"
