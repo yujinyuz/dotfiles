@@ -25,7 +25,11 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = { '*' },
   group = ide_group,
   callback = function()
-    vim.highlight.on_yank {}
+    vim.highlight.on_yank {
+      higroup = 'Substitute',
+      on_visual = false,
+      timeout = 200,
+    }
   end,
   desc = 'Highight on Yank',
 })
