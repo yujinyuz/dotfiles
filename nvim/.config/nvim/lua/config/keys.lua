@@ -85,9 +85,11 @@ vim.keymap.set('n', '<C-n>', '<Cmd>Neotree toggle<CR>')
 
 vim.keymap.set('n', '<localleader>b', '<Cmd>Vista!!<CR>')
 
-vim.keymap.set('n', '<A-i>', '<Cmd>lua require("FTerm").toggle()<CR>')
+-- vim.keymap.set('n', '<A-i>', '<Cmd>lua require("FTerm").toggle()<CR>')
+-- vim.keymap.set('t', '<A-i>', '<Cmd>lua require("FTerm").toggle()<CR>')
 
-vim.keymap.set('t', '<A-i>', '<Cmd>lua require("FTerm").toggle()<CR>')
+vim.keymap.set('n', '<A-i>', '<Cmd>ToggleTerm<CR>')
+vim.keymap.set('t', '<A-i>', '<Cmd>ToggleTerm<CR>')
 
 vim.keymap.set('x', '<leader>h0', ':<c-u>HSHighlight 0<CR>')
 vim.keymap.set('x', '<leader>h1', ':<c-u>HSHighlight 1<CR>')
@@ -109,6 +111,10 @@ end, {
 
 vim.keymap.set({ 'n', 'x' }, 'ga', '<Plug>(EasyAlign)')
 vim.keymap.set('n', '<C-p>', ':e **/')
+
+vim.keymap.set('n', '<C-s>', function()
+  print(require('nvim-gps').get_location())
+end, { desc = 'Use this when feeling lost' })
 
 wk.register({
   [' '] = 'Find Files',
@@ -289,12 +295,6 @@ local switches = {
         ]])
       end,
       'Toggle Git Signs',
-    },
-    d = {
-      function()
-        require('nvim-biscuits').toggle_biscuits()
-      end,
-      'Toggle Biscuits Debug',
     },
     f = { require('config.lsp.formatting').toggle, 'Format on Save' },
     l = {
