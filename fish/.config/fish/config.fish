@@ -52,8 +52,6 @@ set -Ux fish_user_paths
 set -Ux GOPATH ~/go
 
 # Path
-## local binaries
-fish_add_path ~/.local/bin
 ## sysad binaries
 fish_add_path /usr/local/sbin
 ## mysql client
@@ -62,10 +60,12 @@ fish_add_path /usr/local/opt/mysql-client/bin
 fish_add_path /usr/local/opt/python@3.{10,9,8}/bin
 ## golang
 fish_add_path $GOPATH $GOPATH/bin
-## asdf + asdf-direnv
-fish_add_path ~/.asdf/bin
 ## cargo
 fish_add_path ~/.cargo/bin
+## asdf + asdf-direnv
+fish_add_path ~/.asdf/bin
+## local binaries
+fish_add_path ~/.local/bin
 
 
 # aliases
@@ -95,10 +95,10 @@ alias -s ll "exa --color=always --icons --group-directories-first --classify --a
 
 ## Workaround so direnv is unloaded when tmux is ran
 ## https://github.com/direnv/direnv/wiki/Tmux
-if type -q direnv
-    alias -s tat "direnv exec / tat"
-    alias -s tmux "direnv exec / tmux"
-end
+# if type -q direnv
+#     alias -s tat "direnv exec / tat"
+#     alias -s tmux "direnv exec / tmux"
+# end
 
 
 # abbreviations
