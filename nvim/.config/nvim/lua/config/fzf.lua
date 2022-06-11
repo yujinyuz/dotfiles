@@ -27,7 +27,7 @@ fzf.setup {
     },
 
     preview = {
-      delay = 0.1,
+      delay = 0,
     },
   },
   fzf_opts = {
@@ -73,6 +73,10 @@ fzf.setup {
     multiprocess = true,
   },
   file_icon_padding = '',
+  lsp = {
+    -- https://github.com/jose-elias-alvarez/null-ls.nvim/wiki/Compatibility-with-other-plugins
+    async_or_timeout = 3000,
+  },
   on_create = function()
     vim.keymap.set('t', '<Esc>', '<C-c>', { buffer = 0 })
   end,
@@ -95,10 +99,10 @@ vim.keymap.set('n', '<leader>F', function()
   fzf.live_grep_glob { winopts = { preview = { hidden = 'hidden' } }, exec_empty_query = true }
 end)
 vim.keymap.set('n', '<leader>n', function()
-  local winopts = { preview = { hidden = 'hidden' } }
+  local winopts = { preview = { hidden = 'nohidden' } }
 
   fzf.files {
-    fzf_opts = { ['--ansi'] = false },
+    fzf_opts = { ['--ansi'] = false, ['--cycle'] = '' },
     file_icons = false,
     git_icons = false,
     winopts = winopts,
