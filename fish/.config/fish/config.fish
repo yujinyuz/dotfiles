@@ -64,6 +64,8 @@ fish_add_path /usr/local/opt/python@3.{10,9,8}/bin
 fish_add_path $GOPATH $GOPATH/bin
 ## asdf + asdf-direnv
 fish_add_path ~/.asdf/bin
+## cargo
+fish_add_path ~/.cargo/bin
 
 
 # aliases
