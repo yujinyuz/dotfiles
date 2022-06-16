@@ -88,7 +88,8 @@ opt.showmode = false
 -- Enable backups
 opt.backup = true
 -- Ensure filename uniqueness with //
-opt.backupdir = vim.fn.stdpath('data') .. '/backup//'
+-- opt.backupdir = { vim.fn.stdpath('data') .. '/backup//', vim.env.HOME .. '/.backup//', './.backup/' }
+opt.backupdir = { './.backup//', vim.fn.stdpath('data') .. '/backup//'}
 -- Enable persistent undo
 opt.undofile = true
 
@@ -113,15 +114,15 @@ opt.fillchars = {
   vert = '┃', -- BOX DRAWINGS HEAVY VERTICAL (U+2503, UTF-8: E2 94 83)
 }
 
-vim.opt.fillchars:append({
-    horiz = '━',
-    horizup = '┻',
-    horizdown = '┳',
-    vert = '┃',
-    vertleft = '┨',
-    vertright = '┣',
-    verthoriz = '╋',
-})
+vim.opt.fillchars:append {
+  horiz = '━',
+  horizup = '┻',
+  horizdown = '┳',
+  vert = '┃',
+  vertleft = '┨',
+  vertright = '┣',
+  verthoriz = '╋',
+}
 
 -- Maximum number of nesting of folds for indend and syntax method
 opt.foldnestmax = 4
