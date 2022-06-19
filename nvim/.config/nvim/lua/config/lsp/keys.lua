@@ -117,10 +117,12 @@ function M.setup(client, bufnr)
   vim.keymap.set('i', '<C-s>', '<Cmd>lua vim.lsp.buf.signature_help()<CR>', { silent = true, buffer = 0 })
 
   -- Set some keybinds conditional on server capabilities
-  if client.resolved_capabilities.document_formatting then
-    keymap.c.f = { '<Cmd>lua vim.lsp.buf.formatting()<CR>', 'Format Document' }
+  if client.server_capabilities.documentFormattingProvider then
+    keymap.c.f = { '<Cmd>lua vim.lsp.buf.format { async = true }<CR>', 'Format Document' }
     vim.bo.formatexpr = 'v:lua.vim.lsp.formatexpr()'
-  elseif client.resolved_capabilities.document_range_formatting then
+  end
+
+  if client.server_capabilities.documentRangeFormattingProvider then
     keymap_visual.c.f = { '<Cmd>lua vim.lsp.buf.range_formatting()<CR>', 'Format Range' }
   end
 
