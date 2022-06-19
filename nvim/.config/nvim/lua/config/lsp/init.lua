@@ -23,8 +23,8 @@ local on_attach = function(client, bufnr)
   require('config.lsp.keys').setup(client, bufnr)
 
   -- Because some LSPs can have other possible values
-  --    e.g. pyright has `client.resolved_capabilities.goto_definition = { workDoneProgress = true}`
-  --    and sumneko_lua has `client.resolved_capabilities.goto_definition = true`
+  --    e.g. pyright has `client.server_capabilities.definitionProvider = { workDoneProgress = true}`
+  --    and sumneko_lua has `client.server_capabilities.definitionProvider = true`
   -- we will just check if it's not false before setting tagfunc
   if client.server_capabilities.definitionProvider ~= false then
     vim.bo.tagfunc = 'v:lua.vim.lsp.tagfunc'
@@ -102,6 +102,10 @@ local servers = {
 }
 
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+capabilities.textDocument.foldRange = {
+  dynamicRegistration = false,
+  lineFoldingOnly = true
+}
 
 local options = {
   on_attach = on_attach,

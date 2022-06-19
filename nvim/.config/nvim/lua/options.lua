@@ -101,11 +101,11 @@ opt.wildoptions = 'pum'
 -- Number of folds available when starting to edit files
 -- Set to 0 all folds closed, 1 some folds closed, 99 no folds closed
 opt.foldlevelstart = 99
--- Use indend by default when tresesitter folds are not available
+-- Use indent by default when tresesitter folds are not available
 opt.foldmethod = 'indent'
 -- Display better folds
-opt.foldtext =
-  [[substitute(getline(v:foldstart),'\\t',repeat('\ ',&tabstop),'g').' ... '.trim(getline(v:foldend)) . ' (' . (v:foldend - v:foldstart + 1) . ' lines)']]
+-- opt.foldtext =
+--   [[substitute(getline(v:foldstart),'\\t',repeat('\ ',&tabstop),'g').' ... '.trim(getline(v:foldend)) . ' (' . (v:foldend - v:foldstart + 1) . ' lines)']]
 -- opt.fillchars = { fold = " ", vert = "|" }
 opt.fillchars = {
   diff = '∙', -- BULLET OPERATOR (U+2219, UTF-8: E2 88 99)
