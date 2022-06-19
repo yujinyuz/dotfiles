@@ -603,6 +603,19 @@ local plugins = function(use)
       }
     end,
   }
+
+  use {
+    'ziontee113/syntax-tree-surfer',
+    config = function()
+      require('config.syntax-tree-surfer')
+    end,
+  }
+
+  use { 'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async',
+    config = function()
+      require('config.ufo')
+    end,
+  }
 end
 
 return packer.startup {
