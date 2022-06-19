@@ -147,3 +147,7 @@ opt.synmaxcol = 512
 
 -- Use 1 Global statusline
 opt.laststatus = 3
+
+-- Use lower cmd height
+opt.cmdheight = 0
+
