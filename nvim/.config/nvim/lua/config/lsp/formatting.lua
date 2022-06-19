@@ -31,7 +31,7 @@ function M.setup(client, buf)
   end
 
   client.server_capabilities.documentFormattingProvider = enable
-  client.resolved_capabilities.document_formatting = enable
+  client.server_capabilities.documentRangeFormattingProvider = enable
 
   -- format on save
   if client.server_capabilities.documentFormattingProvider then
