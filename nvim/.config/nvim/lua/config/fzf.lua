@@ -95,6 +95,15 @@ vim.keymap.set('n', '<leader>]', function()
   }
 end)
 
+vim.keymap.set('n', '<leader>\\', function()
+  fzf.lsp_live_workspace_symbols {
+    fzf_cli_args = '--with-nth 2,1 --no-hscroll',
+    file_icons = false,
+    git_icons = false,
+  }
+end)
+
+
 vim.keymap.set('n', '<leader>F', function()
   fzf.live_grep_glob { winopts = { preview = { hidden = 'hidden' } }, exec_empty_query = true }
 end)
