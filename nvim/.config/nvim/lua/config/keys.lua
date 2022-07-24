@@ -113,7 +113,7 @@ vim.keymap.set({ 'n', 'x' }, 'ga', '<Plug>(EasyAlign)')
 vim.keymap.set('n', '<C-p>', ':e **/')
 
 vim.keymap.set('n', '<C-s>', function()
-  print(require('nvim-gps').get_location())
+  print(require('nvim-navic').get_location())
 end, { desc = 'Use this when feeling lost' })
 
 wk.register({

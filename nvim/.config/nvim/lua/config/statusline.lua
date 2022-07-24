@@ -1,4 +1,5 @@
 local lualine = require('lualine')
+local navic = require('nvim-navic')
 local filename = function()
   -- local data = vim.fn.pathshorten(vim.fn.expand('%'))
   -- echo fnamemodify(expand("%"), ":~:.")
@@ -28,7 +29,7 @@ lualine.setup {
     lualine_b = { 'branch', 'diff', { 'diagnostics', sources = { 'nvim_diagnostic' } } },
     lualine_c = { { 'filename', file_status = true, path = 1 } },
     lualine_x = {
-      { require('nvim-gps').get_location, cond = require('nvim-gps').is_available },
+      { navic.get_location, cond = navic.is_available },
       'encoding',
       'filetype',
     },

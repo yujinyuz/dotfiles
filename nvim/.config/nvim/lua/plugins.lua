@@ -84,11 +84,7 @@ local plugins = function(use)
   }
   use { 'ThePrimeagen/refactoring.nvim' }
   use {
-    'SmiteshP/nvim-gps',
-    config = function()
-      require('nvim-gps').setup()
-    end,
-    requires = 'nvim-treesitter/nvim-treesitter',
+    'SmiteshP/nvim-navic',
   }
   use { 'yioneko/nvim-yati' }
 
