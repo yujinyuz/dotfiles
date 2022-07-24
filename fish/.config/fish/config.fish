@@ -99,6 +99,7 @@ alias -s ls "exa --color=always --icons --group-directories-first --classify"
 alias -s la "exa --color=always --icons --group-directories-first --classify --all"
 alias -s ll "exa --color=always --icons --group-directories-first --classify --all --long"
 
+alias -s ge "graph-easy"
 
 # abbreviations
 abbr cp "cp -iv"
