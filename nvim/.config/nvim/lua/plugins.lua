@@ -520,7 +520,7 @@ local plugins = function(use)
     end,
   }
 
-  use { 'kazhala/close-buffers.nvim', cmd = 'BDelete' }
+  use { 'famiu/bufdelete.nvim', cmd = { 'Bdelete', 'Bwipeout' } }
   use { 'simrat39/rust-tools.nvim' }
   use { 'junegunn/vim-easy-align' }
   use { 'stevearc/dressing.nvim' }

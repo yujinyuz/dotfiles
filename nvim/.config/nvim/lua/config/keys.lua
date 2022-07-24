@@ -133,7 +133,7 @@ wk.register({
     name = '+buffer',
     ['1'] = { '<Cmd>%bd|e#|bd#<CR>', 'Delete other buffers except this one' },
     b = { 'Buffer List' },
-    d = { '<Cmd>BDelete this<CR>', 'Buffer Delete' },
+    d = { '<Cmd>Bdelete<CR>', 'Buffer Delete Current' },
     t = { '<Cmd>Vista!!<CR>', 'Buffer Tags' },
     o = { '<Cmd>SymbolsOutline<CR>', 'Symbols Outline' },
   },
