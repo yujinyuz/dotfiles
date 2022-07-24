@@ -13,6 +13,7 @@ tags.temp
 *.py[co]
 __pycache__/
 .venv
+pyrightconfig.json
 
 # .vscode stuffs
 .vscode/
