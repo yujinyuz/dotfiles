@@ -8,7 +8,7 @@ ts_configs.setup {
     'bash',
     'c',
     'cmake',
-    'comment',
+    -- 'comment',
     'cpp',
     'css',
     'fennel',
