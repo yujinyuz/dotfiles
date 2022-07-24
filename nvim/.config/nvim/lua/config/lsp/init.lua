@@ -22,6 +22,10 @@ local on_attach = function(client, bufnr)
   require('config.lsp.formatting').setup(client, bufnr)
   require('config.lsp.keys').setup(client, bufnr)
 
+  if client.server_capabilities.documentSymbolProvider then
+    require('nvim-navic').attach(client, bufnr)
+  end
+
   -- Because some LSPs can have other possible values
   --    e.g. pyright has `client.server_capabilities.definitionProvider = { workDoneProgress = true}`
   --    and sumneko_lua has `client.server_capabilities.definitionProvider = true`
