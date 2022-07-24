@@ -292,7 +292,7 @@ local plugins = function(use)
     {
       'ludovicchabant/vim-gutentags',
       setup = function()
-        vim.g.gutentags_project_root = { 'manage.py' }
+        vim.g.gutentags_project_root = { 'manage.py', 'pyrightconfig.json' }
       end,
       event = 'BufRead',
     },
