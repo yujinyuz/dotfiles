@@ -11,3 +11,7 @@ local function shell_plus()
 end
 
 vim.keymap.set({ 'n', 't' }, '<A-x>', shell_plus)
+
+-- Surround word with Optional
+-- e.g. str -> Optional[str] = None
+vim.keymap.set('n', '<leader>o', 'iOptional[<C-o>A] = None<Esc>', { buffer = 0 })
