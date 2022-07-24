@@ -30,8 +30,7 @@ end
 ## Use neovim as the default man pager. Type :h Man for more info
 set -Ux MANPAGER "nvim +Man!"
 set -Ux MANWIDTH 999
-## Autojump
-set -Ux Z_CMD j
+
 ## fzf
 set -l FD_OPTIONS "--hidden --follow --exclude .git --exclude node_modules"
 set -Ux FZF_DEFAULT_COMMAND "git ls-files --cached --others --exclude-standard &> /dev/null | fd --type f --type l $FD_OPTIONS"
