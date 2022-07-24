@@ -426,13 +426,6 @@ local plugins = function(use)
   }
 
   use {
-    'nathom/filetype.nvim',
-    config = function()
-      require('filetype').setup {}
-    end,
-  }
-
-  use {
     'wakatime/vim-wakatime',
     event = 'BufReadPre',
   }
@@ -492,12 +485,6 @@ local plugins = function(use)
     end,
     ft = { 'http' },
   }
-  use {
-    '~/Sources/tablea.nvim',
-    config = function()
-      require('tablea').setup { show_index = false, show_modify = true }
-    end,
-  }
 
   use { 'Pocco81/HighStr.nvim' }
 
@@ -534,13 +521,6 @@ local plugins = function(use)
     end,
   }
   use {
-    'hoschi/yode-nvim',
-    config = function()
-      require('yode-nvim').setup {}
-    end,
-  }
-
-  use {
     'turbio/bracey.vim',
     cmd = 'Bracey',
     run = 'npm install --prefix server',
@@ -548,24 +528,10 @@ local plugins = function(use)
 
   use {
     'wincent/command-t',
-    cond = false_cb,
-    event = 'VimEnter',
-    setup = function()
-      vim.g.CommandTEncoding = 'UTF-8'
-      vim.g.CommandTFileScanner = 'watchman'
-      -- vim.g.CommandTInputDebounce = 50
-      vim.g.CommandTMaxCachedDirectories = 10
-      vim.g.CommandTMaxFiles = 3000000
-      vim.g.CommandTScanDotDirectories = 1
-      vim.g.CommandTTraverseSCM = 'pwd'
-      vim.g.CommandTWildIgnore = vim.o.wildignore
-        .. ',*/.git/*'
-        .. ',*/.hg/*'
-        .. ',*/bower_components/*'
-        .. ',*/tmp/*'
-        .. ',*.class'
-        .. ',*/classes/*'
-        .. ',*/build/*'
+    branch = 'pu',
+    config = function()
+      vim.g.CommandTPreferredImplementation = 'lua'
+      require('wincent.commandt').setup()
     end,
   }
   use { 'andymass/vim-matchup', event = 'BufEnter' }
@@ -617,7 +583,6 @@ end
 return packer.startup {
   plugins,
   config = {
-    max_jobs = 32, -- Prevents :PackerSync from hanging, though higher == faster
     compile_path = vim.fn.stdpath('config') .. '/lua/packer_compiled.lua',
   },
   profile = {
