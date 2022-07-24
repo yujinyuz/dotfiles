@@ -23,3 +23,13 @@ $ brew bundle dump --file=macos/Brewfile --force
 ```
 cp -iv ~/.asdf/completions/asdf.fish ~/.config/fish/completions/
 ```
+
+
+## Remove Desktop Icons
+
+Useful when you just dump stuffs to your desktop but don't want to see it
+
+```console
+defaults write com.apple.finder CreateDesktop false
+killall Finder
+```
