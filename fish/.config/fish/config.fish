@@ -51,12 +51,16 @@ set -Ux BAT_THEME Dracula
 set -Ux fish_user_paths
 ## gopath
 set -Ux GOPATH ~/go
+# Bun
+set -Ux BUN_INSTALL "$HOME/.bun"
 
 # Path
 ## sysad binaries
 fish_add_path /usr/local/sbin
 ## mysql client
 fish_add_path /usr/local/opt/mysql-client/bin
+## psql client
+fish_add_path /usr/local/opt/libpq/bin
 ## python
 fish_add_path /usr/local/opt/python@3.{10,9,8}/bin
 ## golang
@@ -65,9 +69,10 @@ fish_add_path $GOPATH $GOPATH/bin
 fish_add_path ~/.cargo/bin
 ## asdf + asdf-direnv
 fish_add_path ~/.asdf/bin
+## bun
+fish_add_path ~/.bun/bin
 ## local binaries
 fish_add_path ~/.local/bin
-
 
 # aliases
 alias -s brewup "brew update; brew upgrade; brew cleanup; brew doctor"
@@ -93,13 +98,6 @@ alias -s loadsshkeys "ls -d ~/.ssh/* -I '*.pub|config|environment|pems|known_hos
 alias -s ls "exa --color=always --icons --group-directories-first --classify"
 alias -s la "exa --color=always --icons --group-directories-first --classify --all"
 alias -s ll "exa --color=always --icons --group-directories-first --classify --all --long"
-
-## Workaround so direnv is unloaded when tmux is ran
-## https://github.com/direnv/direnv/wiki/Tmux
-# if type -q direnv
-#     alias -s tat "direnv exec / tat"
-#     alias -s tmux "direnv exec / tmux"
-# end
 
 
 # abbreviations
