@@ -1,2 +1,3 @@
 *.crontab linguist-language=Shell
 .tmux.conf linguist-language=Shell
+ssh/**/* filter=crypt diff=crypt merge=crypt
