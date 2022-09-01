@@ -30,7 +30,18 @@ local plugins = function(use)
       'folke/lua-dev.nvim',
     },
   }
-  use { 'williamboman/nvim-lsp-installer', opt = true, module = 'nvim-lsp-installer' }
+  use {
+    'williamboman/mason.nvim',
+    config = function()
+      require('mason').setup {}
+    end,
+  }
+
+  use {
+    'williamboman/mason-lspconfig.nvim',
+    opt = true,
+    module = 'mason-lspconfig',
+  }
 
   -- Comments
   use {
