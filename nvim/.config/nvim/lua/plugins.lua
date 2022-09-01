@@ -110,9 +110,9 @@ local plugins = function(use)
 
   use {
     'camspiers/snap',
-    opt = true,
-    cmd = { 'Snap' },
-    module = 'snap',
+    cond = function()
+      return vim.env.NVIM_FILE_FINDER == 'snap'
+    end,
     config = function()
       require('config.snap')
     end,
@@ -481,7 +481,7 @@ local plugins = function(use)
     cmd = { 'Twilight' },
   }
   use {
-    'marcushwz/nvim-workbench',
+    'weizheheng/nvim-workbench',
     setup = function()
       vim.g.workbench_border = 'single'
       vim.g.workbench_storage_path = vim.fn.expand('~/Sync/notes/workbench/')
@@ -542,9 +542,14 @@ local plugins = function(use)
 
   use {
     'wincent/command-t',
-    branch = 'pu',
-    config = function()
+    -- cond = false_cb,
+    opt = true,
+    event = 'VimEnter',
+    run = 'cd lua/wincent/commandt/lib && make',
+    setup = function()
       vim.g.CommandTPreferredImplementation = 'lua'
+    end,
+    config = function()
       require('wincent.commandt').setup()
     end,
   }

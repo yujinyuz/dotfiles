@@ -25,9 +25,8 @@ fzf.setup {
       cursorline = 'CursorLine', -- cursor line
       search = 'Search', -- search matches (ctags)
     },
-
     preview = {
-      delay = 0,
+      delay = 25,
     },
   },
   fzf_opts = {
@@ -56,6 +55,7 @@ fzf.setup {
     },
   },
   files = {
+    cmd = 'fd --strip-cwd-prefix --color=never --type f --hidden --follow --exclude .git',
     git_icons = false,
     multiprocess = true,
   },
@@ -116,7 +116,7 @@ vim.keymap.set('n', '<leader>n', function()
     git_icons = false,
     winopts = winopts,
   }
-end)
+end, { desc = 'Find Files'})
 
 vim.keymap.set('n', '<leader>bb', '<Cmd>FzfLua buffers<CR>')
 vim.keymap.set('n', '<leader>fw', '<Cmd>FzfLua grep_cword<CR>')
