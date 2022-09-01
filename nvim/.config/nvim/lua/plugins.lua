@@ -514,7 +514,10 @@ local plugins = function(use)
     event = 'CursorHold',
     module = 'illuminate',
     config = function()
-      vim.g.Illuminate_delay = 1000
+      require('illuminate').configure {
+        under_cursor = false,
+        delay = 1000,
+      }
     end,
   }
 
