@@ -120,7 +120,7 @@ local options = {
 }
 
 
-require('nvim-lsp-installer').setup {
+require('mason-lspconfig').setup {
   ensure_installed = vim.tbl_keys(servers),
 }
 
