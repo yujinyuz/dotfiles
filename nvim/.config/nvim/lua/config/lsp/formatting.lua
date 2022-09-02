@@ -30,7 +30,11 @@ function M.setup(client, buf)
     enable = client.name == 'null-ls'
   end
 
+  client.resolved_capabilities.document_formatting = enable
   client.server_capabilities.documentFormattingProvider = enable
+
+
+  client.resolved_capabilities.document_range_formatting = enable
   client.server_capabilities.documentRangeFormattingProvider = enable
 
   -- format on save
