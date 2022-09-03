@@ -443,6 +443,7 @@ local plugins = function(use)
 
   use {
     'lewis6991/gitsigns.nvim',
+    tag = 'release',
     requires = {
       'nvim-lua/plenary.nvim',
     },
@@ -597,6 +598,17 @@ local plugins = function(use)
     requires = 'kevinhwang91/promise-async',
     config = function()
       require('config.ufo')
+    end,
+  }
+  use {
+    'glepnir/lspsaga.nvim',
+    branch = 'main',
+    config = function()
+      local saga = require('lspsaga')
+
+      saga.init_lsp_saga {
+        -- your configuration
+      }
     end,
   }
 end

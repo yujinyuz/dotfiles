@@ -7,21 +7,24 @@ function M.setup(client, bufnr)
     c = {
       name = '+code',
       r = {
-        function()
-          vim.lsp.buf.rename()
-        end,
+        '<Cmd>Lspsaga rename<CR>',
+        -- function()
+        --   vim.lsp.buf.rename()
+        -- end,
         'Rename',
       },
       a = {
-        function()
-          vim.lsp.buf.code_action()
-        end,
+        '<Cmd>Lspsaga code_action<CR>',
+        -- function()
+        --   vim.lsp.buf.code_action()
+        -- end,
         'Code Action',
       },
       d = {
-        function()
-          vim.diagnostic.open_float { opts = { focus = false } }
-        end,
+        '<Cmd>Lspsaga show_line_diagnostics<CR>',
+        -- function()
+        --   vim.diagnostic.open_float { opts = { focus = false } }
+        -- end,
         'Line Diagnostics',
       },
       t = {
@@ -59,6 +62,10 @@ function M.setup(client, bufnr)
           end,
           'Toggle Autoformat',
         },
+        o = {
+          '<Cmd>LSOutlineToggle<CR>',
+          'Toggle LSP Outline',
+        },
         s = {
           name = '+server',
           r = {
@@ -93,7 +100,8 @@ function M.setup(client, bufnr)
 
   local keymap_goto = {
     name = '+goto',
-    r = { 'Goto References' },
+    -- r = { 'Goto References' },
+    r = { '<Cmd>Lspsaga lsp_finder<CR>', 'Goto References'},
     d = { '<Cmd>lua vim.lsp.buf.definition()<CR>', 'Goto Definition' },
     dv = { '<Cmd>vsplit | lua vim.lsp.buf.definition()<CR>', 'Goto Definition' },
     ds = { '<Cmd>split | lua vim.lsp.buf.definition()<CR>', 'Goto Definition' },
@@ -101,19 +109,22 @@ function M.setup(client, bufnr)
     I = { '<Cmd>lua vim.lsp.buf.implementation()<CR>', 'Goto Implementation' },
   }
 
-  vim.keymap.set('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', { buffer = 0, silent = true })
-  vim.keymap.set('n', '[w', function()
-    vim.diagnostic.goto_prev { opts = { focus = false } }
-  end, {
-    buffer = 0,
-    silent = true,
-  })
-  vim.keymap.set('n', ']w', function()
-    vim.diagnostic.goto_next { opts = { focus = false } }
-  end, {
-    buffer = 0,
-    silent = true,
-  })
+  -- vim.keymap.set('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', { buffer = 0, silent = true })
+  vim.keymap.set('n', 'K', '<Cmd>Lspsaga hover_doc<CR>', { buffer = 0, silent = true })
+  vim.keymap.set('n', '[w', '<Cmd>Lspsaga diagnostic_jump_prev<CR>')
+  vim.keymap.set('n', ']w', '<Cmd>Lspsaga diagnostic_jump_next<CR>')
+  -- vim.keymap.set('n', '[w', function()
+  --   vim.diagnostic.goto_prev { opts = { focus = false } }
+  -- end, {
+  --   buffer = 0,
+  --   silent = true,
+  -- })
+  -- vim.keymap.set('n', ']w', function()
+  --   vim.diagnostic.goto_next { opts = { focus = false } }
+  -- end, {
+  --   buffer = 0,
+  --   silent = true,
+  -- })
   vim.keymap.set('i', '<C-s>', '<Cmd>lua vim.lsp.buf.signature_help()<CR>', { silent = true, buffer = 0 })
 
   -- Set some keybinds conditional on server capabilities
