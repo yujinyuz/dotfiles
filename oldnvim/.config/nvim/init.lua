@@ -12,8 +12,14 @@
 --    @repository https://github.com/yujinyuz/dotfiles
 --    @description Collection of dotfiles gathered across different dotfiles repos
 
-require('my.options')
-require('my.maps')
-pcall(require, 'impatient')
-require('my.plugins')
-require('my.nightly')
+-- Load globals
+require('globals')
+-- Load global helpers
+require('utils')
+-- Faster (?) startup time
+prequire('impatient')
+prequire('packer_compiled')
+-- Load options
+require('options')
+-- Load plugins last
+require('plugins')
