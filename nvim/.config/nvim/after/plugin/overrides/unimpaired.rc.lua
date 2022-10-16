@@ -1,7 +1,6 @@
 local utils = require('my.utils')
 
 vim.keymap.set('n', 'yob', function()
-
   local has_config, config = pcall(require, 'gitsigns.config')
 
   if not has_config then
@@ -32,13 +31,13 @@ end, {})
 vim.keymap.set('n', 'yoL', function()
   utils.toggle('list', true)
   utils.toggle_command('IndentBlanklineToggle')
-end, {})
+end)
 vim.keymap.set('n', 'yor', function()
   utils.toggle('relativenumber')
-end, {})
+end)
 vim.keymap.set('n', 'yos', function()
   utils.toggle('spell')
-end, {})
+end)
 vim.keymap.set('n', 'yow', function()
   utils.toggle('wrap')
-end, {})
+end)

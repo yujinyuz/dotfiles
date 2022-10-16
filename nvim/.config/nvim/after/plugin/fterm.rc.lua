@@ -15,4 +15,4 @@ local function fterm_htop()
   htop:toggle()
 end
 
-vim.keymap.set({ 'n', 't' }, '<A-h>', fterm_htop, {})
+vim.keymap.set({ 'n', 't' }, '<A-h>', fterm_htop)

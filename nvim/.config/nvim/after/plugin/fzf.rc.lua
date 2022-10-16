@@ -103,7 +103,7 @@ vim.keymap.set('n', '<leader>]', function()
     file_icons = false,
     git_icons = false,
   }
-end, {})
+end)
 
 vim.keymap.set('n', '<leader>\\', function()
   fzf.lsp_live_workspace_symbols {
@@ -111,11 +111,11 @@ vim.keymap.set('n', '<leader>\\', function()
     file_icons = false,
     git_icons = false,
   }
-end, {})
+end)
 
 vim.keymap.set('n', '<leader>F', function()
   fzf.live_grep_glob { winopts = { preview = { hidden = 'hidden' } }, exec_empty_query = true }
-end, {})
+end)
 vim.keymap.set('n', '<leader>n', function()
   local winopts = {
     preview = { hidden = 'hidden' },
@@ -129,14 +129,10 @@ vim.keymap.set('n', '<leader>n', function()
   }
 end, { desc = 'Find Files' })
 
--- vim.keymap.set('n', '<leader>n', '<Cmd>CommandTRipgrep<CR>', {})
--- vim.keymap.set('n', '<leader>n', '<Cmd>CommandT<CR>', {})
--- vim.keymap.set('n', '<Leader>n', '<Plug>(CommandT)', {})
-
-vim.keymap.set('n', '<leader>bb', '<Cmd>FzfLua buffers<CR>', {})
-vim.keymap.set('n', '<leader>fw', '<Cmd>FzfLua grep_cword<CR>', {})
-vim.keymap.set('n', 'gr', '<Cmd>FzfLua lsp_references<CR>', {})
-vim.keymap.set('n', 'z=', '<Cmd>FzfLua spell_suggest<CR>', {})
+vim.keymap.set('n', '<leader>bb', '<Cmd>FzfLua buffers<CR>')
+vim.keymap.set('n', '<leader>fw', '<Cmd>FzfLua grep_cword<CR>')
+vim.keymap.set('n', 'gr', '<Cmd>FzfLua lsp_references<CR>')
+vim.keymap.set('n', 'z=', '<Cmd>FzfLua spell_suggest<CR>')
 
 if vim.loop.cwd() == vim.fn.expand('~/Sync/notes') then
   -- Override default bindings when we are inside our notes dir
@@ -146,5 +142,5 @@ if vim.loop.cwd() == vim.fn.expand('~/Sync/notes') then
       file_icons = false,
       git_icons = false,
     }
-  end, {})
+  end)
 end

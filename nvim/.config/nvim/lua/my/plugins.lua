@@ -26,7 +26,7 @@ local plugins = function(use)
   use { 'williamboman/mason-lspconfig.nvim' }
   use { 'jose-elias-alvarez/null-ls.nvim', module = 'null-ls' }
   use { 'glepnir/lspsaga.nvim', branch = 'main' }
-  use { 'folke/lua-dev.nvim' }
+  use { 'folke/neodev.nvim' }
   --- }}}
 
   -- Ease of editing {{{
@@ -72,7 +72,7 @@ local plugins = function(use)
   --- }}}
 
   --- Git {{{
-  use { 'tpope/vim-fugitive', cmd = { 'Git', 'G', 'Gwrite', 'Gvdiffsplit', 'Gdiffsplit' } }
+  use { 'tpope/vim-fugitive', cmd = { 'Git', 'G', 'Gcd', 'Gwrite', 'Gvdiffsplit', 'Gdiffsplit' } }
   use { 'TimUntersberger/neogit', cmd = { 'Neogit' }, requires = { 'sindrets/diffview.nvim' } }
   use { 'ruifm/gitlinker.nvim' }
   use { 'lewis6991/gitsigns.nvim' }

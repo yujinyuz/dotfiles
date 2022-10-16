@@ -5,7 +5,6 @@ if not has_lspconfig then
 end
 
 local utils = require('my.utils')
-local lsp_format = require('my.lsp-format')
 
 -- Set up completion using nvim_cmp with LSP source
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
@@ -25,9 +24,6 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<leader>ca', '<Cmd>Lspsaga code_action<CR>', opts)
   vim.keymap.set({ 'v', 'x' }, '<leader>ca', '<Cmd>Lspsaga range_code_action<CR>', opts)
   vim.keymap.set('n', '<leader>cd', '<Cmd>Lspsaga show_line_diagnostics<CR>', opts)
-  vim.keymap.set('n', '<leader>ct', function()
-    print('Dynamic Workspace Symbols')
-  end, opts)
 
   -- +lsp
   vim.keymap.set('n', '<leader>clc', utils.lsp_config, opts)
