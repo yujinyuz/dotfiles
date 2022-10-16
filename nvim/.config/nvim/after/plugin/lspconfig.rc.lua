@@ -8,7 +8,7 @@ local utils = require('my.utils')
 local lsp_format = require('my.lsp-format')
 
 -- Set up completion using nvim_cmp with LSP source
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 capabilities.textDocument.foldingRange = {
   dynamicRegistration = false,
   lineFoldingOnly = true,
@@ -50,24 +50,6 @@ local on_attach = function(client, bufnr)
     vim.opt_local.tagfunc = 'v:lua.vim.lsp.tagfunc'
   end
 
-  if client.server_capabilities.documentFormattingProvider then
-    vim.keymap.set('n', '<leader>cf', function()
-      vim.lsp.buf.formatting_seq_sync()
-    end, opts)
-    vim.opt_local.formatexpr = 'v:lua.vim.lsp.formatexpr()'
-
-    vim.api.nvim_create_autocmd('BufWritePre', {
-      pattern = { '*' },
-      callback = lsp_format.format,
-      group = 'IDECallbacks',
-    })
-  end
-
-  if client.server_capabilities.documentRangeFormattingProvider then
-    vim.keymap.set({ 'x', 'v' }, '<leader>cf', function()
-      vim.lsp.buf.range_formatting({}, nil, nil)
-    end, opts)
-  end
 
   if client.server_capabilities.documentSymbolProvider then
     local _, navic = pcall(require, 'nvim-navic')
@@ -111,12 +93,13 @@ local servers = {
   tailwindcss = {},
   jsonls = {},
   tsserver = {},
-  sumneko_lua = require('lua-dev').setup {
+  vuels = {},
+  sumneko_lua = {
     Lua = {
-      workspace = {
-        checkThirdParty = false,
-      },
-    },
+      completion = {
+        callSnippet = "Replace",
+      }
+    }
   },
 }
 
@@ -128,11 +111,21 @@ local options = {
   },
 }
 
-local mason_lspconfig = require('mason-lspconfig')
+local has_mason_lspconfig, mason_lspconfig = pcall(require, 'mason-lspconfig')
 
-mason_lspconfig.setup {
-  ensure_installed = vim.tbl_keys(servers),
-}
+if has_mason_lspconfig then
+  mason_lspconfig.setup {
+    ensure_installed = vim.tbl_keys(servers),
+  }
+end
+
+-- Setup neodev before lspconfig
+local has_neodev, neodev = pcall(require, 'neodev')
+
+if has_neodev then
+  neodev.setup {}
+end
+
 
 for server, custom_cfg in pairs(servers) do
   local opts = vim.tbl_deep_extend('force', options, custom_cfg or {})
