@@ -7,9 +7,11 @@ vim.api.nvim_create_autocmd('BufReadPost', {
   callback = function()
     local ft = vim.opt_local.filetype:get()
     -- don't apply to git messages
-    if ft:match('commit') or ft:match('rebase') then
+
+    if vim.tbl_contains({'commit', 'rebase'}, ft) then
       return
     end
+
     -- get position of last saved edit
     local line, col = unpack(vim.api.nvim_buf_get_mark(0, '"'))
     -- if in range, go there
