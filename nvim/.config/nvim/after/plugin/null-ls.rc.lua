@@ -24,24 +24,11 @@ local sources = {
   nls.builtins.diagnostics.eslint.with { command = 'eslint_d' },
 }
 
+local lsp_format= require('my.lsp-format')
+
 nls.setup {
   sources = sources,
   on_attach = function(client, bufnr)
-    local opts = {
-      silent = true,
-      buffer = bufnr,
-    }
-
-    if client.server_capabilities.documentFormattingProvider then
-      vim.keymap.set('n', '<leader>cf', function()
-        vim.lsp.buf.formatting_seq_sync {}
-      end, opts)
-    end
-
-    if client.server_capabilities.documentRangeFormattingProvider then
-      vim.keymap.set({ 'x', 'v' }, '<leader>cf', function()
-        vim.lsp.buf.range_formatting()
-      end, opts)
-    end
+    lsp_format.on_attach(client, bufnr)
   end,
 }
