@@ -49,7 +49,7 @@ function M.lsp_config()
   for _, client in pairs(vim.lsp.get_active_clients()) do
     ret[client.name] = { root_dir = client.config.root_dir, settings = client.config.settings }
   end
-  dump(ret)
+  print(vim.inspect(ret))
 end
 
 -- https://github.com/ibhagwan/nvim-lua/blob/main/lua/utils.lua#L280

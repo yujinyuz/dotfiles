@@ -8,4 +8,4 @@ neogit.setup {
   disable_commit_confirmation = true,
 }
 
-vim.keymap.set('n', '<leader>gg', '<Cmd>Neogit<CR>', {})
+vim.keymap.set('n', '<leader>gg', '<Cmd>Neogit<CR>')
