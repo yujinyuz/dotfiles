@@ -89,6 +89,9 @@ fzf.setup {
   end,
 }
 
+-- Register fzf-lua as the picker for vim.ui.select()
+fzf.register_ui_select()
+
 if vim.env.NVIM_FILE_FINDER ~= 'fzf' then
   return
 end
@@ -133,6 +136,7 @@ end, { desc = 'Find Files' })
 vim.keymap.set('n', '<leader>bb', '<Cmd>FzfLua buffers<CR>', {})
 vim.keymap.set('n', '<leader>fw', '<Cmd>FzfLua grep_cword<CR>', {})
 vim.keymap.set('n', 'gr', '<Cmd>FzfLua lsp_references<CR>', {})
+vim.keymap.set('n', 'z=', '<Cmd>FzfLua spell_suggest<CR>', {})
 
 if vim.loop.cwd() == vim.fn.expand('~/Sync/notes') then
   -- Override default bindings when we are inside our notes dir
