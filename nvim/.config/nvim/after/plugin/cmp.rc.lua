@@ -5,7 +5,7 @@ end
 
 local has_luasnip, luasnip = pcall(require, 'luasnip')
 
-local _, lspkind = pcall(require, 'lspkind')
+local has_lspkind, lspkind = pcall(require, 'lspkind')
 
 local utils = require('my.utils')
 
@@ -28,7 +28,7 @@ end
 
 --- disabling redundant-parameter because `cmp.setup` uses setmetatable
 ---@diagnostic disable-next-line:redundant-parameter
-cmp.setup {
+local cmp_config = {
   enabled = function()
     if M.enable_cmp and vim.api.nvim_buf_get_option(0, 'buftype') ~= 'prompt' then
       return true
@@ -129,7 +129,15 @@ cmp.setup {
       's',
     }),
   },
-  formatting = {
+  experimental = {
+    ghost_text = {
+      hl_group = 'LspCodeLens',
+    },
+  },
+}
+
+if has_lspkind then
+  cmp_config.formatting = {
     format = lspkind.cmp_format {
       mode = 'text_symbol',
       with_text = true,
@@ -138,13 +146,10 @@ cmp.setup {
         return vim_item
       end,
     },
-  },
-  experimental = {
-    ghost_text = {
-      hl_group = 'LspCodeLens',
-    },
-  },
-}
+  }
+end
+
+cmp.setup(cmp_config)
 
 cmp.setup.filetype('html', {
   sources = cmp.config.sources({
