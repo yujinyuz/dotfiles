@@ -8,7 +8,7 @@ vim.keymap.set('n', '<leader>S', function()
   spectre.open()
 end, { desc = 'Search and Replace' })
 
-vim.keymap.set('n', '<leader>gw', function()
+vim.keymap.set('n', '<leader>sw', function()
   spectre.open_visual { select_word = true }
 end, { desc = 'Grep word under cursor' })
 
