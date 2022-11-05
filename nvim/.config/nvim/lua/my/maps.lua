@@ -73,3 +73,5 @@ end, { expr = true })
 vim.keymap.set('n', 'j', function()
   return (vim.v.count > 5 and "m'" .. vim.v.count or '') .. 'gj'
 end, { expr = true })
+
+vim.keymap.set('n', '<leader>fixformat', function() print(':e ++ff=dos followed by :set ff=unix') end, { desc = 'Tells Vim to read the file again, forcing dos file format'})
