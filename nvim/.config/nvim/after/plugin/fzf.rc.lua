@@ -38,6 +38,7 @@ fzf.setup {
   },
   fzf_opts = {
     ['--border'] = 'none',
+    ['--no-separator'] = '',
   },
   fzf_colors = {
     ['fg'] = { 'fg', 'CursorLine' },

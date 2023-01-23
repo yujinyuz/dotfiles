@@ -1,5 +1,7 @@
 local utils = require('my.utils')
 
+local gitsigns_enabled = false
+
 vim.keymap.set('n', 'yob', function()
   local has_config, config = pcall(require, 'gitsigns.config')
 
@@ -8,11 +10,14 @@ vim.keymap.set('n', 'yob', function()
     return
   end
 
-  if not config.signcolumn then
+  gitsigns_enabled = not gitsigns_enabled
+
+  if gitsigns_enabled then
     utils.info('enabled gitsigns', 'Toggle')
   else
-    utils.info('disabled gitsigns', 'Toggle')
+    utils.warn('disabled gitsigns', 'Toggle')
   end
+
 
   vim.cmd([[
     Gitsigns toggle_current_line_blame
