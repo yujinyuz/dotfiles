@@ -3,7 +3,7 @@ if not has_lspsaga then
   return
 end
 
-saga.init_lsp_saga {
+saga.setup {
   code_action_lightbulb = {
     sign = false,
   },

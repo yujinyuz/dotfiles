@@ -33,7 +33,7 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<leader>clo', '<Cmd>LSoutlineToggle<CR>', opts)
 
   vim.keymap.set('n', 'gr', '<Cmd>Lspsaga lsp_finder<CR>', opts)
-  -- vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
   vim.keymap.set('n', 'gD', '<Cmd>Lspsaga preview_definition<CR>', opts)
   vim.keymap.set('n', 'gI', vim.lsp.buf.implementation, opts)
   vim.keymap.set('i', '<C-s>', vim.lsp.buf.signature_help, opts)
@@ -45,7 +45,6 @@ local on_attach = function(client, bufnr)
   if client.server_capabilities.definitionProvider ~= false then
     vim.opt_local.tagfunc = 'v:lua.vim.lsp.tagfunc'
   end
-
 
   if client.server_capabilities.documentSymbolProvider then
     local _, navic = pcall(require, 'nvim-navic')
@@ -93,9 +92,9 @@ local servers = {
   sumneko_lua = {
     Lua = {
       completion = {
-        callSnippet = "Replace",
-      }
-    }
+        callSnippet = 'Replace',
+      },
+    },
   },
 }
 
@@ -119,9 +118,19 @@ end
 local has_neodev, neodev = pcall(require, 'neodev')
 
 if has_neodev then
-  neodev.setup {}
-end
+  neodev.setup {
+    override = function(root_dir, library)
+      print(root_dir)
+      -- print(neodev.util.is_nvim_config(root_dir))
+      -- print(root_dir, vim.inspect(library))
 
+      -- if require('neodev.util').has_file(root_dir, '/etc/nixos') then
+      --   library.enabled = true
+      --   library.plugins = true
+      -- end
+    end,
+  }
+end
 
 for server, custom_cfg in pairs(servers) do
   local opts = vim.tbl_deep_extend('force', options, custom_cfg or {})
