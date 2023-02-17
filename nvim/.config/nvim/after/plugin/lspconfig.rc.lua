@@ -89,7 +89,7 @@ local servers = {
   jsonls = {},
   tsserver = {},
   vuels = {},
-  sumneko_lua = {
+  lua_ls = {
     Lua = {
       completion = {
         callSnippet = 'Replace',
@@ -118,18 +118,7 @@ end
 local has_neodev, neodev = pcall(require, 'neodev')
 
 if has_neodev then
-  neodev.setup {
-    override = function(root_dir, library)
-      print(root_dir)
-      -- print(neodev.util.is_nvim_config(root_dir))
-      -- print(root_dir, vim.inspect(library))
-
-      -- if require('neodev.util').has_file(root_dir, '/etc/nixos') then
-      --   library.enabled = true
-      --   library.plugins = true
-      -- end
-    end,
-  }
+  neodev.setup {}
 end
 
 for server, custom_cfg in pairs(servers) do
