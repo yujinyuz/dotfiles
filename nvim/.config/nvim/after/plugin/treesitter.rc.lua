@@ -31,6 +31,7 @@ local langs = {
   -- 'jsonc',
   -- 'json',
   'markdown',
+  'markdown_inline',
 }
 
 ts_configs.setup {
@@ -40,7 +41,7 @@ ts_configs.setup {
     disable = { 'json' },
     additional_vim_regex_highlighting = false,
   },
-  indent = { enable = false }, -- Let nvim-yati handle this for now
+  indent = { enable = true, disable = { 'python' } }, -- Let nvim-yati handle python since it's still buggy
   incremental_selection = {
     enable = true,
     keymaps = {
@@ -129,7 +130,7 @@ ts_configs.setup {
   matchup = { enable = true },
   rainbow = { enable = true, extended_mode = true, max_file_lines = 1000 },
   pyfold = { enable = true, custom_foldtext = false },
-  yati = { enable = true, disable = { 'python' } },
+  yati = { enable = true, suppress_conflict_warning = true, disable = { 'python' } },
 }
 
 local parsers = require('nvim-treesitter.parsers')
