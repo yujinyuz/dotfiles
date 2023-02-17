@@ -14,6 +14,5 @@
 
 require('my.options')
 require('my.maps')
-pcall(require, 'impatient')
 require('my.plugins')
 require('my.nightly')
