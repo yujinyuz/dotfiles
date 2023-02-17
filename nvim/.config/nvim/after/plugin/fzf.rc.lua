@@ -135,6 +135,7 @@ vim.keymap.set('n', '<leader>fw', '<Cmd>FzfLua grep_cword<CR>')
 vim.keymap.set('n', 'gr', '<Cmd>FzfLua lsp_references<CR>')
 vim.keymap.set('n', 'z=', '<Cmd>FzfLua spell_suggest<CR>')
 vim.keymap.set('n', '<leader>gw', '<Cmd>FzfLua grep_cword<CR>')
+vim.keymap.set('n', '<leader>?', '<Cmd>FzfLua lines<CR>')
 
 if vim.loop.cwd() == vim.fn.expand('~/Sync/notes') then
   -- Override default bindings when we are inside our notes dir
