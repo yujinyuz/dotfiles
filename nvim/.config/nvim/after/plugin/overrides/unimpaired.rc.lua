@@ -18,7 +18,6 @@ vim.keymap.set('n', 'yob', function()
     utils.warn('disabled gitsigns', 'Toggle')
   end
 
-
   vim.cmd([[
     Gitsigns toggle_current_line_blame
     Gitsigns toggle_signs

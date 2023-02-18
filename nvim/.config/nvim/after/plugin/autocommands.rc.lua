@@ -8,7 +8,7 @@ vim.api.nvim_create_autocmd('BufReadPost', {
     local ft = vim.opt_local.filetype:get()
     -- don't apply to git messages
 
-    if vim.tbl_contains({'commit', 'rebase'}, ft) then
+    if vim.tbl_contains({ 'commit', 'rebase' }, ft) then
       return
     end
 

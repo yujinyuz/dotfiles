@@ -76,7 +76,7 @@ vim.opt.pumheight = 15
 -- Always show sign columns
 vim.opt.signcolumn = 'yes'
 -- Having longer update time leads to noticeable delays and poor UX
-vim.opt.updatetime = 100
+vim.opt.updatetime = 250
 -- Start scrolling when we're 8 lines below
 vim.opt.scrolloff = 8
 -- and 15 lines from the side
@@ -159,9 +159,7 @@ vim.opt.winbar = vim.opt.winbar
   -- + "%{&paste?'  ':''}"
   + "%{&spell?' ¶ ':''}"
 
-
 -- Use <Space> as the leader key
 vim.g.mapleader = ' '
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
-

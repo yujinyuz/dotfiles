@@ -24,7 +24,7 @@ local sources = {
   nls.builtins.diagnostics.eslint.with { command = 'eslint_d' },
 }
 
-local lsp_format= require('my.lsp-format')
+local lsp_format = require('my.lsp-format')
 
 nls.setup {
   sources = sources,

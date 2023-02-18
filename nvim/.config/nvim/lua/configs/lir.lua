@@ -65,11 +65,3 @@ lir.setup {
     end, { silent = true, buffer = 0 })
   end,
 }
-
-vim.keymap.set('n', '<leader>.', function()
-  require('lir.float').toggle()
-end, { silent = true })
-
-vim.keymap.set('n', '<leader>/', function()
-  require('lir.float').toggle('.')
-end, { silent = true })

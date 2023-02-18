@@ -222,8 +222,8 @@ vim.keymap.set('i', '<C-x><C-f>', function()
   }
 end, { desc = 'Path completion' })
 
-local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done { map_char = { tex = '' } })
+-- local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+-- cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done { map_char = { tex = '' } })
 
 vim.keymap.set('n', 'yoq', M.toggle, { desc = 'Toggle autocomplete' })
 
