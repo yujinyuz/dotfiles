@@ -19,37 +19,73 @@ local plugins = {
   -- }}}
 
   -- LSP {{{
-  { 'neovim/nvim-lspconfig' },
   {
-    'williamboman/mason.nvim',
-    config = true,
+    'neovim/nvim-lspconfig',
+    event = { 'BufRead', 'BufNewFile' },
+    config = function()
+      require('configs.lspconfig')
+    end,
+    dependencies = {
+      { 'williamboman/mason.nvim' },
+      { 'williamboman/mason-lspconfig.nvim' },
+      {
+        'jose-elias-alvarez/null-ls.nvim',
+        config = function()
+          require('configs.null-ls')
+        end,
+      },
+      'folke/neodev.nvim',
+    },
   },
-  { 'williamboman/mason-lspconfig.nvim' },
-  { 'jose-elias-alvarez/null-ls.nvim' },
   {
     'glepnir/lspsaga.nvim',
+    cmd = { 'Lspsaga' },
     opts = {
       code_action_lightbulb = {
         sign = false,
       },
     },
-    branch = 'main',
+    version = '*',
   },
-  { 'folke/neodev.nvim' },
   --- }}}
 
   -- Ease of editing {{{
   {
     'nvim-treesitter/nvim-treesitter',
-    lazy = false,
-    priority = 100,
+    event = { 'BufRead' },
+    config = function()
+      require('configs.treesitter')
+    end,
     build = function()
-      -- require('nvim-treesitter.install').update { with_sync = true }
+      -- pcall is similar to a try/catch block so that our config doesn't throw any errors
+      -- in case installing tree-sitter objects fails
       pcall(require('nvim-treesitter.install').update { with_sync = true })
     end,
+    dependencies = {
+      { 'yioneko/nvim-yati' }, -- For indentation
+      { 'nvim-treesitter/nvim-treesitter-textobjects' },
+      { 'nvim-treesitter/nvim-treesitter-refactor' },
+      { 'p00f/nvim-ts-rainbow' }, -- Colored parens
+      { 'windwp/nvim-ts-autotag' },
+      { 'nvim-treesitter/playground', cmd = 'TSHighlightCapturesUnderCursor' },
+    },
+  },
+  {
+    'numToStr/Comment.nvim',
+    event = { 'BufRead' },
+    config = function()
+      require('Comment').setup {
+        pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
+      }
+    end,
+    dependencies = { 'JoosepAlviste/nvim-ts-context-commentstring' },
   },
   {
     'hrsh7th/nvim-cmp',
+    event = 'InsertEnter',
+    config = function()
+      require('configs.cmp')
+    end,
     dependencies = {
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-buffer',
@@ -57,25 +93,52 @@ local plugins = {
       'hrsh7th/cmp-nvim-lsp-signature-help',
       'lukas-reineke/cmp-rg',
       'lukas-reineke/cmp-under-comparator',
+      'neovim/nvim-lspconfig',
     },
   },
   {
     'windwp/nvim-autopairs',
+    event = { 'InsertEnter' },
     opts = {
       disable_filetype = { 'TelescopePrompt', 'vim', 'markdown', 'neo-tree-popup' },
       map_c_w = true,
       check_ts = true,
     },
   },
-  { 'windwp/nvim-ts-autotag' },
-  { 'numToStr/Comment.nvim', dependencies = 'JoosepAlviste/nvim-ts-context-commentstring' },
   { 'tpope/vim-surround' },
   { 'tpope/vim-repeat' },
-  { 'tpope/vim-unimpaired' },
+  { 'tpope/vim-unimpaired', event = { 'BufEnter' } },
   { 'tpope/vim-rsi' },
-  { 'tpope/vim-abolish',     cmd = { 'Abolish' } },
-  { 'L3MON4D3/LuaSnip',      dependencies = 'rafamadriz/friendly-snippets' },
-  { 'mbbill/undotree',       cmd = { 'UndotreeToggle' } },
+  { 'tpope/vim-abolish', cmd = { 'Abolish' } },
+  {
+    'L3MON4D3/LuaSnip',
+    config = function()
+      require('luasnip.loaders.from_vscode').lazy_load()
+    end,
+    keys = {
+      {
+        '<C-l>',
+        function()
+          require('luasnip').expand()
+        end,
+        mode = 'i',
+      },
+    },
+    -- build = 'make install_jsregexp',
+    dependencies = 'rafamadriz/friendly-snippets',
+  },
+  {
+    'mbbill/undotree',
+    init = function()
+      vim.g.undotree_HighlightChangedWithSign = 0
+      vim.g.undotree_WindowLayout = 4
+      vim.g.undotree_SetFocusWhenToggle = 1
+    end,
+    keys = {
+      { '<leader>u', '<Cmd>UndotreeToggle<CR>', desc = 'Undotree Toggle' },
+    },
+    cmd = { 'UndotreeToggle' },
+  },
   {
     'nvim-pack/nvim-spectre',
     keys = {
@@ -103,42 +166,60 @@ local plugins = {
       },
     },
   },
-  { 'yioneko/nvim-yati' }, -- For indentation
-  { 'nvim-treesitter/nvim-treesitter-textobjects' },
-  { 'nvim-treesitter/nvim-treesitter-refactor' },
-  { 'p00f/nvim-ts-rainbow' }, -- Colored parens
   --- }}}
 
   -- File actions and navigations {{{
-  { 'ibhagwan/fzf-lua' },
+  {
+    'ibhagwan/fzf-lua',
+    keys = {
+      { '<leader>n' },
+      { '<leader>]' },
+      { '<leader>F' },
+    },
+    config = function()
+      require('configs.fzf')
+    end,
+  },
   {
     'tpope/vim-eunuch',
     cmd = { 'Delete', 'Move', 'Rename' },
   },
   {
     'ludovicchabant/vim-gutentags',
+    event = { 'BufRead' },
     init = function()
       vim.g.gutentags_project_root = { 'manage.py', 'pyrightconfig.json', 'init.lua' }
     end,
   },
   {
     'nvim-neo-tree/neo-tree.nvim',
+    config = function()
+      require('configs.neotree')
+    end,
     branch = 'v2.x',
     dependencies = 'MunifTanjim/nui.nvim',
+    cmd = 'Neotree',
     keys = {
       { '<C-n>', '<Cmd>Neotree toggle<CR>', desc = 'Neotree Toggle' },
     },
   },
-  { 'tamago324/lir.nvim' },
   {
-    'SmiteshP/nvim-navic',
+    'tamago324/lir.nvim',
+    config = function()
+      require('configs.lir')
+    end,
     keys = {
       {
-        '<C-s>',
+        '<leader>.',
         function()
-          print(require('nvim-navic').get_location())
+          require('lir.float').toggle()
         end,
-        desc = 'Show current location',
+      },
+      {
+        '<leader>/',
+        function()
+          require('lir.float').toggle('.')
+        end,
       },
     },
   },
@@ -146,15 +227,14 @@ local plugins = {
     'kevinhwang91/nvim-hlslens',
     config = true,
     keys = {
-      { 'n',  [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]] },
-      { 'N',  [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]] },
-      { '*',  [[*<Cmd>lua require('hlslens').start()<CR>]] },
-      { '#',  [[#<Cmd>lua require('hlslens').start()<CR>]] },
+      { 'n', [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]] },
+      { 'N', [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]] },
+      { '*', [[*<Cmd>lua require('hlslens').start()<CR>]] },
+      { '#', [[#<Cmd>lua require('hlslens').start()<CR>]] },
       { 'g*', [[g*<Cmd>lua require('hlslens').start()<CR>]] },
       { 'g#', [[g#<Cmd>lua require('hlslens').start()<CR>]] },
     },
   },
-
   { -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
     config = function()
@@ -169,8 +249,8 @@ local plugins = {
   {
     'tpope/vim-fugitive',
     keys = {
-      { '<leader>gs',  '<Cmd>Git<CR>' },
-      { '<leader>gv>', '<Cmd>Gvdiffsplit<CR>' },
+      { '<leader>gs', '<Cmd>Git<CR>', desc = 'Git' },
+      { '<leader>gv>', '<Cmd>Gvdiffsplit<CR>', desc = 'Fugitive Diffsplit' },
     },
     cmd = { 'Git', 'G', 'Gcd', 'Gwrite', 'Gvdiffsplit', 'Gdiffsplit' },
   },
@@ -190,8 +270,56 @@ local plugins = {
   {
     'ruifm/gitlinker.nvim',
     config = true,
+    keys = {
+      { '<leader>gy' },
+    },
   },
-  { 'lewis6991/gitsigns.nvim' },
+  {
+    'lewis6991/gitsigns.nvim',
+    event = { 'BufRead' },
+    opts = function()
+      local gs = require('gitsigns')
+      return {
+        signs = {
+          add = { hl = 'GitGutterAdd', text = '+' },
+          change = { hl = 'GitGutterChange', text = '~' },
+          delete = { hl = 'GitGutterDelete', text = '_' },
+          topdelete = { hl = 'GitGutterDelete', text = '‾' },
+          changedelete = { hl = 'GitGutterChange', text = '~' },
+        },
+        signcolumn = false,
+        current_line_blame = false,
+        current_line_blame_opts = {
+          virt_text = true,
+          virt_text_pos = 'eol',
+          delay = 500,
+        },
+        on_attach = function(bufnr)
+          vim.keymap.set('n', ']c', function()
+            if vim.wo.diff then
+              return ']c'
+            end
+
+            vim.schedule(function()
+              gs.next_hunk()
+            end)
+            return '<Ignore>'
+          end, { expr = true, buffer = bufnr, desc = 'Next Hunk' })
+
+          vim.keymap.set('n', '[c', function()
+            if vim.wo.diff then
+              return '[c'
+            end
+
+            vim.schedule(function()
+              gs.prev_hunk()
+            end)
+            return '<Ignore>'
+          end, { expr = true, buffer = bufnr, desc = 'Prev Hunk' })
+        end,
+      }
+    end,
+  },
   --- }}}
 
   --- Fancy UI {{{
@@ -207,30 +335,115 @@ local plugins = {
           NormalFloat = { bg = 'NONE' },
         },
       }
-      vim.cmd([[ colorscheme kanagawa ]])
+      vim.cmd.colorscheme('kanagawa')
     end,
   },
-  { 'nvim-lualine/lualine.nvim' },
-  { 'kyazdani42/nvim-web-devicons' },
+  {
+    'nvim-lualine/lualine.nvim',
+    opts = function()
+      local navic = require('nvim-navic')
+      return {
+        options = {
+          theme = 'auto',
+          -- separator = '|',
+          icons_enabled = true,
+          globalstatus = true,
+        },
+        sections = {
+          lualine_a = { 'mode' },
+          lualine_b = { 'branch', 'diff', { 'diagnostics', sources = { 'nvim_diagnostic' } } },
+          lualine_c = { { 'filename', file_status = true, path = 1 } },
+          lualine_x = {
+            { navic.get_location, cond = navic.is_available },
+            'encoding',
+            'filetype',
+          },
+          lualine_y = { 'progress' },
+          lualine_z = { 'location' },
+        },
+        inactive_sections = {
+          lualine_a = {},
+          lualine_b = {},
+          lualine_c = { { 'filename', file_status = true, path = 1 } },
+          lualine_x = { 'location' },
+          lualine_y = {},
+          lualine_z = {},
+        },
+      }
+    end,
+    dependencies = {
+      {
+        'SmiteshP/nvim-navic',
+        keys = {
+          {
+            '<C-s>',
+            function()
+              print(require('nvim-navic').get_location())
+            end,
+            desc = 'Show current location',
+          },
+        },
+      },
+    },
+  },
+  {
+    'kyazdani42/nvim-web-devicons',
+    opts = {
+
+      override = {
+        lir_folder_icon = {
+          icon = '',
+          color = '#7ebae4',
+          name = 'lirfoldernode',
+        },
+      },
+      default = true,
+    },
+  },
   { 'onsails/lspkind-nvim' },
-  { 'lukas-reineke/indent-blankline.nvim' },
-  { 'j-hui/fidget.nvim',                  opts = { text = { spinner = 'dots_footsteps' } } },
-  { 'kevinhwang91/nvim-ufo',              dependencies = 'kevinhwang91/promise-async' },
+  {
+    'lukas-reineke/indent-blankline.nvim',
+    init = function()
+      vim.cmd([[highlight IndentBlanklineIndent1 guifg=#E06C75 gui=nocombine]])
+      vim.cmd([[highlight IndentBlanklineIndent2 guifg=#E5C07B gui=nocombine]])
+      vim.cmd([[highlight IndentBlanklineIndent3 guifg=#98C379 gui=nocombine]])
+      vim.cmd([[highlight IndentBlanklineIndent4 guifg=#56B6C2 gui=nocombine]])
+      vim.cmd([[highlight IndentBlanklineIndent5 guifg=#61AFEF gui=nocombine]])
+      vim.cmd([[highlight IndentBlanklineIndent6 guifg=#C678DD gui=nocombine]])
+    end,
+    event = { 'BufRead' },
+    opts = {
+      enabled = false,
+      show_current_context = true,
+      show_current_context_start = true,
+      show_end_of_line = true,
+      space_char_blankline = ' ',
+      char_highlight_list = {
+        'IndentBlanklineIndent1',
+        'IndentBlanklineIndent2',
+        'IndentBlanklineIndent3',
+        'IndentBlanklineIndent4',
+        'IndentBlanklineIndent5',
+        'IndentBlanklineIndent6',
+      },
+    },
+  },
+  { 'j-hui/fidget.nvim', event = { 'BufRead' }, opts = { text = { spinner = 'dots_footsteps' } } },
+  -- { 'kevinhwang91/nvim-ufo', dependencies = 'kevinhwang91/promise-async' },
   --- }}}
 
   -- General ftplugin {{{
-  { 'SidOfc/mkdx',                        ft = 'markdown' },
+  { 'SidOfc/mkdx', ft = 'markdown' },
   {
     'iamcco/markdown-preview.nvim',
     build = 'cd app && yarn install',
     ft = 'markdown',
   },
-  { 'Vimjas/vim-python-pep8-indent',   ft = 'python' },
+  { 'Vimjas/vim-python-pep8-indent', ft = 'python' },
   { 'michaeljsmith/vim-indent-object', ft = 'python' },
   --- }}}
 
   -- Miscellaneous {{{
-  -- { 'lewis6991/impatient.nvim', lazy = false, priority  = 1001 },
   {
     'danymat/neogen',
     cmd = { 'Neogen' },
@@ -244,10 +457,46 @@ local plugins = {
     keys = { 'zS' },
   },
   { 'numToStr/FTerm.nvim' },
-  { 'akinsho/toggleterm.nvim' },
-  { 'weizheheng/nvim-workbench' },
+  {
+    'akinsho/toggleterm.nvim',
+    opts = {
+
+      shell = vim.env.SHELL,
+      shade_terminals = false,
+      highlights = {
+        Normal = {
+          guibg = 'NONE',
+        },
+        NormalFloat = {
+          link = 'Normal',
+        },
+      },
+    },
+  },
+  {
+    'weizheheng/nvim-workbench',
+    init = function()
+      vim.g.workbench_border = 'single'
+      vim.g.workbench_storage_path = vim.fn.expand('~/Sync/notes/workbench/')
+    end,
+    keys = {
+      {
+        '<leader>pp',
+        function()
+          require('workbench').toggle_project_workbench()
+        end,
+        desc = 'Project Workbench',
+      },
+      {
+        '<leader>pb',
+        function()
+          require('workbench').toggle_branch_workbench()
+        end,
+        desc = 'Branch Workbench',
+      },
+    },
+  },
   { 'tversteeg/registers.nvim' },
-  { 'nvim-treesitter/playground', cmd = 'TSHighlightCapturesUnderCursor' },
   --- }}}
 }
 

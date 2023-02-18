@@ -2,4 +2,3 @@
 if not vim.version().prerelease then
   return
 end
-

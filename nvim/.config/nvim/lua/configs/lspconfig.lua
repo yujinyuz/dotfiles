@@ -91,6 +91,8 @@ local servers = {
   vuels = {},
   lua_ls = {
     Lua = {
+      workspace = { checkThirdParty = false },
+      telemetry = { enable = false },
       completion = {
         callSnippet = 'Replace',
       },
@@ -105,6 +107,12 @@ local options = {
     debounce_text_changes = 150,
   },
 }
+
+local has_mason, mason = pcall(require, 'mason')
+
+if has_mason then
+  mason.setup {}
+end
 
 local has_mason_lspconfig, mason_lspconfig = pcall(require, 'mason-lspconfig')
 
