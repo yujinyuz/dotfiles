@@ -192,15 +192,15 @@ local plugins = {
     end,
   },
   {
-    'nvim-neo-tree/neo-tree.nvim',
-    config = function()
-      require('configs.neotree')
-    end,
-    branch = 'v2.x',
-    dependencies = 'MunifTanjim/nui.nvim',
-    cmd = 'Neotree',
+    'nvim-tree/nvim-tree.lua',
+    opts = {
+      hijack_directories = {
+        enable = false,
+      },
+      select_prompts = true,
+    },
     keys = {
-      { '<C-n>', '<Cmd>Neotree toggle<CR>', desc = 'Neotree Toggle' },
+      { '<C-n>', '<Cmd>NvimTreeFindFileToggle!<CR>', desc = '[n]vim-tree toggle'},
     },
   },
   {
