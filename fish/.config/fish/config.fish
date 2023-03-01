@@ -55,14 +55,18 @@ set -Ux GOPATH ~/go
 set -Ux BUN_INSTALL "$HOME/.bun"
 
 # Path
+## homebrew
+fish_add_path /opt/homebrew/bin
 ## sysad binaries
-fish_add_path /usr/local/sbin
+fish_add_path /opt/homebrew/sbin
 ## mysql client
-fish_add_path /usr/local/opt/mysql-client/bin
+fish_add_path /opt/homebrew/opt/mysql-client/bin
 ## psql client
-fish_add_path /usr/local/opt/libpq/bin
+fish_add_path /opt/homebrew/opt/libpq/bin
 ## python
-fish_add_path /usr/local/opt/python@3.{10,9,8}/bin
+fish_add_path /opt/homebrew/opt/python@3.{11,10,9,8}/bin
+fish_add_path /opt/homebrew/opt/python/libexec/bin
+
 ## golang
 fish_add_path $GOPATH $GOPATH/bin
 ## cargo
@@ -73,8 +77,6 @@ fish_add_path ~/.asdf/bin
 fish_add_path ~/.bun/bin
 ## local binaries
 fish_add_path ~/.local/bin
-## homebrew
-fish_add_path /opt/homebrew/bin
 
 # aliases
 alias -s brewup "brew update; brew upgrade; brew cleanup; brew doctor"
