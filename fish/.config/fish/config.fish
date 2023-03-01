@@ -73,6 +73,8 @@ fish_add_path ~/.asdf/bin
 fish_add_path ~/.bun/bin
 ## local binaries
 fish_add_path ~/.local/bin
+## homebrew
+fish_add_path /opt/homebrew/bin
 
 # aliases
 alias -s brewup "brew update; brew upgrade; brew cleanup; brew doctor"
