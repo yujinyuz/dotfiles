@@ -128,7 +128,13 @@ ts_configs.setup {
   autotag = { enable = true, disable = { 'markdown' } },
   context_commentstring = { enable = true, enable_autocmd = false },
   matchup = { enable = true },
-  rainbow = { enable = true, extended_mode = true, max_file_lines = 1000, query = 'rainbow-parens', strategy = require 'ts-rainbow.strategy.global', },
+  rainbow = {
+    enable = true,
+    extended_mode = true,
+    max_file_lines = 1000,
+    query = 'rainbow-parens',
+    strategy = require('ts-rainbow.strategy.global'),
+  },
   pyfold = { enable = true, custom_foldtext = false },
   yati = { enable = true, suppress_conflict_warning = true, disable = { 'python' } },
 }

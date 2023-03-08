@@ -15,4 +15,3 @@ repos:
   hooks:
     - id: stylua-system # or stylua-system / stylua-github
       args: ['--config-path=stylua.toml', '--glob', '**/*.lua -- .']
-

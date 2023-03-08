@@ -1,7 +1,7 @@
 vim.opt.packpath = {}
 vim.opt.runtimepath = {
-  "~/.neovim",
-  "$VIMRUNTIME",
+  '~/.neovim',
+  '$VIMRUNTIME',
 }
 
 vim.opt.tabstop = 2
@@ -88,7 +88,6 @@ vim.opt.termguicolors = true
 vim.opt.synmaxcol = 512
 vim.opt.laststatus = 3
 vim.g.mapleader = ' '
-
 
 ---- Maps
 vim.keymap.set('n', '<C-p>', ':e **/', {})
