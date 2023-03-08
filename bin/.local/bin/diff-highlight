@@ -330,4 +330,3 @@ $SIG{PIPE} = 'DEFAULT';
 
 DiffHighlight::highlight_stdin();
 exit 0;
-

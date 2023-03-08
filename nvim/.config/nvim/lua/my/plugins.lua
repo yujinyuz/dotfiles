@@ -188,7 +188,7 @@ local plugins = {
   },
   {
     'ludovicchabant/vim-gutentags',
-    event = {'BufRead', 'BufEnter'},
+    event = { 'BufRead', 'BufEnter' },
     init = function()
       vim.g.gutentags_project_root = { 'manage.py', 'pyrightconfig.json', 'init.lua' }
     end,
@@ -202,7 +202,7 @@ local plugins = {
       select_prompts = true,
     },
     keys = {
-      { '<C-n>', '<Cmd>NvimTreeFindFileToggle!<CR>', desc = '[n]vim-tree toggle'},
+      { '<C-n>', '<Cmd>NvimTreeFindFileToggle!<CR>', desc = '[n]vim-tree toggle' },
     },
   },
   {
@@ -331,11 +331,23 @@ local plugins = {
     priority = 1000,
     config = function()
       require('kanagawa').setup {
+        compile = true,
         globalStatus = true,
-        overrides = {
-          FloatBorder = { bg = 'NONE' },
-          NormalFloat = { bg = 'NONE' },
+        colors = {
+          theme = {
+            all = {
+              ui = {
+                bg_gutter = 'none',
+              },
+            },
+          },
         },
+        overrides = function(colors)
+          return {
+            NormalFloat = { bg = 'none' },
+            FloatBorder = { bg = 'none' },
+          }
+        end,
       }
       vim.cmd.colorscheme('kanagawa')
     end,
@@ -393,7 +405,6 @@ local plugins = {
     'kyazdani42/nvim-web-devicons',
     event = 'BufRead',
     opts = {
-
       override = {
         lir_folder_icon = {
           icon = '',
