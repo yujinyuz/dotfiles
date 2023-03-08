@@ -51,8 +51,10 @@ set -Ux BAT_THEME Dracula
 set -Ux fish_user_paths
 ## gopath
 set -Ux GOPATH ~/go
-# Bun
+## Bun
 set -Ux BUN_INSTALL "$HOME/.bun"
+## whalebrew
+set -Ux WHALEBREW_INSTALL_PATH ~/.local/bin
 
 # Path
 ## homebrew
