@@ -183,11 +183,12 @@ local plugins = {
   },
   {
     'tpope/vim-eunuch',
+    event = { 'BufRead' },
     cmd = { 'Delete', 'Move', 'Rename' },
   },
   {
     'ludovicchabant/vim-gutentags',
-    event = { 'BufRead' },
+    event = {'BufRead', 'BufEnter'},
     init = function()
       vim.g.gutentags_project_root = { 'manage.py', 'pyrightconfig.json', 'init.lua' }
     end,
@@ -375,6 +376,7 @@ local plugins = {
     dependencies = {
       {
         'SmiteshP/nvim-navic',
+        event = 'BufRead',
         keys = {
           {
             '<C-s>',
@@ -389,6 +391,7 @@ local plugins = {
   },
   {
     'kyazdani42/nvim-web-devicons',
+    event = 'BufRead',
     opts = {
 
       override = {
@@ -461,7 +464,6 @@ local plugins = {
   {
     'akinsho/toggleterm.nvim',
     opts = {
-
       shell = vim.env.SHELL,
       shade_terminals = false,
       highlights = {
@@ -501,6 +503,20 @@ local plugins = {
   --- }}}
 }
 
-require('lazy').setup(plugins)
+require('lazy').setup(plugins, {
+  performance = {
+    rtp = {
+      disabled_plugins = {
+        'gzip',
+        'matchit',
+        'matchparen',
+        'netrwPlugin',
+        'tarPlugin',
+        'tohtml',
+        'zipPlugin',
+      },
+    },
+  },
+})
 
 -- vim: foldmethod=marker foldlevel=0
