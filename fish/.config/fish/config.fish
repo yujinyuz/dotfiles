@@ -81,8 +81,6 @@ fish_add_path $GOPATH $GOPATH/bin
 fish_add_path ~/.cargo/bin
 ## asdf + asdf-direnv
 fish_add_path ~/.asdf/bin
-## bun
-fish_add_path ~/.bun/bin
 ## local binaries
 fish_add_path ~/.local/bin
 
