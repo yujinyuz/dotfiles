@@ -66,8 +66,14 @@ fish_add_path /opt/homebrew/opt/mysql-client/bin
 ## psql client
 fish_add_path /opt/homebrew/opt/libpq/bin
 ## python
+## python2
+set -l python2_path ~/.asdf/installs/python/2.7.18/bin
+if test -e $python2_path
+  fish_add_path $python2_path
+end
 fish_add_path /opt/homebrew/opt/python@3.{11,10,9,8}/bin
 fish_add_path /opt/homebrew/opt/python/libexec/bin
+
 
 ## golang
 fish_add_path $GOPATH $GOPATH/bin
