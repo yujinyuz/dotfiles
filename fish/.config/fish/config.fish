@@ -4,6 +4,12 @@ set -gx VISUAL $EDITOR
 set -gx SUDO_EDITOR $EDITOR
 set -gx LANG en_US.UTF-8
 
+if test (uname -m) = "arm64"
+  set -gx BREW_BASE "/opt/homebrew"
+else
+  set -gx BREW_BASE "/usr/local"
+end
+
 ## System
 ulimit -n 2048 # Increase resource usage limits to 2048. Default is 256
 
@@ -70,22 +76,21 @@ set -Ux WHALEBREW_INSTALL_PATH ~/.local/bin
 set -Ux fish_user_paths
 
 ## homebrew
-fish_add_path /opt/homebrew/bin
+fish_add_path $BREW_BASE/bin
 ## sysad binaries
-fish_add_path /opt/homebrew/sbin
+fish_add_path $BREW_BASE/sbin
 ## mysql client
-fish_add_path /opt/homebrew/opt/mysql-client/bin
+fish_add_path $BREW_BASE/opt/mysql-client/bin
 ## psql client
-fish_add_path /opt/homebrew/opt/libpq/bin
+fish_add_path $BREW_BASE/opt/libpq/bin
 ## python
 ## python2
-set -l python2_path ~/.asdf/installs/python/2.7.18/bin
+set -l python2 path ~/.asdf/installs/python/2.7.18/bin
 if test -e $python2_path
   fish_add_path $python2_path
 end
-fish_add_path /opt/homebrew/opt/python@3.{11,10,9,8}/bin
-fish_add_path /opt/homebrew/opt/python/libexec/bin
-
+fish_add_path $BREW_BASE/opt/python@3.{11,10,9,8}/bin
+fish_add_path $BREW_BASE/opt/python/libexec/bin
 
 ## golang
 fish_add_path $GOPATH $GOPATH/bin
