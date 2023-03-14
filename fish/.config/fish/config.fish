@@ -59,7 +59,6 @@ set -Ux VIRTUALFISH_HOME $HOME/.local/share/virtualenvs
 set -Ux DIRENV_LOG_FORMAT ""
 ## bat
 set -Ux BAT_THEME Dracula
-set -Ux fish_user_paths
 ## gopath
 set -Ux GOPATH ~/go
 ## Bun
@@ -68,6 +67,8 @@ set -Ux BUN_INSTALL "$HOME/.bun"
 set -Ux WHALEBREW_INSTALL_PATH ~/.local/bin
 
 # Path
+set -Ux fish_user_paths
+
 ## homebrew
 fish_add_path /opt/homebrew/bin
 ## sysad binaries
