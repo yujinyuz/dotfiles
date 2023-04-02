@@ -27,6 +27,7 @@ function M.on_attach(client, bufnr)
   if client.server_capabilities.documentFormattingProvider then
     vim.keymap.set('n', '<leader>cf', function()
       vim.lsp.buf.format { timeout_ms = 5000 }
+      print('Formatting using client: ' .. client.name)
     end, opts)
 
     vim.opt_local.formatexpr = 'v:lua.vim.lsp.formatexpr()'
