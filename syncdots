@@ -2,6 +2,7 @@
 
 user_dirs=(
     alacritty
+    bob
     kitty
     bin
     # emacs
@@ -11,6 +12,7 @@ user_dirs=(
     ruby
     tmux
     nvim
+    minivim
 )
 
 stowit() {
