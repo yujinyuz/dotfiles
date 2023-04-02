@@ -14,12 +14,11 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
-  -- Prereq packages {{{
-  { 'nvim-lua/popup.nvim' },
+  --block: Prereqs
   { 'nvim-lua/plenary.nvim' },
-  -- }}}
+  --endblock
 
-  -- LSP {{{
+  --block: LSP
   {
     'neovim/nvim-lspconfig',
     event = { 'BufRead', 'BufNewFile' },
@@ -35,7 +34,28 @@ local plugins = {
           require('configs.null-ls')
         end,
       },
+      {
+        'WhoIsSethDaniel/mason-tool-installer.nvim',
+        build = ':MasonToolsInstall',
+        config = function()
+          require('mason-tool-installer').setup {
+            ensure_installed = {
+              'prettierd',
+              'eslint_d',
+              'black',
+              'codespell',
+              'cspell',
+              'stylua',
+              'fixjson',
+              'ruff',
+              'hadolint',
+              'write-good',
+            },
+          }
+        end,
+      },
       'folke/neodev.nvim',
+      'onsails/lspkind-nvim',
     },
   },
   {
@@ -48,9 +68,9 @@ local plugins = {
     },
     version = '*',
   },
-  --- }}}
+  --endblock
 
-  -- Ease of editing {{{
+  --block: Ease of Editing
   {
     'nvim-treesitter/nvim-treesitter',
     event = { 'BufRead' },
@@ -100,7 +120,7 @@ local plugins = {
     'windwp/nvim-autopairs',
     event = { 'InsertEnter' },
     opts = {
-      disable_filetype = { 'TelescopePrompt', 'vim', 'markdown', 'neo-tree-popup' },
+      disable_filetype = { 'TelescopePrompt', 'vim', 'markdown' },
       map_c_w = true,
       check_ts = true,
     },
@@ -166,15 +186,15 @@ local plugins = {
       },
     },
   },
-  --- }}}
+  --endblock
 
-  -- File actions and navigations {{{
+  --block: File actions and navigations
   {
     'ibhagwan/fzf-lua',
     keys = {
-      { '<leader>n' },
-      { '<leader>]' },
-      { '<leader>F' },
+      { '<leader>n', desc = 'Fi[n]d files' },
+      { '<leader>]', desc = 'Tags' },
+      { '<leader>F', desc = '[F]ind text' },
     },
     config = function()
       require('configs.fzf')
@@ -236,7 +256,8 @@ local plugins = {
       { 'g#', [[g#<Cmd>lua require('hlslens').start()<CR>]] },
     },
   },
-  { -- Useful plugin to show you pending keybinds.
+  {
+    -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
     config = function()
       vim.o.timeout = true
@@ -244,9 +265,9 @@ local plugins = {
       require('which-key').setup {}
     end,
   },
-  --- }}}
+  --endblock
 
-  --- Git {{{
+  --block: Git
   {
     'tpope/vim-fugitive',
     keys = {
@@ -258,9 +279,19 @@ local plugins = {
   {
     'TimUntersberger/neogit',
     opts = {
-
+      kind = 'split_above',
       integrations = { diffview = true },
       disable_commit_confirmation = true,
+      sections = {
+        untracked = {
+          folded = true,
+        },
+      },
+      mappings = {
+        status = {
+          ['='] = 'Toggle',
+        },
+      },
     },
     cmd = { 'Neogit' },
     keys = {
@@ -272,7 +303,7 @@ local plugins = {
     'ruifm/gitlinker.nvim',
     config = true,
     keys = {
-      { '<leader>gy' },
+      { '<leader>gy', mode = { 'n', 'v' } },
     },
   },
   {
@@ -321,13 +352,16 @@ local plugins = {
       }
     end,
   },
-  --- }}}
+  --endblock
 
-  --- Fancy UI {{{
+  --block: Fancy UI
   {
     'rebelot/kanagawa.nvim',
     lazy = false,
     priority = 1000,
+    enabled = function()
+      return vim.env.NVIM_THEME == 'kanagawa'
+    end,
     config = function()
       require('kanagawa').setup {
         compile = true,
@@ -414,7 +448,6 @@ local plugins = {
       default = true,
     },
   },
-  { 'onsails/lspkind-nvim' },
   {
     'lukas-reineke/indent-blankline.nvim',
     init = function()
@@ -444,9 +477,9 @@ local plugins = {
   },
   { 'j-hui/fidget.nvim', event = { 'BufRead' }, opts = { text = { spinner = 'dots_footsteps' } } },
   -- { 'kevinhwang91/nvim-ufo', dependencies = 'kevinhwang91/promise-async' },
-  --- }}}
+  --endblock
 
-  -- General ftplugin {{{
+  --block: General ftplugin
   { 'SidOfc/mkdx', ft = 'markdown' },
   {
     'iamcco/markdown-preview.nvim',
@@ -455,9 +488,12 @@ local plugins = {
   },
   { 'Vimjas/vim-python-pep8-indent', ft = 'python' },
   { 'michaeljsmith/vim-indent-object', ft = 'python' },
-  --- }}}
+  { 'martinda/Jenkinsfile-vim-syntax', ft = { 'groovy', 'Jenkinsfile' } },
+  { 'thecodesmith/vim-groovy', ft = 'groovy' },
+  { 'fladson/vim-kitty', ft = 'kitty' },
+  --endblock
 
-  -- Miscellaneous {{{
+  --block: Miscellaneous
   {
     'danymat/neogen',
     cmd = { 'Neogen' },
@@ -470,19 +506,26 @@ local plugins = {
     cmd = { 'Scriptnames', 'Messages', 'Verbose' },
     keys = { 'zS' },
   },
-  { 'numToStr/FTerm.nvim' },
   {
-    'akinsho/toggleterm.nvim',
-    opts = {
-      shell = vim.env.SHELL,
-      shade_terminals = false,
-      highlights = {
-        Normal = {
-          guibg = 'NONE',
-        },
-        NormalFloat = {
-          link = 'Normal',
-        },
+    'numToStr/FTerm.nvim',
+    keys = {
+      {
+        '<M-i>',
+        function()
+          require('FTerm').toggle()
+        end,
+        mode = 'n',
+      },
+      {
+        '<M-i>',
+        function()
+          vim.fn.feedkeys('<C-\\><C-n>')
+          -- FIXME: Can't use vim.cmd.normal at the moment
+          -- See issue: https://github.com/neovim/neovim/issues/4895
+          -- vim.cmd.normal {'<C-\\><C-n>', bang = true }
+          require('FTerm').toggle()
+        end,
+        mode = 't',
       },
     },
   },
@@ -491,6 +534,10 @@ local plugins = {
     init = function()
       vim.g.workbench_border = 'single'
       vim.g.workbench_storage_path = vim.fn.expand('~/Sync/notes/workbench/')
+      vim.keymap.set('n', '<leader>i', '### <C-R>=strftime("%H:%M")<CR><Esc>zzA<CR><CR>', { buffer = 0, silent = true })
+    end,
+    config = function()
+      vim.keymap.set('n', '<leader>i', '### <C-R>=strftime("%H:%M")<CR><Esc>zzA<CR><CR>', { buffer = 0, silent = true })
     end,
     keys = {
       {
@@ -510,7 +557,7 @@ local plugins = {
     },
   },
   { 'tversteeg/registers.nvim' },
-  --- }}}
+  --endblock
 }
 
 require('lazy').setup(plugins, {
@@ -529,4 +576,4 @@ require('lazy').setup(plugins, {
   },
 })
 
--- vim: foldmethod=marker foldlevel=0
+-- vim:foldmethod=marker:foldlevel=0:foldmarker=--block,--endblock
