@@ -84,11 +84,6 @@ fish_add_path $BREW_BASE/opt/mysql-client/bin
 ## psql client
 fish_add_path $BREW_BASE/opt/libpq/bin
 ## python
-## python2
-set -l python2 path ~/.asdf/installs/python/2.7.18/bin
-if test -e $python2_path
-  fish_add_path $python2_path
-end
 fish_add_path $BREW_BASE/opt/python@3.{11,10,9,8}/bin
 fish_add_path $BREW_BASE/opt/python/libexec/bin
 
