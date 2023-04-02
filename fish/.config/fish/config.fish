@@ -4,10 +4,10 @@ set -gx VISUAL $EDITOR
 set -gx SUDO_EDITOR $EDITOR
 set -gx LANG en_US.UTF-8
 
-if test (uname -m) = "arm64"
-  set -gx BREW_BASE "/opt/homebrew"
+if test (uname -m) = arm64
+    set -gx BREW_BASE /opt/homebrew
 else
-  set -gx BREW_BASE "/usr/local"
+    set -gx BREW_BASE /usr/local
 end
 
 ## System
@@ -120,4 +120,4 @@ alias -s ls "exa --color=always --icons --group-directories-first --classify"
 alias -s la "exa --color=always --icons --group-directories-first --classify --all"
 alias -s ll "exa --color=always --icons --group-directories-first --classify --all --long"
 
-alias -s ge "graph-easy"
+alias -s ge graph-easy
