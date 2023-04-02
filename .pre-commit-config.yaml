@@ -11,7 +11,16 @@ repos:
     - id: sort-simple-yaml
 
 - repo: https://github.com/JohnnyMorganz/StyLua
-  rev: v0.16.1
+  rev: v0.17.1
   hooks:
     - id: stylua-github # or stylua-system / stylua-github
-      args: ['--config-path=stylua.toml', '--glob', '**/*.lua -- .']
+      # args: ['--config-path=stylua.toml', '--glob', '**/*.lua -- .']
+      args: ['--config-path=stylua.toml']
+      types:
+        - lua
+
+- repo: https://github.com/hugoh/pre-commit-fish.git
+  rev: v1.2
+  hooks:
+    - id: fish_syntax
+    - id: fish_indent
