@@ -19,8 +19,15 @@ repos:
       types:
         - lua
 
-- repo: https://github.com/hugoh/pre-commit-fish.git
-  rev: v1.2
+- repo: local
   hooks:
     - id: fish_syntax
+      name: Check fish syntax
+      entry: fish --no-execute
+      types: [fish]
+      language: system
     - id: fish_indent
+      name: Indent fish
+      entry: fish_indent --write
+      types: [fish]
+      language: system
