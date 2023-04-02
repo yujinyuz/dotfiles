@@ -41,7 +41,7 @@ ts_configs.setup {
     disable = { 'json' },
     additional_vim_regex_highlighting = false,
   },
-  indent = { enable = true, disable = { 'python' } }, -- Let nvim-yati handle python since it's still buggy
+  indent = { enable = true, disable = { 'python' } },
   incremental_selection = {
     enable = true,
     keymaps = {
@@ -136,7 +136,6 @@ ts_configs.setup {
     strategy = require('ts-rainbow.strategy.global'),
   },
   pyfold = { enable = true, custom_foldtext = false },
-  yati = { enable = true, suppress_conflict_warning = true, disable = { 'python' } },
 }
 
 local parsers = require('nvim-treesitter.parsers')
