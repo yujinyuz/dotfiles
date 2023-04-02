@@ -96,6 +96,14 @@ local servers = {
       completion = {
         callSnippet = 'Replace',
       },
+      -- https://github.com/LuaLS/lua-language-server/wiki/Formatter#json
+      format = {
+        enable = true,
+        defaultConfig = {
+          indent_style = 'space',
+          indent_size = '2',
+        },
+      },
     },
   },
 }
