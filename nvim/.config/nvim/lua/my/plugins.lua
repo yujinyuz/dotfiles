@@ -63,7 +63,6 @@ local plugins = {
       pcall(require('nvim-treesitter.install').update { with_sync = true })
     end,
     dependencies = {
-      { 'yioneko/nvim-yati' }, -- For indentation
       { 'nvim-treesitter/nvim-treesitter-textobjects' },
       { 'nvim-treesitter/nvim-treesitter-refactor' },
       { 'HiPhish/nvim-ts-rainbow2' },
