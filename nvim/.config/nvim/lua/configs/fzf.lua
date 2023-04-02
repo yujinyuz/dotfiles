@@ -39,6 +39,7 @@ fzf.setup {
   fzf_opts = {
     ['--border'] = 'none',
     ['--no-separator'] = '',
+    ['--no-hscroll'] = '',
   },
   fzf_colors = {
     ['fg'] = { 'fg', 'CursorLine' },
@@ -99,7 +100,7 @@ end
 
 vim.keymap.set('n', '<leader>]', function()
   fzf.tags {
-    fzf_cli_args = '--with-nth=2,1 --no-hscroll',
+    fzf_cli_args = '--with-nth=2,1',
     winopts = { preview = { hidden = 'nohidden' } },
     file_icons = false,
     git_icons = false,
@@ -108,7 +109,7 @@ end)
 
 vim.keymap.set('n', '<leader>\\', function()
   fzf.lsp_live_workspace_symbols {
-    fzf_cli_args = '--with-nth 2,1 --no-hscroll',
+    fzf_cli_args = '--with-nth 2,1',
     file_icons = false,
     git_icons = false,
   }
