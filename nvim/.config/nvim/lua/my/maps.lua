@@ -30,10 +30,6 @@ vim.keymap.set('n', '<Down>', '<C-w>j')
 vim.keymap.set('n', '<C-y>', '3<C-y>')
 vim.keymap.set('n', '<C-e>', '3<C-e>')
 
--- Automatically center screen when scrolling window downwards
-vim.keymap.set('n', '<C-d>', '<C-d>zz')
-vim.keymap.set('n', '<C-u>', '<C-u>zz')
-
 -- Use Alt for moving lines up/down
 vim.keymap.set('n', '<M-j>', [[mz:m+<CR>`z]], { silent = true })
 vim.keymap.set('n', '<M-k>', [[mz:m-2<CR>`z]], { silent = true })
