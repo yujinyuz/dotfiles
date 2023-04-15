@@ -59,15 +59,13 @@ local plugins = {
     },
   },
   {
-    'glepnir/lspsaga.nvim',
-    cmd = { 'Lspsaga' },
-    opts = {
-      code_action_lightbulb = {
-        sign = false,
-      },
-    },
-    version = '*',
+    'jinzhongjia/LspUI.nvim',
+    event = 'VeryLazy',
+    config = function()
+      require('LspUI').setup()
+    end,
   },
+
   --endblock
 
   --block: Ease of Editing
