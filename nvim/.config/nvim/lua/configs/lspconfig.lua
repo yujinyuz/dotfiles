@@ -20,10 +20,8 @@ local on_attach = function(client, bufnr)
   }
 
   -- +actions
-  vim.keymap.set('n', '<leader>cr', '<Cmd>Lspsaga rename<CR>', opts)
-  vim.keymap.set('n', '<leader>ca', '<Cmd>Lspsaga code_action<CR>', opts)
-  vim.keymap.set({ 'v', 'x' }, '<leader>ca', '<Cmd>Lspsaga range_code_action<CR>', opts)
-  vim.keymap.set('n', '<leader>cd', '<Cmd>Lspsaga show_line_diagnostics<CR>', opts)
+  vim.keymap.set('n', '<leader>cr', '<Cmd>LspUI rename<CR>', opts)
+  vim.keymap.set('n', '<leader>ca', '<Cmd>FzfLua lsp_code_actions<CR>', opts)
 
   -- +lsp
   vim.keymap.set('n', '<leader>clc', utils.lsp_config, opts)
@@ -32,15 +30,17 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<leader>clr', vim.lsp.buf.remove_workspace_folder, opts)
   vim.keymap.set('n', '<leader>clo', '<Cmd>LSoutlineToggle<CR>', opts)
 
-  vim.keymap.set('n', 'gr', '<Cmd>Lspsaga lsp_finder<CR>', opts)
+  vim.keymap.set('n', 'gr', function()
+    require('fzf-lua').lsp_references { ignore_current_line = true }
+  end)
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-  vim.keymap.set('n', 'gD', '<Cmd>Lspsaga preview_definition<CR>', opts)
   vim.keymap.set('n', 'gI', vim.lsp.buf.implementation, opts)
   vim.keymap.set('i', '<C-s>', vim.lsp.buf.signature_help, opts)
 
-  vim.keymap.set('n', 'K', '<Cmd>Lspsaga hover_doc<CR>', opts)
-  vim.keymap.set('n', '[w', '<Cmd>Lspsaga diagnostic_jump_prev<CR>', opts)
-  vim.keymap.set('n', ']w', '<Cmd>Lspsaga diagnostic_jump_next<CR>', opts)
+  vim.keymap.set('n', 'K', '<Cmd>LspUI hover<CR>', opts)
+  vim.keymap.set('n', '<leader>cd', vim.diagnostic.open_float, opts)
+  vim.keymap.set('n', '[w', vim.diagnostic.goto_prev, opts)
+  vim.keymap.set('n', ']w', vim.diagnostic.goto_next, opts)
 
   if client.server_capabilities.definitionProvider ~= false then
     vim.opt_local.tagfunc = 'v:lua.vim.lsp.tagfunc'
