@@ -1,27 +1,5 @@
 local ide_group = vim.api.nvim_create_augroup('IDECallbacks', { clear = true })
 
--- Return to last edit position
-vim.api.nvim_create_autocmd('BufReadPost', {
-  pattern = { '*' },
-  group = ide_group,
-  callback = function()
-    local ft = vim.opt_local.filetype:get()
-    -- don't apply to git messages
-
-    if vim.tbl_contains({ 'commit', 'rebase' }, ft) then
-      return
-    end
-
-    -- get position of last saved edit
-    local line, col = unpack(vim.api.nvim_buf_get_mark(0, '"'))
-    -- if in range, go there
-    if (line > 1) and (line <= vim.api.nvim_buf_line_count(0)) then
-      vim.api.nvim_win_set_cursor(0, { line, col })
-    end
-  end,
-  desc = 'Return to Last Edit Position',
-})
-
 -- Highight on yank
 vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = { '*' },
