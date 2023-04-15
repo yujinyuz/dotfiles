@@ -126,9 +126,9 @@ local plugins = {
   },
   { 'tpope/vim-surround' },
   { 'tpope/vim-repeat' },
-  { 'tpope/vim-unimpaired', event = { 'BufEnter' } },
+  { 'tpope/vim-unimpaired', event = { 'VeryLazy' } },
   { 'tpope/vim-rsi' },
-  { 'tpope/vim-abolish', cmd = { 'Abolish' } },
+  { 'tpope/vim-abolish', event = 'VeryLazy' },
   {
     'L3MON4D3/LuaSnip',
     config = function()
@@ -269,11 +269,11 @@ local plugins = {
   --block: Git
   {
     'tpope/vim-fugitive',
+    event = 'VeryLazy',
     keys = {
       { '<leader>gs', '<Cmd>Git<CR>', desc = 'Git' },
       { '<leader>gv>', '<Cmd>Gvdiffsplit<CR>', desc = 'Fugitive Diffsplit' },
     },
-    cmd = { 'Git', 'G', 'Gcd', 'Gwrite', 'Gvdiffsplit', 'Gdiffsplit' },
   },
   {
     'TimUntersberger/neogit',
