@@ -74,7 +74,7 @@ vim.opt.formatoptions = vim.opt.formatoptions
 vim.opt.completeopt = { 'menuone', 'noselect', 'noinsert' }
 vim.opt.pumheight = 15
 -- Always show sign columns
-vim.opt.signcolumn = 'yes'
+vim.opt.signcolumn = 'number'
 -- Having longer update time leads to noticeable delays and poor UX
 vim.opt.updatetime = 250
 -- Start scrolling when we're 8 lines below
