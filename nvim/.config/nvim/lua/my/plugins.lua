@@ -555,6 +555,7 @@ local plugins = {
     },
   },
   { 'tversteeg/registers.nvim' },
+  { 'ethanholz/nvim-lastplace', config = true, event = 'VeryLazy' },
   --endblock
 }
 
