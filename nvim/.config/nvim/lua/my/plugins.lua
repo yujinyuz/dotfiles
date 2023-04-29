@@ -589,29 +589,30 @@ local plugins = {
     },
   },
   {
-    'weizheheng/nvim-workbench',
-    init = function()
-      vim.g.workbench_border = 'single'
-      vim.g.workbench_storage_path = vim.fn.expand('~/Sync/notes/workbench/')
-      vim.keymap.set('n', '<leader>i', '### <C-R>=strftime("%H:%M")<CR><Esc>zzA<CR><CR>', { buffer = 0, silent = true })
-    end,
+    'yujinyuz/gitpad.nvim',
+    dev = true,
     config = function()
-      vim.keymap.set('n', '<leader>i', '### <C-R>=strftime("%H:%M")<CR><Esc>zzA<CR><CR>', { buffer = 0, silent = true })
+      require('gitpad').setup {
+        dir = '~/Sync/notes/gitpad',
+        on_attach = function()
+          vim.api.nvim_buf_set_keymap(0, 'n', 'q', '<Cmd>silent! wq<CR>', { noremap = true, silent = true })
+        end,
+      }
     end,
     keys = {
       {
         '<leader>pp',
         function()
-          require('workbench').toggle_project_workbench()
+          require('gitpad').toggle_git_pad()
         end,
-        desc = 'Project Workbench',
+        desc = 'gitpad',
       },
       {
         '<leader>pb',
         function()
-          require('workbench').toggle_branch_workbench()
+          require('gitpad').toggle_git_pad_branch()
         end,
-        desc = 'Branch Workbench',
+        desc = 'gitpad branch',
       },
     },
   },
