@@ -527,11 +527,19 @@ local plugins = {
     },
   },
   { 'j-hui/fidget.nvim', event = { 'BufRead' }, opts = { text = { spinner = 'dots_footsteps' } } },
-  -- { 'kevinhwang91/nvim-ufo', dependencies = 'kevinhwang91/promise-async' },
   --endblock
 
   --block: General ftplugin
-  { 'SidOfc/mkdx', ft = 'markdown' },
+  {
+    'SidOfc/mkdx',
+    ft = 'markdown',
+    keys = {
+      { '<leader>t', mode = { 'n', 'v' }, desc = 'Toggle Checkbox' },
+      { '<leader>ll', mode = { 'n', 'v' }, desc = 'Toggle List' },
+      { '<leader>lt', mode = { 'n', 'v' }, desc = 'Toggle Check List' },
+      { '<leader>,', mode = { 'n', 'v' }, desc = 'CSV to Table' },
+    },
+  },
   {
     'iamcco/markdown-preview.nvim',
     build = 'cd app && yarn install',
