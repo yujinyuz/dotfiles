@@ -304,7 +304,27 @@ local plugins = {
     keys = {
       { '<leader>gg', '<Cmd>Neogit<CR>' },
     },
-    dependencies = { 'sindrets/diffview.nvim' },
+    dependencies = {
+      {
+        'sindrets/diffview.nvim',
+        keys = {
+          {
+            '<leader>gp',
+            function()
+              vim.cmd([[DiffviewOpen -uno]])
+            end,
+            desc = '[g]it [p]ull request',
+          },
+          {
+            '<leader>gc',
+            function()
+              vim.cmd([[DiffViewClose]])
+            end,
+            desc = '[g]it [c]lose',
+          },
+        },
+      },
+    },
   },
   {
     'ruifm/gitlinker.nvim',
