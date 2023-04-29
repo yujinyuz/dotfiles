@@ -96,8 +96,8 @@ alias -s getip "curl ipinfo.io/ip"
 alias -s g git
 alias -s groot "cd ./(git rev-parse --show-cdup)"
 alias -s localip "ipconfig getifaddr en0"
-alias -s rscp "rsync -avhW --progress" # for copying local files
-alias -s rsmv "rsync -avhW --no-compress --progress --remove-source-files"
+alias -s rscp "rsync -avhE --progress" # for copying local files
+alias -s rsmv "rsync -avhE --no-compress --progress --remove-source-files"
 alias -s tree "exa --tree"
 alias -s kd "killall Dock"
 alias -s vifish "$EDITOR ~/.config/fish/config.fish"
