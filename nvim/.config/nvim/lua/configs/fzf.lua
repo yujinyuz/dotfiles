@@ -7,6 +7,7 @@ end
 local actions = require('fzf-lua.actions')
 
 fzf.setup {
+  'telescope',
   actions = {
     files = {
       ['default'] = actions.file_edit,
@@ -23,13 +24,6 @@ fzf.setup {
     },
   },
   winopts = {
-    hl = {
-      normal = 'TelescopePromptNormal',
-      border = 'TelescopeBorder',
-      cursor = 'Cursor', -- cursor highlight (grep/LSP matches)
-      cursorline = 'CursorLine', -- cursor line
-      search = 'Search', -- search matches (ctags)
-    },
     preview = {
       delay = 25,
     },
@@ -37,24 +31,10 @@ fzf.setup {
     width = 0.68,
   },
   fzf_opts = {
-    ['--border'] = 'none',
-    ['--no-separator'] = '',
+    -- ['--border'] = 'none',
+    -- ['--no-separator'] = '',
     ['--no-hscroll'] = '',
-  },
-  fzf_colors = {
-    ['fg'] = { 'fg', 'CursorLine' },
-    ['bg'] = { 'bg', 'Normal' },
-    ['hl'] = { 'fg', 'Comment' },
-    ['fg+'] = { 'fg', 'Normal' },
-    ['bg+'] = { 'bg', 'CursorLine' },
-    ['hl+'] = { 'fg', 'Statement' },
-    ['info'] = { 'fg', 'PreProc' },
-    ['prompt'] = { 'fg', 'Conditional' },
-    ['pointer'] = { 'fg', 'Exception' },
-    ['marker'] = { 'fg', 'Keyword' },
-    ['spinner'] = { 'fg', 'Label' },
-    ['header'] = { 'fg', 'Comment' },
-    ['gutter'] = { 'bg', 'Normal' },
+    ['--layout'] = 'reverse',
   },
   keymap = {
     builtin = {
@@ -64,13 +44,13 @@ fzf.setup {
     },
   },
   files = {
-    cmd = 'fd --strip-cwd-prefix --color=never --type f --hidden --follow --exclude .git',
+    fd_opts = '--strip-cwd-prefix ' .. fzf.defaults.files.fd_opts,
     git_icons = false,
     multiprocess = true,
   },
   git = {
     files = {
-      cmd = 'git ls-files --exclude-standard --cached --others --deduplicate',
+      cmd = fzf.defaults.git.files.cmd .. ' --cached --others --deduplicate',
       git_icons = false,
       file_icons = false,
       multiprocess = true,
@@ -80,6 +60,7 @@ fzf.setup {
     git_icons = false,
     file_icons = false,
     multiprocess = true,
+    rg_opts = fzf.defaults.grep.rg_opts .. ' --hidden',
   },
   file_icon_padding = '',
   lsp = {
@@ -137,6 +118,7 @@ vim.keymap.set('n', 'gr', '<Cmd>FzfLua lsp_references<CR>')
 vim.keymap.set('n', 'z=', '<Cmd>FzfLua spell_suggest<CR>')
 vim.keymap.set('n', '<leader>gw', '<Cmd>FzfLua grep_cword<CR>')
 vim.keymap.set('n', '<leader>?', '<Cmd>FzfLua lines<CR>')
+vim.keymap.set('n', '<leader>N', '<Cmd>FzfLua resume<CR>')
 
 if vim.loop.cwd() == vim.fn.expand('~/Sync/notes') then
   -- Override default bindings when we are inside our notes dir
