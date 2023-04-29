@@ -509,7 +509,7 @@ local plugins = {
       vim.cmd([[highlight IndentBlanklineIndent5 guifg=#61AFEF gui=nocombine]])
       vim.cmd([[highlight IndentBlanklineIndent6 guifg=#C678DD gui=nocombine]])
     end,
-    event = { 'BufRead' },
+    cmd = 'IndentBlanklineToggle',
     opts = {
       enabled = false,
       show_current_context = true,
