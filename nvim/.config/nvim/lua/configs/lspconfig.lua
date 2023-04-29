@@ -20,7 +20,7 @@ local on_attach = function(client, bufnr)
   }
 
   -- +actions
-  vim.keymap.set('n', '<leader>cr', '<Cmd>LspUI rename<CR>', opts)
+  vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename, opts)
   vim.keymap.set('n', '<leader>ca', '<Cmd>FzfLua lsp_code_actions<CR>', opts)
 
   -- +lsp
@@ -37,10 +37,7 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', 'gI', vim.lsp.buf.implementation, opts)
   vim.keymap.set('i', '<C-s>', vim.lsp.buf.signature_help, opts)
 
-  vim.keymap.set('n', 'K', '<Cmd>LspUI hover<CR>', opts)
-  vim.keymap.set('n', '<leader>cd', vim.diagnostic.open_float, opts)
-  vim.keymap.set('n', '[w', vim.diagnostic.goto_prev, opts)
-  vim.keymap.set('n', ']w', vim.diagnostic.goto_next, opts)
+  vim.keymap.set({ 'n', 'v' }, 'K', vim.lsp.buf.hover, opts)
 
   if client.server_capabilities.definitionProvider ~= false then
     vim.opt_local.tagfunc = 'v:lua.vim.lsp.tagfunc'
