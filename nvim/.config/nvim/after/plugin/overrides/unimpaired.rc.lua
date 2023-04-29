@@ -3,10 +3,10 @@ local utils = require('my.utils')
 local gitsigns_enabled = false
 
 vim.keymap.set('n', 'yob', function()
-  local has_config, config = pcall(require, 'gitsigns.config')
+  local _, gs = pcall(require, 'gitsigns')
 
-  if not has_config then
-    utils.warn('cannot import config', 'gitsigns.nvim')
+  if not gs then
+    utils.warn('gitsigns.nvim is not installed', '[vim-unimpaired]')
     return
   end
 
@@ -15,26 +15,25 @@ vim.keymap.set('n', 'yob', function()
   if gitsigns_enabled then
     utils.info('enabled gitsigns', 'Toggle')
   else
+    print('disabled')
     utils.warn('disabled gitsigns', 'Toggle')
   end
 
-  vim.cmd([[
-    Gitsigns toggle_current_line_blame
-    Gitsigns toggle_signs
-    Gitsigns toggle_linehl
-    Gitsigns toggle_word_diff
-  ]])
+  gs.toggle_current_line_blame()
+  gs.toggle_signs()
+  gs.toggle_linehl()
+  gs.toggle_word_diff()
 end, { desc = 'Toggle Gitsigns' })
 
 vim.keymap.set('n', 'yof', function()
-  require('my.lsp_format').toggle()
+  require('my.lsp-format').toggle()
 end, { desc = 'Format on Save' })
 vim.keymap.set('n', 'yol', function()
   utils.toggle('number')
 end, {})
 vim.keymap.set('n', 'yoL', function()
+  utils.toggle_command('IndentBlanklineToggle!')
   utils.toggle('list', true)
-  utils.toggle_command('IndentBlanklineToggle')
 end)
 vim.keymap.set('n', 'yor', function()
   utils.toggle('relativenumber')
