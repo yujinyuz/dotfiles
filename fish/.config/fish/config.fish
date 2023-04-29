@@ -71,6 +71,8 @@ set -Ux GOPATH ~/go
 set -Ux BUN_INSTALL "$HOME/.bun"
 ## whalebrew
 set -Ux WHALEBREW_INSTALL_PATH ~/.local/bin
+## zk
+set -Ux ZK_SHELL /bin/zsh
 
 # Path
 set -Ux fish_user_paths
