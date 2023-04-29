@@ -113,3 +113,4 @@ alias -s la "exa --color=always --icons --group-directories-first --classify --a
 alias -s ll "exa --color=always --icons --group-directories-first --classify --all --long"
 
 alias -s ge graph-easy
+alias -s icat "kitty +kitten icat"
