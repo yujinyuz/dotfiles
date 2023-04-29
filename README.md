@@ -11,8 +11,18 @@ $ ./syncdots
 ```
 
 ## Update Brewfile
+```bash
+brew bundle dump --file=macos/Brewfile --force
 ```
-$ brew bundle dump --file=macos/Brewfile --force
+
+## Install Brewfile
+```bash
+$ brew bundle install --file=macos/Brewfile
+```
+
+## Install Fisher
+```bash
+curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher update
 ```
 
 ## Install FZF Completions
@@ -31,9 +41,23 @@ cp -iv ~/.asdf/completions/asdf.fish ~/.config/fish/completions/
 
 Useful when you just dump stuffs to your desktop but don't want to see it
 
-```console
+```bash
 defaults write com.apple.finder CreateDesktop false
 killall Finder
+```
+
+## Make Dock Auto Hide Faster
+
+```bash
+defaults write com.apple.dock autohide-time-modifier -int 0;killall Dock
+```
+
+## fish shell
+
+Change theme
+
+```fish
+fish_config theme choose kanagawa
 ```
 
 ## nvim finder
@@ -87,6 +111,7 @@ flake8
 black
 reorder-python-imports
 codespell
+ruff
 ```
 
 ```fish
