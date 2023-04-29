@@ -635,6 +635,9 @@ require('lazy').setup(plugins, {
       },
     },
   },
+  dev = {
+    path = '~/Sources/github.com/yujinyuz',
+  },
 })
 
 -- vim:foldmethod=marker:foldlevel=0:foldmarker=--block,--endblock
