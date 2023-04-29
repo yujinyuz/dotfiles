@@ -1,0 +1,26 @@
+# Kanagawa
+
+# Syntax Highlighting Colors
+fish_color_normal dcd7ba
+fish_color_command 7aa89f
+fish_color_keyword d27e99
+fish_color_quote c0a36e
+fish_color_redirection dcd7ba
+fish_color_end ff9e64
+fish_color_error c34043
+fish_color_param 957fb8
+fish_color_comment 727169
+fish_color_selection --background=2d4f67
+fish_color_search_match --background=2d4f67
+fish_color_operator 76946a
+fish_color_escape d27e99
+fish_color_autosuggestion 727169
+
+# Completion Pager Colors
+fish_pager_color_progress 727169
+fish_pager_color_prefix 7aa89f
+fish_pager_color_completion dcd7ba
+fish_pager_color_description 727169
+fish_pager_color_selected_background --background=2d4f67
+
+# vim:filetype=fish
