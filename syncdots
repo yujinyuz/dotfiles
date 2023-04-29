@@ -27,11 +27,19 @@ stowit() {
     stow --no-folding -v -R -t ${usr} ${app}
 }
 
+unstowit() {
+  # TODO
+}
+
 echo "Stowing apps for user: ${whoami}"
 
-for app in ${user_dirs[@]}; do
-    stowit "${HOME}" $app
-done
+if [ -z "$1" ]; then
+  for app in ${user_dirs[@]}; do
+      stowit "${HOME}" $app
+  done
+else
+  stowit "${HOME}" $1
+fi
 
 echo ""
 echo "Done"
