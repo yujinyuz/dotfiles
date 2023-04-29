@@ -6,15 +6,13 @@ vim.keymap.set('n', 'Q', '"_')
 -- Create new file
 vim.keymap.set('n', '<leader>fn', [[:e %:h<C-z>]], { desc = 'Create new file relative to current file' })
 
--- Buffer Switch
-vim.keymap.set('n', '<BS>', '<C-^>')
+vim.keymap.set('n', '<BS>', '<C-^>', { desc = '[B]uffer [S]witch' })
 
 -- Resize splits with Shift + Arrow Keys
 vim.keymap.set('n', '<S-Up>', '<C-w>+')
 vim.keymap.set('n', '<S-Down>', '<C-w>-')
 vim.keymap.set('n', '<S-Left>', '<C-w><')
 vim.keymap.set('n', '<S-Right>', '<C-w>>')
-vim.keymap.set('n', '<leader>=', '<C-w>=')
 
 -- Windows
 vim.keymap.set('n', '<C-j>', '<C-w>w')
@@ -50,23 +48,16 @@ vim.keymap.set('t', '<M-j>', [[<C-\><C-n><C-w>j]])
 vim.keymap.set('t', '<M-k>', [[<C-\><C-n><C-w>k]])
 vim.keymap.set('t', '<M-l>', [[<C-\><C-n><C-w>l]])
 
--- Persistent highlights
-vim.keymap.set('n', '<leader>ll', [[<Cmd>call matchadd('Visual', '\%'.line('.').'l')<CR>]], { silent = true })
-vim.keymap.set('n', '<leader>lc', [[<Cmd>call clearmatches()<CR>]], { silent = true })
+vim.keymap.set('c', 'w!!', require('my.utils').sudo_write, { silent = true, desc = 'Sudo Write' })
 
-vim.keymap.set('c', 'w!!', require('my.utils').sudo_write, { silent = true })
+vim.keymap.set('n', '<C-p>', ':e **/', { desc = 'Backup file finder' })
 
--- Just a backup finder
-vim.keymap.set('n', '<C-p>', ':e **/')
+vim.keymap.set('n', '<leader>qq', '<Cmd>q!<CR>', { desc = '[Q]uick [q]uit without saving' })
+vim.keymap.set('n', '<leader>qa', '<Cmd>qa!<CR>', { desc = '[Q]uit [a]ll without saving' })
 
--- Execute and save file
-vim.keymap.set('n', '<leader>fx', ':update<CR>|:source<CR>', { desc = 'Save and execute current file' })
+vim.keymap.set('n', '<leader>w', '<Cmd>update!<CR>', { desc = '[w]rite but only if file has changes' })
 
-vim.keymap.set('n', '<leader>qq', '<Cmd>q!<CR>', { desc = 'Quick quit without saving' })
-vim.keymap.set('n', '<leader>qa', '<Cmd>qa!<CR>', { desc = 'Quit all without saving' })
-
-vim.keymap.set('n', '<leader>w', '<Cmd>update!<CR>')
-
+-- Store relative line number jumps in the jumplist if they exceed a threshold.
 vim.keymap.set('n', 'k', function()
   return (vim.v.count > 5 and "m'" .. vim.v.count or '') .. 'gk'
 end, { expr = true })
@@ -76,14 +67,29 @@ end, { expr = true })
 
 vim.keymap.set('n', '<leader>fixformat', function()
   print(':e ++ff=dos followed by :set ff=unix')
-end, { desc = 'Tells Vim to read the file again, forcing dos file format' })
+end, { desc = 'Tells Vim to read the file again, forcing dos file format. Repairs ^M characters' })
 
 -- Diagnostics. Not necessarily related to LSP
 vim.keymap.set('n', '<leader>cd', function()
   vim.diagnostic.open_float()
-end, {})
-vim.keymap.set('n', '[w', vim.diagnostic.goto_prev, {})
-vim.keymap.set('n', ']w', vim.diagnostic.goto_next, {})
+end, { desc = 'Line diagnostics ' })
+vim.keymap.set('n', '[w', vim.diagnostic.goto_prev, { desc = 'Goto Previous Diagnostic' })
+vim.keymap.set('n', ']w', vim.diagnostic.goto_next, { desc = 'Goto Next Diagnostic' })
 
-vim.keymap.set('n', '<leader>.', function() vim.cmd.edit('%:p:h') end, { desc = 'edit .'})
-vim.keymap.set('n', '<leader>/', function() vim.cmd.edit('.') end, { desc = 'edit root'})
+vim.keymap.set('n', '<leader>.', function()
+  vim.cmd.edit('%:p:h')
+end, { desc = 'edit .' })
+vim.keymap.set('n', '<leader>/', function()
+  vim.cmd.edit('.')
+end, { desc = 'edit root' })
+
+vim.keymap.set('n', 'y.', function()
+  local filepath = vim.fn.expand('%')
+  vim.fn.setreg('+', filepath)
+  require('my.utils').info('Copied ' .. filepath .. ' to system clipboard')
+end, { desc = 'copy current filename to system clipboard' })
+vim.keymap.set('n', 'y/', function()
+  local filepath = vim.fn.expand('%:p')
+  vim.fn.setreg('+', filepath)
+  require('my.utils').info('Copied ' .. filepath .. ' to system clipboard')
+end, { desc = 'copy current absolute filename to system clipboard' })
