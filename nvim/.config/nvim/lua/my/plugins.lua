@@ -208,7 +208,7 @@ local plugins = {
     'ludovicchabant/vim-gutentags',
     event = { 'BufRead', 'BufEnter' },
     init = function()
-      vim.g.gutentags_project_root = { 'manage.py', 'pyrightconfig.json', 'init.lua' }
+      vim.g.gutentags_project_root = { 'manage.py', 'pyrightconfig.json', 'init.lua', 'src/manage.py' }
     end,
   },
   {
