@@ -85,3 +85,5 @@ end, {})
 vim.keymap.set('n', '[w', vim.diagnostic.goto_prev, {})
 vim.keymap.set('n', ']w', vim.diagnostic.goto_next, {})
 
+vim.keymap.set('n', '<leader>.', function() vim.cmd.edit('%:p:h') end, { desc = 'edit .'})
+vim.keymap.set('n', '<leader>/', function() vim.cmd.edit('.') end, { desc = 'edit root'})

@@ -224,24 +224,32 @@ local plugins = {
     },
   },
   {
-    'tamago324/lir.nvim',
+    'stevearc/oil.nvim',
     config = function()
-      require('configs.lir')
+      require('oil').setup {
+        columns = { 'icon' },
+        view_options = {
+          show_hidden = true,
+        },
+        win_options = {
+          wrap = false,
+          signcolumn = 'no',
+          cursorcolumn = false,
+          foldcolumn = '0',
+          spell = false,
+          list = false,
+          conceallevel = 3,
+          concealcursor = 'ncv',
+        },
+        keymaps = {
+          ['<C-c>'] = false,
+          ['<leader>qq'] = 'actions.close',
+          ['<C-l>'] = false,
+          ['<C-r>'] = 'actions.refresh',
+          ['y.'] = 'actions.copy_entry_path',
+        },
+      }
     end,
-    keys = {
-      {
-        '<leader>.',
-        function()
-          require('lir.float').toggle()
-        end,
-      },
-      {
-        '<leader>/',
-        function()
-          require('lir.float').toggle('.')
-        end,
-      },
-    },
   },
   {
     'kevinhwang91/nvim-hlslens',
