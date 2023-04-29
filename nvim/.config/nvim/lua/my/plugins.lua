@@ -546,7 +546,11 @@ local plugins = {
       },
     },
   },
-  { 'j-hui/fidget.nvim', event = { 'BufRead' }, opts = { text = { spinner = 'dots_footsteps' } } },
+  {
+    'j-hui/fidget.nvim',
+    event = { 'BufRead' },
+    opts = { text = { spinner = 'dots_footsteps' } },
+  },
   --endblock
 
   --block: General ftplugin
