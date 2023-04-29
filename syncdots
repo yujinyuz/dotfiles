@@ -29,6 +29,7 @@ stowit() {
 
 unstowit() {
   # TODO
+  echo "TODO..."
 }
 
 echo "Stowing apps for user: ${whoami}"
@@ -41,5 +42,4 @@ else
   stowit "${HOME}" $1
 fi
 
-echo ""
-echo "Done"
+echo "\nDone"
