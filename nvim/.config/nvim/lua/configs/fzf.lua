@@ -67,6 +67,15 @@ fzf.setup {
     -- https://github.com/jose-elias-alvarez/null-ls.nvim/wiki/Compatibility-with-other-plugins
     async_or_timeout = 3000,
   },
+  previewers = {
+    builtin = {
+      extensions = {
+        ['png'] = { 'viu', '-b' },
+        ['jpeg'] = { 'viu', '-b' },
+        ['jpg'] = { 'viu', '-b' },
+      },
+    },
+  },
   on_create = function()
     vim.keymap.set('t', '<Esc>', '<C-c>', { buffer = 0 })
   end,
