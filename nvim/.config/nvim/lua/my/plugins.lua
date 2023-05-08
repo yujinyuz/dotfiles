@@ -269,7 +269,21 @@ local plugins = {
     config = function()
       vim.o.timeout = true
       vim.o.timeoutlen = 300
-      require('which-key').setup {}
+      require('which-key').setup {
+        show_help = false,
+        key_labels = {
+          ['<leader>'] = 'SPC',
+          ['<space>'] = 'SPC',
+          ['<CR>'] = 'RET',
+          ['<TAB>'] = 'TAB',
+        },
+        window = { padding = { 0, 0, 0, 0 } },
+        layout = { height = { min = 1, max = 10 } },
+        triggers_blacklist = {
+          c = { 'w' },
+          n = { '`' },
+        },
+      }
     end,
   },
   --endblock
