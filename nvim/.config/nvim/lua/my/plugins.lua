@@ -618,6 +618,7 @@ local plugins = {
     config = function()
       require('gitpad').setup {
         dir = '~/Sync/notes/gitpad',
+        border = 'rounded',
         on_attach = function()
           vim.api.nvim_buf_set_keymap(0, 'n', 'q', '<Cmd>silent! wq<CR>', { noremap = true, silent = true })
         end,
