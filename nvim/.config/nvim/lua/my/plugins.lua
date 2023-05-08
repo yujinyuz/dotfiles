@@ -60,7 +60,7 @@ local plugins = {
   },
   {
     'jinzhongjia/LspUI.nvim',
-    event = 'VeryLazy',
+    cmd = 'LspUI',
     config = function()
       require('LspUI').setup()
     end,
@@ -201,12 +201,11 @@ local plugins = {
   },
   {
     'tpope/vim-eunuch',
-    event = { 'BufRead' },
     cmd = { 'Delete', 'Move', 'Rename' },
   },
   {
     'ludovicchabant/vim-gutentags',
-    event = { 'BufRead', 'BufEnter' },
+    event = 'VeryLazy',
     init = function()
       vim.g.gutentags_project_root = { 'manage.py', 'pyrightconfig.json', 'init.lua', 'src/manage.py' }
     end,
@@ -292,10 +291,10 @@ local plugins = {
   {
     'tpope/vim-fugitive',
     event = 'VeryLazy',
-    keys = {
-      { '<leader>gs', '<Cmd>Git<CR>', desc = 'Git' },
-      { '<leader>gv>', '<Cmd>Gvdiffsplit<CR>', desc = 'Fugitive Diffsplit' },
-    },
+    config = function()
+      vim.keymap.set('n', '<leader>gs', '<Cmd>Git<CR>', { desc = 'Git' })
+      vim.keymap.set('n', '<leader>gv', '<Cmd>Gvdiffsplit<CR>', { desc = 'Git' })
+    end,
   },
   {
     'TimUntersberger/neogit',
@@ -648,7 +647,7 @@ local plugins = {
       },
     },
   },
-  { 'tversteeg/registers.nvim' },
+  { 'tversteeg/registers.nvim', event = 'VeryLazy' },
   { 'ethanholz/nvim-lastplace', config = true, event = 'VeryLazy' },
   {
     'Wansmer/treesj',
