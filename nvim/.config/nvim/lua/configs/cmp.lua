@@ -216,7 +216,7 @@ vim.keymap.set('i', '<C-x><C-f>', function()
   cmp.complete {
     config = {
       sources = {
-        { name = 'path' },
+        { name = 'async_path' },
       },
     },
   }

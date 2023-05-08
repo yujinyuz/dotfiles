@@ -107,7 +107,7 @@ local plugins = {
     dependencies = {
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-buffer',
-      'hrsh7th/cmp-path',
+      'FelipeLema/cmp-async-path',
       'saadparwaiz1/cmp_luasnip',
       'hrsh7th/cmp-nvim-lsp-signature-help',
       'lukas-reineke/cmp-rg',
