@@ -226,6 +226,16 @@ vim.keymap.set('i', '<C-x><C-f>', function()
   }
 end, { desc = 'Path completion' })
 
+vim.keymap.set('i', '<C-x><C-v>', function()
+  cmp.complete {
+    config = {
+      sources = {
+        { name = 'copilot' },
+      },
+    },
+  }
+end, { desc = 'copilot' })
+
 -- local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 -- cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done { map_char = { tex = '' } })
 
