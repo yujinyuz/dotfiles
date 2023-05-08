@@ -50,16 +50,17 @@ local cmp_config = {
     },
   }),
   window = {
-    documentation = cmp.config.window.bordered {},
+    documentation = cmp.config.window.bordered(),
   },
   sorting = {
     comparators = {
       cmp.config.compare.offset,
       cmp.config.compare.exact,
       cmp.config.compare.score,
+      cmp.config.compare.recently_used,
       require('cmp-under-comparator').under, -- for python
+      cmp.config.compare.locality,
       cmp.config.compare.kind,
-      cmp.config.compare.sort_text,
       cmp.config.compare.length,
       cmp.config.compare.order,
     },
@@ -80,7 +81,10 @@ local cmp_config = {
     ['<C-e>'] = cmp.mapping { i = cmp.mapping.close(), c = cmp.mapping.close() },
     ['<C-y>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
-        cmp.confirm { select = true }
+        cmp.confirm {
+          behavior = cmp.ConfirmBehavior.Replace,
+          select = true,
+        }
       else
         fallback()
       end
@@ -226,26 +230,5 @@ end, { desc = 'Path completion' })
 -- cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done { map_char = { tex = '' } })
 
 vim.keymap.set('n', 'yoq', M.toggle, { desc = 'Toggle autocomplete' })
-
--- vim.api.nvim_create_autocmd({ 'TextChangedI', 'TextChangedP' }, {
---   callback = function()
---     local line = vim.api.nvim_get_current_line()
---     local cursor = vim.api.nvim_win_get_cursor(0)[2]
---
---     local current = string.sub(line, cursor, cursor + 1)
---     if current == '.' or current == ',' or current == ' ' then
---       require('cmp').close()
---     end
---
---     local before_line = string.sub(line, 1, cursor + 1)
---     local after_line = string.sub(line, cursor + 1, -1)
---     if not string.match(before_line, '^%s+$') then
---       if after_line == '' or string.match(before_line, ' $') or string.match(before_line, '%.$') then
---         require('cmp').complete()
---       end
---     end
---   end,
---   pattern = '*',
--- })
 
 return M
