@@ -6,9 +6,6 @@ end
 
 local sources = {
 
-  nls.builtins.diagnostics.cspell.with { filetypes = { 'markdown', 'txt' } },
-  nls.builtins.code_actions.cspell.with { filetypes = { 'markdown', 'txt' } },
-
   nls.builtins.diagnostics.dotenv_linter,
   nls.builtins.diagnostics.fish,
   nls.builtins.diagnostics.hadolint,
