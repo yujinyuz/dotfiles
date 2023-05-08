@@ -41,7 +41,7 @@ ts_configs.setup {
     disable = { 'json' },
     additional_vim_regex_highlighting = false,
   },
-  indent = { enable = true, disable = { 'python' } },
+  indent = { enable = true, disable = { 'python', 'lua' } },
   incremental_selection = {
     enable = true,
     keymaps = {
