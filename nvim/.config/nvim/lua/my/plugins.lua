@@ -561,7 +561,6 @@ local plugins = {
       { '<leader>t', mode = { 'n', 'v' }, desc = 'Toggle Checkbox' },
       { '<leader>ll', mode = { 'n', 'v' }, desc = 'Toggle List' },
       { '<leader>lt', mode = { 'n', 'v' }, desc = 'Toggle Check List' },
-      { '<leader>,', mode = { 'n', 'v' }, desc = 'CSV to Table' },
     },
   },
   {
