@@ -570,6 +570,7 @@ local plugins = {
     ft = 'markdown',
   },
   { 'Vimjas/vim-python-pep8-indent', ft = 'python' },
+  { 'drmingdrmer/vim-indent-lua', ft = 'lua' },
   { 'michaeljsmith/vim-indent-object', ft = 'python' },
   { 'martinda/Jenkinsfile-vim-syntax', ft = { 'groovy', 'Jenkinsfile' } },
   { 'thecodesmith/vim-groovy', ft = 'groovy' },
