@@ -133,6 +133,9 @@ vim.opt.lazyredraw = true
 -- Enable 24-bit RGB color
 vim.opt.termguicolors = true
 
+-- Prefer dark theme by default if NVIM_BACKGROUND is not set
+vim.opt.background = vim.env.NVIM_BACKGROUND or 'dark'
+
 -- Do not highlight on long lines
 vim.opt.synmaxcol = 512
 
