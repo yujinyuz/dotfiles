@@ -439,9 +439,6 @@ local plugins = {
     'rebelot/kanagawa.nvim',
     lazy = false,
     priority = 1000,
-    enabled = function()
-      return vim.env.NVIM_THEME == 'kanagawa'
-    end,
     config = function()
       require('kanagawa').setup {
         compile = false,
@@ -515,7 +512,6 @@ local plugins = {
     dependencies = {
       {
         'SmiteshP/nvim-navic',
-        event = 'BufRead',
         keys = {
           {
             '<C-s>',
@@ -530,15 +526,7 @@ local plugins = {
   },
   {
     'kyazdani42/nvim-web-devicons',
-    event = 'BufRead',
     opts = {
-      override = {
-        lir_folder_icon = {
-          icon = '',
-          color = '#7ebae4',
-          name = 'lirfoldernode',
-        },
-      },
       default = true,
     },
   },
