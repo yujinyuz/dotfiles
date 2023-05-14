@@ -95,6 +95,6 @@ vim.api.nvim_create_autocmd('BufWritePost', {
   callback = function()
     -- auto-reload kitty upon kitty.conf write
     -- https://github.com/kovidgoyal/kitty/discussions/5416#discussioncomment-3473122
-    vim.cmd([[:silent !pgrep -i kitty | xargs kill -SIGUSR1 $KITTY_PID]])
+    vim.cmd([[:silent !pgrep -i kitty | xargs kill -SIGUSR1]])
   end,
 })
