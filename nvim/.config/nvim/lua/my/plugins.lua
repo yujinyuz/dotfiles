@@ -568,11 +568,28 @@ local plugins = {
   {
     'SidOfc/mkdx',
     ft = 'markdown',
-    keys = {
-      { '<leader>t', mode = { 'n', 'v' }, desc = 'Toggle Checkbox' },
-      { '<leader>ll', mode = { 'n', 'v' }, desc = 'Toggle List' },
-      { '<leader>lt', mode = { 'n', 'v' }, desc = 'Toggle Check List' },
-    },
+    init = function()
+      local settings = {
+        -- Use GitHub supported toggles
+        checkbox = {
+          toggles = { ' ', 'x' },
+        },
+        enter = {
+          shift = 1,
+        },
+      }
+
+      vim.g['mkdx#settings'] = settings
+    end,
+    config = function()
+      local wk = require('which-key')
+
+      wk.register {
+        ['<leader>t'] = { name = 'Toggle Checkbox' },
+        ['<leader>ll'] = { name = 'Toggle List' },
+        ['<leader>lt'] = { name = 'Toggle Check List' },
+      }
+    end,
   },
   {
     'iamcco/markdown-preview.nvim',
