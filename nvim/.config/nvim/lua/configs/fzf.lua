@@ -98,11 +98,7 @@ vim.keymap.set('n', '<leader>]', function()
 end)
 
 vim.keymap.set('n', '<leader>\\', function()
-  fzf.lsp_live_workspace_symbols {
-    fzf_cli_args = '--with-nth 2,1',
-    file_icons = false,
-    git_icons = false,
-  }
+  fzf.lsp_live_workspace_symbols {}
 end)
 
 vim.keymap.set('n', '<leader>F', function()
@@ -114,7 +110,7 @@ vim.keymap.set('n', '<leader>n', function()
   }
 
   fzf.files {
-    fzf_opts = { ['--ansi'] = false, ['--cycle'] = '' },
+    fzf_opts = { ['--cycle'] = '' },
     file_icons = false,
     git_icons = false,
     winopts = winopts,
