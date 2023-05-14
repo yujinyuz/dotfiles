@@ -32,7 +32,7 @@ vim.keymap.set('n', 'yol', function()
   utils.toggle('number')
 end, {})
 vim.keymap.set('n', 'yoL', function()
-  utils.toggle_command('IndentBlanklineToggle!')
+  vim.g.miniindentscope_disable = not vim.g.miniindentscope_disable
   utils.toggle('list', true)
 end)
 vim.keymap.set('n', 'yor', function()
