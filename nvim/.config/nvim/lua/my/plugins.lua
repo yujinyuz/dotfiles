@@ -518,6 +518,10 @@ local plugins = {
           lualine_y = {},
           lualine_z = {},
         },
+        extensions = {
+          'lazy',
+          'nvim-tree',
+        },
       }
     end,
     dependencies = {
