@@ -484,7 +484,12 @@ local plugins = {
           }
         end,
       }
-      vim.cmd.colorscheme('kanagawa')
+
+      if vim.o.background == 'light' then
+        vim.cmd.colorscheme('kanagawa-lotus')
+      else
+        vim.cmd.colorscheme('kanagawa')
+      end
     end,
   },
   {
