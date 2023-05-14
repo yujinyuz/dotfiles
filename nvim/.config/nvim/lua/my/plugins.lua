@@ -474,13 +474,19 @@ local plugins = {
             MasonNormal = { bg = theme.ui.bg_p1, fg = theme.ui.fg_dim },
             WhichKeyFloat = { bg = theme.ui.bg_p1, fg = theme.ui.fg_dim },
 
-            GitpadFloatBorder = { bg = 'NONE', fg = theme.ui.float.fg_border },
+            GitpadFloatBorder = { bg = 'none', fg = theme.ui.float.fg_border },
             GitpadFloatTitle = { bg = 'none', fg = theme.ui.special },
 
             Pmenu = { fg = theme.ui.shade0, bg = theme.ui.bg_p1 },
             PmenuSel = { fg = 'none', bg = theme.ui.bg_p2 },
             PmenuSbar = { bg = theme.ui.bg_m1 },
             PmenuThumb = { bg = theme.ui.bg_p2 },
+
+            -- Since kanagawa.nvim doesn't implement these, then we just have to define it here
+            TelescopeNormal = { fg = theme.ui.fg, bg = theme.ui.bg },
+            TelescopeSelection = { fg = theme.ui.fg, bg = theme.ui.bg_p2 },
+            ['@text.todo.checked'] = { fg = theme.syn.special1, bg = theme.ui.bg },
+            ['@text.todo.unchecked'] = { fg = theme.syn.special1, bg = theme.ui.bg },
           }
         end,
       }
