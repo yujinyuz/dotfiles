@@ -285,11 +285,11 @@ local plugins = {
     config = function()
       vim.o.timeout = true
       vim.o.timeoutlen = 300
-      require('which-key').setup {
+      local wk = require('which-key')
+      wk.setup {
         show_help = false,
         key_labels = {
           ['<leader>'] = 'SPC',
-          ['<space>'] = 'SPC',
           ['<CR>'] = 'RET',
           ['<TAB>'] = 'TAB',
         },
@@ -299,6 +299,17 @@ local plugins = {
           c = { 'w' },
           n = { '`' },
         },
+      }
+
+      wk.register {
+        ['<leader>c'] = { name = '+lsp' },
+        ['<leader>g'] = { name = '+git' },
+        ['<leader>h'] = { name = '+hunk' },
+        ['<leader>p'] = { name = '+pad' },
+        ['<leader>q'] = { name = '+quit' },
+        ['<leader>s'] = { name = '+search' },
+        ['y'] = { name = '+yank' },
+        ['yo'] = { name = '+switch on/off' },
       }
     end,
   },
