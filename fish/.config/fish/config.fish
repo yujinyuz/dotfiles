@@ -47,8 +47,6 @@ set -Ux FZF_DEFAULT_OPTS "--no-separator --height 40% --layout=reverse --info=in
 set -Ux FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
 set -Ux FZF_ALT_C_COMMAND "fd --type d $FD_OPTIONS"
 
-## pyenv
-set -Ux PYTHON_BUILD_ARIA2_OPTS "-x 10 -k 1M" # Use aria2c when downloading
 ## virtualfish
 set -Ux VIRTUALFISH_HOME $HOME/.local/share/virtualenvs
 ## asdf-direnv
