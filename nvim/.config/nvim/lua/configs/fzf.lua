@@ -5,6 +5,7 @@ if not has_fzf then
 end
 
 local actions = require('fzf-lua.actions')
+local defaults = require('fzf-lua.defaults').defaults
 
 fzf.setup {
   'telescope',
@@ -44,13 +45,13 @@ fzf.setup {
     },
   },
   files = {
-    fd_opts = '--strip-cwd-prefix ' .. fzf.defaults.files.fd_opts,
+    fd_opts = '--strip-cwd-prefix ' .. defaults.files.fd_opts,
     git_icons = false,
     multiprocess = true,
   },
   git = {
     files = {
-      cmd = fzf.defaults.git.files.cmd .. ' --cached --others --deduplicate',
+      cmd = defaults.git.files.cmd .. ' --cached --others --deduplicate',
       git_icons = false,
       file_icons = false,
       multiprocess = true,
@@ -60,7 +61,7 @@ fzf.setup {
     git_icons = false,
     file_icons = false,
     multiprocess = true,
-    rg_opts = fzf.defaults.grep.rg_opts .. ' --hidden',
+    rg_opts = '--hidden ' .. defaults.grep.rg_opts,
   },
   file_icon_padding = '',
   lsp = {
@@ -90,7 +91,6 @@ end
 
 vim.keymap.set('n', '<leader>]', function()
   fzf.tags {
-    fzf_cli_args = '--with-nth=2,1',
     winopts = { preview = { hidden = 'nohidden' } },
     file_icons = false,
     git_icons = false,
