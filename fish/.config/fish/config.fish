@@ -111,6 +111,7 @@ alias -s minvim "nvim -u ~/.minivim/init.lua"
 alias -s ssht "TERM=screen ssh"
 alias -s zki 'ZK_NOTEBOOK_DIR=~/Sync/notes/ zk new --no-input "$ZK_NOTEBOOK_DIR/brain"'
 alias -s loadsshkeys "ls -d ~/.ssh/* -I '*.pub|config|environment|pems|known_hosts' | xargs ssh-add --apple-load-keychain &> /dev/null"
+alias -s untar "tar -xvf"
 
 alias -s ls "exa --color=always --icons --group-directories-first --classify"
 alias -s la "exa --color=always --icons --group-directories-first --classify --all"
