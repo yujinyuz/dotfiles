@@ -217,16 +217,6 @@ vim.keymap.set('i', '<C-x><C-x>', function()
   }
 end, { desc = 'ripgrep completion' })
 
-vim.keymap.set('i', '<C-x><C-f>', function()
-  cmp.complete {
-    config = {
-      sources = {
-        { name = 'async_path' },
-      },
-    },
-  }
-end, { desc = 'Path completion' })
-
 vim.keymap.set('i', '<C-x><C-k>', function()
   cmp.complete {
     config = {
