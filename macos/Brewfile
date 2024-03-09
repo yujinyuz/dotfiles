@@ -94,6 +94,7 @@ brew "jackett", restart_service: true
 brew "jdupes"
 brew "jq"
 brew "json-c"
+brew "just"
 brew "lazydocker"
 brew "lf"
 brew "libcbor"
