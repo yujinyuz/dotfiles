@@ -42,6 +42,8 @@ fzf.setup {
       ['<C-d>'] = 'preview-page-down',
       ['<C-u>'] = 'preview-page-up',
       ['<C-h>'] = 'toggle-preview',
+      ['<C-y>'] = 'toggle-preview-wrap',
+      ['<C-b>'] = 'toggle-preview-cw',
     },
   },
   files = {
@@ -124,6 +126,9 @@ vim.keymap.set('n', '<leader>gw', '<Cmd>FzfLua grep_cword<CR>')
 vim.keymap.set('n', '<leader>?', '<Cmd>FzfLua lines<CR>')
 vim.keymap.set('n', '<leader>N', '<Cmd>FzfLua resume<CR>')
 
+vim.keymap.set('i', '<C-x><C-f>', function()
+  require('fzf-lua').complete_path()
+end, { silent = true, desc = 'Fuzzy complete path' })
 if vim.loop.cwd() == vim.fn.expand('~/Sync/notes') then
   -- Override default bindings when we are inside our notes dir
   vim.keymap.set('n', '<leader>n', function()
