@@ -119,4 +119,4 @@ alias -s ll "eza --color=always --icons --group-directories-first --classify --a
 
 alias -s ge graph-easy
 alias -s icat "kitty +kitten icat"
-alias -s ccurl "curl -OJ" # download file with original name
+alias -s ccurl "curl -OJL" # download file with original name
