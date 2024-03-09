@@ -113,9 +113,9 @@ alias -s zki 'ZK_NOTEBOOK_DIR=~/Sync/notes/ zk new --no-input "$ZK_NOTEBOOK_DIR/
 alias -s loadsshkeys "ls -d ~/.ssh/* -I '*.pub|config|environment|pems|known_hosts' | xargs ssh-add --apple-load-keychain &> /dev/null"
 alias -s untar "tar -xvf"
 
-alias -s ls "exa --color=always --icons --group-directories-first --classify"
-alias -s la "exa --color=always --icons --group-directories-first --classify --all"
-alias -s ll "exa --color=always --icons --group-directories-first --classify --all --long"
+alias -s ls "eza --color=always --icons --group-directories-first --classify"
+alias -s la "eza --color=always --icons --group-directories-first --classify --all"
+alias -s ll "eza --color=always --icons --group-directories-first --classify --all --long"
 
 alias -s ge graph-easy
 alias -s icat "kitty +kitten icat"
