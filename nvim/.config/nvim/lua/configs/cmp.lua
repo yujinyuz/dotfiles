@@ -38,6 +38,7 @@ local cmp_config = {
   preselect = cmp.PreselectMode.None,
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
+    { name = 'copilot' },
   }, {
     {
       name = 'buffer',
@@ -226,7 +227,7 @@ vim.keymap.set('i', '<C-x><C-f>', function()
   }
 end, { desc = 'Path completion' })
 
-vim.keymap.set('i', '<C-x><C-v>', function()
+vim.keymap.set('i', '<C-x><C-k>', function()
   cmp.complete {
     config = {
       sources = {
