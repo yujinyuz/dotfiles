@@ -26,7 +26,7 @@ vim.keymap.set('n', 'yob', function()
 end, { desc = 'Toggle Gitsigns' })
 
 vim.keymap.set('n', 'yof', function()
-  require('my.lsp-format').toggle()
+  require('my.format').toggle()
 end, { desc = 'Format on Save' })
 vim.keymap.set('n', 'yol', function()
   utils.toggle('number')

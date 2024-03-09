@@ -29,12 +29,6 @@ local plugins = {
       { 'williamboman/mason.nvim', cmd = 'Mason' },
       { 'williamboman/mason-lspconfig.nvim' },
       {
-        'jose-elias-alvarez/null-ls.nvim',
-        config = function()
-          require('configs.null-ls')
-        end,
-      },
-      {
         'WhoIsSethDaniel/mason-tool-installer.nvim',
         build = ':MasonToolsInstall',
         config = function()
@@ -43,6 +37,7 @@ local plugins = {
               'prettierd',
               'eslint_d',
               'black',
+              'djlint',
               'codespell',
               'cspell',
               'stylua',
@@ -59,6 +54,46 @@ local plugins = {
       { 'onsails/lspkind-nvim' },
     },
   },
+  -- Formatter
+  {
+    'stevearc/conform.nvim',
+    opts = {
+      formatters_by_ft = {
+        lua = { 'stylua' },
+        javascript = { 'prettierd', 'eslint_d' },
+        python = { 'black', 'reorder-python-imports', 'ruff' },
+        fish = { 'fish_indent' },
+        json = { 'jq' },
+        jsonc = { 'fixjson' },
+        htmldjango = { 'djlint' },
+      },
+      format_on_save = function(bufnr)
+        if not require('my.format').auto_format then
+          return
+        end
+        return { timeout_ms = 500, lsp_fallback = true }
+      end,
+    },
+  },
+  -- Linter
+  {
+    'mfussenegger/nvim-lint',
+    events = { 'BufReadPre', 'BufNewFile' },
+
+    config = function()
+      local lint = require('lint')
+
+      lint.linters_by_ft = {
+        fish = { 'fish' },
+        python = { 'ruff' },
+        dockerfile = { 'hadolint' },
+        dotenv = { 'dotenv_linter' },
+        conf = { 'dotenv_linter' },
+        htmldjango = { 'djlint' },
+      }
+    end,
+  },
+
   {
     'jinzhongjia/LspUI.nvim',
     cmd = 'LspUI',
