@@ -5,6 +5,7 @@ abbr -a cp "cp -riv"
 abbr -a mv "mv -iv"
 abbr -a t tmux
 abbr -a l ll
-abbr -a v nvim
+abbr -a v vi
 abbr -a vi nvim
-abbr -a vim nvim
+abbr -a j just
+abbr -a ju just
