@@ -69,12 +69,20 @@ vim.diagnostic.config {
 
 -- Server config
 local servers = {
-  pyright = {
-    settings = {
-      python = {
-        analysis = {
-          diagnosticMode = 'openFilesOnly',
-        },
+  -- pyright = {
+  --   settings = {
+  --     python = {
+  --       analysis = {
+  --         diagnosticMode = 'openFilesOnly',
+  --       },
+  --     },
+  --   },
+  -- },
+
+  jedi_language_server = {
+    init_options = {
+      completion = {
+        disableSnippets = true,
       },
     },
   },
