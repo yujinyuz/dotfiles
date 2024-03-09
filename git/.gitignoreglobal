@@ -3,6 +3,8 @@ tags
 tags.lock
 tags.temp
 
+# ignore tags but do not ignore directories named tags
+!tags/
 # ruby stuffs
 .gems
 .rbenv-gemsets
@@ -14,6 +16,7 @@ tags.temp
 __pycache__/
 .venv
 pyrightconfig.json
+htmlcov
 
 # .vscode stuffs
 .vscode/
@@ -42,7 +45,17 @@ temp/
 .DS_Store
 logs/*
 *.log
+tmp*/
 
 
 # custom docker data folder
 dkdata
+
+# Added to every root of a project manually
+# sole purpose is for vim-gutentags to work properly
+# especially for projects that don't have a clear root directory
+.croot
+
+# Used for my custom fish function that automatically sources this file
+# whenever a virtualenv is activated
+exports.fish
