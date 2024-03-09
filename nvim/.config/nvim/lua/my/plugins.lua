@@ -659,6 +659,7 @@ local plugins = {
   { 'martinda/Jenkinsfile-vim-syntax', ft = { 'groovy', 'Jenkinsfile' } },
   { 'thecodesmith/vim-groovy', ft = 'groovy' },
   { 'fladson/vim-kitty', ft = 'kitty' },
+  { 'NoahTheDuke/vim-just', ft = 'just' },
   --endblock
 
   --block: Miscellaneous
