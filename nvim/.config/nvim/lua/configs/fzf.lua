@@ -61,7 +61,6 @@ fzf.setup {
     git_icons = false,
     file_icons = false,
     multiprocess = true,
-    rg_opts = '--hidden ' .. defaults.grep.rg_opts,
   },
   file_icon_padding = '',
   lsp = {
