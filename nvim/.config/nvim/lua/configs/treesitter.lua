@@ -7,6 +7,7 @@ local langs = {
   'bash',
   'c',
   'cmake',
+  'vimdoc',
   -- 'comment',
   'cpp',
   'css',
@@ -18,6 +19,7 @@ local langs = {
   'javascript',
   'latex',
   'lua',
+  'luadoc',
   'nix',
   'python',
   'regex',
@@ -32,6 +34,9 @@ local langs = {
   -- 'json',
   'markdown',
   'markdown_inline',
+  'git_config',
+  'git_rebase',
+  'diff',
 }
 
 ts_configs.setup {
