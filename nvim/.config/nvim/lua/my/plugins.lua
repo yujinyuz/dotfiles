@@ -15,13 +15,13 @@ vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
   --block: Prereqs
-  { 'nvim-lua/plenary.nvim' },
+  { 'nvim-lua/plenary.nvim', lazy = true },
   --endblock
 
   --block: LSP
   {
     'neovim/nvim-lspconfig',
-    event = { 'BufRead', 'BufNewFile' },
+    event = { 'BufReadPre', 'BufNewFile' },
     config = function()
       require('configs.lspconfig')
     end,
@@ -54,8 +54,9 @@ local plugins = {
           }
         end,
       },
-      'folke/neodev.nvim',
-      'onsails/lspkind-nvim',
+      { 'folke/neodev.nvim' },
+      { 'folke/neoconf.nvim', cmd = 'Neoconf', config = true },
+      { 'onsails/lspkind-nvim' },
     },
   },
   {
@@ -89,6 +90,12 @@ local plugins = {
     },
   },
   {
+    'JoosepAlviste/nvim-ts-context-commentstring',
+    opts = {
+      enable_autocmd = false,
+    },
+  },
+  {
     'numToStr/Comment.nvim',
     event = { 'BufRead' },
     config = function()
@@ -96,7 +103,6 @@ local plugins = {
         pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
       }
     end,
-    dependencies = { 'JoosepAlviste/nvim-ts-context-commentstring' },
   },
   {
     'hrsh7th/nvim-cmp',
@@ -224,7 +230,9 @@ local plugins = {
     'ludovicchabant/vim-gutentags',
     event = 'VeryLazy',
     init = function()
-      vim.g.gutentags_project_root = { 'manage.py', 'pyrightconfig.json', 'init.lua', 'src/manage.py' }
+      vim.g.gutentags_project_root = { '.croot' }
+      vim.g.gutentags_define_advanced_commands = true
+      vim.g.gutentags_add_default_project_roots = false
     end,
   },
   {
@@ -245,7 +253,7 @@ local plugins = {
       require('oil').setup {
         columns = { 'icon' },
         view_options = {
-          show_hidden = true,
+          show_hidden = false,
         },
         win_options = {
           wrap = false,
@@ -264,6 +272,7 @@ local plugins = {
           ['<C-r>'] = 'actions.refresh',
           ['y.'] = 'actions.copy_entry_path',
         },
+        skip_confirm_for_simple_edits = true,
       }
     end,
   },
@@ -433,12 +442,15 @@ local plugins = {
           vim.keymap.set('n', '<leader>hb', function()
             gs.blame_line { full = true }
           end)
-          vim.keymap.set('n', '<leader>tb', gs.toggle_current_line_blame)
+
+          -- Commented this out since it conflicts with some of my mappings that starts
+          -- with <leader>t. Will come back to this later
+          -- vim.keymap.set('n', '<leader>tb', gs.toggle_current_line_blame)
+          -- vim.keymap.set('n', '<leader>td', gs.toggle_deleted)
           vim.keymap.set('n', '<leader>hd', gs.diffthis)
           vim.keymap.set('n', '<leader>hD', function()
             gs.diffthis('~')
           end)
-          vim.keymap.set('n', '<leader>td', gs.toggle_deleted)
         end,
       }
     end,
@@ -485,8 +497,6 @@ local plugins = {
             -- Since kanagawa.nvim doesn't implement these, then we just have to define it here
             TelescopeNormal = { fg = theme.ui.fg, bg = theme.ui.bg },
             TelescopeSelection = { fg = theme.ui.fg, bg = theme.ui.bg_p2 },
-            ['@text.todo.checked'] = { fg = theme.syn.special1, bg = theme.ui.bg },
-            ['@text.todo.unchecked'] = { fg = theme.syn.special1, bg = theme.ui.bg },
           }
         end,
       }
@@ -558,6 +568,7 @@ local plugins = {
   },
   {
     'echasnovski/mini.indentscope',
+    event = 'VeryLazy',
     version = false,
     init = function()
       vim.g.miniindentscope_disable = true
@@ -572,7 +583,7 @@ local plugins = {
   {
     'j-hui/fidget.nvim',
     event = { 'BufRead' },
-    opts = { text = { spinner = 'dots_footsteps' } },
+    opts = {},
   },
   --endblock
 
@@ -593,15 +604,15 @@ local plugins = {
 
       vim.g['mkdx#settings'] = settings
     end,
-    config = function()
-      local wk = require('which-key')
-
-      wk.register {
-        ['<leader>t'] = { name = 'Toggle Checkbox' },
-        ['<leader>ll'] = { name = 'Toggle List' },
-        ['<leader>lt'] = { name = 'Toggle Check List' },
-      }
-    end,
+    -- config = function()
+    --   local wk = require('which-key')
+    --
+    --   wk.register {
+    --     ['<leader>t'] = { name = 'Toggle Checkbox' },
+    --     ['<leader>ll'] = { name = 'Toggle List' },
+    --     ['<leader>lt'] = { name = 'Toggle Check List' },
+    --   }
+    -- end,
   },
   {
     'iamcco/markdown-preview.nvim',
@@ -622,6 +633,13 @@ local plugins = {
     cmd = { 'Neogen' },
     opts = {
       enabled = true,
+      languages = {
+        python = {
+          template = {
+            annotation_convention = 'reST',
+          },
+        },
+      },
     },
   },
   {
@@ -661,6 +679,7 @@ local plugins = {
         border = 'rounded',
         on_attach = function()
           vim.api.nvim_buf_set_keymap(0, 'n', 'q', '<Cmd>silent! wq<CR>', { noremap = true, silent = true })
+          vim.opt_local.textwidth = 100
         end,
       }
     end,
@@ -689,6 +708,234 @@ local plugins = {
       { '<leader>j', '<cmd>TSJToggle<cr>', desc = 'Join Toggle' },
     },
     opts = { use_default_keymaps = false, max_join_length = 150 },
+  },
+  {
+    'stevearc/aerial.nvim',
+    opts = {},
+    cmd = { 'AerialToggle' },
+    keys = {
+      { '\\t', '<cmd>AerialToggle<cr>', desc = '' },
+    },
+  },
+  {
+    'cuducos/yaml.nvim',
+  },
+  {
+    'folke/flash.nvim',
+    event = 'VeryLazy',
+    opts = {
+      modes = {
+        search = {
+          enabled = false,
+        },
+      },
+    },
+    keys = {
+      {
+        's',
+        mode = { 'n', 'x', 'o' },
+        function()
+          require('flash').jump()
+        end,
+        desc = 'Flash',
+      },
+      {
+        'S',
+        mode = { 'n', 'o', 'x' },
+        function()
+          require('flash').treesitter()
+        end,
+        desc = 'Flash Treesitter',
+      },
+      {
+        'r',
+        mode = 'o',
+        function()
+          require('flash').remote()
+        end,
+        desc = 'Remote Flash',
+      },
+      {
+        'R',
+        mode = { 'o', 'x' },
+        function()
+          require('flash').treesitter_search()
+        end,
+        desc = 'Flash Treesitter Search',
+      },
+      {
+        '<c-s>',
+        mode = { 'c' },
+        function()
+          require('flash').toggle()
+        end,
+        desc = 'Toggle Flash Search',
+      },
+    },
+  },
+  {
+    'jokajak/keyseer.nvim',
+    version = false,
+    cmd = 'KeySeer',
+    opts = {
+      keyboard = {
+        layout = 'colemak',
+      },
+    },
+  },
+  { 'kevinhwang91/nvim-bqf' },
+  {
+    'camspiers/snap',
+    config = function()
+      -- Basic example config
+      local snap = require('snap')
+      snap.maps {
+        { '<Leader><Leader>', snap.config.file { producer = 'fd.file' } },
+        { '<Leader>fb', snap.config.file { producer = 'vim.buffer' } },
+        { '<Leader>fo', snap.config.file { producer = 'vim.oldfile' } },
+        { '<Leader>ff', snap.config.vimgrep {} },
+      }
+    end,
+  },
+  {
+    'letieu/hacker.nvim',
+    dev = true,
+    config = function()
+      vim.keymap.set('n', '<leader>ha', ':autocmd!<CR><Cmd>HackFollow<CR>', { silent = true })
+
+      local function fixfile()
+        vim.fn.execute('normal! ggdG')
+        vim.fn.execute('read ' .. vim.fn.expand('%') .. '.hackertyper')
+        vim.fn.execute('normal! ggdd')
+        vim.fn.execute('write!')
+      end
+
+      vim.keymap.set('n', '<leader>fix', fixfile, { silent = true })
+    end,
+  },
+  {
+    'eandrju/cellular-automaton.nvim',
+    config = function()
+      vim.keymap.set('n', '<leader>fml', '<cmd>CellularAutomaton make_it_rain<CR>')
+
+      require('cellular-automaton').register_animation {
+        fps = 50,
+        name = 'slide',
+        update = function(grid)
+          for i = 1, #grid do
+            local prev = grid[i][#grid[i]]
+            for j = 1, #grid[i] do
+              grid[i][j], prev = prev, grid[i][j]
+            end
+          end
+          return true
+        end,
+      }
+
+      --[[ require("cellular-automaton").register_animation {
+        fps = 30,
+        name = "scramble",
+
+        update = function(grid)
+          local function is_alphanumeric(c)
+            return c >= "a" and c <= "z" or c >= "A" and c <= "Z" or c >= "0" and c <= "9"
+          end
+
+          local scramble_word = function(word)
+            local chars = {}
+            while #word ~= 0 do
+              local index = math.random(1, #word)
+              table.insert(chars, word[index])
+              table.remove(word, index)
+            end
+            return chars
+          end
+          for i = 1, #grid do
+            local scrambled = {}
+            local word = {}
+            for j = 1, #grid[i] do
+              local c = grid[i][j]
+              if not is_alphanumeric(c.char) then
+                if #word ~= 0 then
+                  for _, d in pairs(scramble_word(word)) do
+                    table.insert(scrambled, d)
+                  end
+                  word = {}
+                end
+                table.insert(scrambled, c)
+              else
+                table.insert(word, c)
+              end
+            end
+
+            grid[i] = scrambled
+          end
+          return true
+        end,
+      } ]]
+
+      local screensaver = function(grid, swapper)
+        local get_character_cols = function(row)
+          local cols = {}
+          for i = 1, #row do
+            if row[i].char ~= ' ' then
+              table.insert(cols, i)
+            end
+          end
+
+          return cols
+        end
+
+        for i = 1, #grid do
+          local cols = get_character_cols(grid[i])
+          if #cols > 0 then
+            local last_col = cols[#cols]
+            local prev = grid[i][last_col]
+            for _, j in ipairs(cols) do
+              prev = swapper(prev, i, j)
+            end
+          end
+        end
+      end
+
+      require('cellular-automaton').register_animation {
+        fps = 50,
+        name = 'screensaver',
+        update = function(grid)
+          screensaver(grid, function(prev, i, j)
+            grid[i][j], prev = prev, grid[i][j]
+            return prev
+          end)
+
+          return true
+        end,
+      }
+
+      require('cellular-automaton').register_animation {
+        fps = 50,
+        name = 'screensaver-inplace-hl',
+        update = function(grid)
+          screensaver(grid, function(prev, i, j)
+            grid[i][j].char, prev.char = prev.char, grid[i][j].char
+            return prev
+          end)
+
+          return true
+        end,
+      }
+
+      require('cellular-automaton').register_animation {
+        fps = 50,
+        name = 'screensaver-inplace-char',
+        update = function(grid)
+          screensaver(grid, function(prev, i, j)
+            grid[i][j].hl_group, prev.hl_group = prev.hl_group, grid[i][j].hl_group
+            return prev
+          end)
+          return true
+        end,
+      }
+    end,
   },
   --endblock
 }
