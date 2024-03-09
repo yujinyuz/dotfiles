@@ -71,6 +71,7 @@ set -Ux NVIM_FILE_FINDER fzf # choices: fzf, telescope
 
 ```fish
 set -Ux BG_TMUX "#1F1F28"  # Depending on current theme
+set -Ux BG_TMUX "#F2ECBC"
 ```
 
 ## asdf
@@ -136,4 +137,15 @@ then make `abc` as a pseudo git repository just so that a custom gitconfig works
 ```
 cd /ghq/sources/abc
 git init
+```
+
+## ngrok
+
+When configuring ngrok, it might contain an orange background when running.
+
+To fix that add this to the config
+
+```yaml
+# ngrok.yml
+console_ui_color: transparent
 ```
