@@ -171,7 +171,8 @@
                 "net.kovidgoyal.kitty",
                 "co.zeit.hyper",
                 "com.apple.Terminal",
-                "io.alacritty"
+                "io.alacritty",
+                "com.valvesoftware.steam"
               ],
               "type": "frontmost_application_unless"
             }
