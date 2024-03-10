@@ -2,7 +2,7 @@ local utils = require('my.utils')
 
 local M = {}
 
-M.auto_format = false
+M.auto_format = true
 
 function M.format()
   require('conform').format { async = true, lsp_fallback = true }
