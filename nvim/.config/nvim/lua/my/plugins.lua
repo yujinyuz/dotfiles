@@ -493,7 +493,31 @@ local plugins = {
 
   --block: Fancy UI
   {
+    'catppuccin/nvim',
+    name = 'catppuccin',
+    priority = 1000,
+    config = function()
+      require('catppuccin').setup {
+        flavour = 'frappe',
+        background = {
+          light = 'latte',
+          dark = 'frappe',
+        },
+        -- transparent_background = true,
+        show_end_of_buffer = true,
+        dim_inactive = {
+          enabled = true,
+          shade = 'dark',
+          percentage = 0.01,
+        },
+      }
+
+      vim.cmd.colorscheme('catppuccin')
+    end,
+  },
+  {
     'rebelot/kanagawa.nvim',
+    enabled = false,
     lazy = false,
     priority = 1000,
     config = function()

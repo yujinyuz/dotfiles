@@ -43,8 +43,7 @@ set -l FD_OPTIONS "--hidden --follow --strip-cwd-prefix --exclude .git --exclude
 set -Ux FZF_DEFAULT_COMMAND "git ls-files --cached --others --exclude-standard &> /dev/null | fd --type f --type l $FD_OPTIONS"
 
 # Generated via fzf-lua
-set -l kanagawa_colors "--color=spinner:#957FB8,marker:#957FB8,pointer:#E46876,hl+:#957FB8,gutter:#1F1F28,bg+:#363646,bg:#1F1F28,fg+:#DCD7BA,hl:#727169,prompt:#957FB8,header:#727169,info:#FFA066"
-set -Ux FZF_DEFAULT_OPTS "--no-separator --height 40% --layout=reverse --info=inline $kanagawa_colors"
+set -Ux FZF_DEFAULT_OPTS "--no-separator --height 40% --layout=reverse --info=inline --color=gutter:-1" # The only important thing here is the gutter color to set it to transparent
 set -Ux FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
 set -Ux FZF_ALT_C_COMMAND "fd --type d $FD_OPTIONS"
 
