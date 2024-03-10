@@ -71,6 +71,15 @@ local plugins = {
         if not require('my.format').auto_format then
           return
         end
+
+        -- Check if there is a .disable-autoformat file in the root of the project
+        local disable_autoformat = not vim.tbl_isempty(
+          vim.fs.find('.disable-autofmt', { upward = true, path = vim.fs.dirname(vim.api.nvim_buf_get_name(bufnr)) })
+        )
+        if disable_autoformat then
+          return
+        end
+
         return { timeout_ms = 500, lsp_fallback = true }
       end,
     },
