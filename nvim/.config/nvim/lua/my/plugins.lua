@@ -672,7 +672,14 @@ local plugins = {
   {
     'j-hui/fidget.nvim',
     event = { 'BufRead' },
-    opts = {},
+    opts = {
+      -- Copied from catppuccin theme recommendation
+      notification = {
+        window = {
+          winblend = 0,
+        },
+      },
+    },
   },
   --endblock
 
