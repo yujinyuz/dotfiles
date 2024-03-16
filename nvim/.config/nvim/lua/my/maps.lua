@@ -84,7 +84,7 @@ vim.keymap.set('n', 'y.', function()
 end, { desc = 'copy current filename to system clipboard' })
 
 vim.keymap.set('n', 'y/', function()
-  local filepath = vim.fn.expand('%:r')
+  local filepath = vim.fn.expand('%:p:.')
   vim.fn.setreg('+', filepath)
   require('my.utils').info("Copied '" .. filepath .. "' to system clipboard")
 end, { desc = 'copy current file path to system clipboard (without the root dir)' })
