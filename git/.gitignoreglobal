@@ -59,3 +59,5 @@ dkdata
 # Used for my custom fish function that automatically sources this file
 # whenever a virtualenv is activated
 exports.fish
+
+.disable-autofmt
