@@ -1082,6 +1082,15 @@ local plugins = {
       separate_by_branch = true,
     },
   },
+
+  {
+    'levouh/tint.nvim',
+    opts = {
+      tint = -5,
+      saturation = 0.0,
+    },
+  },
+
   {
     'gbprod/yanky.nvim',
     config = function()
