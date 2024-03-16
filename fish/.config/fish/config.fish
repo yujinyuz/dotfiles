@@ -38,6 +38,8 @@ end
 set -Ux MANPAGER "nvim +Man!"
 set -Ux MANWIDTH 999
 
+set -Ux XDG_CONFIG_HOME "$HOME/.config"
+
 ## fzf
 set -l FD_OPTIONS "--hidden --follow --strip-cwd-prefix --exclude .git --exclude node_modules"
 set -Ux FZF_DEFAULT_COMMAND "git ls-files --cached --others --exclude-standard &> /dev/null | fd --type f --type l $FD_OPTIONS"
