@@ -590,7 +590,7 @@ local plugins = {
         },
         sections = {
           lualine_a = { 'mode' },
-          lualine_b = { 'branch', 'diff', { 'diagnostics', sources = { 'nvim_diagnostic' } } },
+          lualine_b = { 'branch', 'diff', 'diagnostics' },
           lualine_c = { { 'filename', file_status = true, path = 1 } },
           lualine_x = {
             { navic.get_location, cond = navic.is_available },
@@ -611,6 +611,8 @@ local plugins = {
         extensions = {
           'lazy',
           'nvim-tree',
+          'oil',
+          'mason',
         },
       }
     end,
