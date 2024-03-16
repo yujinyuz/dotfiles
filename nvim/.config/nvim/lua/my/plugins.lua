@@ -126,7 +126,6 @@ local plugins = {
     dependencies = {
       { 'nvim-treesitter/nvim-treesitter-textobjects' },
       { 'nvim-treesitter/nvim-treesitter-refactor' },
-      { 'HiPhish/nvim-ts-rainbow2' },
       { 'windwp/nvim-ts-autotag' },
       { 'nvim-treesitter/playground', cmd = 'TSHighlightCapturesUnderCursor' },
       {
@@ -544,8 +543,8 @@ local plugins = {
           mason = true,
           nvimtree = true,
           which_key = true,
-          ts_rainbow2 = true,
           fidget = true,
+          rainbow_delimiters = true,
           native_lsp = {
             enabled = true,
             virtual_text = {
@@ -724,6 +723,12 @@ local plugins = {
         },
       },
     },
+  },
+  {
+    'hiphish/rainbow-delimiters.nvim',
+    config = function()
+      require('rainbow-delimiters.setup').setup {}
+    end,
   },
   --endblock
 
