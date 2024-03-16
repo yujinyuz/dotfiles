@@ -9,6 +9,7 @@ vim.keymap.set('i', ';H', '<Esc>yypv$r=', { buffer = 0 })
 vim.keymap.set('i', ';h', '<Esc>yypv$r-', { buffer = 0 })
 
 vim.keymap.set('i', ';d', '## <C-R>=strftime("%A, %B %d, %Y")<CR><CR><CR>', { buffer = 0 })
+vim.keymap.set('i', ';D', '### <C-R>=strftime("%Y-%m-%d")<CR><CR><CR>', { buffer = 0 })
 vim.keymap.set('i', ';t', '### <C-R>=strftime("%H:%M")<CR><CR><CR>', { buffer = 0 })
 
 -- Mnemonic for [i]dea
