@@ -61,7 +61,7 @@ local plugins = {
       formatters_by_ft = {
         lua = { 'stylua' },
         javascript = { 'prettierd', 'eslint_d' },
-        python = { 'black', 'reorder-python-imports', 'ruff' },
+        python = { { 'ruff', 'black' }, 'reorder-python-imports' },
         fish = { 'fish_indent' },
         json = { 'jq' },
         jsonc = { 'fixjson' },
@@ -88,7 +88,6 @@ local plugins = {
   {
     'mfussenegger/nvim-lint',
     events = { 'BufReadPre', 'BufNewFile' },
-
     config = function()
       local lint = require('lint')
 
@@ -96,8 +95,6 @@ local plugins = {
         fish = { 'fish' },
         python = { 'ruff' },
         dockerfile = { 'hadolint' },
-        dotenv = { 'dotenv_linter' },
-        conf = { 'dotenv_linter' },
         htmldjango = { 'djlint' },
       }
     end,
