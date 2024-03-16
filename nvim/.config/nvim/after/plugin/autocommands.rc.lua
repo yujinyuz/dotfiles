@@ -182,3 +182,12 @@ vim.api.nvim_create_autocmd({ 'FileType' }, {
     vim.opt_local.conceallevel = 0
   end,
 })
+
+-- Enable spell for gitcommit and markdown
+vim.api.nvim_create_autocmd({ 'FileType' }, {
+  group = augroup('enable_spell'),
+  pattern = { 'gitcommit', 'markdown' },
+  callback = function()
+    vim.opt_local.spell = true
+  end,
+})
