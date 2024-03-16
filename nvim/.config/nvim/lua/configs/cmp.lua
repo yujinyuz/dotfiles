@@ -220,7 +220,7 @@ vim.keymap.set('i', '<C-x><C-i>', function()
   }
 end, { desc = 'ripgrep completion' })
 
-vim.keymap.set('i', '<C-x><C-x>', function()
+vim.keymap.set('i', '<C-x><C-y>', function()
   cmp.complete {
     config = {
       sources = {
