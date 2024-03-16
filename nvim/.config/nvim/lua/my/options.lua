@@ -165,3 +165,19 @@ vim.opt.winbar = vim.opt.winbar
 vim.g.mapleader = ' '
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
+
+-- Diagnostic symbols in the sign column (gutter)
+vim.fn.sign_define('DiagnosticSignError', { text = '✖', texthl = 'DiagnosticSignError', numhl = '' })
+vim.fn.sign_define('DiagnosticSignHint', { text = '➤', texthl = 'DiagnosticSignHint', numhl = '' })
+vim.fn.sign_define('DiagnosticSignInfo', { text = 'ℹ', texthl = 'DiagnosticSignInfo', numhl = '' })
+vim.fn.sign_define('DiagnosticSignWarn', { text = '⚠', texthl = 'DiagnosticSignWarn', numhl = '' })
+
+vim.diagnostic.config {
+  underline = true,
+  update_in_insert = false,
+  virtual_text = { spacing = 2, prefix = '●' },
+  severity_sort = true,
+  float = {
+    source = 'always', -- or 'if_many'
+  },
+}
