@@ -1084,10 +1084,11 @@ local plugins = {
   },
 
   {
-    'levouh/tint.nvim',
+    'miversen33/sunglasses.nvim',
+    event = 'UIEnter',
     opts = {
-      tint = -5,
-      saturation = 0.0,
+      filter_type = 'NOSYNTAX',
+      filter_percent = 0.45,
     },
   },
 
