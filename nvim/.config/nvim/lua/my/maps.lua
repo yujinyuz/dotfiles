@@ -18,12 +18,6 @@ vim.keymap.set('n', '<S-Right>', '<C-w>>')
 vim.keymap.set('n', '<C-j>', '<C-w>w')
 vim.keymap.set('n', '<C-k>', '<C-w>W')
 
--- Navigate to splits with arrow keys
-vim.keymap.set('n', '<Left>', '<C-w>h')
-vim.keymap.set('n', '<Right>', '<C-w>l')
-vim.keymap.set('n', '<Up>', '<C-w>k')
-vim.keymap.set('n', '<Down>', '<C-w>j')
-
 -- Smooth scroll
 vim.keymap.set('n', '<C-y>', '3<C-y>')
 vim.keymap.set('n', '<C-e>', '3<C-e>')
