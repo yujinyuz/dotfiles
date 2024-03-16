@@ -49,7 +49,7 @@ vim.opt.wrap = false
 -- Show highlight when performing substitutions
 vim.opt.inccommand = 'split'
 -- Enable mouse coz why not?
-vim.opt.mouse = 'nicr'
+vim.opt.mouse = 'nivcr'
 -- Use ripgrep instead of grep
 vim.opt.grepprg = [[rg --vimgrep --no-heading --smart-case]]
 
