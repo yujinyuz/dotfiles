@@ -133,7 +133,6 @@ ts_configs.setup {
   },
   autopairs = { enable = true },
   autotag = { enable = true, disable = { 'markdown' } },
-  context_commentstring = { enable = true, enable_autocmd = false },
   matchup = { enable = true },
   rainbow = {
     enable = true,
