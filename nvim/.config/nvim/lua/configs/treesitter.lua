@@ -36,6 +36,8 @@ local langs = {
   'markdown_inline',
   'git_config',
   'git_rebase',
+  'gitcommit',
+  'gitignore',
   'diff',
 }
 
