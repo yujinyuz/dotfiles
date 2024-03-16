@@ -769,7 +769,6 @@ local plugins = {
     },
   },
   { 'tversteeg/registers.nvim', event = 'VeryLazy' },
-  { 'ethanholz/nvim-lastplace', config = true, event = 'VeryLazy' },
   {
     'Wansmer/treesj',
     keys = {
