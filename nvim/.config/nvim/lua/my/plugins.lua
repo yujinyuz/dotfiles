@@ -131,6 +131,7 @@ local plugins = {
       { 'nvim-treesitter/playground', cmd = 'TSHighlightCapturesUnderCursor' },
       {
         'JoosepAlviste/nvim-ts-context-commentstring',
+        event = 'VeryLazy',
         opts = {
           enable_autocmd = false,
         },
@@ -142,9 +143,9 @@ local plugins = {
     version = false,
     event = { 'BufRead' },
     opts = {
-      hooks = {
-        pre = function()
-          require('ts_context_commentstring').update_commentstring()
+      options = {
+        custom_commentstring = function()
+          return require('ts_context_commentstring.internal').calculate_commentstring() or vim.bo.commentstring
         end,
       },
     },
