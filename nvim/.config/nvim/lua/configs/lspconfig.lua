@@ -99,7 +99,7 @@ local servers = {
       workspace = { checkThirdParty = false },
       telemetry = { enable = false },
       completion = {
-        callSnippet = 'Replace',
+        callSnippet = 'Disable',
       },
       -- https://github.com/LuaLS/lua-language-server/wiki/Formatter#json
       format = {
