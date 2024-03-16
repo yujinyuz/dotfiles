@@ -147,7 +147,7 @@ local plugins = {
   },
   {
     'hrsh7th/nvim-cmp',
-    event = 'InsertEnter',
+    event = { 'InsertEnter' },
     config = function()
       require('configs.cmp')
     end,
@@ -159,6 +159,7 @@ local plugins = {
       'lukas-reineke/cmp-rg',
       'lukas-reineke/cmp-under-comparator',
       'neovim/nvim-lspconfig',
+      'chrisgrieser/cmp_yanky',
       {
         'zbirenbaum/copilot.lua',
         dependencies = {
@@ -1001,6 +1002,48 @@ local plugins = {
       }
     end,
   },
+  {
+    'gbprod/yanky.nvim',
+    config = function()
+      require('yanky').setup {
+        ring = {
+          history_length = 100,
+          storage = 'shada',
+          sync_with_numbered_registers = true,
+          cancel_event = 'update',
+          ignore_registers = { '_' },
+          update_register_on_cycle = false,
+        },
+        system_clipboard = {
+          sync_with_ring = true,
+        },
+        preserve_cursor_position = {
+          enabled = true,
+        },
+        highlight = {
+          on_put = true,
+          on_yank = true,
+          timer = 200,
+        },
+      }
+
+      vim.keymap.set({ 'n', 'x' }, 'y', '<Plug>(YankyYank)')
+      vim.keymap.set({ 'n', 'x' }, 'p', '<Plug>(YankyPutAfter)')
+      vim.keymap.set({ 'n', 'x' }, 'P', '<Plug>(YankyPutBefore)')
+      vim.keymap.set({ 'n', 'x' }, 'gp', '<Plug>(YankyGPutAfter)')
+      vim.keymap.set({ 'n', 'x' }, 'gP', '<Plug>(YankyGPutBefore)')
+      vim.keymap.set({ 'n', 'x' }, 'gP', '<Plug>(YankyGPutBefore)')
+
+      vim.keymap.set('n', '<leader>yy', '<Cmd>YankyRingHistory<CR>')
+
+      -- The unimpaired y feels awkard to press when using colemak layout
+      vim.keymap.set('n', '[y', '<Plug>(YankyPreviousEntry)')
+      vim.keymap.set('n', ']y', '<Plug>(YankyNextEntry)')
+      vim.keymap.set('n', '<Left>', '<Plug>(YankyPreviousEntry)')
+      vim.keymap.set('n', '<Right>', '<Plug>(YankyNextEntry)')
+    end,
+  },
+
   --endblock
 }
 

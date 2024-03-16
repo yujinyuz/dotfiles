@@ -144,10 +144,13 @@ local cmp_config = {
 if has_lspkind then
   cmp_config.formatting = {
     format = lspkind.cmp_format {
-      mode = 'text_symbol',
-      with_text = true,
+      mode = 'symbol_text',
       max_width = 50,
+      symbol_map = { Copilot = '', Yank = '' },
       before = function(entry, vim_item)
+        if entry.source.name == 'cmp_yanky' then
+          vim_item.kind = 'Yank'
+        end
         return vim_item
       end,
     },
@@ -207,7 +210,7 @@ vim.keymap.set('i', '<C-x><C-]>', function()
   }
 end, { desc = 'ctags completion' })
 
-vim.keymap.set('i', '<C-x><C-x>', function()
+vim.keymap.set('i', '<C-x><C-i>', function()
   cmp.complete {
     config = {
       sources = {
@@ -216,6 +219,16 @@ vim.keymap.set('i', '<C-x><C-x>', function()
     },
   }
 end, { desc = 'ripgrep completion' })
+
+vim.keymap.set('i', '<C-x><C-x>', function()
+  cmp.complete {
+    config = {
+      sources = {
+        { name = 'cmp_yanky', kind_text = 'Clipboard' },
+      },
+    },
+  }
+end, { desc = 'yanky completion' })
 
 vim.keymap.set('i', '<C-x><C-k>', function()
   cmp.complete {
