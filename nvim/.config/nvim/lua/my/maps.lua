@@ -95,6 +95,6 @@ vim.keymap.set('n', 'y,', function()
   require('my.utils').info("Copied '" .. filepath .. "' to system clipboard")
 end, { desc = 'copy current absolute filename to system clipboard' })
 
-vim.keymap.set('n', '<leader>cf', function()
+vim.keymap.set({ 'n', 'v' }, '<leader>cf', function()
   require('my.format').format()
 end)
