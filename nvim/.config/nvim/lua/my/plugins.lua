@@ -128,23 +128,27 @@ local plugins = {
       { 'HiPhish/nvim-ts-rainbow2' },
       { 'windwp/nvim-ts-autotag' },
       { 'nvim-treesitter/playground', cmd = 'TSHighlightCapturesUnderCursor' },
+      {
+        'JoosepAlviste/nvim-ts-context-commentstring',
+        opts = {
+          enable_autocmd = false,
+        },
+      },
     },
   },
   {
-    'JoosepAlviste/nvim-ts-context-commentstring',
-    opts = {
-      enable_autocmd = false,
-    },
-  },
-  {
-    'numToStr/Comment.nvim',
+    'echasnovski/mini.comment',
+    version = false,
     event = { 'BufRead' },
-    config = function()
-      require('Comment').setup {
-        pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
-      }
-    end,
+    opts = {
+      hooks = {
+        pre = function()
+          require('ts_context_commentstring').update_commentstring()
+        end,
+      },
+    },
   },
+
   {
     'hrsh7th/nvim-cmp',
     event = { 'InsertEnter' },
