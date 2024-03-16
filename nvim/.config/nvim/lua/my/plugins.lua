@@ -127,6 +127,7 @@ local plugins = {
       { 'nvim-treesitter/nvim-treesitter-textobjects' },
       { 'nvim-treesitter/nvim-treesitter-refactor' },
       { 'windwp/nvim-ts-autotag' },
+      { 'RRethy/nvim-treesitter-endwise' },
       { 'nvim-treesitter/playground', cmd = 'TSHighlightCapturesUnderCursor' },
       {
         'JoosepAlviste/nvim-ts-context-commentstring',
@@ -368,6 +369,12 @@ local plugins = {
         ['y'] = { name = '+yank' },
         ['yo'] = { name = '+switch on/off' },
       }
+    end,
+  },
+  {
+    'andymass/vim-matchup',
+    init = function()
+      vim.g.matchup_matchparen_offscreen = { method = 'popup' }
     end,
   },
   --endblock
