@@ -14,7 +14,11 @@ vim.keymap.set('n', '<S-Down>', '<C-w>-')
 vim.keymap.set('n', '<S-Left>', '<C-w><')
 vim.keymap.set('n', '<S-Right>', '<C-w>>')
 
--- Windows
+-- Windows: Move between windows
+-- The reason behind these keymaps is because I loved playing snake
+-- during the Nokia days and I was just using it with 1/9 or 3/7 on the keypad
+-- so even if I have more than 2 windows, these keymaps will just cycle through
+-- all windows
 vim.keymap.set('n', '<C-j>', '<C-w>w')
 vim.keymap.set('n', '<C-k>', '<C-w>W')
 
