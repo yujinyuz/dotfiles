@@ -134,14 +134,6 @@ ts_configs.setup {
   autopairs = { enable = true },
   autotag = { enable = true, disable = { 'markdown' } },
   matchup = { enable = true },
-  rainbow = {
-    enable = true,
-    extended_mode = true,
-    max_file_lines = 1000,
-    query = 'rainbow-parens',
-    strategy = require('ts-rainbow.strategy.global'),
-  },
-  pyfold = { enable = true, custom_foldtext = false },
 }
 
 local parsers = require('nvim-treesitter.parsers')
