@@ -1,4 +1,5 @@
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
+
 if not vim.loop.fs_stat(lazypath) then
   print('Downloading lazy.nvim...')
   vim.fn.system {
@@ -514,12 +515,52 @@ local plugins = {
           light = 'latte',
           dark = 'frappe',
         },
-        -- transparent_background = true,
-        show_end_of_buffer = true,
-        dim_inactive = {
-          enabled = true,
-          shade = 'dark',
-          percentage = 0.01,
+        no_italic = true, -- Force  no italic
+        no_bold = true, -- Force no bold
+        term_colors = true,
+        sytles = {
+          comments = { 'italic' },
+          conditionals = { 'italic' },
+        },
+        transparent_background = true,
+        custom_highlights = function(colors)
+          return {
+            GitpadFloat = { bg = colors.none },
+            GitpadFloatBorder = { bg = colors.none },
+            GitpadFloatTitle = { fg = colors.none, bg = colors.none },
+            Folded = { bg = colors.surface1 }, -- Fix folded background when using transparent
+            BqfPreviewFloat = { bg = colors.none },
+            BqfPreviewBorder = { bg = colors.none },
+            BqfPreviewTitle = { bg = colors.none, fg = colors.none },
+            BqfPreviewThumb = { bg = colors.none },
+          }
+        end,
+        integrations = {
+          aerial = true,
+          cmp = true,
+          mason = true,
+          nvimtree = true,
+          which_key = true,
+          ts_rainbow2 = true,
+          fidget = true,
+          native_lsp = {
+            enabled = true,
+            virtual_text = {
+              errors = { 'italic' },
+              hints = { 'italic' },
+              warnings = { 'italic' },
+              information = { 'italic' },
+            },
+            underlines = {
+              errors = { 'undercurl' },
+              hints = { 'undercurl' },
+              warnings = { 'undercurl' },
+              information = { 'undercurl' },
+            },
+            inlay_hints = {
+              background = true,
+            },
+          },
         },
       }
 
