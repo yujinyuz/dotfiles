@@ -113,13 +113,6 @@ ts_configs.setup {
       },
     },
   },
-  textsubjects = {
-    enable = true,
-    keymaps = {
-      ['.'] = 'textsubjects-smart',
-      [';'] = 'textsubjects-container-outer',
-    },
-  },
   refactor = {
     navigation = {
       enable = true,
@@ -133,7 +126,7 @@ ts_configs.setup {
   },
   autopairs = { enable = true },
   autotag = { enable = true, disable = { 'markdown' } },
-  matchup = { enable = true },
+  endwise = { enable = true },
 }
 
 local parsers = require('nvim-treesitter.parsers')
