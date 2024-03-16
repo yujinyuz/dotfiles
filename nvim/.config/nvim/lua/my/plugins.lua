@@ -51,13 +51,14 @@ local plugins = {
         end,
       },
       { 'folke/neodev.nvim' },
-      { 'folke/neoconf.nvim', cmd = 'Neoconf', config = true },
+      { 'folke/neoconf.nvim', cmd = 'Neoconf' },
       { 'onsails/lspkind-nvim' },
     },
   },
   -- Formatter
   {
     'stevearc/conform.nvim',
+    event = 'VeryLazy',
     opts = {
       formatters_by_ft = {
         lua = { 'stylua' },
@@ -88,7 +89,7 @@ local plugins = {
   -- Linter
   {
     'mfussenegger/nvim-lint',
-    events = { 'BufReadPre', 'BufNewFile' },
+    event = { 'BufReadPost', 'BufNewFile' },
     config = function()
       local lint = require('lint')
 
@@ -98,14 +99,6 @@ local plugins = {
         dockerfile = { 'hadolint' },
         htmldjango = { 'djlint' },
       }
-    end,
-  },
-
-  {
-    'jinzhongjia/LspUI.nvim',
-    cmd = 'LspUI',
-    config = function()
-      require('LspUI').setup()
     end,
   },
 
@@ -298,6 +291,7 @@ local plugins = {
   },
   {
     'stevearc/oil.nvim',
+    event = { 'BufReadPost', 'BufNewFile' },
     config = function()
       require('oil').setup {
         columns = { 'icon' },
@@ -327,7 +321,6 @@ local plugins = {
   },
   {
     'kevinhwang91/nvim-hlslens',
-    config = true,
     keys = {
       { 'n', [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]] },
       { 'N', [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]] },
@@ -373,6 +366,7 @@ local plugins = {
   },
   {
     'andymass/vim-matchup',
+    event = 'VeryLazy',
     init = function()
       vim.g.matchup_matchparen_offscreen = { method = 'popup' }
     end,
@@ -689,7 +683,7 @@ local plugins = {
   },
   {
     'echasnovski/mini.indentscope',
-    event = 'VeryLazy',
+    event = { 'BufReadPost', 'BufNewFile' },
     version = false,
     init = function()
       vim.g.miniindentscope_disable = true
@@ -703,6 +697,7 @@ local plugins = {
   },
   {
     'echasnovski/mini.hipatterns',
+    event = { 'BufReadPost', 'BufNewFile' },
     version = false,
     config = function()
       local hipatterns = require('mini.hipatterns')
@@ -736,6 +731,13 @@ local plugins = {
     config = function()
       require('rainbow-delimiters.setup').setup {}
     end,
+  },
+  {
+    'nvim-zh/colorful-winsep.nvim',
+    opts = {
+      smooth = false,
+    },
+    event = { 'WinNew' },
   },
   --endblock
 
@@ -967,6 +969,7 @@ local plugins = {
   },
   {
     'eandrju/cellular-automaton.nvim',
+    cmd = 'CellularAutomaton',
     config = function()
       vim.keymap.set('n', '<leader>fml', '<cmd>CellularAutomaton make_it_rain<CR>')
 
@@ -1091,6 +1094,7 @@ local plugins = {
   },
   {
     'otavioschwanck/arrow.nvim',
+    keys = { ';' },
     opts = {
       show_icons = true,
       leader_key = ';', -- Recommended to be a single key
@@ -1109,6 +1113,7 @@ local plugins = {
 
   {
     'gbprod/yanky.nvim',
+    keys = { 'y' },
     config = function()
       require('yanky').setup {
         ring = {
