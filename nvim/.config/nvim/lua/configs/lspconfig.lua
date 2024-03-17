@@ -126,6 +126,13 @@ if has_neodev then
   neodev.setup {}
 end
 
+-- Setup neoconfig before lspconfig
+local has_neoconf, neoconf = pcall(require, 'neoconf')
+
+if has_neoconf then
+  neoconf.setup {}
+end
+
 for server, custom_cfg in pairs(servers) do
   local opts = vim.tbl_deep_extend('force', options, custom_cfg or {})
   lspconfig[server].setup(opts)
