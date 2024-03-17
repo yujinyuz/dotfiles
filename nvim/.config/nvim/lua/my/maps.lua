@@ -102,3 +102,29 @@ end, { desc = 'copy current absolute filename to system clipboard' })
 vim.keymap.set({ 'n', 'v' }, '<leader>cf', function()
   require('my.format').format()
 end)
+
+-- Automatically add vim magic to search and substitue
+vim.keymap.set({ 'n', 'v' }, '/', '/\\v', { noremap = true })
+vim.keymap.set({ 'n', 'v' }, '?', '?\\v', { noremap = true })
+
+vim.keymap.set('c', '/', function()
+  -- Get the previous command-line text
+  local line = vim.fn.getcmdline()
+  -- Check if the previous text is "%s"
+  if line == '%s' or line == "'<,'>s" then
+    return '/\\v'
+  end
+
+  return '/'
+end, { noremap = true, expr = true })
+
+vim.keymap.set('c', '?', function()
+  -- Get the previous command-line text
+  local line = vim.fn.getcmdline()
+  -- Check if the previous text is "%s"
+  if line == '%s' or line == "'<,'>s" then
+    return '?\\v'
+  end
+
+  return '?'
+end, { noremap = true, expr = true })
