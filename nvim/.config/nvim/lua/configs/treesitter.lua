@@ -85,13 +85,27 @@ ts_configs.setup {
   textobjects = {
     select = {
       enable = true,
+
+      -- Automatically jump forward to textobj, similar to targets.vim
       lookahead = true,
       keymaps = {
         -- You can use the capture groups defined in textobjects.scm
-        ['af'] = '@function.outer',
-        ['if'] = '@function.inner',
-        ['ac'] = '@class.outer',
-        ['ic'] = '@class.inner',
+        ['af'] = { query = '@function.outer', desc = 'Select around function' },
+        ['if'] = { query = '@function.inner', desc = 'Select inside function' },
+        ['ac'] = { query = '@class.outer', desc = 'Select around class' },
+        ['ic'] = { query = '@class.inner', desc = 'Select inside class' },
+
+        ['a='] = { query = '@assignment.outer', desc = 'Select outer part of an assignment' },
+        ['i='] = { query = '@assignment.inner', desc = 'Select inside part of an assignment' },
+
+        ['=l'] = { query = '@assignment.lhs', desc = 'Select left-hand side of assignment' },
+        ['=r'] = { query = '@assignment.rhs', desc = 'Select right-hand side of assignment' },
+
+        ['aa'] = { query = '@parameter.outer', desc = 'Select around parameter/argument' },
+        ['ia'] = { query = '@parameter.inner', desc = 'Select inside parameter/argument' },
+
+        ['ai'] = { query = '@conditional.outer', desc = 'Select outer part of a conditional' },
+        ['ii'] = { query = '@conditional.inner', desc = 'Select inner part of a conditional' },
       },
     },
     move = {
