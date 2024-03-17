@@ -15,96 +15,8 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
-  --block: Prereqs
-  { 'nvim-lua/plenary.nvim', lazy = true },
-  --endblock
-
-  --block: LSP
-  {
-    'neovim/nvim-lspconfig',
-    event = { 'BufReadPre', 'BufNewFile' },
-    config = function()
-      require('configs.lspconfig')
-    end,
-    dependencies = {
-      { 'williamboman/mason.nvim', cmd = 'Mason' },
-      { 'williamboman/mason-lspconfig.nvim' },
-      {
-        'WhoIsSethDaniel/mason-tool-installer.nvim',
-        build = ':MasonToolsInstall',
-        config = function()
-          require('mason-tool-installer').setup {
-            ensure_installed = {
-              'prettierd',
-              'eslint_d',
-              'black',
-              'djlint',
-              'codespell',
-              'cspell',
-              'stylua',
-              'fixjson',
-              'ruff',
-              'hadolint',
-              'write-good',
-            },
-          }
-        end,
-      },
-      { 'folke/neodev.nvim' },
-      { 'folke/neoconf.nvim', cmd = 'Neoconf' },
-      { 'onsails/lspkind-nvim' },
-    },
-  },
-  -- Formatter
-  {
-    'stevearc/conform.nvim',
-    event = 'VeryLazy',
-    opts = {
-      formatters_by_ft = {
-        lua = { 'stylua' },
-        javascript = { 'prettierd', 'eslint_d' },
-        python = { { 'ruff', 'black' }, 'reorder-python-imports' },
-        fish = { 'fish_indent' },
-        json = { 'jq' },
-        jsonc = { 'fixjson' },
-        htmldjango = { 'djlint' },
-      },
-      format_on_save = function(bufnr)
-        if not require('my.format').auto_format then
-          return
-        end
-
-        -- Check if there is a .disable-autoformat file in the root of the project
-        local disable_autoformat = not vim.tbl_isempty(
-          vim.fs.find('.disable-autofmt', { upward = true, path = vim.fs.dirname(vim.api.nvim_buf_get_name(bufnr)) })
-        )
-        if disable_autoformat then
-          return
-        end
-
-        return { timeout_ms = 500, lsp_fallback = true }
-      end,
-    },
-  },
-  -- Linter
-  {
-    'mfussenegger/nvim-lint',
-    event = { 'BufReadPost', 'BufNewFile' },
-    config = function()
-      local lint = require('lint')
-
-      lint.linters_by_ft = {
-        fish = { 'fish' },
-        python = { 'ruff' },
-        dockerfile = { 'hadolint' },
-        htmldjango = { 'djlint' },
-      }
-    end,
-  },
-
-  --endblock
-
-  --block: Ease of Editing
+  --block: Core Editing
+  -- syntax, indentation,
   {
     'nvim-treesitter/nvim-treesitter',
     event = { 'BufRead' },
@@ -134,19 +46,6 @@ local plugins = {
     },
   },
   {
-    'echasnovski/mini.comment',
-    version = false,
-    event = { 'BufRead' },
-    opts = {
-      options = {
-        custom_commentstring = function()
-          return require('ts_context_commentstring.internal').calculate_commentstring() or vim.bo.commentstring
-        end,
-      },
-    },
-  },
-
-  {
     'hrsh7th/nvim-cmp',
     event = { 'InsertEnter' },
     config = function()
@@ -162,21 +61,15 @@ local plugins = {
       'neovim/nvim-lspconfig',
       'chrisgrieser/cmp_yanky',
       {
-        'zbirenbaum/copilot.lua',
+        'zbirenbaum/copilot-cmp',
+        config = true,
         dependencies = {
-          {
-            'zbirenbaum/copilot-cmp',
-            config = function()
-              require('copilot_cmp').setup {}
-            end,
-          },
-        },
-        config = function()
-          require('copilot').setup {
+          'zbirenbaum/copilot.lua',
+          opts = {
             suggestion = { enabled = false },
             panel = { enabled = false },
-          }
-        end,
+          },
+        },
       },
     },
   },
@@ -189,28 +82,57 @@ local plugins = {
       check_ts = true,
     },
   },
+  {
+    'echasnovski/mini.comment',
+    event = { 'BufReadPost', 'BufNewFile' },
+    version = false,
+    opts = {
+      options = {
+        custom_commentstring = function()
+          return require('ts_context_commentstring.internal').calculate_commentstring() or vim.bo.commentstring
+        end,
+      },
+    },
+  },
+  {
+    'echasnovski/mini.indentscope',
+    event = { 'BufReadPost', 'BufNewFile' },
+    version = false,
+    init = function()
+      vim.g.miniindentscope_disable = true
+    end,
+    config = function()
+      require('mini.indentscope').setup {
+        symbol = '│',
+        options = { try_as_border = true },
+      }
+    end,
+  },
+  {
+    'echasnovski/mini.hipatterns',
+    event = { 'BufReadPost', 'BufNewFile' },
+    version = false,
+    config = function()
+      local hipatterns = require('mini.hipatterns')
+      hipatterns.setup {
+        highlighters = {
+          -- Highlight standalone 'FIXME', 'HACK', 'TODO', 'NOTE'
+          fixme = { pattern = '%f[%w]()FIXME()%f[%W]', group = 'MiniHipatternsFixme' },
+          hack = { pattern = '%f[%w]()HACK()%f[%W]', group = 'MiniHipatternsHack' },
+          todo = { pattern = '%f[%w]()TODO()%f[%W]', group = 'MiniHipatternsTodo' },
+          note = { pattern = '%f[%w]()NOTE()%f[%W]', group = 'MiniHipatternsNote' },
+          -- Highlight hex color strings (`#rrggbb`) using that color
+          hex_color = hipatterns.gen_highlighter.hex_color(),
+        },
+      }
+    end,
+  },
+
   { 'tpope/vim-surround', event = 'VeryLazy' },
   { 'tpope/vim-repeat', event = 'VeryLazy' },
   { 'tpope/vim-unimpaired', event = 'VeryLazy' },
   { 'tpope/vim-rsi', event = 'VeryLazy' },
   { 'tpope/vim-abolish', event = 'VeryLazy' },
-  {
-    'L3MON4D3/LuaSnip',
-    config = function()
-      require('luasnip.loaders.from_vscode').lazy_load()
-    end,
-    keys = {
-      {
-        '<C-l>',
-        function()
-          require('luasnip').expand()
-        end,
-        mode = 'i',
-      },
-    },
-    -- build = 'make install_jsregexp',
-    dependencies = 'rafamadriz/friendly-snippets',
-  },
   {
     'mbbill/undotree',
     init = function()
@@ -250,9 +172,66 @@ local plugins = {
       },
     },
   },
-  --endblock
+  {
+    'andymass/vim-matchup',
+    event = 'VeryLazy',
+    init = function()
+      vim.g.matchup_matchparen_offscreen = { method = 'popup' }
+    end,
+  },
+  { 'tversteeg/registers.nvim', event = 'VeryLazy' },
+  {
+    'Wansmer/treesj',
+    keys = {
+      { '<leader>j', '<cmd>TSJToggle<cr>', desc = 'Join Toggle' },
+    },
+    opts = { use_default_keymaps = false, max_join_length = 150 },
+  },
+  {
+    'gbprod/yanky.nvim',
+    keys = { 'y' },
+    config = function()
+      require('yanky').setup {
+        ring = {
+          history_length = 100,
+          storage = 'shada',
+          sync_with_numbered_registers = true,
+          cancel_event = 'update',
+          ignore_registers = { '_' },
+          update_register_on_cycle = false,
+        },
+        system_clipboard = {
+          sync_with_ring = true,
+        },
+        preserve_cursor_position = {
+          enabled = true,
+        },
+        highlight = {
+          on_put = true,
+          on_yank = true,
+          timer = 200,
+        },
+      }
 
-  --block: File actions and navigations
+      vim.keymap.set({ 'n', 'x' }, 'y', '<Plug>(YankyYank)')
+      vim.keymap.set({ 'n', 'x' }, 'p', '<Plug>(YankyPutAfter)')
+      vim.keymap.set({ 'n', 'x' }, 'P', '<Plug>(YankyPutBefore)')
+      vim.keymap.set({ 'n', 'x' }, 'gp', '<Plug>(YankyGPutAfter)')
+      vim.keymap.set({ 'n', 'x' }, 'gP', '<Plug>(YankyGPutBefore)')
+      vim.keymap.set({ 'n', 'x' }, 'gP', '<Plug>(YankyGPutBefore)')
+
+      vim.keymap.set('n', '<leader>yy', '<Cmd>YankyRingHistory<CR>')
+
+      -- The unimpaired y feels awkard to press when using colemak layout
+      vim.keymap.set('n', '[y', '<Plug>(YankyPreviousEntry)')
+      vim.keymap.set('n', ']y', '<Plug>(YankyNextEntry)')
+      vim.keymap.set('n', '<Left>', '<Plug>(YankyPreviousEntry)')
+      vim.keymap.set('n', '<Right>', '<Plug>(YankyNextEntry)')
+    end,
+  },
+  --endblock: Core Editing
+
+  --block: Navigation/File Management
   {
     'ibhagwan/fzf-lua',
     keys = {
@@ -331,59 +310,136 @@ local plugins = {
     },
   },
   {
-    -- Useful plugin to show you pending keybinds.
-    'folke/which-key.nvim',
-    config = function()
-      vim.o.timeout = true
-      vim.o.timeoutlen = 300
-      local wk = require('which-key')
-      wk.setup {
-        show_help = false,
-        key_labels = {
-          ['<leader>'] = 'SPC',
-          ['<CR>'] = 'RET',
-          ['<TAB>'] = 'TAB',
-        },
-        window = { padding = { 0, 0, 0, 0 } },
-        layout = { height = { min = 1, max = 10 } },
-        triggers_blacklist = {
-          c = { 'w' },
-          n = { '`' },
-        },
-      }
+    'stevearc/aerial.nvim',
+    opts = {},
+    cmd = { 'AerialToggle' },
+    keys = {
+      { '\\t', '<cmd>AerialToggle<cr>', desc = '' },
+    },
+  },
+  { 'kevinhwang91/nvim-bqf' },
+  {
+    'otavioschwanck/arrow.nvim',
+    keys = { '<leader>;' },
+    opts = {
+      show_icons = true,
+      leader_key = '<leader>;',
+      separate_by_branch = true,
+    },
+  },
+  --endblock: Navigation
 
-      wk.register {
-        ['<leader>c'] = { name = '+lsp' },
-        ['<leader>g'] = { name = '+git' },
-        ['<leader>h'] = { name = '+hunk' },
-        ['<leader>p'] = { name = '+pad' },
-        ['<leader>q'] = { name = '+quit' },
-        ['<leader>s'] = { name = '+search' },
-        ['y'] = { name = '+yank' },
-        ['yo'] = { name = '+switch on/off' },
-      }
+  --block: Integration
+  {
+    'neovim/nvim-lspconfig',
+    event = { 'BufReadPre', 'BufNewFile' },
+    config = function()
+      require('configs.lspconfig')
     end,
+    dependencies = {
+      'williamboman/mason.nvim',
+      'williamboman/mason-lspconfig.nvim',
+      {
+        'WhoIsSethDaniel/mason-tool-installer.nvim',
+        build = ':MasonToolsInstall',
+        config = function()
+          require('mason-tool-installer').setup {
+            ensure_installed = {
+              'prettierd',
+              'eslint_d',
+              'black',
+              'djlint',
+              'codespell',
+              'cspell',
+              'stylua',
+              'fixjson',
+              'ruff',
+              'hadolint',
+              'write-good',
+            },
+          }
+        end,
+      },
+    },
   },
   {
-    'andymass/vim-matchup',
+    'L3MON4D3/LuaSnip',
+    config = function()
+      require('luasnip.loaders.from_vscode').lazy_load()
+    end,
+    keys = {
+      {
+        '<C-l>',
+        function()
+          require('luasnip').expand()
+        end,
+        mode = 'i',
+      },
+    },
+    -- build = 'make install_jsregexp',
+    dependencies = 'rafamadriz/friendly-snippets',
+  },
+  { 'folke/neodev.nvim' },
+  { 'folke/neoconf.nvim' },
+  {
+    'stevearc/conform.nvim',
     event = 'VeryLazy',
-    init = function()
-      vim.g.matchup_matchparen_offscreen = { method = 'popup' }
+    opts = {
+      formatters_by_ft = {
+        lua = { 'stylua' },
+        javascript = { 'prettierd', 'eslint_d' },
+        python = { { 'ruff', 'black' }, 'reorder-python-imports' },
+        fish = { 'fish_indent' },
+        json = { 'jq' },
+        jsonc = { 'fixjson' },
+        htmldjango = { 'djlint' },
+      },
+      format_on_save = function(bufnr)
+        if not require('my.format').auto_format then
+          return
+        end
+
+        -- Check if there is a .disable-autoformat file in the root of the project
+        local disable_autoformat = not vim.tbl_isempty(
+          vim.fs.find('.disable-autofmt', { upward = true, path = vim.fs.dirname(vim.api.nvim_buf_get_name(bufnr)) })
+        )
+        if disable_autoformat then
+          return
+        end
+
+        return { timeout_ms = 500, lsp_fallback = true }
+      end,
+    },
+  },
+  {
+    'mfussenegger/nvim-lint',
+    event = { 'BufReadPost', 'BufNewFile' },
+    config = function()
+      local lint = require('lint')
+
+      lint.linters_by_ft = {
+        fish = { 'fish' },
+        python = { 'ruff' },
+        dockerfile = { 'hadolint' },
+        htmldjango = { 'djlint' },
+      }
     end,
   },
-  --endblock
-
-  --block: Git
   {
     'tpope/vim-fugitive',
     event = 'VeryLazy',
-    config = function()
-      vim.keymap.set('n', '<leader>gs', '<Cmd>Git<CR>', { desc = 'Git' })
-      vim.keymap.set('n', '<leader>gv', '<Cmd>Gvdiffsplit<CR>', { desc = 'Git' })
-    end,
+    cmd = { 'Git', 'G', 'Gvdiffsplit' },
+    keys = {
+      { '<leader>gs', '<Cmd>Git<CR>', desc = 'Git' },
+      { '<leader>gv', '<Cmd>Gvdiffsplit<CR>', desc = 'Git' },
+    },
   },
   {
     'TimUntersberger/neogit',
+    cmd = 'Neogit',
+    keys = {
+      { '<leader>gg', '<Cmd>Neogit<CR>', desc = 'Neogit' },
+    },
     opts = {
       kind = 'split_above',
       integrations = { diffview = true },
@@ -399,42 +455,21 @@ local plugins = {
         },
       },
     },
-    cmd = { 'Neogit' },
-    keys = {
-      { '<leader>gg', '<Cmd>Neogit<CR>' },
-    },
     dependencies = {
-      {
-        'sindrets/diffview.nvim',
-        keys = {
-          {
-            '<leader>gp',
-            function()
-              vim.cmd([[DiffviewOpen -uno]])
-            end,
-            desc = '[g]it [p]ull request',
-          },
-          {
-            '<leader>gc',
-            function()
-              vim.cmd([[DiffViewClose]])
-            end,
-            desc = '[g]it [c]lose',
-          },
-        },
+      'nvim-lua/plenary.nvim',
+      'sindrets/diffview.nvim',
+    },
+    {
+      'ruifm/gitlinker.nvim',
+      config = true,
+      keys = {
+        { '<leader>gy', mode = { 'n', 'v' } },
       },
     },
   },
   {
-    'ruifm/gitlinker.nvim',
-    config = true,
-    keys = {
-      { '<leader>gy', mode = { 'n', 'v' } },
-    },
-  },
-  {
     'lewis6991/gitsigns.nvim',
-    event = { 'BufRead' },
+    event = { 'BufReadPost', 'BufNewFile' },
     opts = function()
       local gs = require('gitsigns')
       return {
@@ -504,7 +539,7 @@ local plugins = {
       }
     end,
   },
-  --endblock
+  --endblock: Integration
 
   --block: Fancy UI
   {
@@ -566,69 +601,75 @@ local plugins = {
           },
         },
       }
-
       vim.cmd.colorscheme('catppuccin')
     end,
   },
   {
-    'rebelot/kanagawa.nvim',
-    enabled = false,
-    lazy = false,
-    priority = 1000,
+    -- Useful plugin to show you pending keybinds.
+    'folke/which-key.nvim',
+    init = function()
+      vim.o.timeout = true
+      vim.o.timeoutlen = 300
+    end,
     config = function()
-      require('kanagawa').setup {
-        compile = false,
-        globalStatus = true,
-        colors = {
-          theme = {
-            all = {
-              ui = {
-                bg_gutter = 'none',
-              },
-            },
-          },
+      local wk = require('which-key')
+      wk.setup {
+        show_help = false,
+        key_labels = {
+          ['<leader>'] = 'SPC',
+          ['<CR>'] = 'RET',
+          ['<TAB>'] = 'TAB',
         },
-        overrides = function(colors)
-          local theme = colors.theme
-          return {
-            NormalFloat = { bg = 'none' },
-            FloatBorder = { bg = 'none' },
-            FloatTitle = { bg = 'none' },
-
-            LazyNormal = { bg = theme.ui.bg_p1, fg = theme.ui.fg_dim },
-            MasonNormal = { bg = theme.ui.bg_p1, fg = theme.ui.fg_dim },
-            WhichKeyFloat = { bg = theme.ui.bg_p1, fg = theme.ui.fg_dim },
-
-            GitpadFloatBorder = { bg = 'none', fg = theme.ui.float.fg_border },
-            GitpadFloatTitle = { bg = 'none', fg = theme.ui.special },
-
-            Pmenu = { fg = theme.ui.shade0, bg = theme.ui.bg_p1 },
-            PmenuSel = { fg = 'none', bg = theme.ui.bg_p2 },
-            PmenuSbar = { bg = theme.ui.bg_m1 },
-            PmenuThumb = { bg = theme.ui.bg_p2 },
-
-            -- Since kanagawa.nvim doesn't implement these, then we just have to define it here
-            TelescopeNormal = { fg = theme.ui.fg, bg = theme.ui.bg },
-            TelescopeSelection = { fg = theme.ui.fg, bg = theme.ui.bg_p2 },
-          }
-        end,
+        window = { padding = { 0, 0, 0, 0 } },
+        layout = { height = { min = 1, max = 10 } },
+        triggers_blacklist = {
+          c = { 'w' },
+          n = { '`' },
+        },
       }
-
-      if vim.o.background == 'light' then
-        vim.cmd.colorscheme('kanagawa-lotus')
-      else
-        vim.cmd.colorscheme('kanagawa')
-      end
+      wk.register {
+        ['<leader>c'] = { name = '+lsp' },
+        ['<leader>g'] = { name = '+git' },
+        ['<leader>h'] = { name = '+hunk' },
+        ['<leader>p'] = { name = '+pad' },
+        ['<leader>q'] = { name = '+quit' },
+        ['<leader>s'] = { name = '+search' },
+        ['y'] = { name = '+yank' },
+        ['yo'] = { name = '+switch on/off' },
+      }
     end,
   },
+  { 'onsails/lspkind-nvim' },
+  { 'kyazdani42/nvim-web-devicons' },
   {
     'nvim-lualine/lualine.nvim',
     opts = function()
       local navic = require('nvim-navic')
+      local function location()
+        local rhs = ''
+        if vim.api.nvim_win_get_width(0) > 80 then
+          local column = vim.fn.virtcol('.')
+          local width = vim.fn.virtcol('$')
+          local line = vim.api.nvim_win_get_cursor(0)[1]
+          local height = vim.api.nvim_buf_line_count(0)
+
+          -- Add padding to stop RHS from changing too much as we move the cursor.
+          local padding = #tostring(height) - #tostring(line)
+          if padding > 0 then
+            rhs = rhs .. (' '):rep(padding)
+          end
+
+          -- 'ℓ ' (Literal, \u2113 "SCRIPT SMALL L").
+          -- ' 𝚌 ' -- (Literal, \u1d68c "MATHEMATICAL MONOSPACE SMALL C").
+          rhs = string.format('ℓ:%d/%d 𝚌:%d/%d', line, height, column, width)
+        end
+
+        return rhs
+      end
+
       return {
         options = {
           theme = 'auto',
-          -- separator = '|',
           icons_enabled = true,
           globalstatus = true,
         },
@@ -642,7 +683,7 @@ local plugins = {
             'filetype',
           },
           lualine_y = { 'progress' },
-          lualine_z = { 'location' },
+          lualine_z = { location },
         },
         inactive_sections = {
           lualine_a = {},
@@ -676,45 +717,6 @@ local plugins = {
     },
   },
   {
-    'kyazdani42/nvim-web-devicons',
-    opts = {
-      default = true,
-    },
-  },
-  {
-    'echasnovski/mini.indentscope',
-    event = { 'BufReadPost', 'BufNewFile' },
-    version = false,
-    init = function()
-      vim.g.miniindentscope_disable = true
-    end,
-    config = function()
-      require('mini.indentscope').setup {
-        symbol = '│',
-        options = { try_as_border = true },
-      }
-    end,
-  },
-  {
-    'echasnovski/mini.hipatterns',
-    event = { 'BufReadPost', 'BufNewFile' },
-    version = false,
-    config = function()
-      local hipatterns = require('mini.hipatterns')
-      hipatterns.setup {
-        highlighters = {
-          -- Highlight standalone 'FIXME', 'HACK', 'TODO', 'NOTE'
-          fixme = { pattern = '%f[%w]()FIXME()%f[%W]', group = 'MiniHipatternsFixme' },
-          hack = { pattern = '%f[%w]()HACK()%f[%W]', group = 'MiniHipatternsHack' },
-          todo = { pattern = '%f[%w]()TODO()%f[%W]', group = 'MiniHipatternsTodo' },
-          note = { pattern = '%f[%w]()NOTE()%f[%W]', group = 'MiniHipatternsNote' },
-          -- Highlight hex color strings (`#rrggbb`) using that color
-          hex_color = hipatterns.gen_highlighter.hex_color(),
-        },
-      }
-    end,
-  },
-  {
     'j-hui/fidget.nvim',
     event = { 'BufRead' },
     opts = {
@@ -732,16 +734,24 @@ local plugins = {
       require('rainbow-delimiters.setup').setup {}
     end,
   },
+  -- {
+  --   'levouh/tint.nvim',
+  --   opts = {
+  --     tint = -5,
+  --     saturation = 0.0,
+  --   },
+  -- },
   {
-    'nvim-zh/colorful-winsep.nvim',
+    'miversen33/sunglasses.nvim',
+    event = 'UIEnter',
     opts = {
-      smooth = false,
+      filter_type = 'NOSYNTAX',
+      filter_percent = 0.45,
     },
-    event = { 'WinNew' },
   },
-  --endblock
+  --endblock: Fancy UI
 
-  --block: General ftplugin
+  --block: Filetype Specific
   {
     'SidOfc/mkdx',
     ft = 'markdown',
@@ -755,18 +765,8 @@ local plugins = {
           shift = 1,
         },
       }
-
       vim.g['mkdx#settings'] = settings
     end,
-    -- config = function()
-    --   local wk = require('which-key')
-    --
-    --   wk.register {
-    --     ['<leader>t'] = { name = 'Toggle Checkbox' },
-    --     ['<leader>ll'] = { name = 'Toggle List' },
-    --     ['<leader>lt'] = { name = 'Toggle Check List' },
-    --   }
-    -- end,
   },
   {
     'iamcco/markdown-preview.nvim',
@@ -780,7 +780,8 @@ local plugins = {
   { 'thecodesmith/vim-groovy', ft = 'groovy' },
   { 'fladson/vim-kitty', ft = 'kitty' },
   { 'NoahTheDuke/vim-just', ft = 'just' },
-  --endblock
+  { 'cuducos/yaml.nvim', ft = { 'yaml' } },
+  --endblock: Filetype Specific
 
   --block: Miscellaneous
   {
@@ -855,108 +856,11 @@ local plugins = {
       },
     },
   },
-  { 'tversteeg/registers.nvim', event = 'VeryLazy' },
-  {
-    'Wansmer/treesj',
-    keys = {
-      { '<leader>j', '<cmd>TSJToggle<cr>', desc = 'Join Toggle' },
-    },
-    opts = { use_default_keymaps = false, max_join_length = 150 },
-  },
-  {
-    'stevearc/aerial.nvim',
-    opts = {},
-    cmd = { 'AerialToggle' },
-    keys = {
-      { '\\t', '<cmd>AerialToggle<cr>', desc = '' },
-    },
-  },
-  {
-    'cuducos/yaml.nvim',
-  },
-  {
-    'folke/flash.nvim',
-    event = 'VeryLazy',
-    opts = {
-      modes = {
-        search = {
-          enabled = false,
-        },
-      },
-    },
-    keys = {
-      {
-        's',
-        mode = { 'n', 'x', 'o' },
-        function()
-          require('flash').jump()
-        end,
-        desc = 'Flash',
-      },
-      {
-        'S',
-        mode = { 'n', 'o', 'x' },
-        function()
-          require('flash').treesitter()
-        end,
-        desc = 'Flash Treesitter',
-      },
-      {
-        'r',
-        mode = 'o',
-        function()
-          require('flash').remote()
-        end,
-        desc = 'Remote Flash',
-      },
-      {
-        'R',
-        mode = { 'o', 'x' },
-        function()
-          require('flash').treesitter_search()
-        end,
-        desc = 'Flash Treesitter Search',
-      },
-      {
-        '<c-s>',
-        mode = { 'c' },
-        function()
-          require('flash').toggle()
-        end,
-        desc = 'Toggle Flash Search',
-      },
-    },
-  },
-  {
-    'jokajak/keyseer.nvim',
-    version = false,
-    cmd = 'KeySeer',
-    opts = {
-      keyboard = {
-        layout = 'colemak',
-      },
-    },
-  },
-  { 'kevinhwang91/nvim-bqf' },
-  {
-    'camspiers/snap',
-    config = function()
-      -- Basic example config
-      local snap = require('snap')
-      snap.maps {
-        { '<Leader><Leader>', snap.config.file { producer = 'fd.file' } },
-        { '<Leader>fb', snap.config.file { producer = 'vim.buffer' } },
-        { '<Leader>fo', snap.config.file { producer = 'vim.oldfile' } },
-        { '<Leader>ff', snap.config.vimgrep {} },
-      }
-    end,
-  },
   {
     'letieu/hacker.nvim',
     dev = true,
     config = function()
       vim.keymap.set('n', '<leader>ha', ':autocmd!<CR><Cmd>HackFollow<CR>', { silent = true })
-
       local function fixfile()
         vim.fn.execute('normal! ggdG')
         vim.fn.execute('read ' .. vim.fn.expand('%') .. '.hackertyper')
@@ -969,192 +873,65 @@ local plugins = {
   },
   {
     'eandrju/cellular-automaton.nvim',
-    cmd = 'CellularAutomaton',
-    config = function()
-      vim.keymap.set('n', '<leader>fml', '<cmd>CellularAutomaton make_it_rain<CR>')
+    keys = {
+      { '<leader>fml', '<cmd>CellularAutomaton make_it_rain<CR>', desc = 'Make it rain' },
+    },
+  },
+  --endblock: Miscellaneous
+}
 
-      require('cellular-automaton').register_animation {
-        fps = 50,
-        name = 'slide',
-        update = function(grid)
-          for i = 1, #grid do
-            local prev = grid[i][#grid[i]]
-            for j = 1, #grid[i] do
-              grid[i][j], prev = prev, grid[i][j]
-            end
-          end
-          return true
+local _ = {
+  {
+    'rebelot/kanagawa.nvim',
+    enabled = false,
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require('kanagawa').setup {
+        compile = false,
+        globalStatus = true,
+        colors = {
+          theme = {
+            all = {
+              ui = {
+                bg_gutter = 'none',
+              },
+            },
+          },
+        },
+        overrides = function(colors)
+          local theme = colors.theme
+          return {
+            NormalFloat = { bg = 'none' },
+            FloatBorder = { bg = 'none' },
+            FloatTitle = { bg = 'none' },
+
+            LazyNormal = { bg = theme.ui.bg_p1, fg = theme.ui.fg_dim },
+            MasonNormal = { bg = theme.ui.bg_p1, fg = theme.ui.fg_dim },
+            WhichKeyFloat = { bg = theme.ui.bg_p1, fg = theme.ui.fg_dim },
+
+            GitpadFloatBorder = { bg = 'none', fg = theme.ui.float.fg_border },
+            GitpadFloatTitle = { bg = 'none', fg = theme.ui.special },
+
+            Pmenu = { fg = theme.ui.shade0, bg = theme.ui.bg_p1 },
+            PmenuSel = { fg = 'none', bg = theme.ui.bg_p2 },
+            PmenuSbar = { bg = theme.ui.bg_m1 },
+            PmenuThumb = { bg = theme.ui.bg_p2 },
+
+            -- Since kanagawa.nvim doesn't implement these, then we just have to define it here
+            TelescopeNormal = { fg = theme.ui.fg, bg = theme.ui.bg },
+            TelescopeSelection = { fg = theme.ui.fg, bg = theme.ui.bg_p2 },
+          }
         end,
       }
 
-      --[[ require("cellular-automaton").register_animation {
-        fps = 30,
-        name = "scramble",
-
-        update = function(grid)
-          local function is_alphanumeric(c)
-            return c >= "a" and c <= "z" or c >= "A" and c <= "Z" or c >= "0" and c <= "9"
-          end
-
-          local scramble_word = function(word)
-            local chars = {}
-            while #word ~= 0 do
-              local index = math.random(1, #word)
-              table.insert(chars, word[index])
-              table.remove(word, index)
-            end
-            return chars
-          end
-          for i = 1, #grid do
-            local scrambled = {}
-            local word = {}
-            for j = 1, #grid[i] do
-              local c = grid[i][j]
-              if not is_alphanumeric(c.char) then
-                if #word ~= 0 then
-                  for _, d in pairs(scramble_word(word)) do
-                    table.insert(scrambled, d)
-                  end
-                  word = {}
-                end
-                table.insert(scrambled, c)
-              else
-                table.insert(word, c)
-              end
-            end
-
-            grid[i] = scrambled
-          end
-          return true
-        end,
-      } ]]
-
-      local screensaver = function(grid, swapper)
-        local get_character_cols = function(row)
-          local cols = {}
-          for i = 1, #row do
-            if row[i].char ~= ' ' then
-              table.insert(cols, i)
-            end
-          end
-
-          return cols
-        end
-
-        for i = 1, #grid do
-          local cols = get_character_cols(grid[i])
-          if #cols > 0 then
-            local last_col = cols[#cols]
-            local prev = grid[i][last_col]
-            for _, j in ipairs(cols) do
-              prev = swapper(prev, i, j)
-            end
-          end
-        end
+      if vim.o.background == 'light' then
+        vim.cmd.colorscheme('kanagawa-lotus')
+      else
+        vim.cmd.colorscheme('kanagawa')
       end
-
-      require('cellular-automaton').register_animation {
-        fps = 50,
-        name = 'screensaver',
-        update = function(grid)
-          screensaver(grid, function(prev, i, j)
-            grid[i][j], prev = prev, grid[i][j]
-            return prev
-          end)
-
-          return true
-        end,
-      }
-
-      require('cellular-automaton').register_animation {
-        fps = 50,
-        name = 'screensaver-inplace-hl',
-        update = function(grid)
-          screensaver(grid, function(prev, i, j)
-            grid[i][j].char, prev.char = prev.char, grid[i][j].char
-            return prev
-          end)
-
-          return true
-        end,
-      }
-
-      require('cellular-automaton').register_animation {
-        fps = 50,
-        name = 'screensaver-inplace-char',
-        update = function(grid)
-          screensaver(grid, function(prev, i, j)
-            grid[i][j].hl_group, prev.hl_group = prev.hl_group, grid[i][j].hl_group
-            return prev
-          end)
-          return true
-        end,
-      }
     end,
   },
-  {
-    'otavioschwanck/arrow.nvim',
-    keys = { ';' },
-    opts = {
-      show_icons = true,
-      leader_key = ';', -- Recommended to be a single key
-      separate_by_branch = true,
-    },
-  },
-
-  {
-    'miversen33/sunglasses.nvim',
-    event = 'UIEnter',
-    opts = {
-      filter_type = 'NOSYNTAX',
-      filter_percent = 0.45,
-    },
-  },
-
-  {
-    'gbprod/yanky.nvim',
-    keys = { 'y' },
-    config = function()
-      require('yanky').setup {
-        ring = {
-          history_length = 100,
-          storage = 'shada',
-          sync_with_numbered_registers = true,
-          cancel_event = 'update',
-          ignore_registers = { '_' },
-          update_register_on_cycle = false,
-        },
-        system_clipboard = {
-          sync_with_ring = true,
-        },
-        preserve_cursor_position = {
-          enabled = true,
-        },
-        highlight = {
-          on_put = true,
-          on_yank = true,
-          timer = 200,
-        },
-      }
-
-      vim.keymap.set({ 'n', 'x' }, 'y', '<Plug>(YankyYank)')
-      vim.keymap.set({ 'n', 'x' }, 'p', '<Plug>(YankyPutAfter)')
-      vim.keymap.set({ 'n', 'x' }, 'P', '<Plug>(YankyPutBefore)')
-      vim.keymap.set({ 'n', 'x' }, 'gp', '<Plug>(YankyGPutAfter)')
-      vim.keymap.set({ 'n', 'x' }, 'gP', '<Plug>(YankyGPutBefore)')
-      vim.keymap.set({ 'n', 'x' }, 'gP', '<Plug>(YankyGPutBefore)')
-
-      vim.keymap.set('n', '<leader>yy', '<Cmd>YankyRingHistory<CR>')
-
-      -- The unimpaired y feels awkard to press when using colemak layout
-      vim.keymap.set('n', '[y', '<Plug>(YankyPreviousEntry)')
-      vim.keymap.set('n', ']y', '<Plug>(YankyNextEntry)')
-      vim.keymap.set('n', '<Left>', '<Plug>(YankyPreviousEntry)')
-      vim.keymap.set('n', '<Right>', '<Plug>(YankyNextEntry)')
-    end,
-  },
-
-  --endblock
 }
 
 require('lazy').setup(plugins, {
