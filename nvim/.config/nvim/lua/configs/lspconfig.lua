@@ -44,8 +44,8 @@ local on_attach = function(client, bufnr)
   end
 
   if client.server_capabilities.documentSymbolProvider then
-    local _, navic = pcall(require, 'nvim-navic')
-    if navic then
+    local has_navic, navic = pcall(require, 'nvim-navic')
+    if has_navic then
       navic.attach(client, bufnr)
     end
   end
