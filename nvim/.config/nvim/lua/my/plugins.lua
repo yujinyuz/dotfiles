@@ -463,12 +463,12 @@ local plugins = {
       'nvim-lua/plenary.nvim',
       'sindrets/diffview.nvim',
     },
-    {
-      'ruifm/gitlinker.nvim',
-      config = true,
-      keys = {
-        { '<leader>gy', mode = { 'n', 'v' } },
-      },
+  },
+  {
+    'ruifm/gitlinker.nvim',
+    config = true,
+    keys = {
+      { '<leader>gy', mode = { 'n', 'v' } },
     },
   },
   {
