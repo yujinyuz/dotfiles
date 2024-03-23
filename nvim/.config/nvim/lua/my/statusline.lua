@@ -33,10 +33,13 @@ local function section_fileprefix(args)
   if basename == '' or basename == '.' then
     return ''
   else
+    basename = basename:gsub('/$', '') .. '/'
+
     if statusline.is_truncated(args.trunc_width) then
       return shorten_path(basename, '/', 1)
     end
-    return basename:gsub('/$', '') .. '/'
+
+    return basename
   end
 end
 
