@@ -146,6 +146,13 @@ local plugins = {
     cmd = { 'UndotreeToggle' },
   },
   {
+    'kevinhwang91/nvim-fundo',
+    requires = 'kevinhwang91/promise-async',
+    config = function()
+      require('fundo').install()
+    end,
+  },
+  {
     'nvim-pack/nvim-spectre',
     keys = {
       {
