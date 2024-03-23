@@ -196,7 +196,7 @@ local plugins = {
   },
   {
     'gbprod/yanky.nvim',
-    keys = { 'y' },
+    keys = { 'y', '<Left>', '<Right>', '<leader>yy' },
     config = function()
       require('yanky').setup {
         ring = {
