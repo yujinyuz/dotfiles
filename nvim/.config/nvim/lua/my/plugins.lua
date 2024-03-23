@@ -558,7 +558,7 @@ local plugins = {
           dark = 'frappe',
         },
         no_italic = true, -- Force  no italic
-        no_bold = true, -- Force no bold
+        no_bold = false,
         term_colors = true,
         sytles = {
           comments = { 'italic' },
@@ -571,10 +571,9 @@ local plugins = {
             GitpadFloatBorder = { bg = colors.none },
             GitpadFloatTitle = { fg = colors.none, bg = colors.none },
             Folded = { bg = colors.surface1 }, -- Fix folded background when using transparent
-            BqfPreviewFloat = { bg = colors.none },
-            BqfPreviewBorder = { bg = colors.none },
-            BqfPreviewTitle = { bg = colors.none, fg = colors.none },
-            BqfPreviewThumb = { bg = colors.none },
+            MiniStatuslineFilePrefix = { fg = colors.subtext1 },
+            MiniStatuslineFilename = { fg = colors.text, style = { 'bold', 'italic' } },
+            MiniStatuslineDevinfo = { fg = colors.text },
           }
         end,
         integrations = {
