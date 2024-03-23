@@ -642,79 +642,11 @@ local plugins = {
   { 'onsails/lspkind-nvim' },
   { 'kyazdani42/nvim-web-devicons' },
   {
-    'nvim-lualine/lualine.nvim',
-    opts = function()
-      local navic = require('nvim-navic')
-      local function location()
-        local rhs = ''
-        if vim.api.nvim_win_get_width(0) > 80 then
-          local column = vim.fn.virtcol('.')
-          local width = vim.fn.virtcol('$')
-          local line = vim.api.nvim_win_get_cursor(0)[1]
-          local height = vim.api.nvim_buf_line_count(0)
-
-          -- Add padding to stop RHS from changing too much as we move the cursor.
-          local padding = #tostring(height) - #tostring(line)
-          if padding > 0 then
-            rhs = rhs .. (' '):rep(padding)
-          end
-
-          -- 'ℓ ' (Literal, \u2113 "SCRIPT SMALL L").
-          -- ' 𝚌 ' -- (Literal, \u1d68c "MATHEMATICAL MONOSPACE SMALL C").
-          rhs = string.format('ℓ:%d/%d 𝚌:%d/%d', line, height, column, width)
-        end
-
-        return rhs
-      end
-
-      return {
-        options = {
-          theme = 'auto',
-          icons_enabled = true,
-          globalstatus = true,
-        },
-        sections = {
-          lualine_a = { 'mode' },
-          lualine_b = { 'branch', 'diff', 'diagnostics' },
-          lualine_c = { { 'filename', file_status = true, path = 1 } },
-          lualine_x = {
-            { navic.get_location, cond = navic.is_available },
-            'encoding',
-            'filetype',
-          },
-          lualine_y = { 'progress' },
-          lualine_z = { location },
-        },
-        inactive_sections = {
-          lualine_a = {},
-          lualine_b = {},
-          lualine_c = { { 'filename', file_status = true, path = 1 } },
-          lualine_x = { 'location' },
-          lualine_y = {},
-          lualine_z = {},
-        },
-        extensions = {
-          'lazy',
-          'nvim-tree',
-          'oil',
-          'mason',
-        },
-      }
+    'echasnovski/mini.statusline',
+    version = false,
+    config = function()
+      require('my.statusline')
     end,
-    dependencies = {
-      {
-        'SmiteshP/nvim-navic',
-        keys = {
-          {
-            '<C-s>',
-            function()
-              print(require('nvim-navic').get_location())
-            end,
-            desc = 'Show current location',
-          },
-        },
-      },
-    },
   },
   {
     'j-hui/fidget.nvim',
