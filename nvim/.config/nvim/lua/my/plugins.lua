@@ -571,7 +571,7 @@ local plugins = {
             GitpadFloatBorder = { bg = colors.none },
             GitpadFloatTitle = { fg = colors.none, bg = colors.none },
             Folded = { bg = colors.surface1 }, -- Fix folded background when using transparent
-            MiniStatuslineFilePrefix = { fg = colors.subtext1 },
+            MiniStatuslineFilePrefix = { fg = colors.subtext0 },
             MiniStatuslineFilename = { fg = colors.text, style = { 'bold', 'italic' } },
             MiniStatuslineDevinfo = { fg = colors.text },
           }
