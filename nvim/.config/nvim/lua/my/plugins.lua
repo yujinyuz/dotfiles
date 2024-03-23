@@ -397,9 +397,17 @@ local plugins = {
 
         -- Check if there is a .disable-autoformat file in the root of the project
         local disable_autoformat = not vim.tbl_isempty(
-          vim.fs.find('.disable-autofmt', { upward = true, path = vim.fs.dirname(vim.api.nvim_buf_get_name(bufnr)) })
+          vim.fs.find(
+            { '.disable-autofmt' },
+            { upward = true, path = vim.fs.dirname(vim.api.nvim_buf_get_name(bufnr)) }
+          )
         )
         if disable_autoformat then
+          return
+        end
+
+        -- Only perform autoformat it the file is in the ~/Sources directory
+        if not vim.fn.match(vim.api.nvim_buf_get_name(bufnr), '/Sources/') then
           return
         end
 
