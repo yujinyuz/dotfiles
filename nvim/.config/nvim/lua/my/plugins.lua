@@ -664,24 +664,52 @@ local plugins = {
     },
   },
   {
+    'SmiteshP/nvim-navic',
+    keys = {
+      {
+        '<C-s>',
+        function()
+          print(require('nvim-navic').get_location())
+        end,
+        desc = 'Show current location',
+      },
+    },
+  },
+  {
     'hiphish/rainbow-delimiters.nvim',
     config = function()
-      require('rainbow-delimiters.setup').setup {}
+      local rainbow = require('rainbow-delimiters')
+      require('rainbow-delimiters.setup').setup {
+        strategy = {
+          [''] = function(bufnr)
+            -- Disabled for very large files, global strategy for large files,
+            -- local strategy otherwise
+            local line_count = vim.api.nvim_buf_line_count(bufnr)
+            if line_count > 10000 then
+              return nil
+            elseif line_count > 1000 then
+              return rainbow.strategy['global']
+            end
+            return rainbow.strategy['local']
+          end,
+        },
+      }
     end,
   },
-  -- {
-  --   'levouh/tint.nvim',
-  --   opts = {
-  --     tint = -5,
-  --     saturation = 0.0,
-  --   },
-  -- },
   {
-    'miversen33/sunglasses.nvim',
-    event = 'UIEnter',
+    'levouh/tint.nvim',
     opts = {
-      filter_type = 'NOSYNTAX',
-      filter_percent = 0.45,
+      tint = -5,
+      saturation = 0.0,
+      window_ignore_function = function(winid)
+        local bufid = vim.api.nvim_win_get_buf(winid)
+        local buftype = vim.api.nvim_buf_get_option(bufid, 'buftype')
+        local floating = vim.api.nvim_win_get_config(winid).relative ~= ''
+        local diff_mode = vim.api.nvim_win_get_option(winid, 'diff')
+
+        -- Do not tint `terminal` or floating windows, tint everything else
+        return buftype == 'terminal' or floating or diff_mode
+      end,
     },
   },
   --endblock: Fancy UI
@@ -811,6 +839,36 @@ local plugins = {
     keys = {
       { '<leader>fml', '<cmd>CellularAutomaton make_it_rain<CR>', desc = 'Make it rain' },
     },
+  },
+  {
+    'CopilotC-Nvim/CopilotChat.nvim',
+    branch = 'canary',
+    dependencies = {
+      { 'zbirenbaum/copilot.lua' }, -- or github/copilot.vim
+      { 'nvim-lua/plenary.nvim' }, -- for curl, log wrapper
+    },
+    config = function()
+      require('CopilotChat').setup { debug = true }
+
+      vim.keymap.set({ 'n', 'x' }, '<leader>cch', function()
+        local actions = require('CopilotChat.actions')
+        require('CopilotChat.integrations.fzflua').pick(actions.help_actions())
+      end)
+
+      vim.keymap.set({ 'n', 'x' }, '<leader>ccp', function()
+        local actions = require('CopilotChat.actions')
+        require('CopilotChat.integrations.fzflua').pick(actions.prompt_actions())
+      end)
+
+      vim.keymap.set('n', '<leader>ccq', function()
+        local input = vim.fn.input('Quick Chat: ')
+        if input ~= '' then
+          require('CopilotChat').ask(input, { selection = require('CopilotChat.select').buffer })
+        end
+      end)
+
+      vim.keymap.set('n', '<leader>cgc', '<Cmd>CopilotChatCommitStaged<CR>', { silent = true })
+    end,
   },
   --endblock: Miscellaneous
 }
