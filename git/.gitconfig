@@ -58,7 +58,7 @@
 [core]
 	excludesfile = ~/.gitignoreglobal
 	; S = chop long lines (rather than wrap them onto next line)
-	pager = less -S
+	; pager = less -S
 [commit]
 	template = ~/.gitmessage
 	verbose = true
@@ -121,9 +121,6 @@
 	; Include summaries of merged commits in newly created merge commit messages
 	log = true
 [pager]
-	diff = ~/.local/bin/diff-highlight | menos -iFMRSX --pattern='^(commit|diff)'
-	log = ~/.local/bin/diff-highlight | menos -iFMRSX --pattern='^(commit|diff)'
-	show = ~/.local/bin/diff-highlight | menos -iFMRSX --pattern='^(commit|diff)'
 	whatchanged = ~/.local/bin/diff-highlight | menos -iFMRSX --pattern='^(commit|diff)'
 	show-branch = true
 	status = true
@@ -135,7 +132,8 @@
 	; https://stackoverflow.com/a/26438076/3788603
 	followTags = true
 [rebase]
-  autostash = true
+  autoStash = true
+	autoSquash = true
 [user]
 	email = yujin@jinyuz.dev
 	name = Eugene Oliveros
