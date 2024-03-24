@@ -72,6 +72,7 @@ set -Ux NVIM_FILE_FINDER fzf # choices: fzf, telescope
 ```fish
 set -Ux BG_TMUX "#1F1F28"  # Depending on current theme
 set -Ux BG_TMUX "#F2ECBC"
+set -Ux BG_TMUX "#303446"
 ```
 
 ## asdf
@@ -149,3 +150,23 @@ To fix that add this to the config
 # ngrok.yml
 console_ui_color: transparent
 ```
+
+## rustup
+
+https://sourabhbajaj.com/mac-setup/Rust/
+https://rustup.rs/
+
+
+## Updating Theme
+
+I just recently switched from kanagawa to catpuccin frappe since it looks better in the eyes for me
+at least..
+
+
+
+Things to look out for when changing theme:
+
+neovim
+fish
+tmux
+kitty
