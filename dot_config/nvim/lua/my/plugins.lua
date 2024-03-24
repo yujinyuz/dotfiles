@@ -277,7 +277,7 @@ local plugins = {
   },
   {
     'stevearc/oil.nvim',
-    event = { 'BufReadPost', 'BufNewFile' },
+    event = { 'VeryLazy' },
     config = function()
       require('oil').setup {
         columns = { 'icon' },
@@ -313,7 +313,7 @@ local plugins = {
       { '\\t', '<cmd>AerialToggle<cr>', desc = '' },
     },
   },
-  { 'kevinhwang91/nvim-bqf' },
+  { 'kevinhwang91/nvim-bqf', opts = {} },
   {
     'otavioschwanck/arrow.nvim',
     keys = { '<leader>;' },
