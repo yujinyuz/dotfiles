@@ -1,4 +1,0 @@
-# clean up any backups not used in the past 7 days out of the backup directory
-# set backupdir? to know what is the backup folder
-# https://serverfault.com/questions/948011/cron-job-to-delete-all-files-older-than-7-days-with-extension-in-a-specific-fold
-*/5 * * * * find ~/.local/share/nvim/backup -type f -name '*:*' -mtime +6 -delete
