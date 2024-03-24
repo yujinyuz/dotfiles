@@ -1,2 +1,0 @@
-# Clean up Desktop from screenshots
-*/5 * * * * find ~/Desktop -name "Screen Shot*.png" -type f -mtime +2 -exec mv {} ~/Temp/Screenshots \;
