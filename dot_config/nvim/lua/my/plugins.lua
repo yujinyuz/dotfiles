@@ -341,16 +341,17 @@ local plugins = {
         config = function()
           require('mason-tool-installer').setup {
             ensure_installed = {
-              'prettierd',
-              'eslint_d',
               'black',
-              'djlint',
               'codespell',
               'cspell',
-              'stylua',
+              'djlint',
+              'eslint_d',
               'fixjson',
-              'ruff',
               'hadolint',
+              'prettierd',
+              'ruff',
+              'stylua',
+              'taplo',
               'write-good',
             },
           }
@@ -389,6 +390,7 @@ local plugins = {
         json = { 'jq' },
         jsonc = { 'fixjson' },
         htmldjango = { 'djlint' },
+        toml = { 'taplo' },
       },
       format_on_save = function(bufnr)
         if not require('my.format').auto_format then

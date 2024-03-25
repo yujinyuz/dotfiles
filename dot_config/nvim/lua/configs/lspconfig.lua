@@ -95,6 +95,7 @@ local servers = {
       },
     },
   },
+  taplo = {},
 }
 
 local options = {
