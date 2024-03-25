@@ -576,6 +576,11 @@ local plugins = {
             MiniStatuslineFilePrefix = { fg = colors.subtext0 },
             MiniStatuslineFilename = { fg = colors.text, style = { 'bold', 'italic' } },
             MiniStatuslineDevinfo = { fg = colors.text },
+            MiniStatuslineModeNormal = { fg = colors.mantle, bg = colors.blue, style = { 'bold' } },
+            MiniStatuslineModeInsert = { fg = colors.base, bg = colors.green, style = { 'bold' } },
+            MiniStatuslineModeVisual = { fg = colors.base, bg = colors.mauve, style = { 'bold' } },
+            MiniStatuslineModeReplace = { fg = colors.base, bg = colors.red, style = { 'bold' } },
+            MiniStatuslineModeCommand = { fg = colors.base, bg = colors.peach, style = { 'bold' } },
           }
         end,
         integrations = {
