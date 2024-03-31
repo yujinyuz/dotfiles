@@ -88,7 +88,6 @@ fish_add_path $BREW_BASE/opt/mysql-client/bin
 ## psql client
 fish_add_path $BREW_BASE/opt/libpq/bin
 ## python
-fish_add_path $BREW_BASE/opt/python@3.{12,11,10,9,8}/bin
 fish_add_path $BREW_BASE/opt/python/libexec/bin
 
 ## golang
