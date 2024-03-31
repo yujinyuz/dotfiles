@@ -44,8 +44,15 @@ set -Ux XDG_CONFIG_HOME "$HOME/.config"
 set -l FD_OPTIONS "--hidden --follow --strip-cwd-prefix --exclude .git --exclude node_modules"
 set -Ux FZF_DEFAULT_COMMAND "git ls-files --cached --others --exclude-standard &> /dev/null | fd --type f --type l $FD_OPTIONS"
 
+
 # Generated via fzf-lua
-set -Ux FZF_DEFAULT_OPTS "--no-separator --height 40% --layout=reverse --info=inline --color=gutter:-1,bg+:-1" # The only important thing here is the gutter color to set it to transparent
+# set -Ux FZF_DEFAULT_OPTS "--no-separator --height 40% --layout=reverse --info=inline --color=gutter:-1,bg+:-1" # The only important thing here is the gutter color to set it to transparent
+set -Ux FZF_DEFAULT_OPTS "\
+--color=bg+:#414559,bg:-1,spinner:#f2d5cf,hl:#e78284,gutter:-1 \
+--color=fg:#c6d0f5,header:#e78284,info:#ca9ee6,pointer:#f2d5cf \
+--color=marker:#f2d5cf,fg+:#c6d0f5,prompt:#ca9ee6,hl+:#e78284 \
+--no-separator --height 40% --layout=reverse --info=inline"
+
 set -Ux FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
 set -Ux FZF_ALT_C_COMMAND "fd --type d $FD_OPTIONS"
 
@@ -59,7 +66,7 @@ set -Ux VIRTUALFISH_HOME $HOME/.local/share/virtualenvs
 ## asdf-direnv
 set -Ux DIRENV_LOG_FORMAT ""
 ## bat
-set -Ux BAT_THEME Dracula
+set -Ux BAT_THEME "Catppuccin Mocha"
 ## gopath
 set -Ux GOPATH ~/go
 ## Bun
