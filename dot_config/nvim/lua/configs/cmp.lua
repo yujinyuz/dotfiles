@@ -210,7 +210,7 @@ vim.keymap.set('i', '<C-x><C-]>', function()
   }
 end, { desc = 'ctags completion' })
 
-vim.keymap.set('i', '<C-x><C-i>', function()
+vim.keymap.set('i', '<C-x><C-x>', function()
   cmp.complete {
     config = {
       sources = {
