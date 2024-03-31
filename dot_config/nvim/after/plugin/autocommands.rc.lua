@@ -191,3 +191,19 @@ vim.api.nvim_create_autocmd({ 'FileType' }, {
     vim.opt_local.spell = true
   end,
 })
+
+-- Enable htmldjango for html files
+vim.api.nvim_create_autocmd({ 'FileType' }, {
+  group = augroup('enable_htmldjango'),
+  pattern = { 'html' },
+  callback = function(event)
+    -- We should probably check first if we are inside a django project
+    if
+      #vim.fs.find('manage.py', { upward = true, path = vim.fs.dirname(vim.api.nvim_buf_get_name(event.buf)) }) == 0
+    then
+      return
+    end
+
+    vim.bo[event.buf].filetype = 'htmldjango'
+  end,
+})

@@ -19,6 +19,7 @@ local langs = {
   'go',
   'graphql',
   'html',
+  'htmldjango',
   'javascript',
   'latex',
   'lua',
