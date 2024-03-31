@@ -240,17 +240,6 @@ local plugins = {
 
   --block: Navigation/File Management
   {
-    'ibhagwan/fzf-lua',
-    keys = {
-      { '<leader>n', desc = 'Fi[n]d files' },
-      { '<leader>]', desc = 'Tags' },
-      { '<leader>F', desc = '[F]ind text' },
-    },
-    config = function()
-      require('configs.fzf')
-    end,
-  },
-  {
     'tpope/vim-eunuch',
     cmd = { 'Delete', 'Move', 'Rename' },
   },
@@ -945,7 +934,11 @@ local _ = {
   },
 }
 
-require('lazy').setup(plugins, {
+require('lazy').setup {
+  spec = {
+    plugins,
+    { import = 'my.specs' },
+  },
   performance = {
     rtp = {
       disabled_plugins = {
@@ -962,6 +955,6 @@ require('lazy').setup(plugins, {
   dev = {
     path = '~/Sources/github.com/yujinyuz',
   },
-})
+}
 
 -- vim:foldmethod=marker:foldlevel=0:foldmarker=--block,--endblock
