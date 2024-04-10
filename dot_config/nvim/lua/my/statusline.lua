@@ -43,13 +43,57 @@ local function section_fileprefix(args)
   end
 end
 
+local H = {}
+
+H.get_filesize = function()
+  local size = vim.fn.getfsize(vim.fn.getreg('%'))
+  if size < 1024 then
+    return string.format('%dB', size)
+  elseif size < 1048576 then
+    return string.format('%.2fKiB', size / 1024)
+  else
+    return string.format('%.2fMiB', size / 1048576)
+  end
+end
+
+H.get_filetype_icon = function()
+  -- Have this `require()` here to not depend on plugin initialization order
+  local has_devicons, devicons = pcall(require, 'nvim-web-devicons')
+  if not has_devicons then
+    return ''
+  end
+
+  local file_name, file_ext = vim.fn.expand('%:t'), vim.fn.expand('%:e')
+  return devicons.get_icon(file_name, file_ext, { default = true })
+end
+
+local function section_fileinfo(args)
+  local filetype = vim.bo.filetype
+  if (filetype == '') or vim.bo.buftype ~= '' then
+    return ''
+  end
+
+  local icon = H.get_filetype_icon()
+  if icon ~= '' then
+    filetype = string.format('%s %s', icon, filetype)
+  end
+
+  if statusline.is_truncated(args.trunc_width) then
+    return filetype
+  end
+
+  local size = H.get_filesize()
+
+  return string.format('%s %s', filetype, size)
+end
+
 local config = {
   content = {
     active = function()
       local mode, mode_hl = statusline.section_mode { trunc_width = 120 }
       local git = statusline.section_git { trunc_width = 80 }
       local diagnostics = statusline.section_diagnostics { trunc_width = 80 }
-      local fileinfo = statusline.section_fileinfo { trunc_width = 80 }
+      local fileinfo = section_fileinfo { trunc_width = 80 }
       local search = statusline.section_searchcount { trunc_width = 80 }
       local location = section_location { trunc_width = 80 }
 
