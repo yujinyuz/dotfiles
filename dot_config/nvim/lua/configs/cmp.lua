@@ -36,6 +36,11 @@ local cmp_config = {
     return false
   end,
   preselect = cmp.PreselectMode.None,
+  view = {
+    entries = {
+      follow_cursor = true,
+    },
+  },
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
     { name = 'copilot' },
