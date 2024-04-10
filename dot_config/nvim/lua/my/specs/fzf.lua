@@ -23,10 +23,10 @@ return {
       },
       winopts = {
         preview = {
-          delay = 25,
+          delay = 0,
         },
-        height = 0.50,
-        width = 0.68,
+        height = 0.75,
+        width = 0.80,
       },
       fzf_opts = {
         ['--no-hscroll'] = '',
@@ -57,19 +57,6 @@ return {
         file_icons = false,
       },
       file_icon_padding = '',
-      lsp = {
-        -- https://github.com/jose-elias-alvarez/null-ls.nvim/wiki/Compatibility-with-other-plugins
-        async_or_timeout = 3000,
-      },
-      previewers = {
-        builtin = {
-          extensions = {
-            ['png'] = { 'viu', '-b' },
-            ['jpeg'] = { 'viu', '-b' },
-            ['jpg'] = { 'viu', '-b' },
-          },
-        },
-      },
       on_create = function()
         vim.keymap.set('t', '<Esc>', '<C-c>', { buffer = 0 })
       end,
@@ -83,7 +70,7 @@ return {
       '<leader>n',
       function()
         require('fzf-lua').files {
-          fzf_opts = { ['--cycle'] = '', ['--ansi'] = false },
+          fzf_opts = { ['--ansi'] = false },
           file_icons = false,
           git_icons = false,
           winopts = {
