@@ -56,11 +56,6 @@ set -Ux FZF_DEFAULT_OPTS "\
 set -Ux FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
 set -Ux FZF_ALT_C_COMMAND "fd --type d $FD_OPTIONS"
 
-## n
-### Generally, I'd prefer to just use  asdf for almost everything but
-### it turns out that asdf-node plugin is using node-build under the hood
-### which requires python and it doesn't work most of the time.
-set -Ux N_PREFIX $HOME/.n
 ## virtualfish
 set -Ux VIRTUALFISH_HOME $HOME/.local/share/virtualenvs
 ## asdf-direnv
