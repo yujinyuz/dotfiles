@@ -882,6 +882,86 @@ local plugins = {
       },
     },
   },
+  {
+    'shellRaining/hlchunk.nvim',
+    keys = {
+      {
+        'yoH',
+        function()
+          local utils = require('my.utils')
+          vim.b.hlchunk_t_state = not vim.b.hlchunk_t_state
+
+          if vim.b.hlchunk_t_state then
+            require('hlchunk.mods').chunk:enable()
+            utils.info('enabled hlchunk', 'Toggle')
+          else
+            require('hlchunk.mods').chunk:disable()
+            utils.warn('disabled hlchunk', 'Toggle')
+          end
+        end,
+      },
+    },
+    config = function()
+      require('hlchunk').setup {
+        chunk = {
+          enable = false,
+        },
+        indent = {
+          enable = false,
+        },
+        line_num = {
+          enable = false,
+        },
+        blank = {
+          enable = false,
+        },
+      }
+    end,
+  },
+  {
+    'folke/trouble.nvim',
+    opts = {},
+    keys = {
+      {
+        '<leader>xx',
+        function()
+          require('trouble').toggle()
+        end,
+        desc = 'Trouble Toggle',
+      },
+      {
+        '<leader>xw',
+        function()
+          require('trouble').toggle('workspace_diagnostics')
+        end,
+      },
+      {
+        '<leader>xd',
+        function()
+          require('trouble').toggle('document_diagnostics')
+        end,
+      },
+      {
+        '<leader>xq',
+        function()
+          require('trouble').toggle('quickfix')
+        end,
+      },
+      {
+        '<leader>xl',
+        function()
+          require('trouble').toggle('loclist')
+        end,
+      },
+      {
+        'gR',
+        function()
+          require('trouble').toggle('lsp_references')
+        end,
+      },
+    },
+  },
+
   --endblock: Miscellaneous
 }
 
