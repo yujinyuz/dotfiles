@@ -4,6 +4,7 @@ vim.opt_local.concealcursor = 'n'
 vim.opt_local.shiftwidth = 2
 vim.opt_local.textwidth = 100
 vim.opt_local.formatprg = 'safe-par rTbqR B=.,\\?_A_a_0 Q=_s\\>\\| -w' .. vim.opt_local.textwidth:get()
+vim.opt_local.colorcolumn = { vim.opt_local.textwidth:get() }
 
 vim.keymap.set('i', ';H', '<Esc>yypv$r=', { buffer = 0 })
 vim.keymap.set('i', ';h', '<Esc>yypv$r-', { buffer = 0 })

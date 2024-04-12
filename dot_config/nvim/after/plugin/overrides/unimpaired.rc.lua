@@ -44,3 +44,18 @@ end)
 vim.keymap.set('n', 'yow', function()
   utils.toggle('wrap')
 end)
+
+vim.keymap.set('n', 'yoC', function()
+  vim.b.colorcolumn_t = not vim.b.colorcolumn_t
+
+  -- Check if colorcolumn_opt is set or use default value
+  vim.b.colorcolumn_opt = vim.b.colorcolumn_opt or { 100 }
+
+  if vim.b.colorcolumn_t then
+    vim.opt_local.colorcolumn = vim.b.colorcolumn_opt
+    utils.info('enabled cursorcolumn', 'Toggle')
+  else
+    vim.opt_local.colorcolumn = {}
+    utils.warn('enabled cursorcolumn', 'Toggle')
+  end
+end)
