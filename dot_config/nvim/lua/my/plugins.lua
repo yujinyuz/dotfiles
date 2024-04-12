@@ -1024,6 +1024,9 @@ require('lazy').setup {
     plugins,
     { import = 'my.specs' },
   },
+  change_detection = {
+    notify = false,
+  },
   performance = {
     rtp = {
       disabled_plugins = {
