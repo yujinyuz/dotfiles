@@ -25,7 +25,7 @@ end
 -- @param option
 -- @param [opt] silent
 -- @usage require("utils").toggle('relativenumber')
-M.toggle = function(option, silent)
+M.toggle_opt = function(option, silent)
   vim.opt_local[option] = not vim.opt_local[option]:get()
 
   if silent ~= true then
