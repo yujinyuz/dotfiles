@@ -29,8 +29,14 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 vim.api.nvim_create_autocmd('BufWritePre', {
   pattern = { '*' },
   group = augroup('strip_trailing_whitespace'),
-  callback = function()
-    local ft = vim.opt_local.filetype:get()
+  callback = function(event)
+    local ft = vim.bo[event.buf].filetype
+    local buflisted = vim.bo[event.buf].buflisted
+
+    if not buflisted then
+      return
+    end
+
     if ft:match('commit') or ft:match('rebase') then
       return
     end
