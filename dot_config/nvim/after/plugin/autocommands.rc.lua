@@ -213,3 +213,9 @@ vim.api.nvim_create_autocmd({ 'FileType' }, {
     vim.bo[event.buf].filetype = 'htmldjango'
   end,
 })
+
+vim.api.nvim_create_autocmd('QuickFixCmdPost', {
+  group = augroup('auto_open_quickfix'),
+  pattern = { '[^l]*' },
+  command = 'cwindow',
+})
