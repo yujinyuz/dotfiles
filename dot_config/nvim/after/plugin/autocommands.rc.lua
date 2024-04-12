@@ -103,8 +103,14 @@ vim.api.nvim_create_autocmd('VimResized', {
 vim.api.nvim_create_autocmd('BufWritePre', {
   pattern = { '*' },
   group = augroup('rename_auto_backup_files'),
-  callback = function()
-    vim.cmd([[let &bex = strftime("📅%F⏰%X") .. '✍️']])
+  callback = function(event)
+    -- vim.cmd([[let &bex = strftime("📅%F⏰%X") .. '✍️']])
+
+    if not vim.bo[event.buf].buflisted then
+      return
+    end
+
+    vim.cmd([[let &bex = '@' .. strftime("%F.%H:%M")]])
   end,
   desc = 'Rename backup files',
 })
