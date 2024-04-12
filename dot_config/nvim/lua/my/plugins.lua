@@ -36,12 +36,10 @@ local plugins = {
       { 'nvim-treesitter/playground', cmd = 'TSHighlightCapturesUnderCursor' },
       {
         'JoosepAlviste/nvim-ts-context-commentstring',
-        event = 'VeryLazy',
-        config = function()
-          require('ts_context_commentstring').setup {
-            enable_autocmd = false,
-          }
-        end,
+        lazy = true,
+        opts = {
+          enable_autocmd = false,
+        },
       },
     },
   },
@@ -77,7 +75,7 @@ local plugins = {
     'windwp/nvim-autopairs',
     event = { 'InsertEnter' },
     opts = {
-      disable_filetype = { 'TelescopePrompt', 'vim', 'markdown' },
+      disable_filetype = { 'vim', 'markdown' },
       map_c_w = true,
       check_ts = true,
     },
@@ -103,6 +101,9 @@ local plugins = {
     end,
     config = function()
       require('mini.indentscope').setup {
+        draw = {
+          delay = 10,
+        },
         symbol = '│',
         options = { try_as_border = true },
       }
@@ -181,7 +182,7 @@ local plugins = {
   },
   {
     'andymass/vim-matchup',
-    event = 'VeryLazy',
+    event = 'BufReadPost',
     init = function()
       vim.g.matchup_matchparen_offscreen = { method = 'popup' }
     end,
@@ -196,6 +197,7 @@ local plugins = {
   },
   {
     'gbprod/yanky.nvim',
+    event = { 'BufReadPost' },
     keys = { 'y', '<Left>', '<Right>', '<leader>yy' },
     config = function()
       require('yanky').setup {
@@ -266,7 +268,6 @@ local plugins = {
   },
   {
     'stevearc/oil.nvim',
-    event = { 'VeryLazy' },
     config = function()
       require('oil').setup {
         columns = { 'icon' },
@@ -281,11 +282,11 @@ local plugins = {
           spell = false,
           list = false,
           conceallevel = 3,
-          concealcursor = 'ncv',
+          concealcursor = 'nvic',
         },
         keymaps = {
           ['<C-c>'] = false,
-          ['<leader>qq'] = 'actions.close',
+          ['q'] = 'actions.close',
           ['<C-l>'] = false,
           ['<C-r>'] = 'actions.refresh',
           ['y.'] = 'actions.copy_entry_path',
@@ -302,7 +303,15 @@ local plugins = {
       { '\\t', '<cmd>AerialToggle<cr>', desc = '' },
     },
   },
-  { 'kevinhwang91/nvim-bqf', opts = {} },
+  {
+    'kevinhwang91/nvim-bqf',
+    ft = 'qf',
+    opts = {
+      preview = {
+        winblend = 0,
+      },
+    },
+  },
   {
     'otavioschwanck/arrow.nvim',
     keys = { '<leader>;' },
@@ -369,7 +378,7 @@ local plugins = {
   { 'folke/neoconf.nvim' },
   {
     'stevearc/conform.nvim',
-    event = 'VeryLazy',
+    event = 'BufReadPost',
     opts = {
       formatters_by_ft = {
         lua = { 'stylua' },
@@ -550,10 +559,10 @@ local plugins = {
           light = 'latte',
           dark = 'frappe',
         },
-        no_italic = true, -- Force  no italic
+        no_italic = false, -- Force  no italic
         no_bold = false,
         term_colors = true,
-        sytles = {
+        styles = {
           comments = { 'italic' },
           conditionals = { 'italic' },
         },
@@ -565,7 +574,7 @@ local plugins = {
             GitpadFloatTitle = { fg = colors.none, bg = colors.none },
             Folded = { bg = colors.surface1 }, -- Fix folded background when using transparent
             MiniStatuslineFilePrefix = { fg = colors.subtext0 },
-            MiniStatuslineFilename = { fg = colors.text, style = { 'bold', 'italic' } },
+            MiniStatuslineFilename = { fg = colors.text, style = { 'bold' } },
             MiniStatuslineDevinfo = { fg = colors.text },
             MiniStatuslineModeNormal = { fg = colors.mantle, bg = colors.blue, style = { 'bold' } },
             MiniStatuslineModeInsert = { fg = colors.base, bg = colors.green, style = { 'bold' } },
@@ -675,6 +684,7 @@ local plugins = {
   },
   {
     'hiphish/rainbow-delimiters.nvim',
+    event = 'BufReadPost',
     config = function()
       local rainbow = require('rainbow-delimiters')
       require('rainbow-delimiters.setup').setup {
@@ -698,7 +708,7 @@ local plugins = {
     'levouh/tint.nvim',
     opts = {
       tint = -5,
-      saturation = 0.0,
+      saturation = 0,
       window_ignore_function = function(winid)
         local bufid = vim.api.nvim_win_get_buf(winid)
         local buftype = vim.api.nvim_buf_get_option(bufid, 'buftype')
@@ -734,7 +744,7 @@ local plugins = {
     build = 'cd app && yarn install',
     ft = 'markdown',
   },
-  { 'Vimjas/vim-python-pep8-indent', ft = 'python' },
+  { 'Vimjas/vim-python-pep8-indent', ft = 'python', enabled = false },
   { 'drmingdrmer/vim-indent-lua', ft = 'lua' },
   { 'michaeljsmith/vim-indent-object', ft = 'python' },
   { 'martinda/Jenkinsfile-vim-syntax', ft = { 'groovy', 'Jenkinsfile' } },
@@ -820,17 +830,9 @@ local plugins = {
   {
     'letieu/hacker.nvim',
     dev = true,
-    config = function()
-      vim.keymap.set('n', '<leader>ha', ':autocmd!<CR><Cmd>HackFollow<CR>', { silent = true })
-      local function fixfile()
-        vim.fn.execute('normal! ggdG')
-        vim.fn.execute('read ' .. vim.fn.expand('%') .. '.hackertyper')
-        vim.fn.execute('normal! ggdd')
-        vim.fn.execute('write!')
-      end
-
-      vim.keymap.set('n', '<leader>fix', fixfile, { silent = true })
-    end,
+    keys = {
+      { '<leader>ha', ':autocmd!<CR><Cmd>HackFollow<CR>', silent = true },
+    },
   },
   {
     'eandrju/cellular-automaton.nvim',
@@ -871,6 +873,7 @@ local plugins = {
           local actions = require('CopilotChat.actions')
           require('CopilotChat.integrations.fzflua').pick(actions.prompt_actions())
         end,
+        mode = { 'n', 'x' },
       },
       {
         '<leader>cgc',
