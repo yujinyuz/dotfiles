@@ -51,7 +51,8 @@ vim.opt.inccommand = 'split'
 -- Enable mouse coz why not?
 vim.opt.mouse = 'nivcr'
 -- Use ripgrep instead of grep
-vim.opt.grepprg = [[rg --vimgrep --no-heading --smart-case]]
+vim.opt.grepprg = 'rg --vimgrep --smart-case'
+vim.opt.grepformat = '%f:%l:%c:%m'
 
 vim.opt.shortmess = vim.opt.shortmess
   + 'a'
