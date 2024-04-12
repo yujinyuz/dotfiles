@@ -1,35 +1,31 @@
 local M = {}
 
-function M.t(str)
+M.t = function(str)
   return vim.api.nvim_replace_termcodes(str, true, true, true)
 end
 
-function M.has(plugin)
-  return require('lazy.core.config').plugins[plugin] ~= nil
-end
-
-function M.log(msg, hl, name)
+M.log = function(msg, hl, name)
   name = name or 'Neovim'
   hl = hl or 'Todo'
   vim.api.nvim_echo({ { name .. ': ', hl }, { msg } }, true, {})
 end
 
-function M.warn(msg, name)
+M.warn = function(msg, name)
   M.log(msg, 'DiagnosticWarn', name)
 end
 
-function M.error(msg, name)
+M.error = function(msg, name)
   M.log(msg, 'DiagnosticError', name)
 end
 
-function M.info(msg, name)
+M.info = function(msg, name)
   M.log(msg, 'DiagnosticInfo', name)
 end
 
 -- @param option
 -- @param [opt] silent
 -- @usage require("utils").toggle('relativenumber')
-function M.toggle(option, silent)
+M.toggle = function(option, silent)
   vim.opt_local[option] = not vim.opt_local[option]:get()
 
   if silent ~= true then
@@ -41,13 +37,6 @@ function M.toggle(option, silent)
   end
 end
 
-function M.toggle_command(cmd, silent)
-  if not silent then
-    M.info(cmd, 'Toggle')
-  end
-  vim.cmd(cmd)
-end
-
 function M.lsp_config()
   local ret = {}
   for _, client in pairs(vim.lsp.get_active_clients()) do
@@ -57,8 +46,10 @@ function M.lsp_config()
 end
 
 -- https://github.com/ibhagwan/nvim-lua/blob/main/lua/utils.lua#L280
-function M.sudo_exec(cmd, print_output)
+M.sudo_exec = function(cmd, print_output)
+  vim.fn.inputsave()
   local password = vim.fn.inputsecret('Password: ')
+  vim.fn.inputrestore()
   if not password or #password == 0 then
     M.warn('Invalid password, sudo aborted')
     return false
@@ -75,7 +66,7 @@ function M.sudo_exec(cmd, print_output)
   return true
 end
 
-function M.sudo_write(tmpfile, filepath)
+M.sudo_write = function(tmpfile, filepath)
   if not tmpfile then
     tmpfile = vim.fn.tempname()
   end
@@ -90,9 +81,12 @@ function M.sudo_write(tmpfile, filepath)
   -- Both `bs=1M` and `bs=1m` are non-POSIX
   local cmd = string.format('dd if=%s of=%s bs=1048576', vim.fn.shellescape(tmpfile), vim.fn.shellescape(filepath))
   -- no need to check error as this fails the entire function
-  vim.api.nvim_exec(string.format('write! %s', tmpfile), true)
+  vim.api.nvim_exec2(string.format('write! %s', tmpfile), { output = true })
   if M.sudo_exec(cmd) then
-    vim.cmd('e!')
+    -- refreshes the buffer and prints the "written" message
+    vim.cmd.edit { bang = true }
+    -- exit command mode
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>', true, false, true), 'n', true)
     M.info(string.format('"%s" written', filepath))
   end
   vim.fn.delete(tmpfile)
