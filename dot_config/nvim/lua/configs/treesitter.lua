@@ -50,7 +50,7 @@ ts_configs.setup {
     disable = { 'json' },
     additional_vim_regex_highlighting = false,
   },
-  indent = { enable = true, disable = { 'python', 'lua' } },
+  indent = { enable = true, disable = { 'lua' } },
   incremental_selection = {
     enable = true,
     keymaps = {
@@ -105,8 +105,8 @@ ts_configs.setup {
         ['aa'] = { query = '@parameter.outer', desc = 'Select around parameter/argument' },
         ['ia'] = { query = '@parameter.inner', desc = 'Select inside parameter/argument' },
 
-        ['ai'] = { query = '@conditional.outer', desc = 'Select outer part of a conditional' },
-        ['ii'] = { query = '@conditional.inner', desc = 'Select inner part of a conditional' },
+        ['ax'] = { query = '@conditional.outer', desc = 'Select outer part of a conditional' },
+        ['ix'] = { query = '@conditional.inner', desc = 'Select inner part of a conditional' },
       },
     },
     move = {
