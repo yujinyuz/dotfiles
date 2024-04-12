@@ -96,6 +96,7 @@ local servers = {
     },
   },
   taplo = {},
+  ruff_lsp = {},
 }
 
 local options = {

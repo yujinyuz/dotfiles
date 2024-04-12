@@ -374,7 +374,8 @@ local plugins = {
       formatters_by_ft = {
         lua = { 'stylua' },
         javascript = { 'prettierd', 'eslint_d' },
-        python = { { 'ruff', 'black' }, 'reorder-python-imports' },
+        -- Used ruff-lsp at the moment
+        -- python = { { 'ruff_format', 'black' }, 'ruff_lint' },
         fish = { 'fish_indent' },
         json = { 'jq' },
         jsonc = { 'fixjson' },
@@ -414,7 +415,8 @@ local plugins = {
 
       lint.linters_by_ft = {
         fish = { 'fish' },
-        python = { 'ruff' },
+        -- Used ruff
+        -- python = { 'ruff' },
         dockerfile = { 'hadolint' },
         htmldjango = { 'djlint' },
       }
