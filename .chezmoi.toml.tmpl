@@ -1,6 +1,10 @@
 {{ $email := promptString "email" -}}
 {{ $name := promptString "name" -}}
 
+{{ $customSourceDir := promptString "customSourceDir" -}}
+
+sourceDir = {{ $customSourceDir | quote }}
+
 [data]
   email = {{ $email | quote }}
   name = {{ $name | quote }}

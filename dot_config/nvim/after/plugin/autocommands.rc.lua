@@ -225,3 +225,11 @@ vim.api.nvim_create_autocmd('QuickFixCmdPost', {
   pattern = { '[^l]*' },
   command = 'cwindow',
 })
+
+vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
+  group = augroup('chezmoi_auto_apply'),
+  pattern = { vim.fn.expand('~/Sources/github.com/yujinyuz/dotfiles') .. '/*' },
+  callback = function(event)
+    vim.api.nvim_exec2('!chezmoi apply --force &', { output = true })
+  end,
+})
