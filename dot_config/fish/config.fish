@@ -62,8 +62,6 @@ set -Ux VIRTUALFISH_HOME $HOME/.local/share/virtualenvs
 set -Ux DIRENV_LOG_FORMAT ""
 ## bat
 set -Ux BAT_THEME "Catppuccin Mocha"
-## gopath
-set -Ux GOPATH ~/go
 ## Bun
 set -Ux BUN_INSTALL "$HOME/.bun"
 ## whalebrew
