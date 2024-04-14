@@ -87,7 +87,9 @@ local plugins = {
     opts = {
       options = {
         custom_commentstring = function()
-          return require('ts_context_commentstring.internal').calculate_commentstring() or vim.bo.commentstring
+          return vim.b.commentstring_override
+            or require('ts_context_commentstring.internal').calculate_commentstring()
+            or vim.bo.commentstring
         end,
       },
     },
