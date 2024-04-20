@@ -108,6 +108,34 @@ vim.keymap.set({ 'n', 'v' }, '/', '/\\v', { noremap = true })
 vim.keymap.set({ 'n', 'v' }, '?', '?\\v', { noremap = true })
 
 local get_vim_magic = function(slash)
+  local strip_ranges = function(cmdstr)
+    local modifier = '([%+%-]?%d*)'
+
+    -- Range tokens
+    cmdstr = cmdstr:gsub('^%d+' .. modifier, '') -- line number
+    cmdstr = cmdstr:gsub('^%.' .. modifier, '') -- current line
+    cmdstr = cmdstr:gsub('^$' .. modifier, '') -- last line in file
+    cmdstr = cmdstr:gsub('^%%' .. modifier, '') -- entire file
+    cmdstr = cmdstr:gsub("^'[a-z]\\c" .. modifier, '') -- mark t (or T)
+    cmdstr = cmdstr:gsub("^'[<>]" .. modifier, '') -- visual selection marks
+    cmdstr = cmdstr:gsub('^/[^/]+/' .. modifier, '') -- /{pattern}/
+    cmdstr = cmdstr:gsub('^?[^?]+?' .. modifier, '') -- ?{pattern}?
+    cmdstr = cmdstr:gsub('^\\/' .. modifier, '') -- \/ (next match of previous pattern)
+    cmdstr = cmdstr:gsub('^\\?' .. modifier, '') -- \? (last match of previous pattern)
+    cmdstr = cmdstr:gsub('^\\&' .. modifier, '') -- \& (last match of previous substitution)
+
+    -- Separators
+    cmdstr = cmdstr:gsub('^,', '') -- , (separator)
+    cmdstr = cmdstr:gsub('^;', '') -- ; (separator)
+
+    -- Remove leading spaces if any
+    cmdstr = cmdstr:gsub('^%s+', '')
+
+    -- Return the remaining string, which should be the command token
+    return cmdstr
+  end
+
+  -- If we are not in command-line mode, just return the slash
   if vim.fn.getcmdtype() ~= ':' then
     return slash
   end
@@ -118,11 +146,6 @@ local get_vim_magic = function(slash)
 
   -- For simplicity, only consider a slash typed at the end of the command-line.
   if #cmdline + 1 ~= cmdpos then
-    return slash
-  end
-
-  -- Check if we already have the magic flag
-  if cmdline:find('\\v') ~= nil then
     return slash
   end
 
@@ -158,10 +181,21 @@ local get_vim_magic = function(slash)
     'vglobal',
   }
 
-  for _, command in ipairs(commands) do
-    if cmdline:find(command) ~= nil then
-      return slash .. '\\v'
+  -- Strip ranges from the current command
+  while true do
+    local stripped = strip_ranges(cmdline)
+    if stripped == cmdline then
+      break
+    else
+      cmdline = stripped
     end
+  end
+
+  -- Now, we obtain the command token
+  -- Check if the command token is in the list of commands
+  -- where we can add the \v magic
+  if vim.tbl_contains(commands, cmdline) then
+    return slash .. '\\v'
   end
 
   return slash
