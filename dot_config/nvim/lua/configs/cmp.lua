@@ -4,35 +4,17 @@ if not has_cmp then
 end
 
 local has_luasnip, luasnip = pcall(require, 'luasnip')
-
 local has_lspkind, lspkind = pcall(require, 'lspkind')
 
-local utils = require('my.utils')
+---@diagnostic disable-next-line: inject-field
+vim.b.nvim_cmp_t_state = true
 
-local has_words_before = function()
-  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
-end
-
-local M = {}
-M.enable_cmp = true
-
-function M.toggle()
-  M.enable_cmp = not M.enable_cmp
-  if M.enable_cmp then
-    utils.info('enabled autocomplete ', 'Toggle')
-  else
-    utils.warn('disabled autocomplete', 'Toggle')
-  end
-end
-
---- disabling redundant-parameter because `cmp.setup` uses setmetatable
----@diagnostic disable-next-line:redundant-parameter
 local cmp_config = {
   enabled = function()
-    if M.enable_cmp and vim.api.nvim_buf_get_option(0, 'buftype') ~= 'prompt' then
+    if vim.b.nvim_cmp_t_state and vim.api.nvim_get_option_value('buftype', { buf = 0 }) ~= 'prompt' then
       return true
     end
+
     return false
   end,
   preselect = cmp.PreselectMode.None,
@@ -43,8 +25,8 @@ local cmp_config = {
   },
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
-    { name = 'copilot' },
   }, {
+    { name = 'copilot' },
     {
       name = 'buffer',
       max_item_count = 10,
@@ -78,70 +60,37 @@ local cmp_config = {
       end
     end,
   },
-  mapping = {
-    ['<C-p>'] = cmp.mapping.select_prev_item(),
-    ['<C-n>'] = cmp.mapping.select_next_item(),
-    ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
-    ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-    ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-    ['<C-e>'] = cmp.mapping { i = cmp.mapping.close(), c = cmp.mapping.close() },
-    ['<C-y>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.confirm {
-          behavior = cmp.ConfirmBehavior.Replace,
-          select = true,
-        }
+
+  mapping = cmp.mapping.preset.insert {
+    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-g>'] = function()
+      if cmp.visible_docs() then
+        cmp.close_docs()
       else
-        fallback()
+        cmp.open_docs()
       end
-    end, {
-      'i',
-      's',
-    }),
+    end,
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-y>'] = cmp.mapping.confirm { select = true, behavior = cmp.ConfirmBehavior.Replace },
     ['<C-j>'] = cmp.mapping(function(fallback)
       if luasnip.expand_or_jumpable() then
         luasnip.expand_or_jump()
       else
         fallback()
       end
-    end, { 'i' }),
+    end),
     ['<C-k>'] = cmp.mapping(function(fallback)
       if luasnip.jumpable(-1) then
         luasnip.jump(-1)
       else
         fallback()
       end
-    end, { 'i' }),
-    ['<Tab>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      elseif luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
-      elseif has_words_before() then
-        cmp.complete()
-      else
-        fallback()
-      end
-    end, {
-      'i',
-      's',
-    }),
-    ['<S-Tab>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item()
-      elseif luasnip.jumpable(-1) then
-        luasnip.jump(-1)
-      else
-        fallback()
-      end
-    end, {
-      'i',
-      's',
-    }),
+    end),
   },
   experimental = {
     ghost_text = {
-      hl_group = 'LspCodeLens',
+      hl_group = 'CmpGhostText',
     },
   },
 }
@@ -151,10 +100,15 @@ if has_lspkind then
     format = lspkind.cmp_format {
       mode = 'symbol_text',
       max_width = 50,
-      symbol_map = { Copilot = '', Yank = '' },
+      showLabelDetails = true,
+      symbol_map = { Copilot = '', Yank = '', Suggest = '󱈛', RG = '󰈙' },
       before = function(entry, vim_item)
         if entry.source.name == 'cmp_yanky' then
           vim_item.kind = 'Yank'
+        elseif entry.source.name == 'mocword' then
+          vim_item.kind = 'Suggest'
+        elseif entry.source.name == 'rg' then
+          vim_item.kind = 'RG'
         end
         return vim_item
       end,
@@ -177,9 +131,19 @@ cmp.setup.filetype('html', {
 cmp.setup.filetype('markdown', {
   sources = cmp.config.sources {
     { name = 'nvim_lsp' },
+    { name = 'mocword' },
     { name = 'rg', max_item_count = 10 },
     { name = 'buffer', max_item_count = 10 },
   },
+})
+
+cmp.setup.filetype('gitcommit', {
+  sources = cmp.config.sources({
+    { name = 'mocword' },
+    { name = 'rg', max_item_count = 10 },
+  }, {
+    { name = 'buffer', max_item_count = 10 },
+  }),
 })
 
 -- Following the vim philosophy keybindings
@@ -235,7 +199,7 @@ vim.keymap.set('i', '<C-x><C-y>', function()
   }
 end, { desc = 'yanky completion' })
 
-vim.keymap.set('i', '<C-x><C-k>', function()
+vim.keymap.set('i', '<C-x><C-u>', function()
   cmp.complete {
     config = {
       sources = {
@@ -243,11 +207,33 @@ vim.keymap.set('i', '<C-x><C-k>', function()
       },
     },
   }
-end, { desc = 'copilot' })
+end, { desc = 'copilot (see :h i_CTRL-X_CTRL_U)' })
 
--- local cmp_autopairs = require('nvim-autopairs.completion.cmp')
--- cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done { map_char = { tex = '' } })
+vim.keymap.set('i', '<C-x><C-f>', function()
+  cmp.complete {
+    config = {
+      sources = {
+        {
+          name = 'async_path',
+          option = {
+            trailing_slash = true,
+          },
+        },
+      },
+    },
+  }
+end, { desc = 'Path completion (async)' })
 
-vim.keymap.set('n', 'yoq', M.toggle, { desc = 'Toggle autocomplete' })
+vim.keymap.set('i', '<C-x><C-l>', function()
+  cmp.complete {
+    config = {
+      sources = {
+        {
+          name = 'mocword',
+        },
+      },
+    },
+  }
+end, { desc = 'Mocword' })
 
-return M
+vim.api.nvim_set_hl(0, 'CmpGhostText', { link = 'LspCodeLens', default = true })

@@ -58,6 +58,11 @@ local plugins = {
       'lukas-reineke/cmp-under-comparator',
       'neovim/nvim-lspconfig',
       'chrisgrieser/cmp_yanky',
+      'yutkat/cmp-mocword',
+      {
+        'yujinyuz/cmp-async-path',
+        dev = true,
+      },
       {
         'zbirenbaum/copilot-cmp',
         config = true,
