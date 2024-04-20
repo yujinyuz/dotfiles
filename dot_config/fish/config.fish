@@ -17,10 +17,14 @@ ulimit -n 16384 # Increase resource usage limits to 16384 Default is 256
 ## PARENT_TERM is set by our tmux config so we can use it for other programs
 set -q PARENT_TERM || set PARENT_TERM $TERM
 
-
 # Load universal config when it's changed
 set -l fish_config_mtime
-set fish_config_mtime (/usr/bin/stat -Lf %m $__fish_config_dir/config.fish)
+# Test if we are on macOS or Linux
+if test -d /Applications
+    set fish_config_mtime (/usr/bin/stat -f %m $__fish_config_dir/config.fish)
+else
+    set fish_config_mtime (/usr/bin/stat -c %Y $__fish_config_dir/config.fish)
+end
 
 set -l local_config $__fish_config_dir/config-local.fish
 if test -f $local_config
