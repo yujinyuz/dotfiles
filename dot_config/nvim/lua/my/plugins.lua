@@ -980,6 +980,11 @@ local plugins = {
     'wakatime/vim-wakatime',
     event = 'BufReadPost',
   },
+  {
+    'yujinyuz/very-magic-slash.nvim',
+    opts = {},
+    dev = true,
+  },
   --endblock: Miscellaneous
 }
 
