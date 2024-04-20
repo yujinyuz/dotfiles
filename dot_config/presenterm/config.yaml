@@ -1,0 +1,4 @@
+defaults:
+  theme: catppuccin-frappe
+  terminal_font_size: 24
+  image_protocol: kitty-local
