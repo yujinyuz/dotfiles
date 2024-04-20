@@ -64,7 +64,10 @@ H.get_filetype_icon = function()
   end
 
   local file_name, file_ext = vim.fn.expand('%:t'), vim.fn.expand('%:e')
-  return devicons.get_icon(file_name, file_ext, { default = true })
+
+  local icon, hl_group = devicons.get_icon(file_name, file_ext, { default = true })
+
+  return icon, hl_group
 end
 
 local function section_fileinfo(args)
@@ -73,9 +76,11 @@ local function section_fileinfo(args)
     return ''
   end
 
-  local icon = H.get_filetype_icon()
+  local icon, hl_group = H.get_filetype_icon()
+  local colored_icon = string.format('%%#%s# %s%%#MiniStatuslineFileinfo#', hl_group, icon)
+
   if icon ~= '' then
-    filetype = string.format('%s %s', icon, filetype)
+    filetype = string.format('%s %s', colored_icon, filetype)
   end
 
   if statusline.is_truncated(args.trunc_width) then
