@@ -107,24 +107,66 @@ end)
 vim.keymap.set({ 'n', 'v' }, '/', '/\\v', { noremap = true })
 vim.keymap.set({ 'n', 'v' }, '?', '?\\v', { noremap = true })
 
+local get_vim_magic = function(slash)
+  if vim.fn.getcmdtype() ~= ':' then
+    return slash
+  end
+
+  -- Get the current command-line text
+  local cmdline = vim.fn.getcmdline()
+  local cmdpos = vim.fn.getcmdpos()
+
+  -- For simplicity, only consider a slash typed at the end of the command-line.
+  if #cmdline + 1 ~= cmdpos then
+    return slash
+  end
+
+  -- Check if we already have the magic flag
+  if cmdline:find('\\v') ~= nil then
+    return slash
+  end
+
+  local commands = {
+    'g',
+    'gl',
+    'glo',
+    'glob',
+    'globa',
+    'global',
+    'g!',
+    'gl!',
+    'glo!',
+    'glob!',
+    'globa!',
+    'global!',
+    's',
+    'su',
+    'sub',
+    'subs',
+    'subst',
+    'substi',
+    'substit',
+    'substitu',
+    'substitut',
+    'substitute',
+    'v',
+    'vg',
+    'vgl',
+    'vglo',
+    'vglob',
+    'vgloba',
+    'vglobal',
+  }
+
+  for _, command in ipairs(commands) do
+    if cmdline:find(command) ~= nil then
+      return slash .. '\\v'
+    end
+  end
+
+  return slash
+end
+
 vim.keymap.set('c', '/', function()
-  -- Get the previous command-line text
-  local line = vim.fn.getcmdline()
-  -- Check if the previous text is "%s"
-  if line == '%s' or line == "'<,'>s" then
-    return '/\\v'
-  end
-
-  return '/'
-end, { noremap = true, expr = true })
-
-vim.keymap.set('c', '?', function()
-  -- Get the previous command-line text
-  local line = vim.fn.getcmdline()
-  -- Check if the previous text is "%s"
-  if line == '%s' or line == "'<,'>s" then
-    return '?\\v'
-  end
-
-  return '?'
+  return get_vim_magic('/')
 end, { noremap = true, expr = true })
