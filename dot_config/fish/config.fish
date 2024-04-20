@@ -4,12 +4,6 @@ set -gx VISUAL $EDITOR
 set -gx SUDO_EDITOR $EDITOR
 set -gx LANG en_US.UTF-8
 
-if test (uname -m) = arm64
-    set -gx BREW_BASE /opt/homebrew
-else
-    set -gx BREW_BASE /usr/local
-end
-
 ## System
 ulimit -n 16384 # Increase resource usage limits to 16384 Default is 256
 
@@ -63,16 +57,12 @@ set -Ux GOPATH $HOME/go
 set -Ux fish_user_paths
 ## macos defaults
 fish_add_path /usr/local/bin
-## homebrew
-fish_add_path $BREW_BASE/bin
-## sysad binaries
-fish_add_path $BREW_BASE/sbin
 ## mysql client
-fish_add_path $BREW_BASE/opt/mysql-client/bin
+fish_add_path $HOMEBREW_PREFIX/opt/mysql-client/bin
 ## psql client
-fish_add_path $BREW_BASE/opt/libpq/bin
+fish_add_path $HOMEBREW_PREFIX/opt/libpq/bin
 ## python
-fish_add_path $BREW_BASE/opt/python/libexec/bin
+fish_add_path $HOMEBREW_PREFIX/opt/python/libexec/bin
 ## golang
 fish_add_path $GOPATH $GOPATH/bin
 ## cargo

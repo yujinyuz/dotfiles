@@ -1,6 +1,6 @@
 {{ $email := promptString "email" -}}
 {{ $name := promptString "name" -}}
-
+{{ $preferredShell := promptString "preferredShell" -}}
 {{ $customSourceDir := promptString "customSourceDir" -}}
 
 sourceDir = {{ $customSourceDir | quote }}
@@ -8,6 +8,7 @@ sourceDir = {{ $customSourceDir | quote }}
 [data]
   email = {{ $email | quote }}
   name = {{ $name | quote }}
+  shell = {{ $preferredShell | quote }}
 
 [merge]
   command = "nvim"
