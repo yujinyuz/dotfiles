@@ -71,6 +71,15 @@ end, { desc = 'Tells Vim to read the file again, forcing dos file format. Repair
 vim.keymap.set('n', '<leader>cd', function()
   vim.diagnostic.open_float()
 end, { desc = 'Line diagnostics ' })
+vim.keymap.set('n', '<leader>kd', function()
+  if vim.b.diagnostic_virtual_text_config ~= nil then
+    vim.diagnostic.config { virtual_text = vim.b.diagnostic_virtual_text_config }
+    vim.b.diagnostic_virtual_text_config = nil
+  else
+    vim.b.diagnostic_virtual_text_config = vim.diagnostic.config().virtual_text
+    vim.diagnostic.config { virtual_text = false }
+  end
+end, { desc = '[k]ill [d]iagnostic' })
 vim.keymap.set('n', '[w', vim.diagnostic.goto_prev, { desc = 'Goto Previous Diagnostic' })
 vim.keymap.set('n', ']w', vim.diagnostic.goto_next, { desc = 'Goto Next Diagnostic' })
 
