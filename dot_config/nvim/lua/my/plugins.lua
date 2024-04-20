@@ -971,7 +971,10 @@ local plugins = {
       },
     },
   },
-
+  {
+    'wakatime/vim-wakatime',
+    event = 'BufReadPost',
+  },
   --endblock: Miscellaneous
 }
 
