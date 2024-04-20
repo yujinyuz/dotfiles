@@ -82,7 +82,7 @@ alias -s localip "ipconfig getifaddr en0"
 alias -s rscp "rsync -avhE --progress" # for copying local files
 alias -s rsmv "rsync -avhE --no-compress --progress --remove-source-files"
 alias -s tree "eza --tree"
-alias -s kd "killall Dock"
+alias -s kd "rm /var/folders/*/*/*/com.apple.dock.iconcache; killall Dock"
 alias -s vifish "$EDITOR ~/.config/fish/config.fish"
 alias -s pmr "pm runserver"
 alias -s minvim "NVIM_APPNAME=minvim nvim"
