@@ -77,8 +77,6 @@ fish_add_path $BREW_BASE/opt/python/libexec/bin
 fish_add_path $GOPATH $GOPATH/bin
 ## cargo
 fish_add_path $HOME/cargo/bin
-## asdf + asdf-direnv
-fish_add_path $HOME/asdf/bin
 ## mise shims
 fish_add_path $HOME/.local/share/mise/shims
 ## local binaries
