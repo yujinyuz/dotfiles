@@ -236,7 +236,7 @@ vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
 
 vim.api.nvim_create_autocmd('BufWinLeave', {
   group = augroup('relative_path_fix'),
-  pattern = { 'oil:///*', 'NvimTree*' },
+  pattern = { 'oil:///*', 'fugitive:///*', 'NvimTree*' },
   callback = function()
     vim.cmd.cd('.')
   end,
