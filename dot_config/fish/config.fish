@@ -60,8 +60,6 @@ set -Ux FZF_ALT_C_COMMAND "fd --type d $FD_OPTIONS"
 set -Ux VIRTUALFISH_HOME $HOME/.local/share/virtualenvs
 ## asdf-direnv
 set -Ux DIRENV_LOG_FORMAT ""
-## bat
-set -Ux BAT_THEME "Catppuccin Mocha"
 ## Bun
 set -Ux BUN_INSTALL "$HOME/.bun"
 ## whalebrew
