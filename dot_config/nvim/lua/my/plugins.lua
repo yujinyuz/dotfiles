@@ -792,24 +792,42 @@ local plugins = {
   },
   {
     'numToStr/FTerm.nvim',
+    config = function()
+      local FTerm = require('FTerm')
+      FTerm.setup {
+        -- Makes things a little bit more stable with tmux since it
+        -- does not inherit the environment variables
+        clear_env = true,
+      }
+
+      local fterm1 = FTerm:new {
+        cmd = vim.env.SHELL,
+      }
+
+      local fterm2 = FTerm:new {
+        cmd = vim.env.SHELL,
+      }
+
+      vim.api.nvim_create_user_command('FTerm1Toggle', function()
+        fterm1:toggle()
+      end, { bang = true })
+
+      vim.api.nvim_create_user_command('FTerm2Toggle', function()
+        fterm2:toggle()
+      end, { bang = true })
+    end,
+    cmd = { 'FTerm1Toggle', 'FTerm2Toggle' },
     keys = {
       {
         '<M-i>',
         function()
+          if vim.fn.mode() == 't' then
+            vim.fn.feedkeys('<C-\\><C-n>')
+          end
+
           require('FTerm').toggle()
         end,
-        mode = 'n',
-      },
-      {
-        '<M-i>',
-        function()
-          vim.fn.feedkeys('<C-\\><C-n>')
-          -- FIXME: Can't use vim.cmd.normal at the moment
-          -- See issue: https://github.com/neovim/neovim/issues/4895
-          -- vim.cmd.normal {'<C-\\><C-n>', bang = true }
-          require('FTerm').toggle()
-        end,
-        mode = 't',
+        mode = { 'n', 't' },
       },
     },
   },
