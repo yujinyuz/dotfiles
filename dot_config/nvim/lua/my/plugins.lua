@@ -271,6 +271,7 @@ local plugins = {
     },
     keys = {
       { '<C-n>', '<Cmd>NvimTreeFindFileToggle!<CR>', desc = '[n]vim-tree toggle' },
+      { '<localleader>f', '<Cmd>NvimTreeFindFileToggle!<CR>' },
     },
   },
   {
