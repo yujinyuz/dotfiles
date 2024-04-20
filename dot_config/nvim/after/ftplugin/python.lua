@@ -2,8 +2,13 @@ local fterm = require('FTerm')
 
 local pm_shell = fterm:new {
   ft = 'shell_plus',
-  cmd = 'python manage.py shell_plus --print-sql',
+  -- Sometimes manage.py is located inside src/ or some other directory
+  cmd = (vim.env.DJANGO_MANAGE_PY or 'python manage.py') .. ' shell_plus',
 }
+
+vim.api.nvim_create_user_command('ShellPlus', function()
+  pm_shell:toggle()
+end, { bang = true })
 
 -- Use this to toggle btop in a floating terminal
 local function shell_plus()
