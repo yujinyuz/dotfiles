@@ -134,9 +134,6 @@ local config = function()
       vim.keymap.set('t', '<Esc>', '<C-c>', { buffer = 0 })
     end,
   }
-
-  -- Register fzf-lua as the picker for vim.ui.select()
-  fzf.register_ui_select()
 end
 
 -- TODO:

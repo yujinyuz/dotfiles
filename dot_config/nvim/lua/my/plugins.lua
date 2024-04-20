@@ -722,6 +722,14 @@ local plugins = {
       end,
     },
   },
+  {
+    'stevearc/dressing.nvim',
+    opts = {
+      input = {
+        enabled = false,
+      },
+    },
+  },
   --endblock: Fancy UI
 
   --block: Filetype Specific

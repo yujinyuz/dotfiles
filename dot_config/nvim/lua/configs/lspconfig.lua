@@ -21,7 +21,7 @@ local on_attach = function(client, bufnr)
 
   -- +actions
   vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename, opts)
-  vim.keymap.set('n', '<leader>ca', '<Cmd>FzfLua lsp_code_actions<CR>', opts)
+  vim.keymap.set({ 'n', 'x' }, '<leader>ca', vim.lsp.buf.code_action, opts)
 
   -- +lsp
   vim.keymap.set('n', '<leader>clc', utils.lsp_config, opts)
