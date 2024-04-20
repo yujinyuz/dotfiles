@@ -4,7 +4,6 @@ local keys = {
     function()
       require('fzf-lua').files {
         cwd_prompt = false,
-        prompt = 'Files> ',
         fzf_opts = { ['--ansi'] = false },
         file_icons = false,
         git_icons = false,
@@ -61,15 +60,12 @@ local keys = {
     '<Cmd>FzfLua help_tags<CR>',
   },
   {
-    '<leader>\\',
-    '<Cmd>FzfLua lsp_live_workspace_symbols<CR>',
+    '<leader>fo',
+    '<Cmd>FzfLua oldfiles<CR>',
   },
   {
-    '<C-x><C-f>',
-    function()
-      require('fzf-lua').complete_path()
-    end,
-    mode = 'i',
+    '<leader>\\',
+    '<Cmd>FzfLua lsp_live_workspace_symbols<CR>',
   },
 }
 
@@ -79,6 +75,7 @@ local config = function()
   local defaults = require('fzf-lua.defaults').defaults
 
   fzf.setup {
+    'default-title',
     actions = {
       files = {
         ['default'] = actions.file_edit,
@@ -97,13 +94,15 @@ local config = function()
     winopts = {
       preview = {
         delay = 0,
+        layout = 'flex',
+        flip_columns = 130,
       },
       height = 0.75,
       width = 0.80,
     },
     fzf_opts = {
       ['--no-hscroll'] = '',
-      ['--layout'] = 'reverse',
+      ['--layout'] = 'reverse-list',
     },
     keymap = {
       builtin = {
