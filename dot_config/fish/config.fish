@@ -42,28 +42,27 @@ end
 set -Ux MANPAGER "nvim +Man!"
 set -Ux MANWIDTH 999
 set -Ux XDG_CONFIG_HOME $HOME/.config
-
 ## fzf
 set -l FD_OPTIONS "--hidden --follow --strip-cwd-prefix --exclude .git --exclude node_modules"
 set -Ux FZF_DEFAULT_COMMAND "git ls-files --cached --others --exclude-standard &> /dev/null | fd --type f --type l $FD_OPTIONS"
 set -Ux FZF_DEFAULT_OPTS_FILE $XDG_CONFIG_HOME/fzf/config
 set -Ux FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
 set -Ux FZF_ALT_C_COMMAND "fd --type d $FD_OPTIONS"
-
 ## virtualfish
 set -Ux VIRTUALFISH_HOME $HOME/.local/share/virtualenvs
-## asdf-direnv
-set -Ux DIRENV_LOG_FORMAT ""
 ## Bun
-set -Ux BUN_INSTALL "$HOME/.bun"
+set -Ux BUN_INSTALL $HOME/.bun
 ## whalebrew
-set -Ux WHALEBREW_INSTALL_PATH ~/.local/bin
+set -Ux WHALEBREW_INSTALL_PATH $HOME/.local/bin
 ## zk
 set -Ux ZK_SHELL /bin/zsh
+## go
+set -Ux GOPATH $HOME/go
 
 # Path
 set -Ux fish_user_paths
-
+## macos defaults
+fish_add_path /usr/local/bin
 ## homebrew
 fish_add_path $BREW_BASE/bin
 ## sysad binaries
@@ -74,15 +73,16 @@ fish_add_path $BREW_BASE/opt/mysql-client/bin
 fish_add_path $BREW_BASE/opt/libpq/bin
 ## python
 fish_add_path $BREW_BASE/opt/python/libexec/bin
-
 ## golang
 fish_add_path $GOPATH $GOPATH/bin
 ## cargo
-fish_add_path ~/.cargo/bin
+fish_add_path $HOME/cargo/bin
 ## asdf + asdf-direnv
-fish_add_path ~/.asdf/bin
+fish_add_path $HOME/asdf/bin
+## mise shims
+fish_add_path $HOME/.local/share/mise/shims
 ## local binaries
-fish_add_path ~/.local/bin
+fish_add_path $HOME/.local/bin
 
 # aliases
 alias -s brewup "brew update; brew upgrade; brew cleanup; brew doctor"
@@ -90,7 +90,6 @@ alias -s cat bat
 alias -s dc "docker compose"
 alias -s getip "curl ipinfo.io/ip"
 alias -s g git
-alias -s groot "cd ./(git rev-parse --show-cdup)"
 alias -s localip "ipconfig getifaddr en0"
 alias -s rscp "rsync -avhE --progress" # for copying local files
 alias -s rsmv "rsync -avhE --no-compress --progress --remove-source-files"
@@ -98,17 +97,14 @@ alias -s tree "eza --tree"
 alias -s kd "killall Dock"
 alias -s vifish "$EDITOR ~/.config/fish/config.fish"
 alias -s pmr "pm runserver"
-alias -s lzdocker "TERM=$PARENT_TERM lazydocker"
-alias -s minvim "nvim -u ~/.minivim/init.lua"
+alias -s minvim "NVIM_APPNAME=minvim nvim"
 alias -s ssht "TERM=screen ssh"
-alias -s zki 'ZK_NOTEBOOK_DIR=~/Sync/notes/ zk new --no-input "$ZK_NOTEBOOK_DIR/brain"'
+alias -s zki 'cd ~/Sync/notes/ && zk i'
 alias -s loadsshkeys "ls -d ~/.ssh/* -I '*.pub|config|environment|pems|known_hosts' | xargs ssh-add --apple-load-keychain &> /dev/null"
 alias -s untar "tar -xvf"
-
 alias -s ls "eza --color=always --icons --group-directories-first --classify"
 alias -s la "eza --color=always --icons --group-directories-first --classify --all"
 alias -s ll "eza --color=always --icons --group-directories-first --classify --all --long"
-
 alias -s ge graph-easy
 alias -s icat "kitty +kitten icat"
 alias -s ccurl "curl -OJL" # download file with original name
