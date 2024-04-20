@@ -103,3 +103,4 @@ vim.keymap.set({ 'n', 'v' }, '<leader>cf', function()
   require('my.format').format()
 end)
 
+vim.keymap.set('n', '<leader>fx', '<Cmd>source %<CR>', { desc = '[f]ile e[x]ecute' })
