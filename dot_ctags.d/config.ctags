@@ -1,0 +1,37 @@
+# GENERAL
+--exclude=.git
+--exclude=.DS_Store
+--exclude=*.jpg
+--exclude=*.png
+--exclude=*.gif
+--exclude=*.svg
+--exclude=*.ico
+--exclude=*.mp3
+--exclude=*.mp4
+--exclude=*.yaml
+
+# JAVASCRIPT
+--exclude=node_modules
+--exclude=package-lock.json
+--exclude=dist
+--exclude=docs
+--exclude=__snapshots__
+--exclude=.next
+--exclude=*.min.js
+
+# CSS
+--exclude=*.css
+
+# Markdown
+--exclude=*.md
+--exclude=*/migrations/*auto*.py
+
+--exclude=*.csv
+--exclude=*.csv.org
+--exclude=*.csv*.*
+--exclude=*.json
+--exclude=*.log
+--exclude=*.log*
+--exclude=*.html
+--exclude=*.conf
+--exclude=*.ini
