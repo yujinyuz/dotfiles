@@ -12,6 +12,7 @@
 	cleanstate = "!git reset --hard && git clean -fd"
 	cleanup = "!git branch --merged | grep  -v '\\*\\|master\\|develop' | xargs -n 1 git branch -d"
 	cm = commit -m
+  ca = commit -a
 	co = checkout
 	contributors = shortlog --summary --numbered
 	d = difftool
