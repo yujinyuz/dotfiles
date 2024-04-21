@@ -162,6 +162,9 @@ vim.opt.winbar = vim.opt.winbar
   + "%{&readonly?' ':''}"
   + "%{&spell?' ¶ ':''}"
 
+-- Automatically execute .nvim.lua files
+vim.opt.exrc = true
+
 -- Use <Space> as the leader key
 vim.g.mapleader = ' '
 vim.g.loaded_netrw = 1
