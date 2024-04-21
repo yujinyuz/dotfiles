@@ -57,6 +57,8 @@ set -Ux GOPATH $HOME/go
 set -Ux fish_user_paths
 ## macos defaults
 fish_add_path /usr/local/bin
+## homebrew bin
+fish_add_path $HOMEBREW_PREFIX/sbin $HOMEBREW_PREFIX/bin
 ## mysql client
 fish_add_path $HOMEBREW_PREFIX/opt/mysql-client/bin
 ## psql client
@@ -66,7 +68,7 @@ fish_add_path $HOMEBREW_PREFIX/opt/python/libexec/bin
 ## golang
 fish_add_path $GOPATH $GOPATH/bin
 ## cargo
-fish_add_path $HOME/cargo/bin
+fish_add_path $HOME/.cargo/bin
 ## mise shims
 fish_add_path $HOME/.local/share/mise/shims
 ## local binaries
