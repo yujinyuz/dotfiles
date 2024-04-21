@@ -40,6 +40,10 @@ local keys = {
     '<Cmd>FzfLua buffers<CR>',
   },
   {
+    '<localleader>b',
+    '<Cmd>FzfLua buffers<CR>',
+  },
+  {
     '<leader>fw',
     '<Cmd>FzfLua grep_cword<CR>',
   },
