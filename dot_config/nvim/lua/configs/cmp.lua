@@ -6,12 +6,11 @@ end
 local has_luasnip, luasnip = pcall(require, 'luasnip')
 local has_lspkind, lspkind = pcall(require, 'lspkind')
 
----@diagnostic disable-next-line: inject-field
-vim.b.nvim_cmp_t_state = true
+vim.g.nvim_cmp_t_state = true
 
 local cmp_config = {
   enabled = function()
-    if vim.b.nvim_cmp_t_state and vim.api.nvim_get_option_value('buftype', { buf = 0 }) ~= 'prompt' then
+    if vim.g.nvim_cmp_t_state and vim.api.nvim_get_option_value('buftype', { buf = 0 }) ~= 'prompt' then
       return true
     end
 
