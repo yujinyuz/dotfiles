@@ -773,6 +773,7 @@ local plugins = {
         clear_env = true,
       }
 
+      vim.api.nvim_create_user_command('FTermToggle', FTerm.toggle, { bang = true })
       vim.api.nvim_create_user_command('FTerm1Toggle', function()
         fterm1:toggle()
       end, { bang = true })
@@ -780,14 +781,36 @@ local plugins = {
       vim.api.nvim_create_user_command('FTerm2Toggle', function()
         fterm2:toggle()
       end, { bang = true })
+
+      vim.api.nvim_create_user_command('FTermCloseAllExcept', function(command)
+        if command.args == '1' then
+          FTerm.close()
+          fterm2:close()
+        elseif command.args == '2' then
+          FTerm.close()
+          fterm1:close()
+        else
+          fterm1:close()
+          fterm2:close()
+        end
+      end, {
+        complete = function()
+          return { '0', '1', '2' }
+        end,
+        nargs = '?',
+      })
     end,
-    cmd = { 'FTerm1Toggle', 'FTerm2Toggle' },
+    cmd = {
+      'FTermToggle',
+      'FTerm1Toggle',
+      'FTerm2Toggle',
+    },
     keys = {
       {
         '<M-e>',
         function()
           if vim.fn.mode() == 't' then
-            vim.fn.feedkeys('<C-\\><C-n>')
+            vim.cmd('FTermCloseAllExcept 0')
           end
           require('FTerm').toggle()
         end,
@@ -797,7 +820,7 @@ local plugins = {
         '<M-i>',
         function()
           if vim.fn.mode() == 't' then
-            vim.fn.feedkeys('<C-\\><C-n>')
+            vim.cmd('FTermCloseAllExcept 1')
           end
           vim.cmd('FTerm1Toggle')
         end,
@@ -807,7 +830,7 @@ local plugins = {
         '<M-o>',
         function()
           if vim.fn.mode() == 't' then
-            vim.fn.feedkeys('<C-\\><C-n>')
+            vim.cmd('FTermCloseAllExcept 2')
           end
           vim.cmd('FTerm2Toggle')
         end,
