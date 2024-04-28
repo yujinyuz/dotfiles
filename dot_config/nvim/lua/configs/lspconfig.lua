@@ -7,13 +7,13 @@ end
 local utils = require('my.utils')
 
 -- Set up completion using nvim_cmp with LSP source
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
-capabilities.textDocument.foldingRange = {
+local common_capabilities = require('cmp_nvim_lsp').default_capabilities()
+common_capabilities.textDocument.foldingRange = {
   dynamicRegistration = false,
   lineFoldingOnly = true,
 }
 
-local on_attach = function(client, bufnr)
+local common_on_attach_handler = function(client, bufnr)
   local opts = {
     buffer = bufnr,
     silent = true,
@@ -24,7 +24,6 @@ local on_attach = function(client, bufnr)
   vim.keymap.set({ 'n', 'x' }, '<leader>ca', vim.lsp.buf.code_action, opts)
 
   -- +lsp
-  vim.keymap.set('n', '<leader>clc', utils.lsp_config, opts)
   vim.keymap.set('n', '<leader>cli', '<Cmd>LspInfo<CR>', opts)
   vim.keymap.set('n', '<leader>cla', vim.lsp.buf.add_workspace_folder, opts)
   vim.keymap.set('n', '<leader>clr', vim.lsp.buf.remove_workspace_folder, opts)
@@ -52,21 +51,61 @@ end
 -- Server config
 local servers = {
   -- pyright = {
+  --   enabled = false,
   --   settings = {
+  --     pyright = {
+  --       disableOrganizeImports = true,
+  --     },
   --     python = {
   --       analysis = {
-  --         diagnosticMode = 'openFilesOnly',
+  --         -- Ignore all files for analysis to exclusively use Ruff for linting
+  --         ignore = { '*' },
   --       },
   --     },
   --   },
   -- },
-
+  basedpyright = {
+    enabled = true,
+    settings = {
+      basedpyright = {
+        disableOrganizeImports = true,
+        -- https://github.com/DetachHead/basedpyright/issues/203
+        typeCheckingMode = 'off',
+      },
+    },
+  },
   jedi_language_server = {
+    enabled = false,
     init_options = {
       completion = {
         disableSnippets = true,
       },
     },
+  },
+  ruff_lsp = {
+    on_attach = function(client, bufnr)
+      common_on_attach_handler(client, bufnr)
+      client.server_capabilities.disableHoverProvider = false
+
+      -- Create ruff commands
+      vim.api.nvim_create_user_command('RuffAutoFix', function()
+        vim.lsp.buf.execute_command {
+          command = 'ruff.applyAutofix',
+          arguments = {
+            { uri = vim.uri_from_bufnr(0) },
+          },
+        }
+      end, { desc = 'Ruff: Fix all auto-fixable problems' })
+
+      vim.api.nvim_create_user_command('RuffOrganizeImports', function()
+        vim.lsp.buf.execute_command {
+          command = 'ruff.applyOrganizeImports',
+          arguments = {
+            { uri = vim.uri_from_bufnr(0) },
+          },
+        }
+      end, { desc = 'Ruff: Format imports' })
+    end,
   },
   gopls = {},
   html = {},
@@ -94,12 +133,11 @@ local servers = {
     },
   },
   taplo = {},
-  ruff_lsp = {},
 }
 
 local options = {
-  on_attach = on_attach,
-  capabilities = capabilities,
+  on_attach = common_on_attach_handler,
+  capabilities = common_capabilities,
   flags = {
     debounce_text_changes = 150,
   },

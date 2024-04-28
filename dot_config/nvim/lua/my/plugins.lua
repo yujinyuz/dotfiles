@@ -380,8 +380,7 @@ local plugins = {
       formatters_by_ft = {
         lua = { 'stylua' },
         javascript = { 'prettierd', 'eslint_d' },
-        -- Used ruff-lsp at the moment
-        -- python = { { 'ruff_format', 'black' }, 'ruff_lint' },
+        python = { { 'ruff_format', 'black' } },
         fish = { 'fish_indent' },
         json = { 'jq' },
         jsonc = { 'fixjson' },
