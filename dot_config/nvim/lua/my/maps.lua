@@ -80,8 +80,6 @@ vim.keymap.set('n', '<leader>kd', function()
     vim.diagnostic.config { virtual_text = false }
   end
 end, { desc = '[k]ill [d]iagnostic' })
-vim.keymap.set('n', '[w', vim.diagnostic.goto_prev, { desc = 'Goto Previous Diagnostic' })
-vim.keymap.set('n', ']w', vim.diagnostic.goto_next, { desc = 'Goto Next Diagnostic' })
 
 vim.keymap.set('n', '<leader>.', function()
   vim.cmd.edit('%:p:h')

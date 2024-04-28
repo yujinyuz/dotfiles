@@ -19,22 +19,14 @@ local common_on_attach_handler = function(client, bufnr)
     silent = true,
   }
 
-  -- +actions
-  vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename, opts)
-  vim.keymap.set({ 'n', 'x' }, '<leader>ca', vim.lsp.buf.code_action, opts)
-
   -- +lsp
-  vim.keymap.set('n', '<leader>cli', '<Cmd>LspInfo<CR>', opts)
   vim.keymap.set('n', '<leader>cla', vim.lsp.buf.add_workspace_folder, opts)
   vim.keymap.set('n', '<leader>clr', vim.lsp.buf.remove_workspace_folder, opts)
-  vim.keymap.set('n', '<leader>clo', '<Cmd>LSoutlineToggle<CR>', opts)
 
   vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
   vim.keymap.set('n', 'gI', vim.lsp.buf.implementation, opts)
   vim.keymap.set('i', '<C-s>', vim.lsp.buf.signature_help, opts)
-
-  vim.keymap.set({ 'n', 'v' }, 'K', vim.lsp.buf.hover, opts)
 
   if client.server_capabilities.definitionProvider ~= false then
     vim.opt_local.tagfunc = 'v:lua.vim.lsp.tagfunc'
