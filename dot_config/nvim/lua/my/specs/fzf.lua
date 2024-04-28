@@ -1,5 +1,13 @@
 local keys = {
   {
+    'F',
+    mode = 'c',
+  },
+  {
+    'f',
+    mode = 'c',
+  },
+  {
     '<leader>n',
     function()
       require('fzf-lua').files {

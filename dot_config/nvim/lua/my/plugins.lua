@@ -641,7 +641,7 @@ local plugins = {
         window = { padding = { 0, 0, 0, 0 } },
         layout = { height = { min = 1, max = 10 } },
         triggers_blacklist = {
-          c = { 'w' },
+          c = { 'w', 'f', 'F' },
           n = { '`' },
         },
       }
