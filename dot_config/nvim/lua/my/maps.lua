@@ -86,6 +86,9 @@ vim.keymap.set('n', ']w', vim.diagnostic.goto_next, { desc = 'Goto Next Diagnost
 vim.keymap.set('n', '<leader>.', function()
   vim.cmd.edit('%:p:h')
 end, { desc = 'edit .' })
+vim.keymap.set('n', '-', function()
+  vim.cmd.edit('%:p:h')
+end, { desc = 'edit . (vim-vinegar navigation)' })
 vim.keymap.set('n', '<leader>/', function()
   vim.cmd.edit('.')
 end, { desc = 'edit root' })
@@ -110,6 +113,8 @@ end, { desc = 'copy current absolute filename to system clipboard' })
 
 vim.keymap.set({ 'n', 'v' }, '<leader>cf', function()
   require('my.format').format()
-end)
+end, { desc = 'format buffer' })
 
-vim.keymap.set('n', '<leader>fx', '<Cmd>source %<CR>', { desc = '[f]ile e[x]ecute' })
+vim.keymap.set('n', ',x', '<Cmd>silent! write | :source %<CR>', { desc = 'source & e[x]ecute' })
+
+vim.keymap.set('n', ',,', ',', { noremap = true, desc = 'repeat last f/F t/T command' })

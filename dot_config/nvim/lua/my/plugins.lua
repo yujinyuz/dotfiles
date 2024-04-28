@@ -141,7 +141,7 @@ local plugins = {
   { 'tpope/vim-surround', event = 'VeryLazy' },
   { 'tpope/vim-repeat', event = 'VeryLazy' },
   { 'tpope/vim-unimpaired', event = 'VeryLazy' },
-  { 'tpope/vim-rsi', event = 'VeryLazy' },
+  { 'tpope/vim-rsi', event = 'InsertEnter' },
   { 'tpope/vim-abolish', event = 'VeryLazy' },
   {
     'mbbill/undotree',
@@ -153,11 +153,10 @@ local plugins = {
     keys = {
       { '<leader>u', '<Cmd>UndotreeToggle<CR>', desc = 'Undotree Toggle' },
     },
-    cmd = { 'UndotreeToggle' },
   },
   {
     'kevinhwang91/nvim-fundo',
-    requires = 'kevinhwang91/promise-async',
+    dependencies = { 'kevinhwang91/promise-async' },
     config = function()
       require('fundo').install()
     end,
@@ -200,7 +199,7 @@ local plugins = {
   {
     'Wansmer/treesj',
     keys = {
-      { '<leader>j', '<cmd>TSJToggle<cr>', desc = 'Join Toggle' },
+      { '<leader>J', '<cmd>TSJToggle<cr>', desc = 'Join Toggle' },
     },
     opts = { use_default_keymaps = false, max_join_length = 150 },
   },
@@ -241,8 +240,6 @@ local plugins = {
       vim.keymap.set('n', '<leader>yy', '<Cmd>YankyRingHistory<CR>')
 
       -- The unimpaired y feels awkard to press when using colemak layout
-      vim.keymap.set('n', '[y', '<Plug>(YankyPreviousEntry)')
-      vim.keymap.set('n', ']y', '<Plug>(YankyNextEntry)')
       vim.keymap.set('n', '<Left>', '<Plug>(YankyPreviousEntry)')
       vim.keymap.set('n', '<Right>', '<Plug>(YankyNextEntry)')
     end,
@@ -272,38 +269,35 @@ local plugins = {
       select_prompts = true,
     },
     keys = {
-      { '<C-n>', '<Cmd>NvimTreeFindFileToggle!<CR>', desc = '[n]vim-tree toggle' },
-      { '<localleader>f', '<Cmd>NvimTreeFindFileToggle!<CR>' },
+      { ',f', '<Cmd>NvimTreeFindFileToggle!<CR>', desc = 'nvim tree [f]ind file' },
     },
   },
   {
     'stevearc/oil.nvim',
-    config = function()
-      require('oil').setup {
-        columns = { 'icon' },
-        view_options = {
-          show_hidden = false,
-        },
-        win_options = {
-          wrap = false,
-          signcolumn = 'no',
-          cursorcolumn = false,
-          foldcolumn = '0',
-          spell = false,
-          list = false,
-          conceallevel = 3,
-          concealcursor = 'nvic',
-        },
-        keymaps = {
-          ['<C-c>'] = false,
-          ['q'] = 'actions.close',
-          ['<C-l>'] = false,
-          ['<C-r>'] = 'actions.refresh',
-          ['y.'] = 'actions.copy_entry_path',
-        },
-        skip_confirm_for_simple_edits = true,
-      }
-    end,
+    opts = {
+      columns = { 'icon' },
+      view_options = {
+        show_hidden = false,
+      },
+      win_options = {
+        wrap = false,
+        signcolumn = 'no',
+        cursorcolumn = false,
+        foldcolumn = '0',
+        spell = false,
+        list = false,
+        conceallevel = 3,
+        concealcursor = 'nvic',
+      },
+      keymaps = {
+        ['<C-c>'] = false,
+        ['q'] = 'actions.close',
+        ['<C-l>'] = false,
+        ['<C-r>'] = 'actions.refresh',
+        ['y.'] = 'actions.copy_entry_path',
+      },
+      skip_confirm_for_simple_edits = true,
+    },
   },
   {
     'stevearc/aerial.nvim',
@@ -314,20 +308,13 @@ local plugins = {
     },
   },
   {
-    'kevinhwang91/nvim-bqf',
-    ft = 'qf',
-    opts = {
-      preview = {
-        winblend = 0,
-      },
-    },
-  },
-  {
     'otavioschwanck/arrow.nvim',
-    keys = { '<leader>;' },
+    keys = {
+      { ',a', desc = '[a]rrow' },
+    },
     opts = {
       show_icons = true,
-      leader_key = '<leader>;',
+      leader_key = ',a',
       separate_by_branch = true,
     },
   },
@@ -443,9 +430,8 @@ local plugins = {
   },
   {
     'tpope/vim-fugitive',
-    event = 'VeryLazy',
-    cmd = { 'Git', 'G', 'Gvdiffsplit' },
     keys = {
+      { 'G', mode = 'c' },
       { '<leader>gs', '<Cmd>Git<CR>', desc = 'Git' },
       { '<leader>gv', '<Cmd>Gvdiffsplit<CR>', desc = 'Git' },
     },
@@ -804,10 +790,14 @@ local plugins = {
 
       local fterm1 = FTerm:new {
         cmd = vim.env.SHELL,
+        ft = 'fterm_1',
+        clear_env = true,
       }
 
       local fterm2 = FTerm:new {
         cmd = vim.env.SHELL,
+        ft = 'fterm_2',
+        clear_env = true,
       }
 
       vim.api.nvim_create_user_command('FTerm1Toggle', function()
@@ -821,13 +811,32 @@ local plugins = {
     cmd = { 'FTerm1Toggle', 'FTerm2Toggle' },
     keys = {
       {
+        '<M-e>',
+        function()
+          if vim.fn.mode() == 't' then
+            vim.fn.feedkeys('<C-\\><C-n>')
+          end
+          require('FTerm').toggle()
+        end,
+        mode = { 'n', 't' },
+      },
+      {
         '<M-i>',
         function()
           if vim.fn.mode() == 't' then
             vim.fn.feedkeys('<C-\\><C-n>')
           end
-
-          require('FTerm').toggle()
+          vim.cmd('FTerm1Toggle')
+        end,
+        mode = { 'n', 't' },
+      },
+      {
+        '<M-o>',
+        function()
+          if vim.fn.mode() == 't' then
+            vim.fn.feedkeys('<C-\\><C-n>')
+          end
+          vim.cmd('FTerm2Toggle')
         end,
         mode = { 'n', 't' },
       },
@@ -935,6 +944,7 @@ local plugins = {
             utils.warn('disabled hlchunk', 'Toggle')
           end
         end,
+        desc = 'Toggle hlchunk',
       },
     },
     config = function()
