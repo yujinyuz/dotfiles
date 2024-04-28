@@ -234,10 +234,12 @@ vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
   end,
 })
 
-vim.api.nvim_create_autocmd('BufWinLeave', {
+vim.api.nvim_create_autocmd('BufReadPost', {
   group = augroup('relative_path_fix'),
-  pattern = { 'oil:///*', 'fugitive:///*', 'NvimTree*' },
+  pattern = { '*' },
   callback = function()
-    vim.cmd.cd('.')
+    -- Sometimes buffer names become absolute paths and that messes up the
+    -- name in the tabline.
+    vim.cmd.lcd('.')
   end,
 })
