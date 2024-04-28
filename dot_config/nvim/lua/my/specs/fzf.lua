@@ -114,7 +114,7 @@ local config = function()
     },
     fzf_opts = {
       ['--no-hscroll'] = '',
-      ['--layout'] = 'reverse-list',
+      ['--layout'] = 'default',
     },
     keymap = {
       builtin = {
