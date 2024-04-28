@@ -30,9 +30,7 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<leader>clr', vim.lsp.buf.remove_workspace_folder, opts)
   vim.keymap.set('n', '<leader>clo', '<Cmd>LSoutlineToggle<CR>', opts)
 
-  vim.keymap.set('n', 'gr', function()
-    require('fzf-lua').lsp_references { ignore_current_line = true }
-  end)
+  vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
   vim.keymap.set('n', 'gI', vim.lsp.buf.implementation, opts)
   vim.keymap.set('i', '<C-s>', vim.lsp.buf.signature_help, opts)
