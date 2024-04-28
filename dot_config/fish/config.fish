@@ -52,6 +52,8 @@ set -Ux WHALEBREW_INSTALL_PATH $HOME/.local/bin
 set -Ux ZK_SHELL /bin/zsh
 ## go
 set -Ux GOPATH $HOME/go
+## homebrew cask
+set -Ux HOMEBREW_CASK_OPTS --no-quarantine
 
 # Path
 set -Ux fish_user_paths
