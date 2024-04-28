@@ -1,6 +1,8 @@
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 
-if not vim.loop.fs_stat(lazypath) then
+local uv = vim.uv or vim.loop
+
+if not uv.fs_stat(lazypath) then
   print('Downloading lazy.nvim...')
   vim.fn.system {
     'git',
@@ -15,34 +17,6 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
-  --block: Core Editing
-  -- syntax, indentation,
-  {
-    'nvim-treesitter/nvim-treesitter',
-    event = { 'BufRead' },
-    config = function()
-      require('configs.treesitter')
-    end,
-    build = function()
-      -- pcall is similar to a try/catch block so that our config doesn't throw any errors
-      -- in case installing tree-sitter objects fails
-      pcall(require('nvim-treesitter.install').update { with_sync = true })
-    end,
-    dependencies = {
-      { 'nvim-treesitter/nvim-treesitter-textobjects' },
-      { 'nvim-treesitter/nvim-treesitter-refactor' },
-      { 'windwp/nvim-ts-autotag' },
-      { 'RRethy/nvim-treesitter-endwise' },
-      { 'nvim-treesitter/playground', cmd = 'TSHighlightCapturesUnderCursor' },
-      {
-        'JoosepAlviste/nvim-ts-context-commentstring',
-        lazy = true,
-        opts = {
-          enable_autocmd = false,
-        },
-      },
-    },
-  },
   --block: Core Editing, syntax, indentation,
   {
     'hrsh7th/nvim-cmp',
