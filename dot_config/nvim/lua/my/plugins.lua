@@ -621,13 +621,6 @@ local plugins = {
   { 'onsails/lspkind-nvim' },
   { 'kyazdani42/nvim-web-devicons' },
   {
-    'echasnovski/mini.statusline',
-    version = false,
-    config = function()
-      require('my.statusline')
-    end,
-  },
-  {
     'j-hui/fidget.nvim',
     event = { 'BufRead' },
     opts = {
