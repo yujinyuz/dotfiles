@@ -144,6 +144,16 @@ local treesitter_config = function()
     autotag = { enable = true, disable = { 'markdown' } },
     endwise = { enable = true },
   }
+
+  local ts_info = require('nvim-treesitter.info')
+  vim.api.nvim_create_autocmd('FileType', {
+    pattern = ts_info.installed_parsers(),
+    callback = function()
+      vim.opt_local.foldmethod = 'expr'
+      vim.opt_local.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+    end,
+    desc = 'Set foldexpr for treesitter parsers',
+  })
 end
 
 return {
