@@ -6,13 +6,13 @@
 	authors = shortlog -e -s -n
 	; br = branch -v --sort=committerdate
 	br = for-each-ref --sort=-committerdate refs/heads/ --format='%(committerdate:short) %(authorname) %(refname:short)'
-	brs = for-each-ref --sort=-committerdate --format=\"%(color:blue)%(authordate:relative)\t%(color:cyan)%(authorname)\t%(color:white)%(color:bold)%(refname:short)\" refs/remotes
+	brs = for-each-ref --sort=-committerdate --format='%(color:blue)%(authordate:relative)\t%(color:cyan)%(authorname)\t%(color:white)%(color:bold)%(refname:short)' refs/remotes
 	c = commit
 	ci = commit -v
 	cleanstate = "!git reset --hard && git clean -fd"
-	cleanup = "!git branch --merged | grep  -v '\\*\\|master\\|develop' | xargs -n 1 git branch -d"
+	cleanup = "!git branch --merged | grep	-v '\\*\\|master\\|develop' | xargs -n 1 git branch -d"
 	cm = commit -m
-  ca = commit -a
+	ca = commit -a
 	co = checkout
 	contributors = shortlog --summary --numbered
 	d = difftool
@@ -24,16 +24,19 @@
 	; Find branches containing commit
 	fb = "!f() { git branch -a --contains $1; }; f"
 	; Find commits by source code
-	fc = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short -S$1; }; f"
+	fc = "!f() { git log --pretty=format:'%C(yellow)%h	%Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short -S$1; }; f"
 	; Find commits by commit message
-	fm = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=$1; }; f"
+	fm = "!f() { git log --pretty=format:'%C(yellow)%h	%Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=$1; }; f"
 	; Find tags containing commit
 	ft = "!f() { git describe --always --contains $1; }; f"
 	fl = log -u
+	; https://stackoverflow.com/questions/13630849/git-difference-between-assume-unchanged-and-skip-worktree
+	ignore = update-index --skip-worktree
+	unignore = update-index --no-skip-worktree
 	; Switch to a branch, creating it if necessary
 	ld = log --pretty=format:\"%C(yellow)%h %ad%Cred%d %Creset%s%Cblue [%cn]\" --decorate --date=relative
 	oldlg = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)'
-  lg = log -m --simplify-merges --color --graph --pretty=format:'%Cred%h%Creset %s %Cgreen(%ar) %Cblue%an <%ae>%Creset' --abbrev-commit --date=relative
+	lg = log -m --simplify-merges --color --graph --pretty=format:'%Cred%h%Creset %s %Cgreen(%ar) %Cblue%an <%ae>%Creset' --abbrev-commit --date=relative
 	ll = log --name-status --date=relative --pretty=format:\"%C(red)%h %C(reset)(%cd) %C(green)%an %Creset%s %C(yellow)%d%Creset\"
 	oldll = log --pretty=format:\"%C(yellow)%h%Cred%d %Creset%s%Cblue [%cn]\" --decorate --numstat
 	; Usually used for listing files managed by git bare repo
@@ -51,12 +54,12 @@
 	unpushed = "cherry -v"
 	unstage = "restore --staged ."
 	wip = "!git add . && git commit -m '[WIP] Just reset via git reset HEAD~1'"
-  ; https://stackoverflow.com/a/62303/3788603
+	; https://stackoverflow.com/a/62303/3788603
 	l = log --reverse --no-merges --stat @{1}..
 	; Diff changes against last pull
 	lcrev = log --reverse --no-merges --stat @{1}..
-  dw = diff --color --color-words='[^[:space:]]|([[:alnum:]]|UTF_8_GUARD)+'
-  go = "!f() { git checkout -b \"$1\" 2> /dev/null || git checkout \"$1\"; }; f"
+	dw = diff --color --color-words='[^[:space:]]|([[:alnum:]]|UTF_8_GUARD)+'
+	go = "!f() { git checkout -b \"$1\" 2> /dev/null || git checkout \"$1\"; }; f"
 [core]
 	excludesfile = ~/.gitignoreglobal
 	; S = chop long lines (rather than wrap them onto next line)
@@ -134,12 +137,14 @@
 	; https://stackoverflow.com/a/26438076/3788603
 	followTags = true
 [rebase]
-  autoStash = true
+	autoStash = true
 	autoSquash = true
 [user]
-  email = "{{ .email }}"
-  name = "{{ .name }}"
+	email = "{{ .email }}"
+	name = "{{ .name }}"
 [ghq]
 	root = ~/Sources
 [include]
 	path = ~/.gitconfig.local
+
+; vim:noexpandtab:ts=4:ft=gitconfig
