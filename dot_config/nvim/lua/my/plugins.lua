@@ -130,6 +130,7 @@ local plugins = {
   },
   {
     'kevinhwang91/nvim-fundo',
+    event = { 'BufWritePre' },
     dependencies = { 'kevinhwang91/promise-async' },
     config = function()
       require('fundo').install()
@@ -248,6 +249,7 @@ local plugins = {
   },
   {
     'stevearc/oil.nvim',
+    event = 'VeryLazy',
     opts = {
       columns = { 'icon' },
       view_options = {
@@ -304,6 +306,9 @@ local plugins = {
     dependencies = {
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
+      { 'folke/neoconf.nvim', cmd = 'Neoconf', config = false, dependencies = { 'nvim-lspconfig' } },
+      { 'folke/neodev.nvim', opts = {} },
+      { 'onsails/lspkind-nvim' },
       {
         'WhoIsSethDaniel/mason-tool-installer.nvim',
         build = ':MasonToolsInstall',
@@ -345,8 +350,6 @@ local plugins = {
     -- build = 'make install_jsregexp',
     dependencies = 'rafamadriz/friendly-snippets',
   },
-  { 'folke/neodev.nvim' },
-  { 'folke/neoconf.nvim' },
   {
     'stevearc/conform.nvim',
     event = 'BufReadPost',
@@ -590,6 +593,7 @@ local plugins = {
       vim.o.timeout = true
       vim.o.timeoutlen = 300
     end,
+    event = 'VeryLazy',
     config = function()
       local wk = require('which-key')
       wk.setup {
@@ -618,8 +622,7 @@ local plugins = {
       }
     end,
   },
-  { 'onsails/lspkind-nvim' },
-  { 'kyazdani42/nvim-web-devicons' },
+  { 'kyazdani42/nvim-web-devicons', lazy = true },
   {
     'j-hui/fidget.nvim',
     event = { 'BufRead' },
@@ -668,6 +671,7 @@ local plugins = {
   },
   {
     'levouh/tint.nvim',
+    event = 'VeryLazy',
     opts = {
       tint = -5,
       saturation = 0,
@@ -690,6 +694,7 @@ local plugins = {
   },
   {
     'stevearc/dressing.nvim',
+    event = 'VeryLazy',
     opts = {
       input = {
         enabled = false,
@@ -1008,6 +1013,7 @@ local plugins = {
   },
   {
     'yujinyuz/very-magic-slash.nvim',
+    event = 'VeryLazy',
     opts = {},
     dev = true,
   },
