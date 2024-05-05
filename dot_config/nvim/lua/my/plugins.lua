@@ -236,15 +236,24 @@ local plugins = {
     end,
   },
   {
-    'nvim-tree/nvim-tree.lua',
+    'echasnovski/mini.files',
+    version = false,
     opts = {
-      hijack_directories = {
-        enable = false,
+      options = {
+        use_as_default_explorer = false,
       },
-      select_prompts = true,
     },
     keys = {
-      { ',f', '<Cmd>NvimTreeFindFileToggle!<CR>', desc = 'nvim tree [f]ind file' },
+      {
+        ',t',
+        function()
+          local mf = require('mini.files')
+          if not mf.close() then
+            mf.open(vim.api.nvim_buf_get_name(0))
+            mf.reveal_cwd()
+          end
+        end,
+      },
     },
   },
   {
