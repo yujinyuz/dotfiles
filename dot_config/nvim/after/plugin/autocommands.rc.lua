@@ -255,6 +255,7 @@ vim.api.nvim_create_autocmd('FileType', {
     -- `vim.api.nvim_feedkeys('gO', 'n', true)` doesn't work
     vim.schedule(function()
       require('man').show_toc()
+      vim.cmd.wincmd('w')
     end)
   end,
   desc = 'Automatically open table of contents for man pages',
