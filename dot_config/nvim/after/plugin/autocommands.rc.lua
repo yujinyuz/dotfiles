@@ -226,13 +226,15 @@ vim.api.nvim_create_autocmd('QuickFixCmdPost', {
   command = 'cwindow',
 })
 
-vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
-  group = augroup('chezmoi_auto_apply'),
-  pattern = { vim.fs.normalize('~/Sources/github.com/yujinyuz/dotfiles/*') },
-  callback = function()
-    vim.api.nvim_exec2('!chezmoi apply --force &', { output = true })
-  end,
-})
+if vim.fn.executable('chezmoi') == 1 then
+  vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
+    group = augroup('chezmoi_auto_apply'),
+    pattern = { vim.fs.normalize('~/Sources/github.com/yujinyuz/dotfiles/*') },
+    callback = function()
+      vim.api.nvim_exec2('!chezmoi apply --force &', { output = true })
+    end,
+  })
+end
 
 vim.api.nvim_create_autocmd('BufReadPost', {
   group = augroup('relative_path_fix'),
