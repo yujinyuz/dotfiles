@@ -139,15 +139,13 @@ local config = function()
     grep = {
       git_icons = false,
       file_icons = false,
+      formatter = 'path.filename_first',
     },
-    file_icon_padding = '',
     on_create = function()
       vim.keymap.set('t', '<Esc>', '<C-c>', { buffer = 0 })
     end,
   }
 end
-
--- TODO:
 
 return {
   'ibhagwan/fzf-lua',
