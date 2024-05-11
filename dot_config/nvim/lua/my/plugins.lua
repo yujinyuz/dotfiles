@@ -1,8 +1,6 @@
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 
-local uv = vim.uv or vim.loop
-
-if not uv.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
   print('Downloading lazy.nvim...')
   vim.fn.system {
     'git',
@@ -31,7 +29,6 @@ local plugins = {
       'hrsh7th/cmp-nvim-lsp-signature-help',
       'lukas-reineke/cmp-rg',
       'lukas-reineke/cmp-under-comparator',
-      'neovim/nvim-lspconfig',
       'chrisgrieser/cmp_yanky',
       'yutkat/cmp-mocword',
       {
@@ -114,7 +111,7 @@ local plugins = {
 
   { 'tpope/vim-surround', event = 'VeryLazy' },
   { 'tpope/vim-repeat', event = 'VeryLazy' },
-  { 'tpope/vim-unimpaired', event = 'VeryLazy' },
+  { 'tpope/vim-unimpaired', keys = { 'yo', '[', ']' } },
   { 'tpope/vim-rsi', event = 'InsertEnter' },
   { 'tpope/vim-abolish', event = 'VeryLazy' },
   {
@@ -308,14 +305,14 @@ local plugins = {
   --block: Integration
   {
     'neovim/nvim-lspconfig',
-    event = { 'BufReadPre', 'BufNewFile' },
+    event = { 'BufReadPre', 'BufNewFile', 'VeryLazy' },
     config = function()
       require('configs.lspconfig')
     end,
     dependencies = {
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
-      { 'folke/neoconf.nvim', cmd = 'Neoconf', config = false, dependencies = { 'nvim-lspconfig' } },
+      { 'folke/neoconf.nvim', cmd = 'Neoconf', config = false },
       { 'folke/neodev.nvim', opts = {} },
       { 'onsails/lspkind-nvim' },
       {
