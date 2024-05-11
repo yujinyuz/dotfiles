@@ -809,8 +809,8 @@ local plugins = {
       require('gitpad').setup {
         dir = '~/Sync/notes/gitpad',
         border = 'rounded',
-        on_attach = function()
-          vim.api.nvim_buf_set_keymap(0, 'n', 'q', '<Cmd>silent! wq<CR>', { noremap = true, silent = true })
+        on_attach = function(bufnr)
+          vim.api.nvim_buf_set_keymap(bufnr, 'n', 'q', '<Cmd>silent! wq<CR>', { noremap = true, silent = true })
           vim.opt_local.textwidth = 100
         end,
       }
@@ -819,14 +819,14 @@ local plugins = {
       {
         '<leader>pp',
         function()
-          require('gitpad').toggle_git_pad()
+          require('gitpad').toggle_gitpad()
         end,
-        desc = 'gitpad',
+        desc = 'gitpad project',
       },
       {
         '<leader>pb',
         function()
-          require('gitpad').toggle_git_pad_branch()
+          require('gitpad').toggle_gitpad_branch()
         end,
         desc = 'gitpad branch',
       },
