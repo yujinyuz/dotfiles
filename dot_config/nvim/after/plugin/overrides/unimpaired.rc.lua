@@ -55,6 +55,15 @@ vim.keymap.set('n', 'yow', function()
   utils.toggle_opt('wrap')
 end)
 
+vim.keymap.set('n', 'yom', function()
+  vim.cmd('MuggleFriendlyModeToggle')
+  if vim.g.muggle_friendly_mode then
+    utils.info('enabled muggle friendly mode', 'Toggle')
+  else
+    utils.warn('disabled muggle friendly mode', 'Toggle')
+  end
+end, { desc = 'toggle muggle friendly mode' })
+
 vim.keymap.set('n', 'yoC', function()
   vim.b.colorcolumn_t_state = not vim.b.colorcolumn_t_state
 

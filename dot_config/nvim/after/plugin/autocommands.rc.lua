@@ -66,6 +66,10 @@ vim.api.nvim_create_autocmd({
   pattern = { '*' },
   group = augroup('enable_relative_number'),
   callback = function()
+    if vim.g.muggle_friendly_mode then
+      return
+    end
+
     if vim.opt.number:get() and vim.fn.mode() ~= 'i' then
       vim.opt.relativenumber = true
     end
@@ -82,6 +86,10 @@ vim.api.nvim_create_autocmd({
   pattern = { '*' },
   group = augroup('disable_relative_number'),
   callback = function()
+    if vim.g.muggle_friendly_mode then
+      return
+    end
+
     if vim.opt.number:get() then
       vim.opt.relativenumber = false
     end
