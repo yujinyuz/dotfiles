@@ -113,6 +113,6 @@ vim.keymap.set({ 'n', 'v' }, '<leader>cf', function()
   require('my.format').format()
 end, { desc = 'format buffer' })
 
-vim.keymap.set('n', ',x', '<Cmd>silent! write | :source %<CR>', { desc = 'source & e[x]ecute' })
+vim.keymap.set('n', ',x', '<Cmd>write | :source %<CR>', { desc = 'source & e[x]ecute' })
 
 vim.keymap.set('n', ',,', ',', { noremap = true, desc = 'repeat last f/F t/T command' })
