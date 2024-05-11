@@ -1004,6 +1004,7 @@ require('lazy').setup {
   change_detection = {
     notify = false,
   },
+  install = { colorscheme = { 'catppuccin', 'habamax' } },
   performance = {
     rtp = {
       disabled_plugins = {
