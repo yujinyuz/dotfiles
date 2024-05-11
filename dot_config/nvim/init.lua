@@ -7,10 +7,6 @@
 --     __/ |      _/ |            __/ |
 --    |___/      |__/            |___/
 --
---    @author yujinyuz
---    @gitHub https://github.com/yujinyuz
---    @repository https://github.com/yujinyuz/dotfiles
---    @description Collection of dotfiles gathered across different dotfiles repos
 
 require('my.options')
 require('my.maps')
