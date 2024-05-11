@@ -304,42 +304,6 @@ local plugins = {
 
   --block: Integration
   {
-    'neovim/nvim-lspconfig',
-    event = { 'BufReadPre', 'BufNewFile', 'VeryLazy' },
-    config = function()
-      require('configs.lspconfig')
-    end,
-    dependencies = {
-      'williamboman/mason.nvim',
-      'williamboman/mason-lspconfig.nvim',
-      { 'folke/neoconf.nvim', cmd = 'Neoconf', config = false },
-      { 'folke/neodev.nvim', opts = {} },
-      { 'onsails/lspkind-nvim' },
-      {
-        'WhoIsSethDaniel/mason-tool-installer.nvim',
-        build = ':MasonToolsInstall',
-        config = function()
-          require('mason-tool-installer').setup {
-            ensure_installed = {
-              'black',
-              'codespell',
-              'cspell',
-              'djlint',
-              'eslint_d',
-              'fixjson',
-              'hadolint',
-              'prettierd',
-              'ruff',
-              'stylua',
-              'taplo',
-              'write-good',
-            },
-          }
-        end,
-      },
-    },
-  },
-  {
     'L3MON4D3/LuaSnip',
     config = function()
       require('luasnip.loaders.from_vscode').lazy_load()
@@ -638,18 +602,6 @@ local plugins = {
         window = {
           winblend = 0,
         },
-      },
-    },
-  },
-  {
-    'SmiteshP/nvim-navic',
-    keys = {
-      {
-        '<C-s>',
-        function()
-          print(require('nvim-navic').get_location())
-        end,
-        desc = 'Show current location',
       },
     },
   },
