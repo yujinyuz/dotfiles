@@ -771,6 +771,16 @@ local plugins = {
         clear_env = true,
       }
 
+      local lazydocker = FTerm:new {
+        ft = 'fterm_lazydocker',
+        cmd = 'lazydocker',
+        clear_nv = true,
+      }
+
+      vim.api.nvim_create_user_command('LazyDockerToggle', function()
+        lazydocker:toggle()
+      end, {})
+
       local fterm1 = FTerm:new {
         cmd = vim.env.SHELL,
         ft = 'fterm_1',
@@ -814,6 +824,7 @@ local plugins = {
       'FTermToggle',
       'FTerm1Toggle',
       'FTerm2Toggle',
+      'LazyDockerToggle',
     },
     keys = {
       {
@@ -843,6 +854,13 @@ local plugins = {
             vim.cmd('FTermCloseAllExcept 2')
           end
           vim.cmd('FTerm2Toggle')
+        end,
+        mode = { 'n', 't' },
+      },
+      {
+        '<M-a>',
+        function()
+          vim.cmd('LazyDockerToggle')
         end,
         mode = { 'n', 't' },
       },
