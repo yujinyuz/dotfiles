@@ -335,23 +335,7 @@ local plugins = {
         toml = { 'taplo' },
       },
       format_on_save = function(bufnr)
-        if not require('my.format').auto_format then
-          return
-        end
-
-        -- Check if there is a .disable-autoformat file in the root of the project
-        local disable_autoformat = not vim.tbl_isempty(
-          vim.fs.find(
-            { '.disable-autofmt' },
-            { upward = true, path = vim.fs.dirname(vim.api.nvim_buf_get_name(bufnr)) }
-          )
-        )
-        if disable_autoformat then
-          return
-        end
-
-        -- Only perform autoformat it the file is in the ~/Sources directory
-        if not vim.fn.match(vim.api.nvim_buf_get_name(bufnr), '/Sources/') then
+        if not require('my.format').is_enabled(bufnr) then
           return
         end
 
