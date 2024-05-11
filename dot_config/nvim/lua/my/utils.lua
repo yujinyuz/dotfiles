@@ -92,4 +92,14 @@ M.sudo_write = function(tmpfile, filepath)
   vim.fn.delete(tmpfile)
 end
 
+M.humanize_size = function(size)
+  if size < 1024 then
+    return string.format('%dB', size)
+  elseif size < 1048576 then
+    return string.format('%.2fKiB', size / 1024)
+  else
+    return string.format('%.2fMiB', size / 1048576)
+  end
+end
+
 return M

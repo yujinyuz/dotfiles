@@ -45,7 +45,9 @@ return {
       },
       highlight = {
         enable = true,
-        disable = { 'json' },
+        disable = function(lang, bufnr)
+          return vim.b.large_buf
+        end,
         additional_vim_regex_highlighting = false,
       },
       indent = { enable = true },

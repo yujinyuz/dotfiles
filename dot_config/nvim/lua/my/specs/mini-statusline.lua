@@ -46,17 +46,6 @@ local config = function()
 
   local H = {}
 
-  H.get_filesize = function()
-    local size = vim.fn.getfsize(vim.fn.getreg('%'))
-    if size < 1024 then
-      return string.format('%dB', size)
-    elseif size < 1048576 then
-      return string.format('%.2fKiB', size / 1024)
-    else
-      return string.format('%.2fMiB', size / 1048576)
-    end
-  end
-
   H.get_filetype_icon = function()
     -- Have this `require()` here to not depend on plugin initialization order
     local has_devicons, devicons = pcall(require, 'nvim-web-devicons')
@@ -86,7 +75,7 @@ local config = function()
       return filetype
     end
 
-    local size = H.get_filesize()
+    local size = vim.b.bufsize_human
 
     return string.format('%s %s', filetype, size)
   end
