@@ -13,6 +13,13 @@ common_capabilities.textDocument.foldingRange = {
   lineFoldingOnly = true,
 }
 
+local common_on_init = function(client, _)
+  -- Disabled due to https://github.com/neovim/neovim/issues/23164
+  -- There has been a problem where there is a delay and then it changes the
+  -- highlighting.
+  client.server_capabilities.semanticTokensProvider = false
+end
+
 local common_on_attach_handler = function(client, bufnr)
   local opts = {
     buffer = bufnr,
@@ -42,22 +49,21 @@ end
 
 -- Server config
 local servers = {
-  -- pyright = {
-  --   enabled = false,
-  --   settings = {
-  --     pyright = {
-  --       disableOrganizeImports = true,
-  --     },
-  --     python = {
-  --       analysis = {
-  --         -- Ignore all files for analysis to exclusively use Ruff for linting
-  --         ignore = { '*' },
-  --       },
-  --     },
-  --   },
-  -- },
+  pyright = {
+    enabled = false,
+    settings = {
+      pyright = {
+        disableOrganizeImports = true,
+      },
+      python = {
+        analysis = {
+          -- Ignore all files for analysis to exclusively use Ruff for linting
+          ignore = { '*' },
+        },
+      },
+    },
+  },
   basedpyright = {
-    enabled = true,
     settings = {
       basedpyright = {
         disableOrganizeImports = true,
@@ -128,10 +134,12 @@ local servers = {
 }
 
 local options = {
+  enabled = true,
+  on_init = common_on_init,
   on_attach = common_on_attach_handler,
   capabilities = common_capabilities,
   flags = {
-    debounce_text_changes = 150,
+    debounce_text_changes = 500, -- 150 seems to be the default by idk what this implies
   },
 }
 
@@ -165,5 +173,7 @@ end
 
 for server, custom_cfg in pairs(servers) do
   local opts = vim.tbl_deep_extend('force', options, custom_cfg or {})
-  lspconfig[server].setup(opts)
+  if opts.enabled then
+    lspconfig[server].setup(opts)
+  end
 end
