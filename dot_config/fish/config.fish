@@ -101,3 +101,4 @@ alias -s ge graph-easy
 alias -s icat "kitty +kitten icat"
 alias -s ccurl "curl -OJL" # download file with original name
 alias -s nvim-upgrade-nightly "nvim -v && echo 'Updating neovim@nightly...' && mise uninstall neovim@nightly -q && mise install neovim@nightly -q && nvim -v"
+alias -s cls "clear; printf '\e[3J'"
