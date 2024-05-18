@@ -298,3 +298,14 @@ vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufWritePost' }, {
   end,
   desc = 'Set buffer size and large_buf flag',
 })
+
+vim.api.nvim_create_autocmd('CursorMoved', {
+  group = augroup('auto_hlsearch'),
+  callback = function()
+    if vim.v.hlsearch == 1 and vim.fn.searchcount().exact_match == 0 then
+      vim.schedule(function()
+        vim.cmd.nohlsearch()
+      end)
+    end
+  end,
+})
