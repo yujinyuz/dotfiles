@@ -275,19 +275,22 @@ vim.api.nvim_create_autocmd('FileType', {
   desc = 'Automatically open table of contents for man pages',
 })
 
-vim.api.nvim_create_autocmd('BufReadPre', {
+vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufWritePost' }, {
   group = augroup('bufsize'),
   pattern = '*',
   callback = function(event)
     local stats = vim.uv.fs_stat(vim.api.nvim_buf_get_name(event.buf))
-    if not stats then
-      return
-    end
-    vim.b.bufsize = stats.size
-    vim.b.bufsize_human = require('my.utils').humanize_size(vim.b.bufsize)
-    local max_filesize = 100 * 1024 -- 100kb
+    local size_threshold = 5000 * 1024 -- 5mb
 
-    if stats.size > max_filesize then
+    if not stats then
+      vim.b.bufsize = 0
+    else
+      vim.b.bufsize = stats.size
+    end
+
+    vim.b.bufsize_human = require('my.utils').humanize_size(vim.b.bufsize)
+
+    if vim.b.bufsize > size_threshold then
       vim.b.large_buf = true
     else
       vim.b.large_buf = false
