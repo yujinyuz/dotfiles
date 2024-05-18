@@ -233,11 +233,18 @@ local plugins = {
     end,
   },
   {
-    'echasnovski/mini.files',
+    'yujinyuz/mini.files',
+    dev = true,
     version = false,
+    init = function()
+      vim.g.mini_files_auto_confirm_on_simple_edits = true
+    end,
     opts = {
       options = {
         use_as_default_explorer = false,
+      },
+      mappings = {
+        go_in_plus = '<CR>',
       },
     },
     keys = {
