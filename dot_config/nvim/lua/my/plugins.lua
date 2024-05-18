@@ -134,30 +134,16 @@ local plugins = {
     end,
   },
   {
-    'nvim-pack/nvim-spectre',
+    'MagicDuck/grug-far.nvim',
+    opts = {
+      keymaps = {
+        replace = '<Space>R',
+      },
+      startInInsertMode = false,
+    },
+    cmd = 'GrugFar',
     keys = {
-      {
-        '<leader>S',
-        function()
-          require('spectre').open()
-        end,
-        desc = 'Search and Replace',
-      },
-      {
-        '<leader>sw',
-        function()
-          require('spectre').open_visual { select_word = true }
-        end,
-        desc = 'Search and Replace',
-      },
-      {
-        '<leader>sp',
-        function()
-          vim.cmd([[normal! viw]])
-          require('spectre').open_file_search()
-        end,
-        desc = 'Search and Replace',
-      },
+      { '<leader>S', '<Cmd>GrugFar<CR>', desc = 'GrugFar' },
     },
   },
   {
