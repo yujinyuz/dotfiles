@@ -837,6 +837,27 @@ local plugins = {
         end,
         desc = 'gitpad branch',
       },
+      {
+        '<leader>pn',
+        function()
+          local date_filename = 'daily-' .. os.date('%Y-%m-%d.md')
+          require('gitpad').toggle_gitpad { filename = date_filename, title = 'Daily Notes' }
+        end,
+        desc = 'gitpad daily notes',
+      },
+      {
+        '<leader>pf',
+        function()
+          local filename = vim.fn.bufname()
+          if filename == '' then
+            vim.notify('empty bufname')
+            return
+          end
+          filename = filename .. '.md'
+          require('gitpad').toggle_gitpad { filename = filename }
+        end,
+        desc = 'gitpad per file notes',
+      },
     },
   },
   {
