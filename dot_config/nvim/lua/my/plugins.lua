@@ -343,7 +343,7 @@ local plugins = {
       },
       format_on_save = function(bufnr)
         if not require('my.format').is_enabled(bufnr) then
-          return
+          return nil
         end
 
         return { timeout_ms = 500, lsp_fallback = true }
@@ -502,9 +502,6 @@ local plugins = {
         transparent_background = true,
         custom_highlights = function(colors)
           return {
-            GitpadFloat = { bg = colors.none },
-            GitpadFloatBorder = { bg = colors.none },
-            GitpadFloatTitle = { fg = colors.none, bg = colors.none },
             Folded = { bg = colors.surface1 }, -- Fix folded background when using transparent
             MiniStatuslineFilePrefix = { fg = colors.subtext0 },
             MiniStatuslineFilename = { fg = colors.text, style = { 'bold' } },
