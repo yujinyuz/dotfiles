@@ -5,22 +5,23 @@ local M = {}
 M._enabled = true
 
 function M.is_enabled(bufnr)
-  if M._enabled then
-    return true
-  end
+  -- If the file is not in the ~/Sources directory, do not autoformat.
+  -- If there is a .disable-autoformat file in the root of the project, do not autoformat.
+  -- Otherwise, return the value of M._enabled
 
   bufnr = bufnr or vim.api.nvim_get_current_buf()
   local bufname = vim.api.nvim_buf_get_name(bufnr)
 
-  -- Check if there is a .disable-autoformat file in the root of the project
-  local disable_autoformat =
-    not vim.tbl_isempty(vim.fs.find('.disable-autofmt', { upward = true, path = vim.fs.dirname(bufname) }))
-  if disable_autoformat then
+  -- Only perform autoformat it the file is in the ~/Sources directory
+  if not bufname:match('/Sources/') then
     return false
   end
 
-  -- Only perform autoformat it the file is in the ~/Sources directory
-  if not bufname:match('/Sources/') then
+  -- Check if there is a .disable-autoformat file in the root of the project
+  local disable_autoformat =
+    not vim.tbl_isempty(vim.fs.find('.disable-autofmt', { upward = true, path = vim.fs.dirname(bufname) }))
+
+  if disable_autoformat then
     return false
   end
 
@@ -28,7 +29,7 @@ function M.is_enabled(bufnr)
 end
 
 function M.format()
-  -- In case we need to use another format plugin, we just have to change it here
+  -- This will format the code even when not enabled
   require('conform').format { async = true, lsp_fallback = true }
 end
 
