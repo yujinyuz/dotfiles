@@ -147,6 +147,13 @@ cmp.setup.filetype('gitcommit', {
   }),
 })
 
+cmp.setup.filetype('sql', {
+  sources = cmp.config.sources {
+    { name = 'vim-dadbod-completion' },
+    { name = 'buffer', max_item_count = 10 },
+  },
+})
+
 -- Following the vim philosophy keybindings
 -- @see `:h ins-completion`
 vim.keymap.set('i', '<C-x><C-o>', function()
