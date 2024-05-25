@@ -157,6 +157,9 @@ vim.opt.showtabline = 1
 -- Automatically execute .nvim.lua files
 vim.opt.exrc = true
 
+-- Prevent moving windows around
+vim.opt.splitkeep = 'screen'
+
 -- Use <Space> as the leader key
 vim.g.mapleader = ' '
 vim.g.loaded_netrw = 1
