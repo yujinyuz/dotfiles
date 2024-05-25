@@ -72,7 +72,7 @@ vim.opt.formatoptions = vim.opt.formatoptions
   - '2' -- I'm not in gradeschool anymore
 
 -- Pums
-vim.opt.completeopt = { 'menuone', 'noselect', 'noinsert' }
+vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
 vim.opt.pumheight = 15
 -- Always show sign columns
 vim.opt.signcolumn = 'number'
