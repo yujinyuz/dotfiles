@@ -78,8 +78,8 @@ vim.opt.pumheight = 15
 vim.opt.signcolumn = 'number'
 -- Having longer update time leads to noticeable delays and poor UX
 vim.opt.updatetime = 250
--- Start scrolling when we're 8 lines below
-vim.opt.scrolloff = 8
+-- Start scrolling when we're 10 lines below
+vim.opt.scrolloff = 10
 -- and 15 lines from the side
 vim.opt.sidescrolloff = 15
 -- Don't show the --INSERT--
