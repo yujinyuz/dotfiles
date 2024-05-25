@@ -886,24 +886,6 @@ local plugins = {
   },
   {
     'shellRaining/hlchunk.nvim',
-    keys = {
-      {
-        'yoH',
-        function()
-          local utils = require('my.utils')
-          vim.b.hlchunk_t_state = not vim.b.hlchunk_t_state
-
-          if vim.b.hlchunk_t_state then
-            require('hlchunk.mods').chunk:enable()
-            utils.info('enabled hlchunk', 'Toggle')
-          else
-            require('hlchunk.mods').chunk:disable()
-            utils.warn('disabled hlchunk', 'Toggle')
-          end
-        end,
-        desc = 'Toggle hlchunk',
-      },
-    },
     config = function()
       require('hlchunk').setup {
         chunk = {
@@ -920,6 +902,26 @@ local plugins = {
         },
       }
     end,
+    keys = {
+      {
+        'yoH',
+        function()
+          local utils = require('my.utils')
+          local chunk_mod = require('hlchunk.mods.chunk') {}
+
+          vim.b.hlindent_t_state = not vim.b.hlindent_t_state
+
+          if vim.b.hlindent_t_state then
+            chunk_mod:enable()
+            utils.info('enabled hlchunk', 'Toggle')
+          else
+            chunk_mod:disable()
+            utils.warn('disabled hlchunk', 'Toggle')
+          end
+        end,
+        desc = 'Toggle hlchunk',
+      },
+    },
   },
   {
     'folke/trouble.nvim',
