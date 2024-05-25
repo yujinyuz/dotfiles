@@ -78,17 +78,21 @@ local lsp_config = function()
         },
       },
     },
-    ruff_lsp = {
+    ruff = {
+      enabled = true,
       on_attach = function(client, bufnr)
+        if client.name ~= 'ruff' then
+          return
+        end
         common_on_attach_handler(client, bufnr)
-        client.server_capabilities.disableHoverProvider = false
+        client.server_capabilities.hoverProvider = false
 
         -- Create ruff commands
         vim.api.nvim_create_user_command('RuffAutoFix', function()
           vim.lsp.buf.execute_command {
             command = 'ruff.applyAutofix',
             arguments = {
-              { uri = vim.uri_from_bufnr(0) },
+              { uri = vim.uri_from_bufnr(bufnr) },
             },
           }
         end, { desc = 'Ruff: Fix all auto-fixable problems' })
@@ -97,7 +101,7 @@ local lsp_config = function()
           vim.lsp.buf.execute_command {
             command = 'ruff.applyOrganizeImports',
             arguments = {
-              { uri = vim.uri_from_bufnr(0) },
+              { uri = vim.uri_from_bufnr(bufnr) },
             },
           }
         end, { desc = 'Ruff: Format imports' })
