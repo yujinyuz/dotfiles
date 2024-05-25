@@ -11,3 +11,4 @@ abbr -a j just
 abbr -a ju just
 abbr -a ch chezmoi
 abbr -a che chezmoi
+abbr -a ghq ghr
