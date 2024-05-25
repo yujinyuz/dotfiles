@@ -160,6 +160,9 @@ vim.opt.exrc = true
 -- Prevent moving windows around
 vim.opt.splitkeep = 'screen'
 
+-- Always ask for confirmation when closing unsaved buffers
+vim.opt.confirm = true
+
 -- Use <Space> as the leader key
 vim.g.mapleader = ' '
 vim.g.loaded_netrw = 1
