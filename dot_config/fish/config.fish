@@ -37,11 +37,7 @@ set -Ux MANPAGER "nvim +Man!"
 set -Ux MANWIDTH 999
 set -Ux XDG_CONFIG_HOME $HOME/.config
 ## fzf
-set -l FD_OPTIONS "--hidden --follow --strip-cwd-prefix --exclude .git --exclude node_modules"
-set -Ux FZF_DEFAULT_COMMAND "git ls-files --cached --others --exclude-standard &> /dev/null | fd --type f --type l $FD_OPTIONS"
 set -Ux FZF_DEFAULT_OPTS_FILE $XDG_CONFIG_HOME/fzf/config
-set -Ux FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
-set -Ux FZF_ALT_C_COMMAND "fd --type d $FD_OPTIONS"
 ## virtualfish
 set -Ux VIRTUALFISH_HOME $HOME/.local/share/virtualenvs
 ## Bun
