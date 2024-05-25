@@ -127,7 +127,7 @@ vim.opt.foldminlines = 2
 vim.opt.breakindent = true
 -- Make it so long that lines wrap smartly
 vim.opt.linebreak = true
-vim.opt.showbreak = ' ↳ '
+vim.opt.showbreak = ' ↪ '
 
 vim.opt.lazyredraw = true
 
