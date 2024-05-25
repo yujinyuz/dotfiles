@@ -54,9 +54,7 @@ local cmp_config = {
   },
   snippet = {
     expand = function(args)
-      if has_luasnip then
-        luasnip.lsp_expand(args.body)
-      end
+      vim.snippet.expand(args.body)
     end,
   },
 
