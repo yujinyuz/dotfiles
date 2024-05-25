@@ -148,6 +148,10 @@ local lsp_config = function()
 
     local server_opts = vim.tbl_deep_extend('force', common_options, servers[server_name] or {})
 
+    if type(server_opts.capabilities) == 'function' then
+      server_opts.capabilities = server_opts.capabilities()
+    end
+
     if server_opts.enabled ~= false then
       require('lspconfig')[server_name].setup(server_opts)
     end
