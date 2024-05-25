@@ -58,20 +58,6 @@ local plugins = {
     },
   },
   {
-    'echasnovski/mini.comment',
-    event = { 'BufReadPost', 'BufNewFile' },
-    version = false,
-    opts = {
-      options = {
-        custom_commentstring = function()
-          return vim.b.commentstring_override
-            or require('ts_context_commentstring.internal').calculate_commentstring()
-            or vim.bo.commentstring
-        end,
-      },
-    },
-  },
-  {
     'echasnovski/mini.indentscope',
     event = { 'BufReadPost', 'BufNewFile' },
     version = false,

@@ -173,11 +173,13 @@ return {
     opts = {},
   },
   {
-  {
-    'JoosepAlviste/nvim-ts-context-commentstring',
-    lazy = true,
+    'folke/ts-comments.nvim',
     opts = {
-      enable_autocmd = false,
+      lang = {
+        htmldjango = {
+          '{# %s #}',
+        },
+      },
     },
   },
 }
