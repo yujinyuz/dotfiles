@@ -9,3 +9,7 @@ vim.api.nvim_create_user_command('MuggleFriendlyModeToggle', function()
     vim.opt.relativenumber = true
   end
 end, {})
+
+vim.api.nvim_create_user_command('CursorMiddleToggle', function()
+  vim.opt.scrolloff = 999 - vim.o.scrolloff
+end, { desc = 'Always keep the cursor in the middle of the screen' })
