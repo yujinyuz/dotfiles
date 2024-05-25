@@ -174,9 +174,6 @@ return {
     opts = {},
   },
   {
-    'nvim-treesitter/playground',
-    cmd = 'TSHighlightCapturesUnderCursor',
-  },
   {
     'JoosepAlviste/nvim-ts-context-commentstring',
     lazy = true,
