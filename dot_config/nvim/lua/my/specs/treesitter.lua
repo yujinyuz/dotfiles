@@ -144,7 +144,6 @@ return {
         },
       },
       autopairs = { enable = true },
-      autotag = { enable = true, disable = { 'markdown' } },
       endwise = { enable = true },
     },
     config = function(_, opts)
