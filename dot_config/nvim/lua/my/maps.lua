@@ -53,7 +53,7 @@ vim.keymap.set('n', '<C-p>', ':e **/', { desc = 'Backup file finder' })
 vim.keymap.set('n', '<leader>qq', '<Cmd>q!<CR>', { desc = '[Q]uick [q]uit without saving' })
 vim.keymap.set('n', '<leader>qa', '<Cmd>qa!<CR>', { desc = '[Q]uit [a]ll without saving' })
 
-vim.keymap.set('n', '<leader>w', vim.cmd.write, { desc = '[w]rite file changes' })
+vim.keymap.set('n', '<leader>w', vim.cmd.update, { desc = '[w]rite file changes if any' })
 
 -- Store relative line number jumps in the jumplist if they exceed a threshold.
 vim.keymap.set('n', 'k', function()
