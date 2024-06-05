@@ -114,7 +114,7 @@ local lsp_config = function()
     tailwindcss = {},
     jsonls = {},
     tsserver = {},
-    vuels = {},
+    volar = {},
     lua_ls = {
       Lua = {
         workspace = { checkThirdParty = false },
