@@ -128,6 +128,7 @@ local lsp_config = function()
       },
     },
     taplo = {},
+    prosemd_lsp = {},
   }
 
   local common_options = {
