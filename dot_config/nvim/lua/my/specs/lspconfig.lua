@@ -129,6 +129,7 @@ local lsp_config = function()
     },
     taplo = {},
     prosemd_lsp = {},
+    bashls = {},
   }
 
   local common_options = {
