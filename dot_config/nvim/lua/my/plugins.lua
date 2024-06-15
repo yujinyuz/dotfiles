@@ -17,47 +17,6 @@ vim.opt.rtp:prepend(lazypath)
 local plugins = {
   --block: Core Editing, syntax, indentation,
   {
-    'hrsh7th/nvim-cmp',
-    event = { 'InsertEnter' },
-    config = function()
-      require('configs.cmp')
-    end,
-    dependencies = {
-      'hrsh7th/cmp-nvim-lsp',
-      'hrsh7th/cmp-buffer',
-      'saadparwaiz1/cmp_luasnip',
-      'hrsh7th/cmp-nvim-lsp-signature-help',
-      'lukas-reineke/cmp-rg',
-      'lukas-reineke/cmp-under-comparator',
-      'chrisgrieser/cmp_yanky',
-      'yutkat/cmp-mocword',
-      {
-        'yujinyuz/cmp-async-path',
-        dev = true,
-      },
-      {
-        'zbirenbaum/copilot-cmp',
-        config = true,
-        dependencies = {
-          'zbirenbaum/copilot.lua',
-          opts = {
-            suggestion = { enabled = false },
-            panel = { enabled = false },
-          },
-        },
-      },
-    },
-  },
-  {
-    'windwp/nvim-autopairs',
-    event = { 'InsertEnter' },
-    opts = {
-      disable_filetype = { 'vim', 'markdown' },
-      map_c_w = true,
-      check_ts = true,
-    },
-  },
-  {
     'echasnovski/mini.indentscope',
     event = { 'BufReadPost', 'BufNewFile' },
     version = false,
