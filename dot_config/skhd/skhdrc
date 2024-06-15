@@ -109,3 +109,5 @@ alt + ctrl - y : yabai -m query --spaces --space | \
                          then yabai -m space --layout bsp; \
                          else yabai -m space --layout stack; \
                          fi"; \
+
+# vim: ft=bash
