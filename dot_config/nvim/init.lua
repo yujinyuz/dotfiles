@@ -7,8 +7,7 @@
 --     __/ |      _/ |            __/ |
 --    |___/      |__/            |___/
 --
-
 require('my.options')
 require('my.maps')
-require('my.plugins')
+require('my.plugman')
 require('my.nightly')
