@@ -139,6 +139,7 @@ local config = function()
     grep = {
       git_icons = false,
       file_icons = false,
+      multiline = 1,
       formatter = 'path.filename_first',
     },
     on_create = function()
