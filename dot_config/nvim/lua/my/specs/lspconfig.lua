@@ -25,8 +25,13 @@ local lsp_config = function()
 
   local common_on_attach_handler = function(client, bufnr)
     -- +lsp
-    vim.keymap.set('n', 'crn', vim.lsp.buf.rename, { buffer = bufnr, desc = '[c]ode [r]efactor [n]ame' })
-    vim.keymap.set('n', 'crr', vim.lsp.buf.code_action, { buffer = bufnr, desc = '[c]ode [r]efactor [r]efactor' })
+    vim.keymap.set({ 'n', 'x' }, 'crn', vim.lsp.buf.rename, { buffer = bufnr, desc = '[c]ode [r]efactor [n]ame' })
+    vim.keymap.set(
+      { 'n', 'x' },
+      'crr',
+      vim.lsp.buf.code_action,
+      { buffer = bufnr, desc = '[c]ode [r]efactor [r]efactor' }
+    )
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, { buffer = bufnr, desc = '[g]oto [r]eferences' })
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { buffer = bufnr, desc = '[g]oto [d]efinition' })
     vim.keymap.set('n', 'gI', vim.lsp.buf.implementation, { buffer = bufnr, desc = '[g]oto [I]mplementation' })
