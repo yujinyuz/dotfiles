@@ -44,6 +44,11 @@ local keys = {
     desc = '[F]ind text',
   },
   {
+    '<leader>R',
+    '<Cmd>FzfLua resume<CR>',
+    desc = '[R]esume',
+  },
+  {
     '<leader>fb',
     '<Cmd>FzfLua buffers<CR>',
   },
