@@ -172,19 +172,4 @@ return {
       { 'nvim-treesitter/nvim-treesitter-refactor' },
     },
   },
-  {
-    'windwp/nvim-ts-autotag',
-    event = 'InsertEnter',
-    opts = {},
-  },
-  {
-    'folke/ts-comments.nvim',
-    opts = {
-      lang = {
-        htmldjango = {
-          '{# %s #}',
-        },
-      },
-    },
-  },
 }
