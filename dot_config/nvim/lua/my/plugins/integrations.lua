@@ -102,11 +102,11 @@ return {
       local gs = require('gitsigns')
       return {
         signs = {
-          add = { hl = 'GitGutterAdd', text = '+' },
-          change = { hl = 'GitGutterChange', text = '~' },
-          delete = { hl = 'GitGutterDelete', text = '_' },
-          topdelete = { hl = 'GitGutterDelete', text = '‾' },
-          changedelete = { hl = 'GitGutterChange', text = '~' },
+          add = { text = '+' },
+          change = { text = '~' },
+          delete = { text = '_' },
+          topdelete = { text = '‾' },
+          changedelete = { text = '~' },
         },
         signcolumn = false,
         current_line_blame = false,
@@ -118,25 +118,19 @@ return {
         on_attach = function(bufnr)
           vim.keymap.set('n', ']c', function()
             if vim.wo.diff then
-              return ']c'
+              vim.cmd.normal { ']c', bang = true }
+            else
+              gs.nav_hunk('next')
             end
-
-            vim.schedule(function()
-              gs.next_hunk()
-            end)
-            return '<Ignore>'
-          end, { expr = true, buffer = bufnr, desc = 'Next Hunk' })
+          end, { buffer = bufnr, desc = 'Next Hunk' })
 
           vim.keymap.set('n', '[c', function()
             if vim.wo.diff then
-              return '[c'
+              vim.cmd.normal { '[c', bang = true }
+            else
+              gs.nav_hunk('prev')
             end
-
-            vim.schedule(function()
-              gs.prev_hunk()
-            end)
-            return '<Ignore>'
-          end, { expr = true, buffer = bufnr, desc = 'Prev Hunk' })
+          end, { buffer = bufnr, desc = 'Prev Hunk' })
 
           -- Actions
           vim.keymap.set('n', '<leader>hs', gs.stage_hunk)
@@ -163,6 +157,8 @@ return {
           vim.keymap.set('n', '<leader>hD', function()
             gs.diffthis('~')
           end)
+
+          vim.keymap.set({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
         end,
       }
     end,
