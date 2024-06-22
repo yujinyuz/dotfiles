@@ -17,7 +17,7 @@ return {
           comments = { 'italic' },
           conditionals = { 'italic' },
         },
-        transparent_background = true,
+        transparent_background = false,
         custom_highlights = function(colors)
           return {
             Folded = { bg = colors.surface1 }, -- Fix folded background when using transparent
@@ -57,6 +57,16 @@ return {
         },
       }
       vim.cmd.colorscheme('catppuccin')
+
+      vim.api.nvim_create_user_command('CatppuccinToggleTransparent', function()
+        local cat = require('catppuccin')
+        -- Change the compile path so whenever we restart neovim, it won't use
+        -- the old compiled file
+        cat.options.compile_path = string.format('%s/tmp-catpuccin', vim.fn.stdpath('cache'))
+        cat.options.transparent_background = not cat.options.transparent_background
+        cat.compile()
+        vim.cmd.colorscheme(vim.g.colors_name)
+      end, {})
     end,
   },
   {
