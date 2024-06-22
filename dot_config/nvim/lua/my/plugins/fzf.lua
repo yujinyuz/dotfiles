@@ -84,6 +84,10 @@ local keys = {
     '<leader>\\',
     '<Cmd>FzfLua lsp_live_workspace_symbols<CR>',
   },
+  {
+    ',b',
+    '<Cmd>FzfLua buffers<CR>',
+  },
 }
 
 local config = function()
@@ -96,14 +100,14 @@ local config = function()
     actions = {
       files = {
         ['default'] = actions.file_edit,
-        ['ctrl-x'] = actions.file_split,
+        ['ctrl-s'] = actions.file_split,
         ['ctrl-v'] = actions.file_vsplit,
         ['ctrl-t'] = actions.file_tabedit,
         ['alt-q'] = actions.file_sel_to_qf,
       },
       buffers = {
         ['default'] = actions.buf_edit,
-        ['ctrl-x'] = actions.buf_split,
+        ['ctrl-s'] = actions.buf_split,
         ['ctrl-v'] = actions.buf_vsplit,
         ['ctrl-t'] = actions.buf_tabedit,
       },
@@ -145,7 +149,6 @@ local config = function()
       git_icons = false,
       file_icons = false,
       multiline = 1,
-      formatter = 'path.filename_first',
     },
     on_create = function()
       vim.keymap.set('t', '<Esc>', '<C-c>', { buffer = 0 })
