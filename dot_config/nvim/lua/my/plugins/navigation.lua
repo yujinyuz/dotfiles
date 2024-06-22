@@ -73,7 +73,7 @@ return {
     opts = {},
     cmd = { 'AerialToggle' },
     keys = {
-      { '\\t', '<cmd>AerialToggle<cr>', desc = '' },
+      { '\\t', '<cmd>AerialToggle<cr>', desc = 'Toggle Tags' },
     },
   },
   {
@@ -85,6 +85,13 @@ return {
       show_icons = true,
       leader_key = ',a',
       separate_by_branch = true,
+    },
+  },
+  {
+    'pechorin/any-jump.vim',
+    keys = {
+      { '<leader>j', '<Cmd>AnyJump<CR>', mode = { 'n', 'v' } },
+      { 'Any', mode = 'c' },
     },
   },
 }
