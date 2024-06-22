@@ -19,12 +19,12 @@ vim.opt.number = true
 -- Allow vim to set title of the terminal
 vim.opt.title = true
 -- Change list characters
+vim.opt.list = true
 vim.opt.listchars = {
   tab = '→ ',
   trail = '·',
-  space = '·',
   -- eol = '↲',
-  eol = '↴',
+  -- eol = '↴',
   nbsp = '☠',
   precedes = '«',
   extends = '»',
