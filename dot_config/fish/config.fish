@@ -4,6 +4,14 @@ set -gx VISUAL $EDITOR
 set -gx SUDO_EDITOR $EDITOR
 set -gx LANG en_US.UTF-8
 
+# i = case-insensitive searches, unless uppercase characters in search string
+# F = exit immediately if output fits on one screen
+# M = verbose prompt
+# R = ANSI color support
+# X = suppress alternate screen
+# -#.25 = scroll horizontally by quarter of screen width (default is half)
+set -gx LESS "-iFRMX-#.25"
+
 ## System
 ulimit -n 16384 # Increase resource usage limits to 16384 Default is 256
 
