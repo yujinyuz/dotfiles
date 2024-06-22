@@ -42,6 +42,8 @@ vim.opt.clipboard = 'unnamedplus'
 vim.opt.path = '.,**'
 -- Split right by default
 vim.opt.splitright = true
+-- Split below by default
+vim.opt.splitbelow = true
 -- Always show tabs
 vim.opt.showtabline = 2
 -- Don't wrap words
