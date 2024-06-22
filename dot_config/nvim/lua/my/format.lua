@@ -30,7 +30,7 @@ end
 
 function M.format()
   -- This will format the code even when not enabled
-  require('conform').format { async = true, lsp_fallback = true }
+  require('conform').format { async = true, lsp_format = 'fallback' }
 end
 
 function M.toggle()
