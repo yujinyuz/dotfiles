@@ -263,18 +263,12 @@ vim.api.nvim_create_autocmd('BufReadPost', {
 })
 
 vim.api.nvim_create_autocmd('FileType', {
-  group = augroup('man_auto_toc'),
+  group = augroup('man_toc_reminder'),
   pattern = { 'man' },
   callback = function()
-    -- Not sure why we need to wrap it within a vim.schedule
-    -- I'm also not sure how to send `gO` keys coz calling
-    -- `vim.api.nvim_feedkeys('gO', 'n', true)` doesn't work
-    vim.schedule(function()
-      require('man').show_toc()
-      vim.cmd.wincmd('w')
-    end)
+    vim.api.nvim_echo({ { 'Press gO to toggle table of contents', 'DiagnosticInfo' } }, true, {})
   end,
-  desc = 'Automatically open table of contents for man pages',
+  desc = 'Reminder to press gO to toggle table of contents',
 })
 
 vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufWritePost' }, {
