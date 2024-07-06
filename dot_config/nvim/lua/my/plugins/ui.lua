@@ -64,6 +64,13 @@ return {
         -- the old compiled file
         cat.options.compile_path = string.format('%s/tmp-catpuccin', vim.fn.stdpath('cache'))
         cat.options.transparent_background = not cat.options.transparent_background
+
+        if cat.options.transparent_background then
+          require('my.utils').info('enabled catpuccin.transparent_background', 'Toggle')
+        else
+          require('my.utils').warn('disabled catpuccin.transparent_background', 'Toggle')
+        end
+
         cat.compile()
         vim.cmd.colorscheme(vim.g.colors_name)
       end, {})

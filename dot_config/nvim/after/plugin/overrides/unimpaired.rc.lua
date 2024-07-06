@@ -78,3 +78,5 @@ vim.keymap.set('n', 'yoC', function()
     utils.warn('enabled cursorcolumn', 'Toggle')
   end
 end)
+
+vim.keymap.set('n', 'yoT', '<Cmd>CatppuccinToggleTransparent<CR>', { desc = 'Toggle transparent background' })
