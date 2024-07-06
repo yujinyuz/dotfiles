@@ -68,10 +68,6 @@ vim.keymap.set('n', '<leader>fixformat', function()
 end, { desc = 'Tells Vim to read the file again, forcing dos file format. Repairs ^M characters' })
 
 -- Diagnostics. Not necessarily related to LSP
-vim.keymap.set('n', '<leader>cd', function()
-  vim.deprecate('<leader>cd', '<C-w>d', 'in the future', 'config')
-  vim.diagnostic.open_float()
-end, { desc = 'Line diagnostics ' })
 vim.keymap.set('n', '<leader>kd', function()
   if vim.b.diagnostic_virtual_text_config ~= nil then
     vim.diagnostic.config { virtual_text = vim.b.diagnostic_virtual_text_config }
