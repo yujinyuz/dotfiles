@@ -148,29 +148,6 @@ return {
     end,
   },
   {
-    'levouh/tint.nvim',
-    event = 'VeryLazy',
-    opts = {
-      tint = -5,
-      saturation = 0,
-      window_ignore_function = function(winid)
-        local bufid = vim.api.nvim_win_get_buf(winid)
-        local buftype = vim.api.nvim_get_option_value('buftype', { buf = bufid })
-        local buflisted = vim.api.nvim_get_option_value('buflisted', { buf = bufid })
-        local floating = vim.api.nvim_win_get_config(winid).relative ~= ''
-        local diff_mode = vim.api.nvim_get_option_value('diff', { win = winid })
-
-        -- Do not tint unlisted buffers since we don't really care about them
-        if not buflisted then
-          return true
-        end
-
-        -- Do not tint `terminal` or floating windows, tint everything else
-        return buftype == 'terminal' or floating or diff_mode
-      end,
-    },
-  },
-  {
     'stevearc/dressing.nvim',
     event = 'VeryLazy',
     opts = {
@@ -178,5 +155,23 @@ return {
         enabled = false,
       },
     },
+  },
+  {
+    'miversen33/sunglasses.nvim',
+    event = 'UIEnter',
+    opts = {
+      filter_type = 'NOSYNTAX',
+      filter_percent = 0.35,
+      excluded_filetypes = {
+        'spellpopup',
+        'fugitive',
+        'gitcommit',
+        'qf',
+      },
+    },
+    config = function(_, opts)
+      local sg = require('sunglasses')
+      sg.setup(opts)
+    end,
   },
 }
