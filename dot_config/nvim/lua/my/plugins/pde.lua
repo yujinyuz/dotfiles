@@ -211,4 +211,10 @@ return {
       },
     },
   },
+  {
+    'echasnovski/mini.align',
+    event = { 'BufReadPost', 'BufNewFile' },
+    version = false,
+    opts = {},
+  },
 }
