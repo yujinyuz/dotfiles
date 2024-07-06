@@ -226,4 +226,10 @@ return {
       },
     },
   },
+  {
+    'andrewferrier/debugprint.nvim',
+    event = { 'BufReadPost' },
+    opts = {},
+    version = '*',
+  },
 }
