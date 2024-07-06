@@ -20,6 +20,7 @@ yabai -m config external_bar all:35:0
 # Custom rules
 yabai -m rule --add app="^System Settings$" manage=off
 yabai -m rule --add app="^Ice$" manage=off
+yabai -m rule --add app="^OBS$" manage=off
 yabai -m rule --add app="^Raycast*" manage=off
 yabai -m rule --add app="^Docker*" manage=off
 yabai -m rule --add app="^IINA$" manage=off
