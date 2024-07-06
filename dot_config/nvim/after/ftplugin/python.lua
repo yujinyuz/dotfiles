@@ -1,22 +1,21 @@
-local fterm = require('FTerm')
+local function copy_as_pytest()
+  local navic_data = require('nvim-navic').get_data()
 
-local pm_shell = fterm:new {
-  ft = 'shell_plus',
-  -- Sometimes manage.py is located inside src/ or some other directory
-  cmd = (vim.env.DJANGO_MANAGE_PY or 'python manage.py') .. ' shell_plus',
-}
+  local filepath = vim.fn.expand('%:p:.')
+  local tbl = {}
 
-vim.api.nvim_create_user_command('ShellPlus', function()
-  pm_shell:toggle()
-end, { bang = true })
+  table.insert(tbl, filepath)
+  for _, data in ipairs(navic_data) do
+    table.insert(tbl, data.name)
+  end
 
--- Use this to toggle btop in a floating terminal
-local function shell_plus()
-  pm_shell:toggle()
+  local pytest_test_path = table.concat(tbl, '::')
+
+  vim.fn.setreg('+', pytest_test_path)
+  return pytest_test_path
 end
 
-vim.keymap.set({ 'n', 't' }, '<A-x>', shell_plus)
-
--- Surround word with Optional
--- e.g. str -> Optional[str] = None
-vim.keymap.set('n', '<leader>o', 'iOptional[<C-o>A] = None<Esc>', { buffer = 0 })
+-- Override the default <C-s> keybinding to copy the current location as a pytest
+vim.keymap.set('n', '<C-s>', function()
+  vim.api.nvim_echo({ { copy_as_pytest(), 'String' } }, true, {})
+end, { buffer = 0 })
