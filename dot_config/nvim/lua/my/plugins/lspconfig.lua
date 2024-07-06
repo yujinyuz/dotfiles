@@ -135,6 +135,7 @@ local lsp_config = function()
     taplo = {},
     prosemd_lsp = {},
     bashls = {},
+    marksman = {},
   }
 
   local common_options = {
