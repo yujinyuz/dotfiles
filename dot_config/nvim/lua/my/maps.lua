@@ -115,3 +115,6 @@ vim.keymap.set('n', ',x', '<Cmd>write | :source %<CR>', { desc = 'source & e[x]e
 vim.keymap.set('n', ',,', ',', { noremap = true, desc = 'repeat last f/F t/T command' })
 
 vim.keymap.set('n', 'gV', '`[v`]', { desc = 'Select recently pasted text' })
+
+-- Disable the Type :qa! message when pressing <C-c> in normal mode
+vim.keymap.set('n', '<C-c>', '<silent> <C-c>', { noremap = true })
