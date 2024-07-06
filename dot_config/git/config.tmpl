@@ -1,49 +1,43 @@
 [alias]
-	; Amend the currently staged files to the latest commit
+	# Amend the currently staged files to the latest commit
 	amend = commit --amend --reuse-message=HEAD
 	aa = add --all
 	ap = add --patch
 	authors = shortlog -e -s -n
-	; br = branch -v --sort=committerdate
-	br = for-each-ref --sort=-committerdate refs/heads/ --format='%(committerdate:short) %(authorname) %(refname:short)'
-	brs = for-each-ref --sort=-committerdate --format='%(color:blue)%(authordate:relative)\t%(color:cyan)%(authorname)\t%(color:white)%(color:bold)%(refname:short)' refs/remotes
+	br = "for-each-ref --sort=-committerdate refs/heads/ --format='%(committerdate:short) %(authorname) %(refname:short)'"
+	brs = "for-each-ref --sort=-committerdate --format='%(color:blue)%(authordate:relative)\t%(color:cyan)%(authorname)\t%(color:white)%(color:bold)%(refname:short)' refs/remotes"
 	c = commit
 	ci = commit -v
-	cleanstate = "!git reset --hard && git clean -fd"
-	cleanup = "!git branch --merged | grep	-v '\\*\\|master\\|develop' | xargs -n 1 git branch -d"
+	cleanstate = "!f() { git reset --hard && git clean -fd; }; f"
+	cleanup = "!git branch --merged | grep -v '\\*\\|master\\|develop' | xargs -n 1 git branch -d"
 	cm = commit -m
 	ca = commit -a
 	co = checkout
 	contributors = shortlog --summary --numbered
-	d = difftool
-	dl = !git ll -1
-	; Show what files changed in current branch
+	# Show what files changed in current branch
 	df = diff --name-only ; <branch_name>
-	; Fetch all
+	# Fetch all
 	fa = fetch --all
-	; Find branches containing commit
+	# Find branches containing commit
 	fb = "!f() { git branch -a --contains $1; }; f"
-	; Find commits by source code
+	# Find commits by source code
 	fc = "!f() { git log --pretty=format:'%C(yellow)%h	%Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short -S$1; }; f"
-	; Find commits by commit message
+	# Find commits by commit message
 	fm = "!f() { git log --pretty=format:'%C(yellow)%h	%Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=$1; }; f"
-	; Find tags containing commit
+	# Find tags containing commit
 	ft = "!f() { git describe --always --contains $1; }; f"
 	fl = log -u
-	; https://stackoverflow.com/questions/13630849/git-difference-between-assume-unchanged-and-skip-worktree
+	# https://stackoverflow.com/questions/13630849/git-difference-between-assume-unchanged-and-skip-worktree
 	ignore = update-index --skip-worktree
 	unignore = update-index --no-skip-worktree
-	; Switch to a branch, creating it if necessary
-	ld = log --pretty=format:\"%C(yellow)%h %ad%Cred%d %Creset%s%Cblue [%cn]\" --decorate --date=relative
-	oldlg = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)'
-	lg = log -m --simplify-merges --color --graph --pretty=format:'%Cred%h%Creset %s %Cgreen(%ar) %Cblue%an <%ae>%Creset' --abbrev-commit --date=relative
-	ll = log --name-status --date=relative --pretty=format:\"%C(red)%h %C(reset)(%cd) %C(green)%an %Creset%s %C(yellow)%d%Creset\"
-	oldll = log --pretty=format:\"%C(yellow)%h%Cred%d %Creset%s%Cblue [%cn]\" --decorate --numstat
-	; Usually used for listing files managed by git bare repo
+	# Switch to a branch, creating it if necessary
+	lg = "log -m --simplify-merges --color --graph --pretty=format:'%Cred%h%Creset %s %Cgreen(%ar) %Cblue%an <%ae>%Creset' --abbrev-commit --date=relative"
+	ll = "log --name-status --date=relative --pretty=format:\"%C(red)%h %C(reset)(%cd) %C(green)%an %Creset%s %C(yellow)%d%Creset\""
+	# Usually used for listing files managed by git bare repo
 	ls = ls-tree --full-tree -r --name-only HEAD
 	modified = ls-files -m
 	pu = push
-	; It will halt the push operation if someone has pushed to the same branch while you were working on it (and haven’t pulled any changes).
+	# It will halt the push operation if someone has pushed to the same branch while you were working on it (and haven’t pulled any changes).
 	pf = push --force-with-lease
 	pup = "!git push -u origin $(git rev-parse --abbrev-ref HEAD)"
 	remotes = remote -v
@@ -54,16 +48,20 @@
 	unpushed = "cherry -v"
 	unstage = "restore --staged ."
 	wip = "!git add . && git commit -m '[WIP] Just reset via git reset HEAD~1'"
-	; https://stackoverflow.com/a/62303/3788603
+	# https://stackoverflow.com/a/62303/3788603
 	l = log --reverse --no-merges --stat @{1}..
-	; Diff changes against last pull
+	# Diff changes against last pull
 	lcrev = log --reverse --no-merges --stat @{1}..
 	dw = diff --color --color-words='[^[:space:]]|([[:alnum:]]|UTF_8_GUARD)+'
 	go = "!f() { git checkout -b \"$1\" 2> /dev/null || git checkout \"$1\"; }; f"
 [core]
 	excludesfile = ~/.gitignoreglobal
-	; S = chop long lines (rather than wrap them onto next line)
-	; pager = less -S
+	# S = chop long lines (rather than wrap them onto next line)
+	#
+	# This in addition to the "iFMRX" that we get via LESS environment variable.
+	# (In the absence LESS, Git would use "FRX".)
+	# pager = less -S
+	pager = delta
 [commit]
 	template = ~/.gitmessage
 	verbose = true
@@ -71,20 +69,10 @@
 	enabled = true
 [color]
 	ui = auto
-[color "diff-highlight"]
-	newhighlight = reverse
-	newreset = noreverse
-	oldhighlight = reverse
-	oldreset = noreverse
-; [color "diff-highlight"]
-;	oldNormal = red bold
-;	oldHighlight = red bold 52
-;	newNormal = green bold
-;	newHighlight = green bold 22
 [color "status"]
 	added = green
 	changed = yellow
-	untracked = cyan
+	untracked = blue
 [color "interactive"]
 	prompt = blue reverse
 [color "diff"]
@@ -94,13 +82,21 @@
 	old = red
 	new = green
 	whitespace = red reverse
+[color "diff-highlight"]
+	newhighlight = reverse
+	newreset = noreverse
+	oldhighlight = reverse
+	oldreset = noreverse
 [diff]
 	algorithm = histogram
 	compactionHeuristic = true
 	# Detect copies as well as renames
 	renames = copies
+	# Highlight code that has been moved
+	colorMoved = dimmed-zebra
+	# colorMoved = default
 [diff "bin"]
-	; Use `hexdump` to diff binary files
+	# Use `hexdump` to diff binary files
 	textconv = hexdump -v -C
 [difftool]
 	prompt = false
@@ -117,7 +113,9 @@
 	templatedir = ~/.git_template
 	defaultBranch = main
 [interactive]
-	diffFilter = diff-highlight
+	# diffFilter = diff-highlight
+	# diffFilter = delta --color-only
+	diffFilter = delta --color-only --features=interactive
 [log]
 	decorate = short
 [merge]
@@ -125,12 +123,31 @@
 	ff = no
 	commit = no
 	summary = true
-	; Include summaries of merged commits in newly created merge commit messages
+	# Include summaries of merged commits in newly created merge commit messages
 	log = true
 [pager]
-	whatchanged = ~/.local/bin/diff-highlight | menos -iFMRSX --pattern='^(commit|diff)'
+	# diff = less -iFMRSX --pattern='^(commit|diff)'
+	# log = less -iFMRSX --pattern='^(commit|diff)'
+	# show = less -iFMRSX --pattern='^(commit|diff)'
+	# whatchanged = less -iFMRSX --pattern='^(commit|diff)'
 	show-branch = true
 	status = true
+[delta]
+	navigate = true
+	diff-so-fancy = true
+	syntax-theme = none
+	keep-plus-minus-markers = false
+	commit-style = raw
+	file-style = raw
+    file-decoration-style = ul
+	hunk-header-decoration-style = none
+	hunk-header-style = raw
+	minus-style = raw
+	file-added-label = [+]
+	file-copied-label = [C]
+	file-modified-label = [M]
+	file-removed-label = [-]
+	file-renamed-label = [R]
 [pull]
 	rebase = true
 [push]
@@ -149,4 +166,4 @@
 [include]
 	path = ~/.gitconfig.local
 
-; vim:noexpandtab:ts=4:ft=gitconfig
+# vim:noexpandtab:ts=4:sw=4:ft=gitconfig:commentstring=#\ %s
