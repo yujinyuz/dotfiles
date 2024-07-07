@@ -102,8 +102,13 @@ vim.api.nvim_create_autocmd('VimResized', {
   group = augroup('resize_splits'),
   callback = function()
     local current_tab = vim.fn.tabpagenr()
+    local current_win = vim.api.nvim_get_current_win()
+
     vim.cmd('tabdo wincmd =')
     vim.cmd('tabnext ' .. current_tab)
+
+    -- Needed to prevent the cursor from moving somewhere else when resizing splits
+    vim.api.nvim_set_current_win(current_win)
   end,
   desc = 'Automatically Resize Windows Equally',
 })
