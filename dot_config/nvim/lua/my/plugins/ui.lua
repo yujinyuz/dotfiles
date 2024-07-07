@@ -1,18 +1,17 @@
 return {
   {
     'catppuccin/nvim',
+    lazy = false,
     name = 'catppuccin',
     priority = 1000,
     config = function()
       require('catppuccin').setup {
-        flavour = 'frappe',
         background = {
           light = 'latte',
           dark = 'frappe',
         },
         no_italic = false, -- Force  no italic
         no_bold = false,
-        term_colors = true,
         styles = {
           comments = { 'italic' },
           conditionals = { 'italic' },
@@ -21,6 +20,7 @@ return {
         custom_highlights = function(colors)
           return {
             Folded = { bg = colors.surface1 }, -- Fix folded background when using transparent
+            FloatBorder = { bg = colors.none }, -- Needed because of https://github.com/catppuccin/nvim/commit/31fcf
             StatusLine = { bg = colors.surface0 },
             StatuslineFilePrefix = { bg = colors.surface0, fg = colors.subtext0, style = { 'italic' } },
             StatuslineFileName = { bg = colors.surface0, fg = colors.text, style = { 'bold' } },
@@ -31,11 +31,12 @@ return {
         integrations = {
           aerial = true,
           cmp = true,
+          gitsigns = true,
+          leap = true,
+          lsp_trouble = true,
           mason = true,
-          nvimtree = true,
-          which_key = true,
-          fidget = true,
-          rainbow_delimiters = true,
+          markdown = true,
+          mini = true,
           native_lsp = {
             enabled = true,
             virtual_text = {
@@ -54,6 +55,9 @@ return {
               background = true,
             },
           },
+          treesitter = true,
+          treesitter_context = true,
+          which_key = true,
         },
       }
       vim.cmd.colorscheme('catppuccin')
