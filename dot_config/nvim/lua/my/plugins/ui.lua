@@ -81,42 +81,6 @@ return {
     end,
   },
   {
-    -- Useful plugin to show you pending keybinds.
-    'folke/which-key.nvim',
-    init = function()
-      vim.o.timeout = true
-      vim.o.timeoutlen = 300
-    end,
-    event = 'VeryLazy',
-    config = function()
-      local wk = require('which-key')
-      wk.setup {
-        show_help = false,
-        key_labels = {
-          ['<leader>'] = 'SPC',
-          ['<CR>'] = 'RET',
-          ['<TAB>'] = 'TAB',
-        },
-        window = { padding = { 0, 0, 0, 0 } },
-        layout = { height = { min = 1, max = 10 } },
-        triggers_blacklist = {
-          c = { 'w', 'f', 'F' },
-          n = { '`' },
-        },
-      }
-      wk.register {
-        ['<leader>c'] = { name = '+lsp' },
-        ['<leader>g'] = { name = '+git' },
-        ['<leader>h'] = { name = '+hunk' },
-        ['<leader>p'] = { name = '+pad' },
-        ['<leader>q'] = { name = '+quit' },
-        ['<leader>s'] = { name = '+search' },
-        ['y'] = { name = '+yank' },
-        ['yo'] = { name = '+switch on/off' },
-      }
-    end,
-  },
-  {
     'echasnovski/mini.icons',
     lazy = true,
     opts = {},
