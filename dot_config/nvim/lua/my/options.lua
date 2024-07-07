@@ -182,6 +182,6 @@ vim.diagnostic.config {
   virtual_text = { spacing = 2, prefix = '●' },
   severity_sort = true,
   float = {
-    source = 'always', -- or 'if_many'
+    source = true,
   },
 }
