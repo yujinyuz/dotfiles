@@ -20,7 +20,6 @@ return {
         custom_highlights = function(colors)
           return {
             Folded = { bg = colors.surface1 }, -- Fix folded background when using transparent
-            FloatBorder = { bg = colors.none }, -- Needed because of https://github.com/catppuccin/nvim/commit/31fcf
             StatusLine = { bg = colors.surface0 },
             StatuslineFilePrefix = { bg = colors.surface0, fg = colors.subtext0, style = { 'italic' } },
             StatuslineFileName = { bg = colors.surface0, fg = colors.text, style = { 'bold' } },
