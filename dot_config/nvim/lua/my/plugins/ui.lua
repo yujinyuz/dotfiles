@@ -24,6 +24,7 @@ return {
             StatuslineFilePrefix = { bg = colors.surface0, fg = colors.subtext0, style = { 'italic' } },
             StatuslineFileName = { bg = colors.surface0, fg = colors.text, style = { 'bold' } },
             StatusLineLocInfo = { bg = colors.text, fg = colors.base },
+            StatusLineMode = { bg = colors.text, fg = colors.base },
             StatusLineCommonInfo = { bg = colors.surface1, style = { 'bold' } },
           }
         end,

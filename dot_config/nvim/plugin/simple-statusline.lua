@@ -53,9 +53,10 @@ end
 _G.SimpleStatusline.render = function()
   return table.concat {
     -- Show mode
-    '%#StatusLineCommonInfo#',
-    string.format('[%s]', vim.api.nvim_get_mode().mode),
+    '%#StatusLineMode#',
+    string.format(' %s ', vim.api.nvim_get_mode().mode),
     -- Show git branch (if available)
+    '%#StatusLineCommonInfo#',
     H.git_branch { trunc_width = 80 },
     '%*',
     '%<',
