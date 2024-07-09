@@ -35,3 +35,4 @@
 --exclude=*.html
 --exclude=*.conf
 --exclude=*.ini
+--exclude=*.diff
