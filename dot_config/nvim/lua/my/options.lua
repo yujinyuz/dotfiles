@@ -57,7 +57,7 @@ vim.opt.grepprg = 'rg --vimgrep --smart-case'
 vim.opt.grepformat = '%f:%l:%c:%m'
 
 vim.opt.shortmess = vim.opt.shortmess
-  + 'a'
+  + 'a' -- use abbreviations in messages eg. `[RO]` instead of `[readonly]`
   + 'I' -- Disable intro message
   + 'c' -- Don't give |ins-completion-menu| messages
 
