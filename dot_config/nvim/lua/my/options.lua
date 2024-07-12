@@ -32,8 +32,8 @@ vim.opt.listchars = {
 }
 -- Hide buffer when switching to other files
 vim.opt.hidden = true
--- Prefer bash for shell-related tasks
-vim.opt.shell = '/bin/bash'
+-- Prefer sh for shell-related tasks
+vim.opt.shell = 'sh'
 -- Disable annoying swapfiles
 vim.opt.swapfile = false
 -- Use system clipboard
