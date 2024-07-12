@@ -82,8 +82,8 @@ vim.opt.signcolumn = 'number'
 vim.opt.updatetime = 250
 -- Start scrolling when we're 10 lines below
 vim.opt.scrolloff = 10
--- and 15 lines from the side
-vim.opt.sidescrolloff = 15
+-- and 3 lines from the side
+vim.opt.sidescrolloff = 3
 -- Don't show the --INSERT--
 vim.opt.showmode = false
 -- Enable backups
