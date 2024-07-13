@@ -118,3 +118,7 @@ vim.keymap.set('n', 'gV', '`[v`]', { desc = 'Select recently pasted text' })
 
 -- Disable the Type :qa! message when pressing <C-c> in normal mode
 vim.keymap.set('n', '<C-c>', '<silent> <C-c>', { noremap = true })
+
+-- Automatically center the screen when searching
+vim.keymap.set('n', 'n', 'nzzzv', { desc = "Fwd  search '/' or '?'" })
+vim.keymap.set('n', 'N', 'Nzzzv', { desc = "Back search '/' or '?'" })

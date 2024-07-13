@@ -309,4 +309,6 @@ vim.api.nvim_create_autocmd('CursorMoved', {
       end)
     end
   end,
+  desc = 'Automatically clear hlsearch when cursor moves',
+})
 })

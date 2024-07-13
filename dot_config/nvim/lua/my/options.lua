@@ -131,8 +131,6 @@ vim.opt.breakindent = true
 vim.opt.linebreak = true
 vim.opt.showbreak = ' ↪ '
 
-vim.opt.lazyredraw = true
-
 -- Enable 24-bit RGB color
 vim.opt.termguicolors = true
 
