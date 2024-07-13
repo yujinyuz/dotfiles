@@ -35,7 +35,7 @@ yabai -m rule --add label="Software Update" title="Software Update" manage=off
 yabai -m rule --add label="About This Mac" app="System Information" title="About This Mac" manage=off
 yabai -m rule --apply
 
-borders active_color=0xffc6d0f5 inactive_color=0x00000000 width=3.0 style=round &
+borders active_color=0xffc6d0f5 inactive_color=0x00000000 width=3.0 style=round blacklist="OBS" &
 
 # Requires SIP to be disabled.. so I'll prefer not using it in the mean time
 # yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
