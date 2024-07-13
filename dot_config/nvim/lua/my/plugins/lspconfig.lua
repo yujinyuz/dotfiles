@@ -182,6 +182,10 @@ return {
       { 'onsails/lspkind-nvim' },
       {
         'SmiteshP/nvim-navic',
+        lazy = true,
+        opts = {
+          lazy_update_context = true,
+        },
         keys = {
           {
             '<C-s>',
