@@ -106,6 +106,7 @@ return {
         replace = '<Space>R',
       },
       startInInsertMode = false,
+      windowCreationCommand = 'tabnew',
     },
     cmd = 'GrugFar',
     keys = {
