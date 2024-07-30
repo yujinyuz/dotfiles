@@ -50,11 +50,27 @@ H.loc_info = function(args)
   return 'ℓ:%l/%L 𝚌:%2v/%-2{virtcol("$")-1}'
 end
 
+H.gutter_padding = function()
+  local line_count = #tostring(vim.api.nvim_buf_line_count(0))
+
+  local hl = vim.bo.modified and '%#@text.danger#' or '%#StatusLineMode#'
+
+  -- Minimum of 2 spaces for the padding
+  local rep = math.max(line_count, 3)
+
+  -- Only expand the mode to the same width as the line count if
+  -- H
+  -- Handling even numbers is quite tricky, so we'll just remove one space
+  -- from the left padding if the line count is even
+  local padding = string.rep(' ', rep)
+
+  return string.format('%s%s', hl, padding)
+end
+
 _G.SimpleStatusline.render = function()
   return table.concat {
     -- Show mode
-    '%#StatusLineMode#',
-    string.format(' %s ', vim.api.nvim_get_mode().mode),
+    H.gutter_padding(),
     -- Show git branch (if available)
     '%#StatusLineCommonInfo#',
     H.git_branch { trunc_width = 80 },

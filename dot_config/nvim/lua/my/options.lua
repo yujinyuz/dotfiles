@@ -84,8 +84,8 @@ vim.opt.updatetime = 250
 vim.opt.scrolloff = 10
 -- and 3 lines from the side
 vim.opt.sidescrolloff = 3
--- Don't show the --INSERT--
-vim.opt.showmode = false
+-- Dislay --INSERT--
+vim.opt.showmode = true
 -- Enable backups
 vim.opt.backup = true
 -- Ensure filename uniqueness with //
