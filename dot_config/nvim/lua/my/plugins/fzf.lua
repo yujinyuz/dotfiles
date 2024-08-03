@@ -113,6 +113,7 @@ local config = function()
       },
     },
     winopts = {
+      backdrop = false,
       preview = {
         delay = 0,
         layout = 'flex',
