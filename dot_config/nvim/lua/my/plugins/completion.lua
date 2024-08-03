@@ -1,5 +1,5 @@
 vim.g.nvim_cmp_t_state = true
-vim.api.nvim_set_hl(0, 'CmpGhostText', { link = 'LspCodeLens', default = true })
+vim.api.nvim_set_hl(0, 'CmpGhostText', { link = 'Comment', default = true })
 
 local cmp_config = function()
   local cmp = require('cmp')
