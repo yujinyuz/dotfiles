@@ -65,13 +65,13 @@ return {
         local cat = require('catppuccin')
         -- Change the compile path so whenever we restart neovim, it won't use
         -- the old compiled file
-        cat.options.compile_path = string.format('%s/tmp-catpuccin', vim.fn.stdpath('cache'))
+        cat.options.compile_path = string.format('%s/tmp-catppuccin', vim.fn.stdpath('cache'))
         cat.options.transparent_background = not cat.options.transparent_background
 
         if cat.options.transparent_background then
-          require('my.utils').info('enabled catpuccin.transparent_background', 'Toggle')
+          require('my.utils').info('enabled catppuccin.transparent_background', 'Toggle')
         else
-          require('my.utils').warn('disabled catpuccin.transparent_background', 'Toggle')
+          require('my.utils').warn('disabled catppuccin.transparent_background', 'Toggle')
         end
 
         cat.compile()
