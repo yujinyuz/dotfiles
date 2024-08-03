@@ -122,3 +122,6 @@ vim.keymap.set('n', '<C-c>', '<Nop>', { noremap = true })
 -- Automatically center the screen when searching
 vim.keymap.set('n', 'n', 'nzzzv', { desc = "Fwd  search '/' or '?'" })
 vim.keymap.set('n', 'N', 'Nzzzv', { desc = "Back search '/' or '?'" })
+vim.keymap.set('c', '<CR>', function()
+  return vim.fn.getcmdtype() == '/' and '<CR>zzzv' or '<CR>'
+end, { expr = true })
