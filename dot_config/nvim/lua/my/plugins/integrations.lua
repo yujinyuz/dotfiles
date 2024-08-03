@@ -23,7 +23,7 @@ return {
       formatters_by_ft = {
         lua = { 'stylua' },
         javascript = { 'prettierd', 'eslint_d' },
-        python = { { 'ruff_format', 'black' }, 'ruff_fix' },
+        python = { 'ruff_format', 'ruff_fix' },
         fish = { 'fish_indent' },
         json = { 'jq' },
         jsonc = { 'fixjson' },
