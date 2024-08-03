@@ -125,3 +125,7 @@ vim.keymap.set('n', 'N', 'Nzzzv', { desc = "Back search '/' or '?'" })
 vim.keymap.set('c', '<CR>', function()
   return vim.fn.getcmdtype() == '/' and '<CR>zzzv' or '<CR>'
 end, { expr = true })
+
+vim.keymap.set({ 'n', 'x' }, '@', function()
+  vim.cmd('noautocmd norm! ' .. vim.v.count1 .. '@' .. vim.fn.getcharstr())
+end, { noremap = true })
