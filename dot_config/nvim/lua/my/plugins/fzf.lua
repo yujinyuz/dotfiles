@@ -8,6 +8,21 @@ local keys = {
     mode = 'c',
   },
   {
+    '<leader>e',
+    function()
+      require('fzf-lua').files {
+        cwd = '~/Sources/github.com/yujinyuz/dotfiles',
+        fzf_opts = { ['--ansi'] = false },
+        file_icons = false,
+        git_icons = false,
+        winopts = {
+          preview = { hidden = 'hidden' },
+        },
+      }
+    end,
+    desc = 'Edit dotfiles',
+  },
+  {
     '<leader>n',
     function()
       require('fzf-lua').files {
