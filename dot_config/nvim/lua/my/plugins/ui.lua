@@ -145,6 +145,7 @@ return {
   {
     'miversen33/sunglasses.nvim',
     event = 'UIEnter',
+    dev = true,
     opts = {
       filter_type = 'NOSYNTAX',
       filter_percent = 0.35,
@@ -153,6 +154,10 @@ return {
         'fugitive',
         'gitcommit',
         'qf',
+        'http',
+        'text',
+        'grug-far',
+        'oil',
       },
     },
     config = function(_, opts)
