@@ -121,6 +121,15 @@ return {
             return rainbow.strategy['local']
           end,
         },
+        highlight = {
+          -- 'RainbowDelimiterRed',
+          'RainbowDelimiterYellow',
+          'RainbowDelimiterBlue',
+          -- 'RainbowDelimiterOrange',
+          -- 'RainbowDelimiterGreen',
+          'RainbowDelimiterViolet',
+          'RainbowDelimiterCyan',
+        },
       }
     end,
   },
