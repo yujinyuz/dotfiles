@@ -121,6 +121,9 @@ return {
               vim.cmd.normal { ']c', bang = true }
             else
               gs.nav_hunk('next')
+              vim.schedule(function()
+                gs.preview_hunk_inline()
+              end)
             end
           end, { buffer = bufnr, desc = 'Next Hunk' })
 
@@ -129,6 +132,9 @@ return {
               vim.cmd.normal { '[c', bang = true }
             else
               gs.nav_hunk('prev')
+              vim.schedule(function()
+                gs.preview_hunk_inline()
+              end)
             end
           end, { buffer = bufnr, desc = 'Prev Hunk' })
 
@@ -144,21 +150,20 @@ return {
           vim.keymap.set('n', '<leader>hS', gs.stage_buffer)
           vim.keymap.set('n', '<leader>hu', gs.undo_stage_hunk)
           vim.keymap.set('n', '<leader>hR', gs.reset_buffer)
-          vim.keymap.set('n', '<leader>hp', gs.preview_hunk)
           vim.keymap.set('n', '<leader>hb', function()
             gs.blame_line { full = true }
           end)
 
           -- Commented this out since it conflicts with some of my mappings that starts
           -- with <leader>t. Will come back to this later
-          -- vim.keymap.set('n', '<leader>tb', gs.toggle_current_line_blame)
-          -- vim.keymap.set('n', '<leader>td', gs.toggle_deleted)
+          vim.keymap.set('n', '<leader>htb', gs.toggle_current_line_blame)
+          vim.keymap.set('n', '<leader>htd', gs.toggle_deleted)
           vim.keymap.set('n', '<leader>hd', gs.diffthis)
           vim.keymap.set('n', '<leader>hD', function()
             gs.diffthis('~')
           end)
 
-          vim.keymap.set({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+          vim.keymap.set({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>', { silent = true })
         end,
       }
     end,
