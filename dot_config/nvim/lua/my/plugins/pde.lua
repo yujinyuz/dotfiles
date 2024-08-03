@@ -105,12 +105,29 @@ return {
       keymaps = {
         replace = '<Space>R',
       },
+      headerMaxWidth = 80,
       startInInsertMode = false,
       windowCreationCommand = 'tabnew',
+      transient = true,
     },
     cmd = 'GrugFar',
     keys = {
       { '<leader>S', '<Cmd>GrugFar<CR>', desc = 'GrugFar' },
+      {
+        '<leader>sr',
+        function()
+          local grug = require('grug-far')
+          local ext = vim.bo.buftype == '' and vim.fn.expand('%:e')
+          grug.grug_far {
+            transient = true,
+            prefills = {
+              filesFilter = ext and ext ~= '' and '*.' .. ext or nil,
+            },
+          }
+        end,
+        mode = { 'n', 'v' },
+        desc = 'Search and Replace',
+      },
     },
   },
   { 'tversteeg/registers.nvim', event = 'VeryLazy' },
