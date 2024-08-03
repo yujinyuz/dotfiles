@@ -4,6 +4,22 @@ return {
     event = 'BufReadPost',
     init = function()
       vim.g.matchup_matchparen_offscreen = { method = 'popup' }
+      vim.g.matchup_surround_enabled = 1
+    end,
+    opts = {},
+    config = function(_, opts)
+      local ok, cmp = pcall(require, 'cmp')
+
+      -- https://github.com/hrsh7th/nvim-cmp/issues/1940
+      if ok then
+        cmp.event:on('menu_opened', function()
+          vim.b.matchup_matchparen_enabled = false
+        end)
+        cmp.event:on('menu_closed', function()
+          vim.b.matchup_matchparen_enabled = true
+        end)
+      end
+      require('match-up').setup(opts)
     end,
   },
   {
