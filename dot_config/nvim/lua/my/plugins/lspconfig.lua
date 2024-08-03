@@ -179,7 +179,6 @@ return {
     dependencies = {
       { 'folke/neoconf.nvim', cmd = 'Neoconf', config = false },
       { 'folke/neodev.nvim', opts = {} },
-      { 'onsails/lspkind-nvim' },
       {
         'SmiteshP/nvim-navic',
         lazy = true,

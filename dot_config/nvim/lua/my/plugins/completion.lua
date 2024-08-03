@@ -87,24 +87,6 @@ local cmp_config = function()
         hl_group = 'CmpGhostText',
       },
     },
-    formatting = {
-      format = require('lspkind').cmp_format {
-        mode = 'symbol_text',
-        max_width = 50,
-        showLabelDetails = true,
-        symbol_map = { Copilot = '', Yank = '', Suggest = '󱈛', RG = '󰈙' },
-        before = function(entry, vim_item)
-          if entry.source.name == 'cmp_yanky' then
-            vim_item.kind = 'Yank'
-          elseif entry.source.name == 'mocword' then
-            vim_item.kind = 'Suggest'
-          elseif entry.source.name == 'rg' then
-            vim_item.kind = 'RG'
-          end
-          return vim_item
-        end,
-      },
-    },
   }
 
   -- Setup filetype sources
