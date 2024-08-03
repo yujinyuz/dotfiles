@@ -79,7 +79,7 @@ _G.SimpleStatusline.render = function()
     '%#StatuslineFilePrefix#',
     string.format(' %s', H.fileprefix { trunc_width = 120 }),
     '%#StatuslineFilename#',
-    '%t',
+    '%t ',
     -- Reset highlight
     '%* ',
     -- Show modified flag and readonly flag
@@ -96,3 +96,8 @@ end
 
 -- Set statusline
 vim.opt.statusline = '%!v:lua.SimpleStatusline.render()'
+
+-- Define custom highlights
+vim.api.nvim_set_hl(0, 'StatusLineCommonInfo', { link = 'Visual', default = true })
+vim.api.nvim_set_hl(0, 'StatusLineLocInfo', { link = 'Cursor', default = true })
+vim.api.nvim_set_hl(0, 'StatusLineMode', { link = 'Cursor', default = true })
