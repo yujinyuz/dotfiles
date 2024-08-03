@@ -188,6 +188,7 @@ vim.api.nvim_create_autocmd('FileType', {
     'neotest-output-panel',
     'grug-far',
     'fugitive',
+    'fugitiveblame',
   },
   callback = function(event)
     vim.bo[event.buf].buflisted = false
