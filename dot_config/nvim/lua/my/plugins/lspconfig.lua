@@ -25,14 +25,22 @@ local lsp_config = function()
 
   local common_on_attach_handler = function(client, bufnr)
     -- +lsp
-    vim.keymap.set({ 'n', 'x' }, 'crn', vim.lsp.buf.rename, { buffer = bufnr, desc = '[c]ode [r]efactor [n]ame' })
-    vim.keymap.set(
-      { 'n', 'x' },
-      'crr',
-      vim.lsp.buf.code_action,
-      { buffer = bufnr, desc = '[c]ode [r]efactor [r]efactor' }
-    )
-    vim.keymap.set('n', 'gr', vim.lsp.buf.references, { buffer = bufnr, desc = '[g]oto [r]eferences' })
+    vim.keymap.set('n', 'grn', function()
+      vim.lsp.buf.rename()
+    end, { buffer = bufnr, desc = 'vim.lsp.buf.rename()' })
+
+    vim.keymap.set({ 'n', 'x' }, 'gra', function()
+      vim.lsp.buf.code_action()
+    end, { buffer = bufnr, desc = 'vim.lsp.buf.code_action()' })
+
+    vim.keymap.set('n', 'grr', function()
+      vim.lsp.buf.references()
+    end, { buffer = bufnr, desc = 'vim.lsp.buf.references()' })
+
+    vim.keymap.set('i', '<C-S>', function()
+      vim.lsp.buf.signature_help()
+    end, { buffer = bufnr, desc = 'vim.lsp.buf.signature_help()' })
+
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { buffer = bufnr, desc = '[g]oto [d]efinition' })
     vim.keymap.set('n', 'gI', vim.lsp.buf.implementation, { buffer = bufnr, desc = '[g]oto [I]mplementation' })
     vim.keymap.set('i', '<C-s>', vim.lsp.buf.signature_help, { buffer = bufnr, desc = 'code [s]ignature help' })
