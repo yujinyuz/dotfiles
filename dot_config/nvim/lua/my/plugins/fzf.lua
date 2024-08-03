@@ -26,7 +26,7 @@ local keys = {
     '<leader>]',
     function()
       require('fzf-lua').tags {
-        winopts = { preview = { hidden = 'nohidden' } },
+        winopts = { preview = { hidden = 'hidden' } },
         file_icons = false,
         git_icons = false,
       }
