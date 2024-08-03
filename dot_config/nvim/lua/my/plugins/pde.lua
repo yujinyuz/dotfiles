@@ -156,7 +156,7 @@ return {
     end,
   },
   {
-    'yujinyuz/very-magic-slash.nvim',
+    'yujinyuz/vms.nvim',
     event = 'VeryLazy',
     opts = {},
     dev = true,
