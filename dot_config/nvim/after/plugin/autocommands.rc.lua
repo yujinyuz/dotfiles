@@ -249,8 +249,19 @@ if vim.fn.executable('chezmoi') == 1 then
   vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
     group = augroup('chezmoi_auto_apply'),
     pattern = { vim.fs.normalize('~/Sources/github.com/yujinyuz/dotfiles/*') },
-    callback = function()
-      vim.api.nvim_exec2('!chezmoi apply --force &', { output = true })
+    callback = function(event)
+      local bufname = vim.fn.pathshorten(vim.api.nvim_buf_get_name(event.buf))
+      vim.uv.spawn('chezmoi', {
+        args = {
+          'apply',
+          '--force',
+        },
+      }, function(code, signal)
+        vim.schedule(function()
+          local msg = string.format('applied %s code: %s, signal: %s', bufname, code, signal)
+          require('my.utils').info(msg, '[chezmoi]')
+        end)
+      end)
     end,
   })
 end
