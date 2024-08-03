@@ -26,3 +26,10 @@ vim.api.nvim_create_user_command('FormatJson', function(opts)
 
   vim.cmd(start_line .. ',' .. end_line .. '!jq . --indent ' .. indent)
 end, { nargs = '?', range = true })
+
+vim.api.nvim_create_user_command('DiffOrig', function()
+  local ft = vim.bo.filetype
+  vim.cmd('leftabove vert new')
+  vim.cmd('set ft=' .. ft)
+  vim.cmd('set buftype=nofile | read ++edit # | 0d_ | diffthis | wincmd p | diffthis')
+end, { desc = 'Diff Orig file' })
