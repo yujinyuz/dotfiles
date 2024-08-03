@@ -26,8 +26,8 @@ vim.opt.listchars = {
   -- eol = '↲',
   -- eol = '↴',
   nbsp = '☠',
-  precedes = '«',
-  extends = '»',
+  precedes = '…',
+  extends = '…',
   conceal = '┊',
 }
 -- Hide buffer when switching to other files
