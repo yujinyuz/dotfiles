@@ -18,10 +18,8 @@ local cmp_config = function()
         follow_cursor = true,
       },
     },
-    sources = cmp.config.sources({
+    sources = cmp.config.sources {
       { name = 'nvim_lsp' },
-    }, {
-      { name = 'copilot' },
       {
         name = 'buffer',
         max_item_count = 10,
@@ -31,7 +29,7 @@ local cmp_config = function()
           end,
         },
       },
-    }),
+    },
     window = {
       documentation = cmp.config.window.bordered(),
     },
@@ -152,7 +150,6 @@ local cmp_config = function()
       config = {
         sources = {
           { name = 'nvim_lsp' },
-          { name = 'nvim_lua' },
         },
       },
     }
@@ -256,6 +253,7 @@ return {
       },
       {
         'zbirenbaum/copilot-cmp',
+        enabled = false,
         config = true,
         dependencies = {
           'zbirenbaum/copilot.lua',
