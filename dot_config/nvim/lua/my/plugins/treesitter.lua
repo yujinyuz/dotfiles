@@ -55,7 +55,6 @@ return {
         end,
         additional_vim_regex_highlighting = false,
       },
-      indent = { enable = true },
       incremental_selection = {
         enable = true,
         keymaps = {
@@ -88,6 +87,8 @@ return {
           show_help = '?',
         },
       },
+      indent = { enable = false },
+      yati = { enable = true, default_lazy = true, default_fallback = 'auto' },
       textobjects = {
         select = {
           enable = true,
@@ -170,6 +171,7 @@ return {
       { 'nvim-treesitter/nvim-treesitter-textobjects' },
       { 'RRethy/nvim-treesitter-endwise' },
       { 'nvim-treesitter/nvim-treesitter-refactor' },
+      { 'yioneko/nvim-yati' },
     },
   },
 }
