@@ -92,7 +92,7 @@ local lsp_config = function()
       },
     },
     ruff = {
-      enabled = true,
+      enabled = false,
       on_attach = function(client, bufnr)
         if client.name ~= 'ruff' then
           return
