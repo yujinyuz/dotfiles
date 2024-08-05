@@ -173,8 +173,13 @@ local lsp_config = function()
     end
   end
 
+  local ensure_installed = vim.tbl_filter(function(server_name)
+    -- Checking whether it is ~= false since severs can be configured to have empty values
+    return servers[server_name].enabled ~= false
+  end, vim.tbl_keys(servers))
+
   mason_lspconfig.setup {
-    ensure_installed = vim.tbl_keys(servers),
+    ensure_installed = ensure_installed,
     handlers = { setup_server_handler },
   }
 end
@@ -239,11 +244,7 @@ return {
         end
       end
 
-      if mr.refresh() then
-        mr.refresh(ensure_installed)
-      else
-        ensure_installed()
-      end
+      mr.refresh(ensure_installed)
     end,
   },
 }
