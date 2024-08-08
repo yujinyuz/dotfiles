@@ -1,6 +1,4 @@
 --layout="reverse-list"
 --height="40%"
 --info="inline-right"
---color="bg+:#414559,bg:-1,spinner:#f2d5cf,hl:#e78284,gutter:-1"
---color="fg:#c6d0f5,header:#e78284,info:#ca9ee6,pointer:#f2d5cf"
---color="marker:#f2d5cf,fg+:#c6d0f5,prompt:#ca9ee6,hl+:#e78284"
+--color="hl:#f4b8e5,hl+:#f4b8e5,bg+:#3b3f53,info:#737995,separator:#8caaef,header:#a5adcf,border:#8caaef,scrollbar:#8caaef,gutter:#303447,prompt:#f4b8e5,query:#c6d0f6:regular,bg:#303447,fg:#c6d0f6,marker:#f4b8e5,pointer:#f4b8e5,spinner:#f4b8e5"
