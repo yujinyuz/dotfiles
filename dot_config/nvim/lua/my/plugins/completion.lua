@@ -103,6 +103,18 @@ local cmp_config = function()
         hl_group = 'CmpGhostText',
       },
     },
+    formatting = {
+      format = function(entry, vim_item)
+        vim_item.menu = ({
+          buffer = '[Buf]',
+          nvim_lsp = '[LSP]',
+          rg = '[Grep]',
+          mocword = '[Sugg]',
+          cmp_yanky = '[Yanky]',
+        })[entry.source.name]
+        return vim_item
+      end,
+    },
   }
 
   -- Setup filetype sources
@@ -177,7 +189,7 @@ local cmp_config = function()
     cmp.complete {
       config = {
         sources = {
-          { name = 'rg', max_item_count = 10 },
+          { name = 'rg' },
         },
       },
     }
