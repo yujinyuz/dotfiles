@@ -1,6 +1,7 @@
 return {
   {
     'andymass/vim-matchup',
+    enabled = false,
     event = 'BufReadPost',
     init = function()
       vim.g.matchup_matchparen_offscreen = { method = 'popup' }
@@ -178,13 +179,6 @@ return {
             vim.cmd('FTermCloseAllExcept 2')
           end
           vim.cmd('FTerm2Toggle')
-        end,
-        mode = { 'n', 't' },
-      },
-      {
-        '<M-a>',
-        function()
-          vim.cmd('LazyDockerToggle')
         end,
         mode = { 'n', 't' },
       },
