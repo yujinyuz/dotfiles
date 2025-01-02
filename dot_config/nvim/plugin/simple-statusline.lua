@@ -26,7 +26,14 @@ H.git_branch = function(args)
   if H.is_truncated(args.trunc_width) then
     return ''
   end
-  return vim.b.gitsigns_head and string.format('  %s ', vim.b.gitsigns_head) or ''
+
+  local branch = vim.b.gitsigns_head and vim.b.gitsigns_head or vim.g.gitsigns_head
+
+  if not branch or branch == '' then
+    branch = '-'
+  end
+
+  return string.format('  %s ', branch)
 end
 
 H.file_info = function(args)
@@ -52,8 +59,7 @@ end
 
 H.gutter_padding = function()
   local line_count = #tostring(vim.api.nvim_buf_line_count(0))
-
-  local hl = vim.bo.modified and '%#@text.danger#' or '%#StatusLineMode#'
+  local hl = vim.bo.modified and '%4*' or '%1*'
 
   -- Minimum of 2 spaces for the padding
   local rep = math.max(line_count, 3)
@@ -72,14 +78,14 @@ _G.SimpleStatusline.render = function()
     -- Show mode
     H.gutter_padding(),
     -- Show git branch (if available)
-    '%#StatusLineCommonInfo#',
+    '%5*',
     H.git_branch { trunc_width = 80 },
     '%*',
     '%<',
-    '%#StatuslineFilePrefix#',
+    '%3*',
     string.format(' %s', H.fileprefix { trunc_width = 120 }),
-    '%#StatuslineFilename#',
-    '%t ',
+    '%2*',
+    '%t',
     -- Reset highlight
     '%* ',
     -- Show modified flag and readonly flag
@@ -89,7 +95,7 @@ _G.SimpleStatusline.render = function()
     -- Show filetype and file size
     H.file_info { trunc_width = 80 },
     -- Show current line and total lines
-    '%#StatusLineLocInfo# ',
+    '%1* ',
     H.loc_info { trunc_width = 80 },
   }
 end
@@ -98,6 +104,20 @@ end
 vim.opt.statusline = '%!v:lua.SimpleStatusline.render()'
 
 -- Define custom highlights
-vim.api.nvim_set_hl(0, 'StatusLineCommonInfo', { link = 'Visual', default = true })
-vim.api.nvim_set_hl(0, 'StatusLineLocInfo', { link = 'Cursor', default = true })
+vim.api.nvim_set_hl(0, 'StatusLineCommonInfo', { link = 'ColorColumn', default = true })
 vim.api.nvim_set_hl(0, 'StatusLineMode', { link = 'Cursor', default = true })
+
+vim.api.nvim_create_autocmd({ 'UIEnter', 'ColorScheme' }, {
+  callback = function()
+    local tablinesel = vim.api.nvim_get_hl(0, { name = 'TabLineSel' })
+    local conceal = vim.api.nvim_get_hl(0, { name = 'Conceal' })
+
+    vim.api.nvim_set_hl(0, 'User1', { link = 'Cursor', default = true })
+    vim.api.nvim_set_hl(0, 'User3', vim.tbl_extend('keep', conceal, {})) -- file prefix
+    vim.api.nvim_set_hl(0, 'User2', { bold = true, bg = conceal.bg }) -- file name
+    vim.api.nvim_set_hl(0, 'User4', { bg = '#e78285' }) -- gutter
+    vim.api.nvim_set_hl(0, 'User5', vim.tbl_extend('keep', { fg = 'none' }, tablinesel)) -- git branch
+
+    vim.api.nvim_set_hl(0, 'StatusLine', { bg = 'none' })
+  end,
+})
