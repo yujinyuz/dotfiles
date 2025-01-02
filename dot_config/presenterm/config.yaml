@@ -1,4 +1,6 @@
 defaults:
-  theme: catppuccin-frappe
-  terminal_font_size: 24
+  theme: terminal-dark
   image_protocol: kitty-local
+snippet:
+  exec:
+    enable: true
