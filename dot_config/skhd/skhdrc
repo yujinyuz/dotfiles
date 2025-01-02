@@ -11,13 +11,13 @@ alt - return : pgrep -x kitty && kitty @ launch --type=os-window --cwd=~ &> /dev
 # window state & layout
 alt + ctrl - return : yabai -m window --toggle split
 
-# Hyper key + shift
-cmd + alt + ctrl + shift - 1 : yabai -m window --space 1
-cmd + alt + ctrl + shift - 2 : yabai -m window --space 2
-cmd + alt + ctrl + shift - 3 : yabai -m window --space 3
-cmd + alt + ctrl + shift - 4 : yabai -m window --space 4
-cmd + alt + ctrl + shift - 5 : yabai -m window --space 5
-cmd + alt + ctrl + shift - 6 : yabai -m window --space 6
+# window focus
+cmd + alt + ctrl - 1 : yabai -m space --focus 1
+cmd + alt + ctrl - 2 : yabai -m space --focus 2
+cmd + alt + ctrl - 3 : yabai -m space --focus 3
+cmd + alt + ctrl - 4 : yabai -m space --focus 4
+cmd + alt + ctrl - 5 : yabai -m space --focus 5
+cmd + alt + ctrl - 6 : yabai -m space --focus 6
 
 # toggle desktop offset
 cmd + alt + ctrl - g : yabai -m space --toggle padding; yabai -m space --toggle gap
