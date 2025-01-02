@@ -240,12 +240,6 @@ vim.api.nvim_create_autocmd({ 'FileType' }, {
   end,
 })
 
-vim.api.nvim_create_autocmd('QuickFixCmdPost', {
-  group = augroup('auto_open_quickfix'),
-  pattern = { '[^l]*' },
-  command = 'cwindow',
-})
-
 if vim.fn.executable('chezmoi') == 1 then
   vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
     group = augroup('chezmoi_auto_apply'),
