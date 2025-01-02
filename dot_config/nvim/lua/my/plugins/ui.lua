@@ -19,17 +19,17 @@ return {
         transparent_background = false,
         custom_highlights = function(colors)
           return {
-            StatusLine = { bg = colors.surface0 },
             StatuslineFilePrefix = { bg = colors.surface0, fg = colors.subtext0, style = { 'italic' } },
             StatuslineFileName = { bg = colors.surface0, fg = colors.text, style = { 'bold' } },
-            StatusLineLocInfo = { bg = colors.text, fg = colors.base },
             StatusLineMode = { bg = colors.text, fg = colors.base },
-            StatusLineCommonInfo = { bg = colors.surface1, style = { 'bold' } },
+            MiniFilesNormal = { bg = colors.none, fg = colors.text },
+            FzfLuaNormal = { bg = colors.none },
           }
         end,
         integrations = {
           aerial = true,
           cmp = true,
+          fzf = true,
           gitsigns = true,
           leap = true,
           lsp_trouble = true,
@@ -118,7 +118,8 @@ return {
             elseif line_count > 1000 then
               return rainbow.strategy['global']
             end
-            return rainbow.strategy['local']
+
+            return nil
           end,
         },
         highlight = {
@@ -158,6 +159,11 @@ return {
         'text',
         'grug-far',
         'oil',
+      },
+      excluded_highlights = {
+        'WinSeparator',
+        { 'StatusLine*', glob = true },
+        { 'User*', glob = true },
       },
     },
     config = function(_, opts)
