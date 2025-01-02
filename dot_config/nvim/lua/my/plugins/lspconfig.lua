@@ -92,7 +92,7 @@ local lsp_config = function()
       },
     },
     ruff = {
-      enabled = false,
+      enabled = true,
       on_attach = function(client, bufnr)
         if client.name ~= 'ruff' then
           return
@@ -126,7 +126,7 @@ local lsp_config = function()
     emmet_language_server = {},
     tailwindcss = {},
     jsonls = {},
-    tsserver = {},
+    ts_ls = {},
     volar = {},
     lua_ls = {
       Lua = {
