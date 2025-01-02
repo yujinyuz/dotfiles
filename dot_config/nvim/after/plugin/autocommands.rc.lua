@@ -41,9 +41,9 @@ vim.api.nvim_create_autocmd('BufWritePre', {
       return
     end
 
-    local cursor_pos = vim.api.nvim_win_get_cursor(0)
+    local winview = vim.fn.winsaveview()
     vim.cmd([[%s/\s\+$//e]])
-    vim.api.nvim_win_set_cursor(0, cursor_pos)
+    vim.fn.winrestview(winview)
   end,
   desc = 'Strip Trailing Whitespace',
 })
@@ -347,4 +347,29 @@ vim.api.nvim_create_autocmd('UILeave', {
     end
   end,
   desc = 'Automatically sync colorscheme with terminal',
+})
+
+vim.api.nvim_create_autocmd('TabNew', {
+  group = augroup('overhead'),
+  callback = function()
+    if #vim.api.nvim_list_tabpages() > 2 then
+      require('my.utils').warn('Hard to procses more than 2 tabs', '[brain]')
+    end
+  end,
+  desc = 'Prevent overhead with multiple tabs',
+})
+
+vim.api.nvim_create_autocmd('VimEnter', {
+  group = augroup('has_last_session'),
+  callback = function()
+    local file = require('persistence').current()
+
+    if vim.o.columns < 80 then
+      return
+    end
+
+    if vim.fn.filereadable(file) ~= 0 then
+      require('my.utils').info('existing session found for this project', '[reminder]')
+    end
+  end,
 })
