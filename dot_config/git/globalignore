@@ -61,3 +61,9 @@ dkdata
 exports.fish
 
 .disable-autofmt
+
+# neovim
+.nvim.lua
+
+# virtualfish
+.vfenv
