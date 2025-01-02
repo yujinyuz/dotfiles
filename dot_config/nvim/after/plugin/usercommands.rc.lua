@@ -27,6 +27,20 @@ vim.api.nvim_create_user_command('FormatJson', function(opts)
   vim.cmd(start_line .. ',' .. end_line .. '!jq . --indent ' .. indent)
 end, { nargs = '?', range = true })
 
+-- TODO: Add a parameter to existing FormatJson instead of having a separate command
+vim.api.nvim_create_user_command('FormatJsonSorted', function(opts)
+  local indent = tonumber(opts.args) or 2
+  local start_line, end_line
+
+  if opts.range == 0 then
+    start_line, end_line = 1, vim.fn.line('$')
+  else
+    start_line, end_line = opts.line1, opts.line2
+  end
+
+  vim.cmd(start_line .. ',' .. end_line .. '!jq . --indent ' .. indent .. ' --sort-keys')
+end, { nargs = '?', range = true })
+
 vim.api.nvim_create_user_command('DiffOrig', function()
   local ft = vim.bo.filetype
   vim.cmd('leftabove vert new')
