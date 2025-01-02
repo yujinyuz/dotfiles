@@ -28,4 +28,5 @@ return {
   { 'fladson/vim-kitty', ft = 'kitty' },
   { 'NoahTheDuke/vim-just', ft = 'just' },
   { 'cuducos/yaml.nvim', ft = { 'yaml' } },
+  { 'HiPhish/jinja.vim', ft = { 'jinja' } },
 }
