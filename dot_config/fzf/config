@@ -1,4 +1,7 @@
 --layout="reverse-list"
 --height="40%"
 --info="inline-right"
---color="hl:#f4b8e5,hl+:#f4b8e5,bg+:#3b3f53,info:#737995,separator:#8caaef,header:#a5adcf,border:#8caaef,scrollbar:#8caaef,gutter:#303447,prompt:#f4b8e5,query:#c6d0f6:regular,bg:#303447,fg:#c6d0f6,marker:#f4b8e5,pointer:#f4b8e5,spinner:#f4b8e5"
+--color="bg+:#3b3f53,bg:-1,spinner:#f4b8e5,hl:#f4b8e5,gutter:-1"
+--color="fg:#c6d0f6,header:#a5adcf,info:#737995,pointer:#f4b8e5"
+--color="marker:#f4b8e5,fg+:#c6d0f5,prompt:#f4b8e5,hl+:#f4b8e5"
+--color="query:#c6d0f6:regular,border:#8caaef,scrollbar:#8caaef,separator:#8caaef"
