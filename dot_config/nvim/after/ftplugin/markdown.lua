@@ -22,3 +22,6 @@ vim.keymap.set('i', ';t', function()
 end, { buffer = 0, expr = true })
 
 vim.keymap.set('n', '<leader>pm', '<Cmd>MarkdownPreviewToggle<CR>', { buffer = 0 })
+
+vim.keymap.set('i', ';e', '<!-- end_slide -->', { nowait = true })
+vim.keymap.set('i', ';p', '<!-- pause -->', { nowait = true })
