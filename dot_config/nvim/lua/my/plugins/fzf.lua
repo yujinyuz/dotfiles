@@ -103,6 +103,15 @@ local keys = {
     ',b',
     '<Cmd>FzfLua buffers<CR>',
   },
+  {
+    '<leader>hl',
+    '<Cmd>FzfLua highlights<CR>',
+  },
+  {
+    '<leader>fq',
+    '<Cmd>FzfLua quickfix<CR>',
+  },
+  { ',q', '<Cmd>FzfLua quickfix<CR>' },
 }
 
 local config = function()
@@ -141,6 +150,7 @@ local config = function()
       ['--no-hscroll'] = '',
       ['--layout'] = 'default',
     },
+    fzf_colors = true,
     keymap = {
       builtin = {
         ['<C-d>'] = 'preview-page-down',
