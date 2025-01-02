@@ -34,8 +34,11 @@ local cmp_config = function()
         name = 'buffer',
         max_item_count = 10,
         option = {
+          show_source = true,
           get_bufnrs = function()
-            return vim.api.nvim_list_bufs()
+            return vim.tbl_filter(function(bufnr)
+              return vim.fn.buflisted(bufnr) == 1
+            end, vim.api.nvim_list_bufs())
           end,
         },
       },
@@ -58,7 +61,10 @@ local cmp_config = function()
     },
     snippet = {
       expand = function(args)
-        vim.snippet.expand(args.body)
+        -- FIXME: There is a bug where highlights gets left behind
+        -- IDK what caused this so.... using luasnip for now
+        -- vim.snippet.expand(args.body)
+        require('luasnip').lsp_expand(args.body)
       end,
     },
     mapping = cmp.mapping.preset.insert {
