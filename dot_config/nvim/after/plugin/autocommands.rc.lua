@@ -189,6 +189,7 @@ vim.api.nvim_create_autocmd('FileType', {
     'grug-far',
     'fugitive',
     'fugitiveblame',
+    'fugitive://*',
   },
   callback = function(event)
     vim.bo[event.buf].buflisted = false
