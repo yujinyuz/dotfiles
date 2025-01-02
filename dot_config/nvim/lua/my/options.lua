@@ -21,7 +21,7 @@ vim.opt.title = true
 -- Change list characters
 vim.opt.list = true
 vim.opt.listchars = {
-  tab = '→ ',
+  tab = '▷⋯', -- WHITE RIGHT-POINTING TRIANGLE (U+25B7, UTF-8: E2 96 B7) + MIDLINE HORIZONTAL ELLIPSIS (U+22EF, UTF-8: E2 8B AF)
   trail = '·',
   -- eol = '↲',
   -- eol = '↴',
