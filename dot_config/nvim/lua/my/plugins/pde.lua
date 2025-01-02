@@ -195,7 +195,7 @@ return {
       {
         '<leader>pp',
         function()
-          require('gitpad').toggle_gitpad()
+          require('gitpad').toggle_gitpad { title = '󰊢 gitpad' }
         end,
         desc = 'gitpad project',
       },
