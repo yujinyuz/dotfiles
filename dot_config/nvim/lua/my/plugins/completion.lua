@@ -1,6 +1,16 @@
 vim.g.nvim_cmp_t_state = true
 vim.api.nvim_set_hl(0, 'CmpGhostText', { link = 'Comment', default = true })
 
+vim.keymap.set('n', 'yoq', function()
+  vim.g.nvim_cmp_t_state = not vim.g.nvim_cmp_t_state
+
+  if vim.g.nvim_cmp_t_state then
+    require('my.utils').info('enabled autocomplete', 'Toggle')
+  else
+    require('my.utils').warn('disabled autocomplete', 'Toggle')
+  end
+end, { desc = 'toggle autocomplete' })
+
 local cmp_config = function()
   local cmp = require('cmp')
 
