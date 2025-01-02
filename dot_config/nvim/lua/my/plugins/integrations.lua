@@ -20,15 +20,26 @@ return {
     'stevearc/conform.nvim',
     event = 'BufReadPost',
     opts = {
+      formatters = {
+        kulala = {
+          command = 'kulala-fmt',
+          args = { '$FILENAME' },
+          stdin = false,
+        },
+      },
       formatters_by_ft = {
         lua = { 'stylua' },
         javascript = { 'prettierd', 'eslint_d' },
-        python = { 'ruff_format', 'ruff_fix' },
+        -- javascript = { 'eslint_d', 'prettierd' },
+        python = { 'ruff_format', 'ruff_fix', 'ruff_organize_imports' },
         fish = { 'fish_indent' },
         json = { 'jq' },
         jsonc = { 'fixjson' },
         htmldjango = { 'djlint' },
         toml = { 'taplo' },
+        http = { 'kulala' },
+        go = { 'goimports', 'gofmt', lsp_format = 'fallback' },
+        templ = { 'templ' },
       },
       format_on_save = function(bufnr)
         if not require('my.format').is_enabled(bufnr) then
