@@ -246,6 +246,7 @@ if vim.fn.executable('chezmoi') == 1 then
     pattern = { vim.fs.normalize('~/Sources/github.com/yujinyuz/dotfiles/*') },
     callback = function(event)
       local bufname = vim.fn.pathshorten(vim.api.nvim_buf_get_name(event.buf))
+
       vim.uv.spawn('chezmoi', {
         args = {
           'apply',
@@ -253,6 +254,9 @@ if vim.fn.executable('chezmoi') == 1 then
         },
       }, function(code, signal)
         vim.schedule(function()
+          if vim.o.columns < 80 then
+            return
+          end
           local msg = string.format('applied %s code: %s, signal: %s', bufname, code, signal)
           require('my.utils').info(msg, '[chezmoi]')
         end)
