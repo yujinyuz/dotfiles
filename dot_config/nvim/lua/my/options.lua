@@ -177,7 +177,7 @@ vim.fn.sign_define('DiagnosticSignWarn', { text = '⚠', texthl = 'DiagnosticSig
 vim.diagnostic.config {
   underline = true,
   update_in_insert = false,
-  virtual_text = { spacing = 2, prefix = '●' },
+  virtual_text = { spacing = 2, prefix = ' ●' },
   severity_sort = true,
   float = {
     source = true,
