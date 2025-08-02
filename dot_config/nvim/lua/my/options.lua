@@ -169,10 +169,10 @@ vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
 -- Diagnostic symbols in the sign column (gutter)
-vim.fn.sign_define('DiagnosticSignError', { text = '✖', texthl = 'DiagnosticSignError', numhl = '' })
-vim.fn.sign_define('DiagnosticSignHint', { text = '➤', texthl = 'DiagnosticSignHint', numhl = '' })
-vim.fn.sign_define('DiagnosticSignInfo', { text = '', texthl = 'DiagnosticSignInfo', numhl = '' })
-vim.fn.sign_define('DiagnosticSignWarn', { text = '⚠', texthl = 'DiagnosticSignWarn', numhl = '' })
+-- vim.fn.sign_define('DiagnosticSignError', { text = '✖', texthl = 'DiagnosticSignError', numhl = '' })
+-- vim.fn.sign_define('DiagnosticSignHint', { text = '➤', texthl = 'DiagnosticSignHint', numhl = '' })
+-- vim.fn.sign_define('DiagnosticSignInfo', { text = '', texthl = 'DiagnosticSignInfo', numhl = '' })
+-- vim.fn.sign_define('DiagnosticSignWarn', { text = '⚠', texthl = 'DiagnosticSignWarn', numhl = '' })
 
 vim.diagnostic.config {
   underline = true,
@@ -181,5 +181,13 @@ vim.diagnostic.config {
   severity_sort = true,
   float = {
     source = true,
+  },
+  signs = {
+    text = {
+      [vim.diagnostic.severity.INFO] = '',
+      [vim.diagnostic.severity.ERROR] = '✖',
+      [vim.diagnostic.severity.HINT] = '➤',
+      [vim.diagnostic.severity.WARN] = '⚠',
+    },
   },
 }
