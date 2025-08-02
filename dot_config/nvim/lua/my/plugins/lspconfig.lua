@@ -191,7 +191,6 @@ return {
     config = lsp_config,
     dependencies = {
       { 'folke/neoconf.nvim', cmd = 'Neoconf', config = false },
-      { 'folke/neodev.nvim', opts = {} },
       {
         'SmiteshP/nvim-navic',
         lazy = true,
