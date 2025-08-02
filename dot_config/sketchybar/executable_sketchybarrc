@@ -20,7 +20,7 @@ ITEM_DIR="$CONFIG_DIR/items"
 # https://felixkratz.github.io/SketchyBar/config/tricks#color-picker
 
 config=(
-  height=35
+  height=28
   blur_radius=30
   position=top
   sticky=off
@@ -46,7 +46,7 @@ default=(
   label.padding_right=4
   background.color=$BAR_COLOR
   background.corner_radius=5
-  background.height=24
+  background.height=20
   padding_left=5
   padding_right=5
 )
