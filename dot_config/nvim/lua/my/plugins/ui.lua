@@ -16,14 +16,17 @@ return {
           comments = { 'italic' },
           conditionals = { 'italic' },
         },
-        transparent_background = false,
+        transparent_background = true,
+        float = {
+          transparent = true,
+          solid = true,
+        },
         custom_highlights = function(colors)
           return {
             StatuslineFilePrefix = { bg = colors.surface0, fg = colors.subtext0, style = { 'italic' } },
             StatuslineFileName = { bg = colors.surface0, fg = colors.text, style = { 'bold' } },
             StatusLineMode = { bg = colors.text, fg = colors.base },
             MiniFilesNormal = { bg = colors.none, fg = colors.text },
-            FzfLuaNormal = { bg = colors.none },
           }
         end,
         integrations = {
