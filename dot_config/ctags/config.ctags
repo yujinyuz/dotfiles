@@ -36,3 +36,7 @@
 --exclude=*.conf
 --exclude=*.ini
 --exclude=*.diff
+
+
+# Python
+--exclude=.tox
