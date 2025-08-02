@@ -108,6 +108,7 @@ return {
   {
     'hiphish/rainbow-delimiters.nvim',
     event = 'BufReadPost',
+    submodules = false,
     config = function()
       local rainbow = require('rainbow-delimiters')
       require('rainbow-delimiters.setup').setup {
