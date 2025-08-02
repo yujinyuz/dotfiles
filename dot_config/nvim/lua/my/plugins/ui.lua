@@ -149,8 +149,9 @@ return {
   },
   {
     'miversen33/sunglasses.nvim',
+    enabled = false,
     event = 'UIEnter',
-    dev = true,
+    dev = false,
     opts = {
       filter_type = 'NOSYNTAX',
       filter_percent = 0.35,
