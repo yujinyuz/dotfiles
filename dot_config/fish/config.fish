@@ -77,6 +77,8 @@ fish_add_path $GOPATH $GOPATH/bin
 fish_add_path $HOME/.cargo/bin
 ## mise shims
 fish_add_path $HOME/.local/share/mise/shims
+## docker
+fish_add_path $HOME/.docker/bin
 ## local binaries
 fish_add_path $HOME/.local/bin
 
