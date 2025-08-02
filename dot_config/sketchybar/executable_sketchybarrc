@@ -71,3 +71,9 @@ sketchybar --update
 
 
 # References: https://github.com/linkarzu/dotfiles-latest/blob/main/sketchybar/felixkratz/sketchybarrc
+# TODO: This works when I have another monitor
+# defaults write com.knollsoft.Rectangle screenEdgeGapTop -int 30
+# defaults write com.knollsoft.Rectangle screenEdgeGapBottom -int 6
+# defaults write com.knollsoft.Rectangle screenEdgeGapLeft -int 6
+# defaults write com.knollsoft.Rectangle screenEdgeGapRight -int 6
+# defaults write com.knollsoft.Rectangle screenEdgeGapTopNotch -int 1
