@@ -45,48 +45,6 @@ return {
     },
   },
   {
-    'CopilotC-Nvim/CopilotChat.nvim',
-    branch = 'canary',
-    dependencies = {
-      { 'zbirenbaum/copilot.lua' }, -- or github/copilot.vim
-      { 'nvim-lua/plenary.nvim' }, -- for curl, log wrapper
-    },
-    opts = { debug = true },
-    keys = {
-      {
-        '<leader>cch',
-        function()
-          local actions = require('CopilotChat.actions')
-          require('CopilotChat.integrations.fzflua').pick(actions.help_actions())
-        end,
-        mode = { 'n', 'x' },
-      },
-      {
-        '<leader>ccq',
-        function()
-          local input = vim.fn.input('Quick Chat: ')
-          if input ~= '' then
-            require('CopilotChat').ask(input, { selection = require('CopilotChat.select').buffer })
-          end
-        end,
-        mode = 'n',
-      },
-      {
-        '<leader>ccp',
-        function()
-          local actions = require('CopilotChat.actions')
-          require('CopilotChat.integrations.fzflua').pick(actions.prompt_actions())
-        end,
-        mode = { 'n', 'x' },
-      },
-      {
-        '<leader>cgc',
-        '<Cmd>CopilotChatCommitStaged<CR>',
-        mode = 'n',
-      },
-    },
-  },
-  {
     'numToStr/FTerm.nvim',
     config = function()
       local FTerm = require('FTerm')
