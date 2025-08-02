@@ -279,7 +279,7 @@ return {
     'windwp/nvim-autopairs',
     event = { 'InsertEnter' },
     opts = {
-      disable_filetype = { 'vim', 'markdown' },
+      disable_filetype = { 'vim', 'markdown', 'snacks_picker_input' },
       map_c_w = true,
       check_ts = true,
     },
