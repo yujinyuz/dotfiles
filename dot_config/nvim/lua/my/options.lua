@@ -163,6 +163,10 @@ vim.opt.splitkeep = 'screen'
 -- Always ask for confirmation when closing unsaved buffers
 vim.opt.confirm = true
 
+-- Make vim diff better
+-- https://www.reddit.com/r/neovim/comments/1ihpvaf/the_linematch_diffopt_makes_builtin_diff_so_sweat/maz7fmu/
+vim.opt.diffopt = 'filler,internal,closeoff,algorithm:histogram,context:5,linematch:60'
+
 -- Use <Space> as the leader key
 vim.g.mapleader = ' '
 vim.g.loaded_netrw = 1
